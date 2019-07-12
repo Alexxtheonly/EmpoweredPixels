@@ -1,0 +1,35 @@
+<div class="card">
+    <div class="card-body">
+        <table class="table-borderless">
+            <thead>
+                <th>Id</th>
+                <th>Max health</th>
+                <th>Max energy</th>
+                <th>Damage done</th>
+                <th>Damage taken</th>
+                <th>Energy used</th>
+                <th>Kills</th>
+                <th>Deaths</th>
+                <th>Distance traveled</th>
+                <th>Regenerated health</th>
+                <th>Regenerated Energy</th>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let matchScore of matchScores">
+                    <td>{{ matchScore.id }}</td>
+                    <td>{{ matchScore.maxHealth }}</td>
+                    <td>{{ matchScore.maxEnergy }}</td>
+                    <td>{{ matchScore.totalDamageDone }}</td>
+                    <td>{{ matchScore.totalDamageTaken }}</td>
+                    <td>{{ matchScore.totalEnergyUsed }}</td>
+                    <td>{{ matchScore.totalKills }}</td>
+                    <td>{{ matchScore.totalDeaths }}</td>
+                    <td>{{ matchScore.totalDistanceTraveled }}</td>
+                    <td>{{ matchScore.totalRegeneratedHealth }}</td>
+                    <td>{{ matchScore.totalRegeneratedEnergy }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
