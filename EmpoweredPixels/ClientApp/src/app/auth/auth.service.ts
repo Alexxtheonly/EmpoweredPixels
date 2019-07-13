@@ -4,6 +4,7 @@ import { Token } from './+models/token';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,15 +22,15 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
-  public authenticate(login: Login): Observable<Token> {
-    return this.http.post<Token>('api/authentication/token', login);
+  public login(login: Login): Observable<Token> {
+    return this.http.post<Token>('api/authentication/token', login).pipe(map(token => {
+      localStorage.setItem('token', JSON.stringify(token));
+
+      return token;
+    }));
   }
 
-  public authenticateFor(user: string, password: string): Observable<Token> {
-    const login = new Login();
-    login.username = user;
-    login.password = password;
-
-    return this.authenticate(login);
+  public logout() {
+    localStorage.removeItem('token');
   }
 }

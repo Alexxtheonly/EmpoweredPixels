@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -39,7 +38,6 @@ namespace EmpoweredPixels.Controllers.Identity
     {
       // allow login with name and email
       var user = await Context.Users
-        .Where(o => o.IsVerified)
         .SingleOrDefaultAsync(o => o.Name == login.User || o.Email == login.User);
 
       if (user == null || !user.IsValidPassword(login.Password))

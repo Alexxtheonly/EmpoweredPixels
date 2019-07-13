@@ -1,5 +1,10 @@
+import { Login } from './../auth/+models/login';
+import { AlertService } from 'src/app/+services/alert.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -7,10 +12,50 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  private loginForm: FormGroup;
+  private loading = false;
+  private submitted = false;
 
-  constructor(public auth: AuthService) { }
+  constructor(
+    private auth: AuthService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private alert: AlertService) { }
 
   ngOnInit() {
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+
+    this.auth.logout();
   }
 
+  get f() { return this.loginForm.controls; }
+
+  private submit(): void {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.loading = true;
+
+    const login = new Login();
+    login.user = this.f.username.value;
+    login.password = this.f.password.value;
+
+    this.auth.login(login)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.router.navigate(['/']);
+        },
+        error => {
+          this.alert.error(error);
+          this.loading = false;
+        });
+  }
 }
