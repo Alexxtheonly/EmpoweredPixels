@@ -4,7 +4,7 @@
   {
     public static long? AsLong(this object obj)
     {
-      if (long.TryParse(obj.ToString(), out long parsed))
+      if (long.TryParse(obj?.ToString(), out long parsed))
       {
         return parsed;
       }

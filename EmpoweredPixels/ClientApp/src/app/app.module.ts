@@ -2,7 +2,7 @@ import { AuthGuardService } from './auth/auth-guard.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -12,6 +12,10 @@ import { MatchViewerComponent } from './match-viewer/match-viewer.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AlertComponent } from './+directives/alert/alert/alert.component';
+import { RosterComponent } from './roster/roster.component';
+import { JwtInterceptor } from './+helpers/jwt-interceptor';
+import { FighterComponent } from './roster/fighter/fighter.component';
+import { NewComponent } from './roster/new/new.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,10 @@ import { AlertComponent } from './+directives/alert/alert/alert.component';
     MatchViewerComponent,
     LoginComponent,
     RegisterComponent,
-    AlertComponent
+    AlertComponent,
+    RosterComponent,
+    FighterComponent,
+    NewComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,10 +39,14 @@ import { AlertComponent } from './+directives/alert/alert/alert.component';
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuardService] },
       { path: 'match', component: MatchViewerComponent, canActivate: [AuthGuardService] },
       { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent }
+      { path: 'register', component: RegisterComponent },
+      { path: 'roster', component: RosterComponent, canActivate: [AuthGuardService] },
+      { path: 'roster/fighter/new', component: NewComponent, canActivate: [AuthGuardService] },
     ])
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

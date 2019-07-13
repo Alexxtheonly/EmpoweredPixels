@@ -10,6 +10,7 @@ namespace EmpoweredPixels.Extensions
     {
       return claims
         .SingleOrDefault(o => o.Type == ClaimTypes.Name)
+        ?.Value
         .AsLong();
     }
   }

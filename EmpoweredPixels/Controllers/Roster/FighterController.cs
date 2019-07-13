@@ -29,6 +29,11 @@ namespace EmpoweredPixels.Controllers.Roster
     {
       var userId = User.Claims.GetUserId();
 
+      if (userId == null)
+      {
+        return Forbid();
+      }
+
       return Ok(await Context.Fighters
         .Where(o => o.UserId == userId)
         .ToListAsync());
@@ -55,12 +60,19 @@ namespace EmpoweredPixels.Controllers.Roster
     }
 
     [HttpPut]
-    public async Task<ActionResult<FighterDto>> CreateFighter([FromBody] string name)
+    public async Task<ActionResult<FighterDto>> CreateFighter([FromBody] FighterDto dto)
     {
       var userId = User.Claims.GetUserId();
       if (userId == null)
       {
         return Forbid();
+      }
+
+      var name = dto.Name;
+
+      if (string.IsNullOrEmpty(name) || await Context.Fighters.AnyAsync(o => o.Name == name))
+      {
+        return BadRequest();
       }
 
       var fighter = new Fighter()

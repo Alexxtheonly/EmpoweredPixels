@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Add new fighter</h4>
+      <input type="text" [(ngModel)]="name" placeholder="Enter fighter name">
+    </div>
+    <div class="card-body">
+      <button type="button" class="btn btn-primary" (click)="submit()" [disabled]="loading">Add</button>
+    </div>
+  </div>
+</div>
