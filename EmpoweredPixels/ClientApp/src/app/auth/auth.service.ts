@@ -11,15 +11,20 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
 
-  private jwtHelper: JwtHelperService;
+  private jwtHelper: JwtHelperService = new JwtHelperService();
 
   constructor(private http: HttpClient) {
   }
 
   public isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
+    const token = this.getToken();
+    if (!token) {
+      return false;
+    }
 
-    return !this.jwtHelper.isTokenExpired(token);
+    const jwt = token.token;
+
+    return !this.jwtHelper.isTokenExpired(jwt);
   }
 
   public login(login: Login): Observable<Token> {
@@ -32,5 +37,12 @@ export class AuthService {
 
   public logout() {
     localStorage.removeItem('token');
+  }
+
+  private getToken(): Token {
+    const json = JSON.parse(localStorage.getItem('token'));
+    const token: Token = json;
+
+    return token;
   }
 }

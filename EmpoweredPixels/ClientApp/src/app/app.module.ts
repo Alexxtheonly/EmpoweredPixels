@@ -1,3 +1,4 @@
+import { AuthGuardService } from './auth/auth-guard.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -28,8 +29,8 @@ import { AlertComponent } from './+directives/alert/alert/alert.component';
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'match', component: MatchViewerComponent },
+      { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuardService] },
+      { path: 'match', component: MatchViewerComponent, canActivate: [AuthGuardService] },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent }
     ])

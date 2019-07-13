@@ -11,9 +11,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  private registerForm: FormGroup;
-  private loading = false;
-  private submitted = false;
+  public registerForm: FormGroup;
+  public loading = false;
+  public submitted = false;
 
   constructor(
     private registerService: RegisterService,

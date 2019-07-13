@@ -1,4 +1,5 @@
 ﻿using EmpoweredPixels.Models.Identity;
+using EmpoweredPixels.Models.Roster;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmpoweredPixels.Models
@@ -16,6 +17,8 @@ namespace EmpoweredPixels.Models
     public DbSet<Token> Tokens { get; set; }
 
     public DbSet<Verification> Verifications { get; set; }
+
+    public DbSet<Fighter> Fighters { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -39,6 +42,13 @@ namespace EmpoweredPixels.Models
         e.HasKey(o => o.Id);
         e.Property(o => o.Id).ValueGeneratedOnAdd();
         e.HasOne(o => o.User).WithOne().HasForeignKey<Verification>(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
+      });
+
+      modelBuilder.Entity<Fighter>(e =>
+      {
+        e.HasKey(o => o.Id);
+        e.Property(o => o.Id).ValueGeneratedOnAdd();
+        e.HasOne(o => o.User).WithMany().HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
       });
     }
   }
