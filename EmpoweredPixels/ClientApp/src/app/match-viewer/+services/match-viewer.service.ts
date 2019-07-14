@@ -1,4 +1,4 @@
-import { Match } from './../+models/match';
+import { MatchResult } from '../+models/match-result';
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -7,12 +7,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MatchViewerService {
-  public match: Match;
+  public match: MatchResult;
 
   constructor(public http: HttpClient) {
   }
 
-  public getTestmatch(): Observable<Match> {
-    return this.http.get<Match>('api/match/test');
+  public getTestmatch(): Observable<MatchResult> {
+    return this.http.get<MatchResult>('api/match/test');
   }
 }

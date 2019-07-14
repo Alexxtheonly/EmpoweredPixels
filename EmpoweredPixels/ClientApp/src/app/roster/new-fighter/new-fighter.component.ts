@@ -1,14 +1,14 @@
-import { Fighter } from './../+models/fighter';
-import { Router } from '@angular/router';
-import { RosterService } from './../+services/roster.service';
 import { Component, OnInit } from '@angular/core';
+import { RosterService } from '../+services/roster.service';
+import { Router } from '@angular/router';
+import { Fighter } from '../+models/fighter';
 
 @Component({
-  selector: 'app-new',
-  templateUrl: './new.component.html',
-  styleUrls: ['./new.component.css']
+  selector: 'app-new-fighter',
+  templateUrl: './new-fighter.component.html',
+  styleUrls: ['./new-fighter.component.css']
 })
-export class NewComponent implements OnInit {
+export class NewFighterComponent implements OnInit {
   public name: string;
   public loading: boolean;
 

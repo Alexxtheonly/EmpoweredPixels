@@ -2,7 +2,7 @@
 
 namespace EmpoweredPixels.DataTransferObjects.Match
 {
-  public class MatchDto
+  public class MatchResultDto
   {
     public IEnumerable<RoundTickDto> Ticks { get; set; }
 

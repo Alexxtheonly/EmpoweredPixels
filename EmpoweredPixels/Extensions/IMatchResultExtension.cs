@@ -8,9 +8,9 @@ namespace EmpoweredPixels.Extensions
 {
   public static class IMatchResultExtension
   {
-    public static MatchDto AsDto(this IMatchResult result)
+    public static MatchResultDto AsDto(this IMatchResult result)
     {
-      return new MatchDto()
+      return new MatchResultDto()
       {
         Ticks = result.Ticks.Select(o => o.AsDto()),
         Scores = result.Scores.Select(o => o.AsDto()),

@@ -1,7 +1,7 @@
 import { MatchScore } from './+models/match-score';
 import { MatchViewerService } from './+services/match-viewer.service';
 import { Component, OnInit } from '@angular/core';
-import { Match } from './+models/match';
+import { MatchResult } from './+models/match-result';
 
 @Component({
   selector: 'app-match-viewer',
@@ -10,7 +10,7 @@ import { Match } from './+models/match';
 })
 export class MatchViewerComponent implements OnInit {
 
-  public match: Match;
+  public match: MatchResult;
   public matchScores: MatchScore[];
 
   private service: MatchViewerService;

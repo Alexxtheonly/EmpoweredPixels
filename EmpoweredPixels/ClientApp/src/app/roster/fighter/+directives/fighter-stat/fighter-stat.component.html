@@ -1,0 +1,15 @@
+<div class="card">
+  <div class="card-body">
+    <h3 class="card-title">{{ name }}</h3>
+    <a class="btn btn-light" (click)="decrease()">
+      <i class="fa fa-minus" aria-hidden="true"></i></a>
+    <span class="badge" style="font-size: 2em">{{ value }}</span>
+    <a class="btn btn-light" (click)="increase()">
+      <i class="fa fa-plus" aria-hidden="true"></i></a>
+  </div>
+  <div class="card-footer">
+    <div class="card-text">
+      {{ description }}
+    </div>
+  </div>
+</div>

@@ -80,6 +80,16 @@ namespace EmpoweredPixels.Controllers.Roster
         Name = name,
         UserId = userId.Value,
         Created = dateTimeProvider.Now,
+        Accuracy = 1,
+        Agility = 1,
+        Expertise = 1,
+        Power = 1,
+        Regeneration = 1,
+        Speed = 1,
+        Stamina = 1,
+        Toughness = 1,
+        Vision = 1,
+        Vitality = 1,
       };
 
       // todo: set max fighters per user

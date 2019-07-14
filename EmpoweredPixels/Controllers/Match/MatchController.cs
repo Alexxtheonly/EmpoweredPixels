@@ -25,7 +25,7 @@ namespace EmpoweredPixels.Controllers.Match
     }
 
     [HttpGet("test")]
-    public ActionResult<MatchDto> GetTestMatch()
+    public ActionResult<MatchResultDto> GetTestMatch()
     {
       var engine = new Engine(
         cfg =>

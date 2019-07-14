@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -15,7 +14,9 @@ import { AlertComponent } from './+directives/alert/alert/alert.component';
 import { RosterComponent } from './roster/roster.component';
 import { JwtInterceptor } from './+helpers/jwt-interceptor';
 import { FighterComponent } from './roster/fighter/fighter.component';
-import { NewComponent } from './roster/new/new.component';
+import { NewFighterComponent } from './roster/new-fighter/new-fighter.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { FighterStatComponent } from './roster/fighter/+directives/fighter-stat/fighter-stat.component';
 
 @NgModule({
   declarations: [
@@ -28,20 +29,23 @@ import { NewComponent } from './roster/new/new.component';
     AlertComponent,
     RosterComponent,
     FighterComponent,
-    NewComponent
+    NewFighterComponent,
+    FighterStatComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularFontAwesomeModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuardService] },
       { path: 'match', component: MatchViewerComponent, canActivate: [AuthGuardService] },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'roster', component: RosterComponent, canActivate: [AuthGuardService] },
-      { path: 'roster/fighter/new', component: NewComponent, canActivate: [AuthGuardService] },
+      { path: 'roster/fighter/new', component: NewFighterComponent, canActivate: [AuthGuardService] },
+      { path: 'roster/fighter/:id', component: FighterComponent, canActivate: [AuthGuardService] },
     ])
   ],
   providers: [
