@@ -1,9 +1,5 @@
-﻿using AutoMapper;
-using EmpoweredPixels.Controllers.Match;
+﻿using EmpoweredPixels.Controllers.Matches;
 using EmpoweredPixels.Models;
-using EmpoweredPixels.Profiles.Match;
-using Newtonsoft.Json;
-using Xunit;
 
 namespace EmpoweredPixels.Test.Controllers.Match
 {
@@ -11,15 +7,6 @@ namespace EmpoweredPixels.Test.Controllers.Match
   {
     public MatchControllerTest()
     {
-    }
-
-    [Fact]
-    public void ShouldReturnMatchDto()
-    {
-      var actual = TestUtilities.GetActionResultValue(Controller.GetTestMatch());
-      Assert.NotNull(actual);
-      Assert.NotEmpty(actual.Scores);
-      Assert.NotEmpty(actual.Ticks);
     }
   }
 }

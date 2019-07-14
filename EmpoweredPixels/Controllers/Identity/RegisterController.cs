@@ -47,7 +47,7 @@ namespace EmpoweredPixels.Controllers.Identity
     public async Task<ActionResult> Verify([FromBody] Guid value)
     {
       var verification = await Context.Verifications
-          .SingleOrDefaultAsync(o => o.Id == value);
+          .FirstOrDefaultAsync(o => o.Id == value);
 
       if (verification == null)
       {

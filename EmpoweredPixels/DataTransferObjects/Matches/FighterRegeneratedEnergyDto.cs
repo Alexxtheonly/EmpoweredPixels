@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EmpoweredPixels.DataTransferObjects.Match
+namespace EmpoweredPixels.DataTransferObjects.Matches
 {
   public class FighterRegeneratedEnergyDto : TickDto
   {

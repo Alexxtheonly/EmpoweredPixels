@@ -16,7 +16,7 @@
             </thead>
 
             <tbody>
-                <tr *ngFor="let matchScore of matchScores">
+                <tr *ngFor="let matchScore of match.scores | async">
                     <td>{{ matchScore.id }}</td>
                     <td>{{ matchScore.maxHealth }}</td>
                     <td>{{ matchScore.maxEnergy }}</td>

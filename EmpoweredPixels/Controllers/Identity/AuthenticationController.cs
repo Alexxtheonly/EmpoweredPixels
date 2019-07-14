@@ -68,7 +68,7 @@ namespace EmpoweredPixels.Controllers.Identity
       var token = await Context.Tokens
         .AsTracking()
         .Include(o => o.User)
-        .SingleOrDefaultAsync(o => o.UserId == tokenDto.UserId && o.RefreshValue == tokenDto.Refresh);
+        .FirstOrDefaultAsync(o => o.UserId == tokenDto.UserId && o.RefreshValue == tokenDto.Refresh);
 
       if (token == null)
       {

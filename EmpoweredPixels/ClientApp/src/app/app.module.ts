@@ -17,6 +17,10 @@ import { FighterComponent } from './roster/fighter/fighter.component';
 import { NewFighterComponent } from './roster/new-fighter/new-fighter.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { FighterStatComponent } from './roster/fighter/+directives/fighter-stat/fighter-stat.component';
+import { MatchCreationComponent } from './match/match-creation/match-creation.component';
+import { MatchlobbyComponent } from './match/matchlobby/matchlobby.component';
+import { MatchParticipantComponent } from './match/matchlobby/match-participant/match-participant.component';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 @NgModule({
   declarations: [
@@ -31,6 +35,10 @@ import { FighterStatComponent } from './roster/fighter/+directives/fighter-stat/
     FighterComponent,
     NewFighterComponent,
     FighterStatComponent,
+    MatchCreationComponent,
+    MatchlobbyComponent,
+    MatchParticipantComponent,
+    TimeAgoPipe,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -40,12 +48,14 @@ import { FighterStatComponent } from './roster/fighter/+directives/fighter-stat/
     AngularFontAwesomeModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuardService] },
-      { path: 'match', component: MatchViewerComponent, canActivate: [AuthGuardService] },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'roster', component: RosterComponent, canActivate: [AuthGuardService] },
       { path: 'roster/fighter/new', component: NewFighterComponent, canActivate: [AuthGuardService] },
       { path: 'roster/fighter/:id', component: FighterComponent, canActivate: [AuthGuardService] },
+      { path: 'match/create', component: MatchCreationComponent, canActivate: [AuthGuardService] },
+      { path: 'match/:id', component: MatchlobbyComponent, canActivate: [AuthGuardService] },
+      { path: 'match/:id/result', component: MatchViewerComponent, canActivate: [AuthGuardService] },
     ])
   ],
   providers: [

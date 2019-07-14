@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using EmpoweredPixels.DataTransferObjects.Match;
+using EmpoweredPixels.DataTransferObjects.Matches;
 using SharpFightingEngine.Engines;
 using SharpFightingEngine.Engines.Ticks;
 

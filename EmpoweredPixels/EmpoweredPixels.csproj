@@ -46,7 +46,6 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\app\match-viewer\" />
-    <Folder Include="Models\Match\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
