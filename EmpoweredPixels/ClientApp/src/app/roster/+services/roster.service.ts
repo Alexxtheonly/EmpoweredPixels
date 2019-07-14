@@ -18,6 +18,10 @@ export class RosterService {
     return this.http.get<Fighter>(`api/fighter/${id}`);
   }
 
+  public getFighterName(id:string ):Observable<string>{
+    return this.http.get<string>(`api/fighter/${id}/name`);
+  }
+
   public createFighter(fighter: Fighter): Observable<Fighter> {
     return this.http.put<Fighter>('api/fighter', fighter);
   }

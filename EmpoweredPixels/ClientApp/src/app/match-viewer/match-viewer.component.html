@@ -1,35 +1,35 @@
-<div class="card">
-    <div class="card-body">
-        <table class="table-borderless">
-            <thead>
-                <th>Id</th>
-                <th>Max health</th>
-                <th>Max energy</th>
-                <th>Damage done</th>
-                <th>Damage taken</th>
-                <th>Energy used</th>
-                <th>Kills</th>
-                <th>Deaths</th>
-                <th>Distance traveled</th>
-                <th>Regenerated health</th>
-                <th>Regenerated Energy</th>
-            </thead>
+<div class="container">
+    <h4 *ngIf="match">Rounds: {{ match?.Ticks.length }}</h4>
 
-            <tbody>
-                <tr *ngFor="let matchScore of match.scores | async">
-                    <td>{{ matchScore.id }}</td>
-                    <td>{{ matchScore.maxHealth }}</td>
-                    <td>{{ matchScore.maxEnergy }}</td>
-                    <td>{{ matchScore.totalDamageDone }}</td>
-                    <td>{{ matchScore.totalDamageTaken }}</td>
-                    <td>{{ matchScore.totalEnergyUsed }}</td>
-                    <td>{{ matchScore.totalKills }}</td>
-                    <td>{{ matchScore.totalDeaths }}</td>
-                    <td>{{ matchScore.totalDistanceTraveled }}</td>
-                    <td>{{ matchScore.totalRegeneratedHealth }}</td>
-                    <td>{{ matchScore.totalRegeneratedEnergy }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <th>Id</th>
+            <th>Max health</th>
+            <th>Max energy</th>
+            <th>Damage done</th>
+            <th>Damage taken</th>
+            <th>Energy used</th>
+            <th>Kills</th>
+            <th>Deaths</th>
+            <th>Distance traveled</th>
+            <th>Regenerated health</th>
+            <th>Regenerated Energy</th>
+        </thead>
+
+        <tbody *ngIf="match">
+            <tr *ngFor="let matchScore of match.Scores">
+                <td>{{ matchScore.Id }}</td>
+                <td>{{ matchScore.MaxHealth }}</td>
+                <td>{{ matchScore.MaxEnergy }}</td>
+                <td>{{ matchScore.TotalDamageDone }}</td>
+                <td>{{ matchScore.TotalDamageTaken }}</td>
+                <td>{{ matchScore.TotalEnergyUsed }}</td>
+                <td>{{ matchScore.TotalKills }}</td>
+                <td>{{ matchScore.TotalDeaths }}</td>
+                <td>{{ matchScore.TotalDistanceTraveled }}</td>
+                <td>{{ matchScore.TotalRegeneratedHealth }}</td>
+                <td>{{ matchScore.TotalRegeneratedEnergy }}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
