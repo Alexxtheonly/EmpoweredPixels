@@ -1,0 +1,58 @@
+<div class="container">
+    <h1>{{fighter.name}}</h1>
+    <h2>Powerlevel: {{ powerlevel }}</h2>
+
+    <a class="btn btn-outline-success" (click)="updateFighter()">Save</a>
+
+    <h3>Offensive</h3>
+    <div class="row">
+        <app-fighter-stat class="col col-lg-3 col-md-6 col-12" [(value)]="fighter.power" [name]="'Power'"
+            [description]="'Increases the fighters attack damage'" [(powerlevel)]="powerlevel">
+        </app-fighter-stat>
+
+        <app-fighter-stat class="col col-lg-3 col-md-6 col-12" [(value)]="fighter.accuracy" [name]="'Accuracy'"
+            [description]="'Reduces the chance of missing attacks'" [(powerlevel)]="powerlevel">
+        </app-fighter-stat>
+
+        <app-fighter-stat class="col col-lg-3 col-md-6 col-12" [(value)]="fighter.expertise" [name]="'Expertise'"
+            [description]="'Increases the chance of critical hits'" [(powerlevel)]="powerlevel">
+        </app-fighter-stat>
+    </div>
+
+    <h3>Defensive</h3>
+    <div class="row">
+        <app-fighter-stat class="col col-lg-3 col-md-6 col-12" [(value)]="fighter.agility" [name]="'Agility'"
+            [description]="'Increases the chance of avoiding enemy attacks'" [(powerlevel)]="powerlevel">
+        </app-fighter-stat>
+
+        <app-fighter-stat class="col col-lg-3 col-md-6 col-12" [(value)]="fighter.toughness" [name]="'Toughness'"
+            [description]="'Reduces the damage taken by enemy attacks'" [(powerlevel)]="powerlevel">
+        </app-fighter-stat>
+
+        <app-fighter-stat class="col col-lg-3 col-md-6 col-12" [(value)]="fighter.vitality" [name]="'Vitality'"
+            [description]="'Increases the fighters life points'" [(powerlevel)]="powerlevel">
+        </app-fighter-stat>
+    </div>
+
+    <h3>Utility</h3>
+    <div class="row">
+        <app-fighter-stat class="col col-lg-3 col-md-6 col-12" [(value)]="fighter.speed" [name]="'Speed'"
+            [description]="'Increases the distance that can be covered with each move'" [(powerlevel)]="powerlevel">
+        </app-fighter-stat>
+
+        <app-fighter-stat class="col col-lg-3 col-md-6 col-12" [(value)]="fighter.stamina" [name]="'Stamina'"
+            [description]="'Increases the fighters energy. Energy is used to perform skills.'"
+            [(powerlevel)]="powerlevel">
+        </app-fighter-stat>
+
+        <app-fighter-stat class="col col-lg-3 col-md-6 col-12" [(value)]="fighter.regeneration" [name]="'Regeneration'"
+            [description]="'Increases the fighters ability to regenerate. Regeneration restores life points every round.'"
+            [(powerlevel)]="powerlevel">
+        </app-fighter-stat>
+
+        <app-fighter-stat class="col col-lg-3 col-md-6 col-12" [(value)]="fighter.vision" [name]="'Vision'"
+            [description]="'Increases the fighters vision. The vision affects the distance the enemy can be seen at.'"
+            [(powerlevel)]="powerlevel">
+        </app-fighter-stat>
+    </div>
+</div>

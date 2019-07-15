@@ -1,9 +1,16 @@
+using AutoMapper;
+using EmpoweredPixels.Extensions;
+using EmpoweredPixels.Models;
+using EmpoweredPixels.Providers.DateTime;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace EmpoweredPixels
 {
@@ -20,6 +27,28 @@ namespace EmpoweredPixels
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+      services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+      services.AddDbContextPool<DatabaseContext>(o => o.UseInMemoryDatabase("db"));
+      services.AddAutoMapper(typeof(Startup));
+
+      services.AddAuthentication(o =>
+      {
+        o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+      }).AddJwtBearer(o =>
+      {
+        o.RequireHttpsMetadata = false;
+        o.SaveToken = true;
+        o.TokenValidationParameters = new TokenValidationParameters()
+        {
+          ValidateIssuerSigningKey = true,
+          IssuerSigningKey = new SymmetricSecurityKey(Configuration.GetSigningKey()),
+          ValidateIssuer = false,
+          ValidateAudience = false,
+        };
+      });
 
       // In production, the Angular files will be served from this directory
       services.AddSpaStaticFiles(configuration =>
@@ -40,6 +69,7 @@ namespace EmpoweredPixels
         app.UseExceptionHandler("/Error");
       }
 
+      app.UseAuthentication();
       app.UseStaticFiles();
       app.UseSpaStaticFiles();
 
