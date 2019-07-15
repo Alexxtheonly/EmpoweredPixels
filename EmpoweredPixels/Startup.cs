@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -30,7 +29,7 @@ namespace EmpoweredPixels
 
       services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
-      services.AddDbContextPool<DatabaseContext>(o => o.UseInMemoryDatabase("db"));
+      services.AddDbContextPool<DatabaseContext>(o => o.ConfigureDatabase(Configuration));
       services.AddAutoMapper(typeof(Startup));
 
       services.AddAuthentication(o =>
@@ -60,15 +59,6 @@ namespace EmpoweredPixels
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
-      if (env.IsDevelopment())
-      {
-        app.UseDeveloperExceptionPage();
-      }
-      else
-      {
-        app.UseExceptionHandler("/Error");
-      }
-
       app.UseAuthentication();
       app.UseStaticFiles();
       app.UseSpaStaticFiles();

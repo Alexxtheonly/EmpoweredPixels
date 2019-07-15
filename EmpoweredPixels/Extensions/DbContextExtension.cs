@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EmpoweredPixels.Extensions
@@ -21,6 +22,25 @@ namespace EmpoweredPixels.Extensions
         .BuildServiceProvider());
 
       return builder;
+    }
+
+    public static DbContextOptionsBuilder ConfigureSqlServerDatabase(this DbContextOptionsBuilder builder, string connectionString)
+    {
+      return builder
+         .UseSqlServer(connectionString);
+    }
+
+    public static DbContextOptionsBuilder ConfigureDatabase(this DbContextOptionsBuilder builder, IConfiguration configuration)
+    {
+      var connectionString = configuration.GetConnectionString();
+      if (string.IsNullOrEmpty(connectionString))
+      {
+        return builder.ConfigureInMemoryDatabase();
+      }
+      else
+      {
+        return builder.ConfigureSqlServerDatabase(connectionString);
+      }
     }
   }
 }
