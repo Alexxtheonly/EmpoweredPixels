@@ -10,5 +10,10 @@ namespace EmpoweredPixels.Extensions
     {
       return Encoding.UTF8.GetBytes(configuration.GetValue<string>(Constants.SigningKey));
     }
+
+    public static string GetConnectionString(this IConfiguration configuration)
+    {
+      return configuration.GetValue<string>(Constants.ConnectionString);
+    }
   }
 }
