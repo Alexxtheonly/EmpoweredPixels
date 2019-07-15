@@ -196,7 +196,7 @@ namespace EmpoweredPixels.Controllers.Matches
       var engine = new Engine(
         cfg =>
         {
-          cfg.ActionsPerRound = 2;
+          cfg.ActionsPerRound = 1;
           cfg.Battlefield = new PlainBattlefield(new Small());
           cfg.Features.Add(new FeatureRegenerateEnergy());
           cfg.Features.Add(new FeatureRegenerateHealth());

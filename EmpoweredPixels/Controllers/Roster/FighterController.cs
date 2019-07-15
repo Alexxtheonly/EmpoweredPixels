@@ -50,13 +50,13 @@ namespace EmpoweredPixels.Controllers.Roster
 
       var fighter = await Context.Fighters
         .Where(o => o.UserId == userId)
-        .SingleOrDefaultAsync();
+        .FirstOrDefaultAsync(o => o.Id == id);
       if (fighter == null)
       {
         return NotFound();
       }
 
-      return Mapper.Map<FighterDto>(fighter);
+      return Ok(Mapper.Map<FighterDto>(fighter));
     }
 
     [HttpPut]
@@ -80,16 +80,16 @@ namespace EmpoweredPixels.Controllers.Roster
         Name = name,
         UserId = userId.Value,
         Created = dateTimeProvider.Now,
-        Accuracy = 1,
-        Agility = 1,
-        Expertise = 1,
-        Power = 1,
-        Regeneration = 1,
-        Speed = 1,
-        Stamina = 1,
-        Toughness = 1,
-        Vision = 1,
-        Vitality = 1,
+        Accuracy = 15,
+        Agility = 15,
+        Expertise = 15,
+        Power = 15,
+        Regeneration = 15,
+        Speed = 15,
+        Stamina = 15,
+        Toughness = 15,
+        Vision = 15,
+        Vitality = 15,
       };
 
       // todo: set max fighters per user
