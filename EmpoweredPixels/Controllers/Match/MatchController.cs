@@ -213,7 +213,7 @@ namespace EmpoweredPixels.Controllers.Matches
       Context.MatchResults.Add(new Models.Matches.MatchResult()
       {
         MatchId = match.Id,
-        ResultJson = JsonConvert.SerializeObject(result),
+        ResultJson = JsonConvert.SerializeObject(result.AsDto()),
       });
     }
 
