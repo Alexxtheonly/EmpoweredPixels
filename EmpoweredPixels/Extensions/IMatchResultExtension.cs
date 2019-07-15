@@ -75,6 +75,19 @@ namespace EmpoweredPixels.Extensions
           RegeneratedEnergy = tick.RegeneratedEnergy,
         };
       }
+      else if (engineTick.GetType() == typeof(FighterSpawnTick))
+      {
+        var tick = (FighterSpawnTick)engineTick;
+        return new FighterSpawnTickDto()
+        {
+          FighterId = tick.Fighter.Id,
+          Health = tick.Fighter.Health,
+          Energy = tick.Fighter.Energy,
+          PositionX = tick.Fighter.X,
+          PositionY = tick.Fighter.Y,
+          PositionZ = tick.Fighter.Z,
+        };
+      }
       else
       {
         throw new ArgumentException($"No suitable dto for type {engineTick.GetType().Name} found.");
