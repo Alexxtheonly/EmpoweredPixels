@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-fighter-stat',
@@ -9,6 +9,9 @@ export class FighterStatComponent implements OnInit {
   @Input()
   public value: number;
 
+  @Output()
+  public valueChange: EventEmitter<number> = new EventEmitter();
+
   @Input()
   public name: string;
 
@@ -18,6 +21,9 @@ export class FighterStatComponent implements OnInit {
   @Input()
   public powerlevel: number;
 
+  @Output()
+  public powerlevelChange: EventEmitter<number> = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
@@ -26,6 +32,8 @@ export class FighterStatComponent implements OnInit {
   public increase() {
     this.value++;
     this.powerlevel++;
+
+    this.emitChanges();
   }
 
   public decrease() {
@@ -35,6 +43,13 @@ export class FighterStatComponent implements OnInit {
 
     this.value--;
     this.powerlevel--;
+
+    this.emitChanges();
   }
 
+  private emitChanges():void
+  {
+    this.valueChange.emit(this.value);
+    this.valueChange.emit(this.powerlevel);
+  }
 }
