@@ -1,9 +1,9 @@
-<div class="container">
+<div class="container" *ngIf="match$ | async as match">
     <h4 *ngIf="match">Rounds: {{ match?.Ticks.length }}</h4>
 
     <table class="table table-bordered table-hover">
         <thead>
-            <th>Id</th>
+            <th>Name</th>
             <th>Max health</th>
             <th>Max energy</th>
             <th>Damage done</th>
@@ -18,7 +18,7 @@
 
         <tbody *ngIf="match">
             <tr *ngFor="let matchScore of match.Scores">
-                <td>{{ getFighterName(matchScore.Id).name | async }}</td>
+                <td>{{ matchScore.Id | fightername | async}}</td>
                 <td>{{ matchScore.MaxHealth }}</td>
                 <td>{{ matchScore.MaxEnergy }}</td>
                 <td>{{ matchScore.TotalDamageDone }}</td>
