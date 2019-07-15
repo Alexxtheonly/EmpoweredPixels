@@ -8,7 +8,13 @@ export class FighterNamePipe implements PipeTransform {
 
     }
 
-    transform(value: string) {
+    async transform(value: string) {
+        const fightername = await this.rosterService.getFighterName(value).toPromise();
 
+        if (fightername == null) {
+            return '';
+        }
+
+        return fightername.name;
     }
 }

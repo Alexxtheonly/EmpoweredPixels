@@ -15,24 +15,17 @@ import { MatchResult } from './+models/match-result';
 })
 export class MatchViewerComponent implements OnInit {
 
-  public match: MatchResult;
+  public match$: Observable<MatchResult>;
 
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
     private matchService: MatchService,
     private route: ActivatedRoute,
     private rosterService: RosterService) {
-    const id: string = this.route.snapshot.paramMap.get('id');
-    this.matchService.getMatchResult(id).subscribe(result => {
-      this.match = result;
-      this.changeDetectionRef.markForCheck();
-    });
   }
 
   ngOnInit() {
-  }
-
-  public getFighterName(id: string): Observable<FighterName> {
-    return this.rosterService.getFighterName(id);
+    const id: string = this.route.snapshot.paramMap.get('id');
+    this.match$ = this.matchService.getMatchResult(id);
   }
 }
