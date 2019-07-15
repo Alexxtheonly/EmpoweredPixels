@@ -1,0 +1,35 @@
+<div class="container">
+    <h4 *ngIf="match">Rounds: {{ match?.Ticks.length }}</h4>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <th>Id</th>
+            <th>Max health</th>
+            <th>Max energy</th>
+            <th>Damage done</th>
+            <th>Damage taken</th>
+            <th>Energy used</th>
+            <th>Kills</th>
+            <th>Deaths</th>
+            <th>Distance traveled</th>
+            <th>Regenerated health</th>
+            <th>Regenerated Energy</th>
+        </thead>
+
+        <tbody *ngIf="match">
+            <tr *ngFor="let matchScore of match.Scores">
+                <td>{{ getFighterName(matchScore.Id).name | async }}</td>
+                <td>{{ matchScore.MaxHealth }}</td>
+                <td>{{ matchScore.MaxEnergy }}</td>
+                <td>{{ matchScore.TotalDamageDone }}</td>
+                <td>{{ matchScore.TotalDamageTaken }}</td>
+                <td>{{ matchScore.TotalEnergyUsed }}</td>
+                <td>{{ matchScore.TotalKills }}</td>
+                <td>{{ matchScore.TotalDeaths }}</td>
+                <td>{{ matchScore.TotalDistanceTraveled }}</td>
+                <td>{{ matchScore.TotalRegeneratedHealth }}</td>
+                <td>{{ matchScore.TotalRegeneratedEnergy }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

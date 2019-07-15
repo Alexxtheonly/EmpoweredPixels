@@ -1,0 +1,21 @@
+<div class="container">
+  <h1>Lobby</h1>
+  <hr>
+  <h2>Match: {{ match?.id }}</h2>
+  <form class="form-group" (ngsubmit)="join()">
+    <label for="fighterSelection"></label>
+    <select [(ngModel)]="fighterId" class="form-control" name="fighterSelection" id="fighterSelection" >
+      <option *ngFor="let fighter of fighters | async" value="{{ fighter.id }}">{{ fighter.name }}</option>
+    </select>
+  </form>
+  <a class="btn btn-outline-success" (click)="join()">Join match</a>
+  <a class="btn btn-outline-danger" (click)="leave()">Leave match</a>
+  <div class="card">
+    <ul>
+      <li *ngFor="let registration of match?.registrations">
+        <app-match-participant [registration]="registration"></app-match-participant>
+      </li>
+    </ul>
+    <a class="btn btn-primary" (click)="startMatch()">Start match</a>
+  </div>
+</div>
