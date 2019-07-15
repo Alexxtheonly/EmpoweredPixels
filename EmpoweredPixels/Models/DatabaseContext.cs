@@ -37,6 +37,8 @@ namespace EmpoweredPixels.Models
         e.Property(o => o.Id).ValueGeneratedOnAdd();
         e.HasIndex(o => o.Email).IsUnique();
         e.HasIndex(o => o.Name).IsUnique();
+
+        e.HasMany<Match>().WithOne(o => o.User).HasForeignKey(o => o.CreatorUserId).IsRequired(false).OnDelete(DeleteBehavior.Cascade);
       });
 
       modelBuilder.Entity<Token>(e =>
