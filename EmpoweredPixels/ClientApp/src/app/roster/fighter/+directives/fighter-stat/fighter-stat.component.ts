@@ -47,9 +47,8 @@ export class FighterStatComponent implements OnInit {
     this.emitChanges();
   }
 
-  private emitChanges():void
-  {
+  private emitChanges(): void {
     this.valueChange.emit(this.value);
-    this.valueChange.emit(this.powerlevel);
+    this.powerlevelChange.emit(this.powerlevel);
   }
 }

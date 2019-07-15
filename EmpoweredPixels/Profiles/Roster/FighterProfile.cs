@@ -10,6 +10,8 @@ namespace EmpoweredPixels.Profiles.Roster
     {
       CreateMap<Fighter, FighterDto>(MemberList.Destination);
       CreateMap<FighterDto, Fighter>(MemberList.Source);
+
+      CreateMap<Fighter, FighterNameDto>(MemberList.Destination);
     }
   }
 }

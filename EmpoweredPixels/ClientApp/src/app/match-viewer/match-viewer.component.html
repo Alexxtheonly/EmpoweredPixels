@@ -18,7 +18,7 @@
 
         <tbody *ngIf="match">
             <tr *ngFor="let matchScore of match.Scores">
-                <td>{{ matchScore.Id }}</td>
+                <td>{{ getFighterName(matchScore.Id).name | async }}</td>
                 <td>{{ matchScore.MaxHealth }}</td>
                 <td>{{ matchScore.MaxEnergy }}</td>
                 <td>{{ matchScore.TotalDamageDone }}</td>

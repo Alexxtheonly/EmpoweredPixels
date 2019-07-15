@@ -30,7 +30,8 @@ export class FighterComponent implements OnInit {
       + this.fighter.stamina
       + this.fighter.toughness
       + this.fighter.vision
-      + this.fighter.vitality;
+      + this.fighter.vitality
+      + this.fighter.accuracy;
   }
 
   public updateFighter(): void {

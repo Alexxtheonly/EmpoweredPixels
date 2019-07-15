@@ -1,3 +1,4 @@
+import { FighterName } from './../../match-viewer/+models/fighter-name';
 import { Fighter } from './../+models/fighter';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -18,8 +19,8 @@ export class RosterService {
     return this.http.get<Fighter>(`api/fighter/${id}`);
   }
 
-  public getFighterName(id:string ):Observable<string>{
-    return this.http.get<string>(`api/fighter/${id}/name`);
+  public getFighterName(id: string): Observable<FighterName> {
+    return this.http.get<FighterName>(`api/fighter/${id}/name`);
   }
 
   public createFighter(fighter: Fighter): Observable<Fighter> {

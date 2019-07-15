@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using EmpoweredPixels.DataTransferObjects.Roster;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Models;
@@ -59,6 +60,15 @@ namespace EmpoweredPixels.Controllers.Roster
       return Ok(Mapper.Map<FighterDto>(fighter));
     }
 
+    [HttpGet("{id}/name")]
+    public async Task<ActionResult<FighterNameDto>> GetFighterName(Guid id)
+    {
+      return Ok(await Context.Fighters
+        .Where(o => o.Id == id)
+        .ProjectTo<FighterNameDto>(Mapper.ConfigurationProvider)
+        .FirstOrDefaultAsync());
+    }
+
     [HttpPut]
     public async Task<ActionResult<FighterDto>> CreateFighter([FromBody] FighterDto dto)
     {
@@ -80,16 +90,16 @@ namespace EmpoweredPixels.Controllers.Roster
         Name = name,
         UserId = userId.Value,
         Created = dateTimeProvider.Now,
-        Accuracy = 15,
-        Agility = 15,
-        Expertise = 15,
-        Power = 15,
-        Regeneration = 15,
-        Speed = 15,
-        Stamina = 15,
-        Toughness = 15,
-        Vision = 15,
-        Vitality = 15,
+        Accuracy = 1,
+        Agility = 1,
+        Expertise = 1,
+        Power = 1,
+        Regeneration = 1,
+        Speed = 1,
+        Stamina = 1,
+        Toughness = 1,
+        Vision = 1,
+        Vitality = 1,
       };
 
       // todo: set max fighters per user
