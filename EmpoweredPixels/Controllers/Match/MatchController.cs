@@ -143,6 +143,7 @@ namespace EmpoweredPixels.Controllers.Matches
       }
 
       var match = await Context.Matches
+        .AsTracking()
         .Include(o => o.Registrations)
         .ThenInclude(o => o.Fighter)
         .Where(o => o.CreatorUserId == userId && o.Started == null)
@@ -176,6 +177,8 @@ namespace EmpoweredPixels.Controllers.Matches
 
     private void StartMatchInternal(Match match)
     {
+      match.Started = dateTimeProvider.Now;
+
       var fighters = match.Registrations
         .Select(o => o.Fighter)
         .Select(o => new GenericFighter()

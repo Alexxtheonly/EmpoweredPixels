@@ -38,12 +38,15 @@ namespace EmpoweredPixels.Controllers.Identity
     {
       // allow login with name and email
       var user = await Context.Users
+        .AsTracking()
         .SingleOrDefaultAsync(o => o.Name == login.User || o.Email == login.User);
 
       if (user == null || !user.IsValidPassword(login.Password))
       {
         return BadRequest();
       }
+
+      user.LastLogin = dateTimeProvider.Now;
 
       var token = await Context.Tokens
         .AsTracking()
