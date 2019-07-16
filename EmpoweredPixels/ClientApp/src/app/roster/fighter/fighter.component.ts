@@ -41,4 +41,19 @@ export class FighterComponent implements OnInit {
     }, error => console.error(error));
   }
 
+  public resetFighter(): void {
+    this.fighter.agility = 1;
+    this.fighter.expertise = 1;
+    this.fighter.power = 1;
+    this.fighter.regeneration = 1;
+    this.fighter.speed = 1;
+    this.fighter.stamina = 1;
+    this.fighter.toughness = 1;
+    this.fighter.vision = 1;
+    this.fighter.vitality = 1;
+    this.fighter.accuracy = 1;
+
+    this.powerlevel = this.getPowerlevel();
+  }
+
 }

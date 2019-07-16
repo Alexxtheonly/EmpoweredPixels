@@ -29,20 +29,20 @@ export class FighterStatComponent implements OnInit {
   ngOnInit() {
   }
 
-  public increase() {
-    this.value++;
-    this.powerlevel++;
+  public increase(value: number) {
+    this.value += value;
+    this.powerlevel += value;
 
     this.emitChanges();
   }
 
-  public decrease() {
-    if (this.value <= 1) {
+  public decrease(value: number) {
+    if ((this.value - value) < 1) {
       return;
     }
 
-    this.value--;
-    this.powerlevel--;
+    this.value -= value;
+    this.powerlevel -= value;
 
     this.emitChanges();
   }
