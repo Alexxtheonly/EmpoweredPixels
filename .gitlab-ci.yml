@@ -1,6 +1,6 @@
 variables:
- - DOCKER_INTERNAL="registry.dylf.de/empoweredpixels/internal"
- - DOCKER_EXTERNAL="registry.dylf.de/empoweredpixels"
+ DOCKER_INTERNAL: "registry.dylf.de/empoweredpixels/internal"
+ DOCKER_EXTERNAL: "registry.dylf.de/empoweredpixels"
 
 stages:
   - Test_Unit
