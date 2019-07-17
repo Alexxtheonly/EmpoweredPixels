@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <CodeAnalysisRuleSet>./../stylecop/ruleset.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)' == 'Debug'">./../stylecop/ruleset.ruleset</CodeAnalysisRuleSet>
 
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
@@ -27,7 +27,7 @@
     <PackageReference Include="SharpFightingEngine.Fighters" Version="0.2.0" />
     <PackageReference Include="SharpFightingEngine.Items" Version="0.2.0" />
     <PackageReference Include="SharpFightingEngine.Skills" Version="0.2.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" Condition="'$(Configuration)' == 'Debug'">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -46,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="./../stylecop/stylecop.json"></AdditionalFiles>
+    <AdditionalFiles Include="./../stylecop/stylecop.json" Condition="'$(Configuration)' == 'Debug'"></AdditionalFiles>
   </ItemGroup>
 
   <ItemGroup>
@@ -65,7 +65,7 @@
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install --quiet" />
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
 

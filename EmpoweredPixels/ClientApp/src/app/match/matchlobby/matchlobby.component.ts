@@ -15,9 +15,9 @@ import { stringify } from '@angular/core/src/util';
   styleUrls: ['./matchlobby.component.css']
 })
 export class MatchlobbyComponent implements OnInit {
-  private match: Match;
-  private fighters: Observable<Fighter[]>;
-  private fighterId: string;
+  public match: Match;
+  public fighters: Observable<Fighter[]>;
+  public fighterId: string;
 
   constructor(
     private matchService: MatchService,
@@ -50,6 +50,9 @@ export class MatchlobbyComponent implements OnInit {
     this.matchService.joinMatch(registration).subscribe(result => {
       this.loadMatch();
     });
+  }
+
+  public leave(): void {
   }
 
   public startMatch(): void {
