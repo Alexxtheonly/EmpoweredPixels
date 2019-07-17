@@ -1,0 +1,59 @@
+variables:
+ - DOCKER_INTERNAL="registry.dylf.de/empoweredpixels/internal"
+ - DOCKER_EXTERNAL="registry.dylf.de/empoweredpixels"
+
+stages:
+  - Test_Unit
+  - Docker_Internal
+  - Test_Integration
+  - Docker_External
+
+before_script:
+  - export REVISION=$(git describe --tags --abbrev=0)
+  - export DOCKER_IMAGE=$DOCKER_INTERNAL:$CI_COMMIT_REF_NAME-$REVISION
+  - export DOCKER_RELEASE=$DOCKER_EXTERNAL:$REVISION
+
+build:
+ stage: Test_Unit
+ image: mjibrandl/dotnetcore-angular:latest
+ script: 
+   - dotnet restore
+   - dotnet test 
+
+push-docker-internal:
+ stage: Docker_Internal
+ image: docker:git
+ services:
+  - name: docker:dind
+    alias: dind
+ script:
+   - docker build -f ./EmpoweredPixels/Dockerfile -t $DOCKER_IMAGE .
+   - docker push $DOCKER_INTERNAL
+
+test-docker-container:
+ stage: Test_Integration
+ image: alexxtheonly/dockergitcurl
+ services:
+  - name: docker:dind
+    alias: dind
+ script:
+  - docker network create -d bridge testnetwork
+  - docker run --rm -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=7HKWvzeakjWekpp7k44hIX2' -p 1433:1433 --network=testnetwork --name mssql -d microsoft/mssql-server-linux:2017-latest
+  - docker run --rm -d -e connectionString='Server=mssql;Initial Catalog=TestDb;User ID=sa;Password=7HKWvzeakjWekpp7k44hIX2' -p 4500:80 --network=testnetwork --name test_container $DOCKER_INTERNAL
+  - sleep 40
+  - docker logs test_container
+  - docker stop test_container
+  - docker stop mssql
+
+push-docker-external:
+ stage: Docker_External
+ image: docker:git
+ services:
+  - name: docker:dind
+    alias: dind
+ script:
+   - docker pull $DOCKER_IMAGE
+   - docker tag $DOCKER_IMAGE $DOCKER_RELEASE
+   - docker push $DOCKER_RELEASE
+ only:
+  - tags
