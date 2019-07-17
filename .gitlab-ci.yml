@@ -15,7 +15,7 @@ before_script:
 
 build:
  stage: Test_Unit
- image: mcr.microsoft.com/dotnet/core/sdk:2.2.300-alpine3.9
+ image: mjibrandl/dotnetcore-angular:latest
  script: 
    - dotnet restore
    - dotnet test 
