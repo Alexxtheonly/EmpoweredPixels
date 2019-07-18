@@ -27,7 +27,8 @@ push-docker-internal:
   - name: docker:dind
     alias: dind
  script:
-   - docker build -f ./EmpoweredPixels/Dockerfile -t $DOCKER_IMAGE .
+   - cd ./EmpoweredPixels
+   - docker build -t $DOCKER_IMAGE .
    - docker push $DOCKER_INTERNAL
 
 test-docker-container:
