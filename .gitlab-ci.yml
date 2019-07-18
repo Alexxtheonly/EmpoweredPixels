@@ -29,7 +29,7 @@ push-docker-internal:
  script:
    - cd ./EmpoweredPixels
    - docker build -t $DOCKER_IMAGE .
-   - docker push $DOCKER_INTERNAL
+   - docker push $DOCKER_IMAGE
 
 test-docker-container:
  stage: Test_Integration
@@ -40,7 +40,7 @@ test-docker-container:
  script:
   - docker network create -d bridge testnetwork
   - docker run --rm -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=7HKWvzeakjWekpp7k44hIX2' -p 1433:1433 --network=testnetwork --name mssql-test -d microsoft/mssql-server-linux:2017-latest
-  - docker run --rm -d -e connectionString='Server=mssql-test;Initial Catalog=TestDb;User ID=sa;Password=7HKWvzeakjWekpp7k44hIX2' -p 4500:80 --network=testnetwork --name test_container $DOCKER_INTERNAL
+  - docker run --rm -d -e connectionString='Server=mssql-test;Initial Catalog=TestDb;User ID=sa;Password=7HKWvzeakjWekpp7k44hIX2' -p 4500:80 --network=testnetwork --name test_container $DOCKER_IMAGE
   - sleep 40
   - docker logs test_container
   - docker stop test_container
