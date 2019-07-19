@@ -16,7 +16,10 @@ namespace EmpoweredPixels.Extensions
         var services = scope.ServiceProvider;
         var context = services.GetRequiredService<DatabaseContext>();
 
-        context.Database.Migrate();
+        if (context.Database.IsSqlServer())
+        {
+          context.Database.Migrate();
+        }
       }
 
       return webHost;

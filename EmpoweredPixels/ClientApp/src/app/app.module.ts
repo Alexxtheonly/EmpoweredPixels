@@ -1,3 +1,4 @@
+import { FooterComponent } from './footer/footer.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -40,7 +41,8 @@ import { FighterNamePipe } from './match-viewer/+pipes/fighter-name-pipe';
     MatchlobbyComponent,
     MatchParticipantComponent,
     TimeAgoPipe,
-    FighterNamePipe
+    FighterNamePipe,
+    FooterComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

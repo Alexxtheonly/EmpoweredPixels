@@ -2,6 +2,7 @@ using AutoMapper;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Providers.DateTime;
+using EmpoweredPixels.Providers.Version;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,7 @@ namespace EmpoweredPixels
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
       services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+      services.AddSingleton<IVersionProvider, VersionProvider>();
 
       services.AddDbContextPool<DatabaseContext>(o => o.ConfigureDatabase(Configuration));
       services.AddAutoMapper(typeof(Startup));
