@@ -6,8 +6,6 @@ import { MatchService } from './../+services/match.service';
 import { Match } from './../+models/match';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { stringify } from '@angular/core/src/util';
 
 @Component({
   selector: 'app-matchlobby',
