@@ -8,7 +8,8 @@ namespace EmpoweredPixels.Profiles.Matches
   {
     public MatchProfile()
     {
-      CreateMap<Match, MatchDto>();
+      CreateMap<Match, MatchDto>()
+        .ForMember(o => o.Ended, opt => opt.MapFrom(o => o.Started != null));
 
       CreateMap<MatchRegistration, MatchRegistrationDto>()
         .ForMember(o => o.FighterName, opt => opt.MapFrom(o => o.Fighter.Name))

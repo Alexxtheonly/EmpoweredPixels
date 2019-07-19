@@ -33,6 +33,10 @@ export class MatchlobbyComponent implements OnInit {
     const id: string = this.route.snapshot.paramMap.get('id');
     this.matchService.getMatch(id).subscribe(result => {
       this.match = result;
+
+      if (result.ended) {
+        this.navigateToResult();
+      }
     }, error => console.error(error));
   }
 
@@ -52,7 +56,11 @@ export class MatchlobbyComponent implements OnInit {
 
   public startMatch(): void {
     this.matchService.startMatch(this.match).subscribe(result => {
-      this.router.navigate([`match/${this.match.id}/result`]);
+      this.navigateToResult();
     });
+  }
+
+  private navigateToResult() {
+    this.router.navigate([`match/${this.match.id}/result`]);
   }
 }
