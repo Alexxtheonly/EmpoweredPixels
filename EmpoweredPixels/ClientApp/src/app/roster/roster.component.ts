@@ -9,7 +9,7 @@ import { observable, Observable } from 'rxjs';
   styleUrls: ['./roster.component.css']
 })
 export class RosterComponent implements OnInit {
-  private fighters: Fighter[] = new Array();
+  public fighters: Fighter[] = new Array();
 
   constructor(private rosterService: RosterService) { }
 

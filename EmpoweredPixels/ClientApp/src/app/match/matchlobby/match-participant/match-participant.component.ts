@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class MatchParticipantComponent implements OnInit {
   @Input()
-  private registration: MatchRegistration;
+  public registration: MatchRegistration;
 
   constructor() { }
 
