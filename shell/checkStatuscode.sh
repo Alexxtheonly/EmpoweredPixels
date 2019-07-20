@@ -6,7 +6,7 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-result=$(curl -o - -s -w "%{http_code}\n" "$1")
+result=$(curl -i -X GET "$1")
 
 if [ "$result" = 200 ]; then
 	echo "Ok."
