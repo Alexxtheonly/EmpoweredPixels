@@ -4,10 +4,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EmpoweredPixels.DataTransferObjects.Matches;
 using EmpoweredPixels.Extensions;
+using EmpoweredPixels.Hubs.Matches;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Matches;
 using EmpoweredPixels.Providers.DateTime;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -25,11 +27,18 @@ namespace EmpoweredPixels.Controllers.Matches
   public class MatchController : ControllerBase<DatabaseContext, MatchController>
   {
     private readonly IDateTimeProvider dateTimeProvider;
+    private readonly IHubContext<MatchHub, IMatchClient> matchHubContext;
 
-    public MatchController(DatabaseContext context, ILogger<MatchController> logger, IMapper mapper, IDateTimeProvider dateTimeProvider)
+    public MatchController(
+      DatabaseContext context,
+      ILogger<MatchController> logger,
+      IMapper mapper,
+      IDateTimeProvider dateTimeProvider,
+      IHubContext<MatchHub, IMatchClient> matchHubContext)
       : base(context, logger, mapper)
     {
       this.dateTimeProvider = dateTimeProvider;
+      this.matchHubContext = matchHubContext;
     }
 
     [HttpPut]
@@ -95,6 +104,8 @@ namespace EmpoweredPixels.Controllers.Matches
       Context.MatchRegistrations.Add(registration);
       await Context.SaveChangesAsync();
 
+      await PushMatchUpdate(match.Id);
+
       return Ok();
     }
 
@@ -130,6 +141,8 @@ namespace EmpoweredPixels.Controllers.Matches
       Context.MatchRegistrations.Remove(registration);
       await Context.SaveChangesAsync();
 
+      await PushMatchUpdate(match.Id);
+
       return Ok();
     }
 
@@ -158,6 +171,8 @@ namespace EmpoweredPixels.Controllers.Matches
 
       await Context.SaveChangesAsync();
 
+      await PushMatchUpdate(match.Id);
+
       return Ok();
     }
 
@@ -173,6 +188,17 @@ namespace EmpoweredPixels.Controllers.Matches
       }
 
       return Content(matchResult.ResultJson);
+    }
+
+    private async Task PushMatchUpdate(Guid id)
+    {
+      var match = await Context.Matches
+        .Include(o => o.Registrations)
+        .ThenInclude(o => o.Fighter)
+        .ThenInclude(o => o.User)
+        .FirstOrDefaultAsync(o => o.Id == id);
+
+      await matchHubContext.Clients.Group(id.ToString()).UpdateMatch(Mapper.Map<MatchDto>(match));
     }
 
     private void StartMatchInternal(Match match)
