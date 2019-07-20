@@ -1,5 +1,6 @@
 using AutoMapper;
 using EmpoweredPixels.Extensions;
+using EmpoweredPixels.Hubs.Matches;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Providers.DateTime;
 using EmpoweredPixels.Providers.Version;
@@ -33,6 +34,8 @@ namespace EmpoweredPixels
 
       services.AddDbContextPool<DatabaseContext>(o => o.ConfigureDatabase(Configuration));
       services.AddAutoMapper(typeof(Startup));
+
+      services.AddSignalR();
 
       services.AddAuthentication(o =>
       {
@@ -70,6 +73,11 @@ namespace EmpoweredPixels
         routes.MapRoute(
                   name: "default",
                   template: "{controller}/{action=Index}/{id?}");
+      });
+
+      app.UseSignalR(configure =>
+      {
+        configure.MapHub<MatchHub>("/hub/match");
       });
 
       app.UseSpa(spa =>
