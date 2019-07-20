@@ -40,9 +40,11 @@ test-docker-container:
  script:
   - docker network create -d bridge testnetwork
   - docker run --rm -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=7HKWvzeakjWekpp7k44hIX2' -p 1433:1433 --network=testnetwork --name mssql-test -d microsoft/mssql-server-linux:2017-latest
-  - docker run --rm -d -e connectionString='Server=mssql-test;Initial Catalog=TestDb;User ID=sa;Password=7HKWvzeakjWekpp7k44hIX2' -p 4500:80 --network=testnetwork --name test_container $DOCKER_IMAGE
+  - docker run --rm -d -e signingKey='9w88g5c1h44s43rqj' -e connectionString='Server=mssql-test;Initial Catalog=TestDb;User ID=sa;Password=7HKWvzeakjWekpp7k44hIX2' -p 4500:80 --network=testnetwork --name test_container $DOCKER_IMAGE
   - sleep 40
   - docker logs test_container
+  - chmod +x ./shell/checkStatuscode.sh
+  - ./shell/checkStatuscode.sh http://dind:4500$CONTAINER_HEALTH_PATH
   - docker stop test_container
   - docker stop mssql-test
 
