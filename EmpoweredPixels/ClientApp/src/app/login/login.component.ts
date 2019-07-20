@@ -12,9 +12,9 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  private loginForm: FormGroup;
-  private loading = false;
-  private submitted = false;
+  public loginForm: FormGroup;
+  public loading = false;
+  public submitted = false;
 
   constructor(
     private auth: AuthService,
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   get f() { return this.loginForm.controls; }
 
-  private submit(): void {
+  public submit(): void {
     this.submitted = true;
 
     // stop here if form is invalid
