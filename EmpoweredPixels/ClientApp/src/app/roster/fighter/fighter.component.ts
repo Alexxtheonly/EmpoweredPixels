@@ -1,3 +1,4 @@
+import { AlertService } from 'src/app/+services/alert.service';
 import { RosterService } from './../+services/roster.service';
 import { Fighter } from './../+models/fighter';
 import { Component, OnInit } from '@angular/core';
@@ -11,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class FighterComponent implements OnInit {
   public fighter: Fighter;
   public powerlevel: number;
-  constructor(private route: ActivatedRoute, private rosterService: RosterService) { }
+  constructor(private route: ActivatedRoute, private rosterService: RosterService, private alertService: AlertService) { }
 
   ngOnInit() {
     const id: string = this.route.snapshot.paramMap.get('id');
@@ -38,7 +39,11 @@ export class FighterComponent implements OnInit {
     this.rosterService.updateFighter(this.fighter).subscribe(result => {
       this.fighter = result;
       this.powerlevel = this.getPowerlevel();
-    }, error => console.error(error));
+      this.alertService.success('Fighter attributes successfully saved');
+    }, error => {
+      console.error(error);
+      this.alertService.error('Error while saving');
+    });
   }
 
   public resetFighter(): void {
