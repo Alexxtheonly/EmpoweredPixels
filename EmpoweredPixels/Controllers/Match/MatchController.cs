@@ -20,6 +20,7 @@ using SharpFightingEngine.Engines.FighterPositionGenerators;
 using SharpFightingEngine.Engines.MoveOrders;
 using SharpFightingEngine.Features;
 using SharpFightingEngine.Fighters;
+using SharpFightingEngine.StaleConditions;
 using SharpFightingEngine.WinConditions;
 
 namespace EmpoweredPixels.Controllers.Matches
@@ -232,6 +233,7 @@ namespace EmpoweredPixels.Controllers.Matches
           cfg.MoveOrder = new AllRandomMoveOrder();
           cfg.PositionGenerator = new AllRandomPositionGenerator();
           cfg.WinCondition = new LastManStandingWinCondition();
+          cfg.StaleCondition = new NoWinnerCanBeDeterminedStaleCondition();
 
           return cfg;
         }, fighters);
