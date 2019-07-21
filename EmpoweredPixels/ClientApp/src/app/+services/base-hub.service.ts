@@ -2,9 +2,6 @@ import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
 export abstract class BaseHubService {
   protected hubConnection: HubConnection;
   protected connectionEstablished$ = new BehaviorSubject<boolean>(false);
