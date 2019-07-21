@@ -28,7 +28,7 @@
     <PackageReference Include="SharpFightingEngine.Fighters" Version="0.3.0" />
     <PackageReference Include="SharpFightingEngine.Items" Version="0.3.0" />
     <PackageReference Include="SharpFightingEngine.Skills" Version="0.3.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118"  Condition="'$(Configuration)' == 'Debug'">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
