@@ -1,4 +1,4 @@
-import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+import { HubConnection, HubConnectionBuilder, HubConnectionState } from '@aspnet/signalr';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -13,7 +13,12 @@ export abstract class BaseHubService {
   }
 
   public async connect(): Promise<void> {
-    await this.hubConnection.start().catch(error => console.error(error));
+    if (this.hubConnection.state === HubConnectionState.Disconnected) {
+      await this.hubConnection
+        .start()
+        .then(() => console.log('hub connection established'))
+        .catch(error => console.error(error));
+    }
     this.connectionEstablished$.next(true);
     this.register();
   }
@@ -21,7 +26,11 @@ export abstract class BaseHubService {
   public async disconnect(): Promise<void> {
     this.unregister();
     this.connectionEstablished$.next(false);
-    await this.hubConnection.stop().catch(error => console.error(error));
+    if (this.hubConnection.state === HubConnectionState.Connected) {
+      await this.hubConnection.stop()
+        .then(() => console.log('hub connection closed'))
+        .catch(error => console.error(error));
+    }
   }
 
   protected abstract register(): void;
