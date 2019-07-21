@@ -39,7 +39,6 @@ export class MatchlobbyComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.matchHubService.leaveGroup(this.match);
-    this.matchHubService.disconnect();
   }
 
   private loadMatch() {
