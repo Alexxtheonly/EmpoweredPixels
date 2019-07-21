@@ -14,11 +14,27 @@ export class MatchHubService extends BaseHubService {
   }
 
   public joinGroup(match: Match): Promise<any> {
-    return this.hubConnection.invoke('JoinGroup', match.id);
+    if (this.IsConnected()) {
+      return this.hubConnection.invoke('JoinGroup', match.id);
+    } else {
+      this.connectionEstablished$.subscribe(result => {
+        if (result) {
+          return this.hubConnection.invoke('JoinGroup', match.id);
+        }
+      });
+    }
   }
 
   public leaveGroup(match: Match): Promise<any> {
-    return this.hubConnection.invoke('LeaveGroup', match.id);
+    if (this.IsConnected) {
+      return this.hubConnection.invoke('LeaveGroup', match.id);
+    } else {
+      this.connectionEstablished$.subscribe(result => {
+        if (result) {
+          return this.hubConnection.invoke('LeaveGroup', match.id);
+        }
+      });
+    }
   }
 
   protected register(): void {
