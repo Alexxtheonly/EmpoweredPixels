@@ -33,6 +33,10 @@ export abstract class BaseHubService {
     }
   }
 
+  protected IsConnected(): boolean {
+    return this.hubConnection.state === HubConnectionState.Connected;
+  }
+
   protected abstract register(): void;
 
   protected abstract unregister(): void;
