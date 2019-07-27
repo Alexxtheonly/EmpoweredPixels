@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -43,12 +44,28 @@ namespace EmpoweredPixels.Controllers.Matches
     }
 
     [HttpPut]
-    public async Task<ActionResult<MatchDto>> CreateNewMatch()
+    public async Task<ActionResult<MatchOptionsDto>> CreateNewMatch()
     {
       var userId = User.Claims.GetUserId();
       if (userId == null)
       {
         return Forbid();
+      }
+
+      var options = new MatchOptionsDto()
+      {
+        ActionsPerRound = 2,
+        Bounds = new Medium().Id,
+        Battlefield = new PlainBattlefield(new Medium()).Id,
+        Features = new List<Guid>()
+        {
+          new FeatureRegenerateEnergy().Id,
+          new FeatureRegenerateHealth().Id,
+        },
+        MoveOrder = new AllRandomMoveOrder().Id,
+        PositionGenerator = new AllRandomPositionGenerator().Id,
+        WinCondition = new NoWinnerCanBeDeterminedStaleCondition().Id,
+
       }
 
       var match = new Match()
