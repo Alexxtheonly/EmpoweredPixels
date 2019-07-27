@@ -8,6 +8,12 @@
 
             <div class="arena-view">
 
+                <div class="fighter" *ngFor="let fighter of fighters" [style.top.px]="fighter.currentX"
+                    [style.left.px]="fighter.currentY">
+                    <div class="dot"></div>
+                    {{fighter.fighterId | fightername | async }}
+                </div>
+
             </div>
 
             <hr>
@@ -17,6 +23,13 @@
                     >>
             </button> <button class="nes-btn is-primary" (click)="showAllRounds()">Direkt anzeigen</button>
             <div #consolePanel class="console-view nes-container is-rounded is-dark">
+
+                <!--Spawn-->
+                <div>
+
+                </div>
+
+                <!--Console-->
                 <div *ngFor="let round of roundsConsole; let i = index">
                     Runde : {{round.Round}}
 
@@ -25,6 +38,7 @@
                         -
 
                         <span *ngIf="tick.NextX;else attack">
+                            {{setPositionOfFighter(tick)}}
                             gehe zu (X,Y) : {{tick.NextX}}, {{tick.NextY}}
                         </span>
 

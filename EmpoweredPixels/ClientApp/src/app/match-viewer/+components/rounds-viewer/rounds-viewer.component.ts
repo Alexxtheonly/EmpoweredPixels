@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { RoundTick } from '../../+models/round-tick';
+import { FighterMove } from '../../+models/fighter-move';
 
 @Component({
   selector: 'app-rounds-viewer',
@@ -15,13 +16,26 @@ export class RoundsViewerComponent implements OnInit
   public isReplayMatchResult: boolean;
 
   @Input()
+  set matchScores(scores: any[])
+  {
+    scores.forEach(o =>
+    {
+      const fighter = new FighterMove();
+      fighter.fighterId = o.Id;
+      this.fighters.push(fighter);
+    });
+  }
+
+  @Input()
   ticks: RoundTick[];
 
   public currentTick: number;
 
   public roundsConsole: RoundTick[] = new Array();
+  public fighters: FighterMove[] = new Array();
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit()
   {
@@ -29,7 +43,7 @@ export class RoundsViewerComponent implements OnInit
 
   public replayMatchResult(): void
   {
-    this.currentTick = 1;
+    this.currentTick = 0;
     this.roundsConsole = [];
     this.roundsConsole.push(this.ticks[this.currentTick]);
     this.isReplayMatchResult = true;
@@ -59,6 +73,19 @@ export class RoundsViewerComponent implements OnInit
   public showAllRounds(): void
   {
     this.roundsConsole = JSON.parse(JSON.stringify(this.ticks));
+  }
+
+  public setPositionOfFighter(tick: any): void
+  {
+    const fighter = this.fighters.find(o => o.fighterId == tick.FighterId);
+
+    if (fighter == null)
+    {
+      return;
+    }
+
+    fighter.currentX = tick.CurrentX;
+    fighter.currentY = tick.CurrentY;
   }
 
 }
