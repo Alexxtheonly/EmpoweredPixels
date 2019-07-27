@@ -23,6 +23,7 @@ import { MatchlobbyComponent } from './match/matchlobby/matchlobby.component';
 import { MatchParticipantComponent } from './match/matchlobby/match-participant/match-participant.component';
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { FighterNamePipe } from './match-viewer/+pipes/fighter-name-pipe';
+import { RoundsViewerComponent } from './match-viewer/+components/rounds-viewer/rounds-viewer.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { FighterNamePipe } from './match-viewer/+pipes/fighter-name-pipe';
     TimeAgoPipe,
     FighterNamePipe,
     FooterComponent,
+    RoundsViewerComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

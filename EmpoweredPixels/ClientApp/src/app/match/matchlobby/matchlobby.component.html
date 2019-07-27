@@ -2,20 +2,27 @@
   <h1>Lobby</h1>
   <hr>
   <h2>Match: {{ match?.id }}</h2>
-  <form class="form-group" (ngsubmit)="join()">
-    <label for="fighterSelection"></label>
-    <select [(ngModel)]="fighterId" class="form-control" name="fighterSelection" id="fighterSelection" >
+
+  <label for="fighterSelection">Kämpfer</label>
+  <div class=" nes-select" (ngsubmit)="join()">
+    <select [(ngModel)]="fighterId" name="fighterSelection" id="fighterSelection">
       <option *ngFor="let fighter of fighters | async" value="{{ fighter.id }}">{{ fighter.name }}</option>
     </select>
-  </form>
-  <a class="btn btn-outline-success" (click)="join()">Join match</a>
-  <a class="btn btn-outline-danger" (click)="leave()">Leave match</a>
-  <div class="card">
+  </div>
+  <button class="nes-btn is-success" (click)="join()">Join match</button>
+  <button class="nes-btn is-error" (click)="leave()">Leave match</button>
+
+
+  <div class="nes-container with-title " style="margin-top: 50px">
+    <p class="title">Kämpfer in Lobby</p>
+
     <ul>
       <li *ngFor="let registration of match?.registrations">
         <app-match-participant [registration]="registration"></app-match-participant>
       </li>
     </ul>
-    <a class="btn btn-primary" (click)="startMatch()">Start match</a>
+
   </div>
+  <hr>
+  <button class="nes-btn is-primary" style="width: 100%;" (click)="startMatch()">Start match</button>
 </div>

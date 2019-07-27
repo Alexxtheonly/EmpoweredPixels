@@ -1,7 +1,7 @@
 <div class="container" *ngIf="match$ | async as match">
     <h4 *ngIf="match">Rounds: {{ match?.Ticks.length }}</h4>
 
-    <table class="table table-bordered table-hover">
+    <table class=" nes-table is-bordered">
         <thead>
             <th>Name</th>
             <th>Max health</th>
@@ -32,4 +32,7 @@
             </tr>
         </tbody>
     </table>
+
+    <app-rounds-viewer [ticks]="match.Ticks"></app-rounds-viewer>
+
 </div>

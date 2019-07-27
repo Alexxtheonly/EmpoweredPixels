@@ -1,0 +1,56 @@
+<ng-container *ngIf="ticks">
+
+    <button class="nes-btn is-primary" (click)="replayMatchResult()">Match Verlauf anzeigen</button>
+
+    <ng-container *ngIf="isReplayMatchResult">
+
+        <div>
+
+            <div class="arena-view">
+
+            </div>
+
+            <hr>
+
+            <button class="nes-btn is-primary" (click)="backward()">
+                << </button> <button class="nes-btn is-primary" (click)="forward()">
+                    >>
+            </button> <button class="nes-btn is-primary" (click)="showAllRounds()">Direkt anzeigen</button>
+            <div #consolePanel class="console-view nes-container is-rounded is-dark">
+                <div *ngFor="let round of roundsConsole; let i = index">
+                    Runde : {{round.Round}}
+
+                    <div *ngFor="let tick of round.Ticks">
+                        {{tick.FighterId | fightername | async}}
+                        -
+
+                        <span *ngIf="tick.NextX;else attack">
+                            gehe zu (X,Y) : {{tick.NextX}}, {{tick.NextY}}
+                        </span>
+
+                        <span #attack *ngIf="tick.TargetId; else energyReg">
+                            <img src="assets/sword.png" width="12px" /> Angriff auf
+                            {{tick.TargetId | fightername | async}}
+                            <span>, Schaden : {{tick.Damage}}</span>
+                        </span>
+
+                        <span #energyReg *ngIf="tick.RegeneratedEnergy; else healthReg">
+                            Energy Regenerierung {{ tick.RegeneratedEnergy}}
+                        </span>
+
+                        <span #healthReg *ngIf="tick.HealthPointsRegenerated; else healthReg">
+                            Leben Regenerierung {{ tick.HealthPointsRegenerated}}
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </ng-container>
+
+
+</ng-container>
