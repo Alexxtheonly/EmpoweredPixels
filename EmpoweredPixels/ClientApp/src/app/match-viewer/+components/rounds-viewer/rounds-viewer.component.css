@@ -1,0 +1,27 @@
+.console-view {
+  padding: 10px;
+  margin: 20px 0px;
+  font-size: 12px;
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.arena-view {
+  height: 100px;
+  width: 100px;
+  background: #a26a00;
+  position: relative;
+}
+
+button {
+  padding: 0px;
+  height: 32px;
+  line-height: 10px;
+}
+
+.fighter {
+  width: 1px;
+  height: 1px;
+  background: yellow;
+  position: absolute;
+}
