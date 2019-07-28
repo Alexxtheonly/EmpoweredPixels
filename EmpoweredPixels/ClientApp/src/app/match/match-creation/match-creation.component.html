@@ -1,3 +1,65 @@
-<p>
-  match-creation works!
-</p>
+<div class="container">
+  <div class="row">
+    <button type="button" class="btn btn-outline-primary" (click)="createMatch()">Create match</button>
+  </div>
+
+  <h1>Options</h1>
+
+  <div class="row">
+    <div class="card col col-12">
+      <div class="card-header">
+        <h4>General</h4>
+      </div>
+
+      <div class="card-body">
+        <div class="col col-3">
+          <label>Max powerlevel</label>
+          <input type="number" [(ngModel)]="matchOptions.maxPowerlevel">
+        </div>
+
+        <div class="col col-3">
+          <label>Actions per round</label>
+          <input type="number" [(ngModel)]="matchOptions.actionsPerRound">
+        </div>
+
+        <div class="col col-3">
+          <label>Max fighters per user</label>
+          <input type="number" [(ngModel)]="matchOptions.maxFightersPerUser">
+        </div>
+      </div>
+    </div>
+
+    <div class="card col col-12">
+      <div class="card-header">
+        <h4>Bots</h4>
+      </div>
+
+      <div class="card-body">
+        <div class="col col-2">
+          <label>Count</label>
+          <input type="number" [(ngModel)]="matchOptions.botCount">
+        </div>
+
+        <div class="col col-3">
+          <label>Powerlevel</label>
+          <input type="number" [(ngModel)]="matchOptions.botPowerlevel">
+        </div>
+      </div>
+    </div>
+
+    <div class="card col col-12">
+      <div class="card-header">
+        <h4>Battlefield</h4>
+      </div>
+
+      <div class="card-body">
+        <div class="col col-3">
+          <label>Size</label>
+          <select [(ngModel)]="matchOptions.bounds">
+            <option *ngFor="let size of sizes | async" [ngValue]="size">{{ size  | translate }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
