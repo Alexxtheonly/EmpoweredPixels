@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EmpoweredPixels.DataTransferObjects.Matches;
 using EmpoweredPixels.Extensions;
+using EmpoweredPixels.Factories.Matches;
 using EmpoweredPixels.Hubs.Matches;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Matches;
@@ -14,15 +15,8 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using SharpFightingEngine.Battlefields.Bounds;
-using SharpFightingEngine.Battlefields.Plain;
 using SharpFightingEngine.Engines;
-using SharpFightingEngine.Engines.FighterPositionGenerators;
-using SharpFightingEngine.Engines.MoveOrders;
-using SharpFightingEngine.Features;
 using SharpFightingEngine.Fighters;
-using SharpFightingEngine.StaleConditions;
-using SharpFightingEngine.WinConditions;
 
 namespace EmpoweredPixels.Controllers.Matches
 {
@@ -30,21 +24,24 @@ namespace EmpoweredPixels.Controllers.Matches
   {
     private readonly IDateTimeProvider dateTimeProvider;
     private readonly IHubContext<MatchHub, IMatchClient> matchHubContext;
+    private readonly IEngineFactory engineFactory;
 
     public MatchController(
       DatabaseContext context,
       ILogger<MatchController> logger,
       IMapper mapper,
       IDateTimeProvider dateTimeProvider,
-      IHubContext<MatchHub, IMatchClient> matchHubContext)
+      IHubContext<MatchHub, IMatchClient> matchHubContext,
+      IEngineFactory engineFactory)
       : base(context, logger, mapper)
     {
       this.dateTimeProvider = dateTimeProvider;
       this.matchHubContext = matchHubContext;
+      this.engineFactory = engineFactory;
     }
 
-    [HttpPut]
-    public async Task<ActionResult<MatchOptionsDto>> CreateNewMatch()
+    [HttpGet("options/default")]
+    public ActionResult<MatchOptionsDto> GetDefaultMatchOptions()
     {
       var userId = User.Claims.GetUserId();
       if (userId == null)
@@ -52,25 +49,28 @@ namespace EmpoweredPixels.Controllers.Matches
         return Forbid();
       }
 
-      var options = new MatchOptionsDto()
-      {
-        ActionsPerRound = 2,
-        Bounds = new Medium().Id,
-        Battlefield = new PlainBattlefield(new Medium()).Id,
-        Features = new List<Guid>()
-        {
-          new FeatureRegenerateEnergy().Id,
-          new FeatureRegenerateHealth().Id,
-        },
-        MoveOrder = new AllRandomMoveOrder().Id,
-        PositionGenerator = new AllRandomPositionGenerator().Id,
-        WinCondition = new NoWinnerCanBeDeterminedStaleCondition().Id,
+      return Ok(Mapper.Map<MatchOptionsDto>(engineFactory.GetDefaultOptions()));
+    }
 
+    [HttpGet("options/sizes")]
+    public ActionResult<IEnumerable<Guid>> GetBattlefieldSizes()
+    {
+      return Ok(engineFactory.GetAvailableBounds());
+    }
+
+    [HttpPut("create")]
+    public async Task<ActionResult<MatchDto>> CreateMatchLobby([FromBody]MatchOptionsDto dto)
+    {
+      var userId = User.Claims.GetUserId();
+      if (userId == null)
+      {
+        return Forbid();
       }
 
       var match = new Match()
       {
         CreatorUserId = userId,
+        Options = dto,
       };
 
       Context.Add(match);
@@ -101,6 +101,8 @@ namespace EmpoweredPixels.Controllers.Matches
       }
 
       var match = await Context.Matches
+        .Include(o => o.Registrations)
+        .ThenInclude(o => o.Fighter)
         .Where(o => o.Started == null)
         .FirstOrDefaultAsync(o => o.Id == dto.MatchId);
 
@@ -109,6 +111,20 @@ namespace EmpoweredPixels.Controllers.Matches
         .FirstOrDefaultAsync(o => o.Id == dto.FighterId);
 
       if (match == null || fighter == null)
+      {
+        return BadRequest();
+      }
+
+      if (match.Options.MaxFightersPerUser != null &&
+        match.Registrations
+        .Where(o => o.Fighter.UserId == userId)
+        .Count() >= match.Options.MaxFightersPerUser)
+      {
+        return BadRequest();
+      }
+
+      if (match.Options.MaxPowerlevel != null &&
+        fighter.PowerLevel() > match.Options.MaxPowerlevel)
       {
         return BadRequest();
       }
@@ -185,7 +201,7 @@ namespace EmpoweredPixels.Controllers.Matches
         return BadRequest();
       }
 
-      StartMatchInternal(match);
+      await StartMatchInternal(match);
 
       await Context.SaveChangesAsync();
 
@@ -219,7 +235,7 @@ namespace EmpoweredPixels.Controllers.Matches
       await matchHubContext.Clients.Group(id.ToString()).UpdateMatch(Mapper.Map<MatchDto>(match));
     }
 
-    private void StartMatchInternal(Match match)
+    private async Task StartMatchInternal(Match match)
     {
       match.Started = dateTimeProvider.Now;
 
@@ -240,24 +256,10 @@ namespace EmpoweredPixels.Controllers.Matches
           Vitality = o.Vitality,
         });
 
-      var engine = new Engine(
-        cfg =>
-        {
-          cfg.ActionsPerRound = 2;
-          cfg.Battlefield = new PlainBattlefield(new Small());
-          cfg.Features.Add(new FeatureRegenerateEnergy());
-          cfg.Features.Add(new FeatureRegenerateHealth());
-          cfg.MoveOrder = new AllRandomMoveOrder();
-          cfg.PositionGenerator = new AllRandomPositionGenerator();
-          cfg.WinCondition = new LastManStandingWinCondition();
-          cfg.StaleCondition = new NoWinnerCanBeDeterminedStaleCondition();
-
-          return cfg;
-        }, fighters);
-
+      var engine = engineFactory.GetEngine(fighters, match.Options);
       var result = engine.StartMatch();
 
-      CreateFighterScores(match, result);
+      await CreateFighterScores(match, result);
       Context.MatchResults.Add(new Models.Matches.MatchResult()
       {
         MatchId = match.Id,
@@ -265,10 +267,15 @@ namespace EmpoweredPixels.Controllers.Matches
       });
     }
 
-    private void CreateFighterScores(Match match, IMatchResult result)
+    private async Task CreateFighterScores(Match match, IMatchResult result)
     {
       foreach (var fighterScore in result.Scores)
       {
+        if (!await Context.Fighters.AnyAsync(o => o.Id == fighterScore.Id))
+        {
+          continue;
+        }
+
         Context.MatchScoreFighters.Add(new MatchScoreFighter()
         {
           Created = dateTimeProvider.Now,

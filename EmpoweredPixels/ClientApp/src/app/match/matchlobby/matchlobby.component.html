@@ -1,10 +1,15 @@
 <div class="container">
   <h1>Lobby</h1>
   <hr>
+
+  <span class="nes-badge float-right" *ngIf="match?.options?.botCount">
+    Bots: {{ match.options.botCount }}
+  </span>
   <h2>Match: {{ match?.id }}</h2>
+
   <form class="form-group" (ngsubmit)="join()">
     <label for="fighterSelection"></label>
-    <select [(ngModel)]="fighterId" class="form-control" name="fighterSelection" id="fighterSelection" >
+    <select [(ngModel)]="fighterId" class="form-control" name="fighterSelection" id="fighterSelection">
       <option *ngFor="let fighter of fighters | async" value="{{ fighter.id }}">{{ fighter.name }}</option>
     </select>
   </form>

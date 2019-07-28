@@ -3,7 +3,7 @@ import { AuthGuardService } from './auth/auth-guard.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -23,6 +23,12 @@ import { MatchlobbyComponent } from './match/matchlobby/matchlobby.component';
 import { MatchParticipantComponent } from './match/matchlobby/match-participant/match-participant.component';
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { FighterNamePipe } from './match-viewer/+pipes/fighter-name-pipe';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -60,7 +66,14 @@ import { FighterNamePipe } from './match-viewer/+pipes/fighter-name-pipe';
       { path: 'match/create', component: MatchCreationComponent, canActivate: [AuthGuardService] },
       { path: 'match/:id', component: MatchlobbyComponent, canActivate: [AuthGuardService] },
       { path: 'match/:id/result', component: MatchViewerComponent, canActivate: [AuthGuardService] },
-    ])
+    ]),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

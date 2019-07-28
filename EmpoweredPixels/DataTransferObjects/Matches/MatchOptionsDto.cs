@@ -15,7 +15,7 @@ namespace EmpoweredPixels.DataTransferObjects.Matches
 
     public int? BotPowerlevel { get; set; }
 
-    public ICollection<Guid> Features { get; set; }
+    public IEnumerable<Guid> Features { get; set; }
 
     public Guid Battlefield { get; set; }
 
