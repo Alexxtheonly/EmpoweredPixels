@@ -25,6 +25,7 @@ import { TimeAgoPipe } from 'time-ago-pipe';
 import { FighterNamePipe } from './match-viewer/+pipes/fighter-name-pipe';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { RoundsViewerComponent } from './match-viewer/+components/rounds-viewer/rounds-viewer.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -49,6 +50,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TimeAgoPipe,
     FighterNamePipe,
     FooterComponent,
+    RoundsViewerComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
