@@ -45,7 +45,7 @@
 
                         <span *ngIf="tick.NextX;else attack">
                             {{setPositionOfFighter(tick)}}
-                            gehe zu (X,Y) : {{tick.NextX}}, {{tick.NextY}}
+                            move to (X,Y) : {{tick.NextX}}, {{tick.NextY}}
                         </span>
 
                         <span #attack *ngIf="tick.TargetId; else energyReg">
