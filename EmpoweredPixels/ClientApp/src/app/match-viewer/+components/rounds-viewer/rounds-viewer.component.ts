@@ -10,7 +10,7 @@ import { FighterMove } from '../../+models/fighter-move';
 })
 export class RoundsViewerComponent implements OnInit
 {
-  @ViewChild('consolePanel')
+  @ViewChild('consolePanel', { static: false })
   consolePanel: ElementRef;
 
   public isReplayMatchResult: boolean;
@@ -39,6 +39,23 @@ export class RoundsViewerComponent implements OnInit
 
   ngOnInit()
   {
+  }
+
+  public play()
+  {
+    this.currentTick = 0;
+    this.roundsConsole = [];
+    this.roundsConsole.push(this.ticks[this.currentTick]);
+
+    const looper = setInterval(() =>
+    {
+      this.forward();
+
+      if (this.currentTick === this.ticks.length - 1)
+      {
+        clearInterval(looper);
+      }
+    }, 1000);
   }
 
   public replayMatchResult(): void

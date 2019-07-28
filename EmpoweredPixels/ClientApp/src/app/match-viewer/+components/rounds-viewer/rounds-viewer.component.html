@@ -1,6 +1,6 @@
 <ng-container *ngIf="ticks">
 
-    <button class="nes-btn is-primary" (click)="replayMatchResult()">Match Verlauf anzeigen</button>
+    <button class="nes-btn is-primary" (click)="replayMatchResult()">Show match rounds</button>
 
     <ng-container *ngIf="isReplayMatchResult">
 
@@ -19,9 +19,11 @@
             <hr>
 
             <button class="nes-btn is-primary" (click)="backward()">
-                << </button> <button class="nes-btn is-primary" (click)="forward()">
+                << </button>
+                <button class="nes-btn is-primary" (click)="play()">Play</button>
+                <button class="nes-btn is-primary" (click)="forward()">
                     >>
-            </button> <button class="nes-btn is-primary" (click)="showAllRounds()">Direkt anzeigen</button>
+            </button> <button class="nes-btn is-primary" (click)="showAllRounds()">Show all</button>
             <div #consolePanel class="console-view nes-container is-rounded is-dark">
 
                 <!--Spawn-->
