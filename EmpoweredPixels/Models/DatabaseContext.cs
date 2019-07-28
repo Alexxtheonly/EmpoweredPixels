@@ -1,7 +1,9 @@
-﻿using EmpoweredPixels.Models.Identity;
+﻿using EmpoweredPixels.DataTransferObjects.Matches;
+using EmpoweredPixels.Models.Identity;
 using EmpoweredPixels.Models.Matches;
 using EmpoweredPixels.Models.Roster;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace EmpoweredPixels.Models
 {
@@ -66,6 +68,9 @@ namespace EmpoweredPixels.Models
       {
         e.HasKey(o => o.Id);
         e.Property(o => o.Id).ValueGeneratedOnAdd();
+        e.Property(o => o.Options).HasConversion(
+          o => JsonConvert.SerializeObject(o),
+          o => JsonConvert.DeserializeObject<MatchOptionsDto>(o));
       });
 
       modelBuilder.Entity<MatchRegistration>(e =>

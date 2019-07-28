@@ -1,5 +1,6 @@
 using AutoMapper;
 using EmpoweredPixels.Extensions;
+using EmpoweredPixels.Factories.Matches;
 using EmpoweredPixels.Hubs.Matches;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Providers.DateTime;
@@ -31,6 +32,7 @@ namespace EmpoweredPixels
 
       services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
       services.AddSingleton<IVersionProvider, VersionProvider>();
+      services.AddTransient<IEngineFactory, EngineFactory>();
 
       services.AddDbContextPool<DatabaseContext>(o => o.ConfigureDatabase(Configuration));
       services.AddAutoMapper(typeof(Startup));
