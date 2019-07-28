@@ -1,6 +1,10 @@
 <div class="container">
   <h1>Lobby</h1>
   <hr>
+
+  <span class="nes-badge float-right" *ngIf="match?.options?.botCount">
+    Bots: {{ match.options.botCount }}
+  </span>
   <h2>Match: {{ match?.id }}</h2>
 
   <label for="fighterSelection">Kämpfer</label>

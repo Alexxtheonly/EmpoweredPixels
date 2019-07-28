@@ -10,5 +10,7 @@ namespace EmpoweredPixels.DataTransferObjects.Matches
     public bool Ended { get; set; }
 
     public ICollection<MatchRegistrationDto> Registrations { get; set; } = new List<MatchRegistrationDto>();
+
+    public MatchOptionsDto Options { get; set; }
   }
 }
