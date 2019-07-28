@@ -33,12 +33,22 @@ export class RoundsViewerComponent implements OnInit
 
   public roundsConsole: RoundTick[] = new Array();
   public fighters: FighterMove[] = new Array();
-
+  public zoom = 1;
   constructor(
     private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit()
   {
+  }
+
+  public zoomIn()
+  {
+    this.zoom++;
+  }
+
+  public zoomOut()
+  {
+    this.zoom--;
   }
 
   public play()

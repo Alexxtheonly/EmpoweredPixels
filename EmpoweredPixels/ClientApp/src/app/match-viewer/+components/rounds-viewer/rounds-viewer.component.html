@@ -6,7 +6,11 @@
 
         <div>
 
-            <div class="arena-view">
+            <br>
+            <br>
+            <a (click)="zoomIn()">+</a>
+            <a style="margin-left: 10px;" (click)="zoomOut()">-</a>
+            <div #ele class="arena-view" [style.zoom]="zoom">
 
                 <div class="fighter" *ngFor="let fighter of fighters" [style.top.px]="fighter.currentX"
                     [style.left.px]="fighter.currentY">
@@ -19,10 +23,10 @@
             <hr>
 
             <button class="nes-btn is-primary" (click)="backward()">
-                << </button>
-                <button class="nes-btn is-primary" (click)="play()">Play</button>
-                <button class="nes-btn is-primary" (click)="forward()">
-                    >>
+                << </button> <button class="nes-btn is-primary" (click)="play()">Play
+            </button>
+            <button class="nes-btn is-primary" (click)="forward()">
+                >>
             </button> <button class="nes-btn is-primary" (click)="showAllRounds()">Show all</button>
             <div #consolePanel class="console-view nes-container is-rounded is-dark">
 
@@ -33,7 +37,7 @@
 
                 <!--Console-->
                 <div *ngFor="let round of roundsConsole; let i = index">
-                    Runde : {{round.Round}}
+                    <div style="border:1px solid;margin-top: 5px;padding: 2px;"> Runde : {{round.Round}} </div>
 
                     <div *ngFor="let tick of round.Ticks">
                         {{tick.FighterId | fightername | async}}
