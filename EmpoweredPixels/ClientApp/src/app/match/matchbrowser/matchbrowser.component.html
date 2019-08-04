@@ -4,33 +4,38 @@
             Match browser
         </div>
         <div class="card-body">
-            <table *ngIf="page?.total > 0" class="table table-bordered">
-                <thead>
-                    <th>Id</th>
-                    <th>Created</th>
-                    <th>Registrations</th>
-                    <th>Max powerlevel</th>
-                    <th>Max fighters per user</th>
-                    <th>Bots</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let match of page?.items">
-                        <td><a routerLink="/match/{{ match.id }}">{{ match.id }}</a></td>
-                        <td>{{ match.created | timeAgo }}</td>
-                        <td>{{ match.registrations.length }}</td>
-                        <td>{{ match.options.maxPowerlevel }}</td>
-                        <td>{{ match.options.maxFightersPerUser }}</td>
-                        <td>{{ match.options.botCount }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div *ngIf="page?.total > 0">
+                <table class="table table-bordered">
+                    <thead>
+                        <th>Id</th>
+                        <th>Created</th>
+                        <th>Registrations</th>
+                        <th>Max powerlevel</th>
+                        <th>Max fighters per user</th>
+                        <th>Bots</th>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let match of page?.items | paginate: { id: 'server', itemsPerPage: options.pageSize, currentPage: options.pageNumber, totalItems: page.total }">
+                            <td><a routerLink="/match/{{ match.id }}">{{ match.id }}</a></td>
+                            <td>{{ match.created | timeAgo }}</td>
+                            <td>{{ match.registrations.length }}</td>
+                            <td>{{ match.options.maxPowerlevel }}</td>
+                            <td>{{ match.options.maxFightersPerUser }}</td>
+                            <td>{{ match.options.botCount }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="text-align: center;">
+                    <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+                    <pagination-controls (pageChange)="loadPage($event)" id="server"></pagination-controls>
+                </div>
+            </div>
+
             <div *ngIf="page?.total === 0">
                 <span style="display: block">There are no matches at the moment.</span>
                 <a routerLink="/match/create">Create one.</a>
             </div>
-        </div>
-        <div class="card-footer text-muted">
-            Options
         </div>
     </div>
 </div>

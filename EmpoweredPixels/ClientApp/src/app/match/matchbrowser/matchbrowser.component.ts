@@ -13,6 +13,7 @@ import { Page } from '../+models/page';
 export class MatchbrowserComponent implements OnInit
 {
   public options: PagingOptions = new PagingOptions();
+  public loading: boolean;
   public page: Page<Match>;
 
   constructor(private matchService: MatchService, private matchHubService: MatchHubService)
@@ -25,11 +26,19 @@ export class MatchbrowserComponent implements OnInit
     this.loadMatches();
   }
 
+  public loadPage(page: number)
+  {
+    this.loading = true;
+    this.options.pageNumber = page;
+    this.loadMatches();
+  }
+
   private loadMatches(): void
   {
     this.matchService.browse(this.options).subscribe(result =>
     {
       this.page = result;
+      this.loading = false;
     });
   }
 

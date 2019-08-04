@@ -27,6 +27,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RoundsViewerComponent } from './match-viewer/+components/rounds-viewer/rounds-viewer.component';
 import { MatchbrowserComponent } from './match/matchbrowser/matchbrowser.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -61,6 +62,7 @@ export function HttpLoaderFactory(http: HttpClient)
     FormsModule,
     ReactiveFormsModule,
     AngularFontAwesomeModule,
+    NgxPaginationModule,
     RouterModule.forRoot([
       { path: '', component: MatchbrowserComponent, pathMatch: 'full', canActivate: [AuthGuardService] },
       { path: 'login', component: LoginComponent },
