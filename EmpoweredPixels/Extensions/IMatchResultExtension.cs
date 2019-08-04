@@ -112,6 +112,7 @@ namespace EmpoweredPixels.Extensions
         return new RoundScoreDto()
         {
           Id = tick.FighterId,
+          Powerlevel = tick.Powerlevel,
           DamageDone = tick.DamageDone,
           DamageTaken = tick.DamageTaken,
           Deaths = tick.Deaths,
@@ -131,6 +132,7 @@ namespace EmpoweredPixels.Extensions
         return new RoundScoreDto()
         {
           Id = tick.TeamId,
+          Powerlevel = tick.Powerlevel,
           DamageDone = tick.DamageDone,
           DamageTaken = tick.DamageTaken,
           Deaths = tick.Deaths,
@@ -157,6 +159,7 @@ namespace EmpoweredPixels.Extensions
         Id = score.Id,
         MaxEnergy = score.MaxEnergy,
         MaxHealth = score.MaxHealth,
+        Powerlevel = score.Powerlevel,
         TotalDamageDone = score.TotalDamageDone,
         TotalDamageTaken = score.TotalDamageTaken,
         TotalDeaths = score.TotalDeaths,
@@ -165,6 +168,7 @@ namespace EmpoweredPixels.Extensions
         TotalKills = score.TotalKills,
         TotalRegeneratedEnergy = score.TotalRegeneratedEnergy,
         TotalRegeneratedHealth = score.TotalRegeneratedHealth,
+        RoundsAlive = score.RoundsAlive,
       };
     }
   }

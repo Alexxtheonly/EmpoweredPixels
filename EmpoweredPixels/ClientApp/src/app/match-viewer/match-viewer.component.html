@@ -1,11 +1,13 @@
 <div class="container" *ngIf="match$ | async as match">
-    <h4 *ngIf="match">Rounds: {{ match?.Ticks.length }}</h4>
+    <h4 *ngIf="match">Rounds: {{ match?.Ticks.length - 1 }}</h4>
 
     <table class=" nes-table is-bordered">
         <thead>
             <th>Name</th>
+            <th>Powerlevel</th>
             <th>Max health</th>
             <th>Max energy</th>
+            <th>Rounds alive</th>
             <th>Damage done</th>
             <th>Damage taken</th>
             <th>Energy used</th>
@@ -19,8 +21,10 @@
         <tbody *ngIf="match">
             <tr *ngFor="let matchScore of match.Scores">
                 <td>{{ matchScore.Id | fightername | async}}</td>
+                <td>{{ matchScore.Powerlevel }}</td>
                 <td>{{ matchScore.MaxHealth }}</td>
                 <td>{{ matchScore.MaxEnergy }}</td>
+                <td>{{ matchScore.RoundsAlive }}</td>
                 <td>{{ matchScore.TotalDamageDone }}</td>
                 <td>{{ matchScore.TotalDamageTaken }}</td>
                 <td>{{ matchScore.TotalEnergyUsed }}</td>
