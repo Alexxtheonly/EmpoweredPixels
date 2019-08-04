@@ -26,8 +26,10 @@ import { FighterNamePipe } from './match-viewer/+pipes/fighter-name-pipe';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RoundsViewerComponent } from './match-viewer/+components/rounds-viewer/rounds-viewer.component';
+import { MatchbrowserComponent } from './match/matchbrowser/matchbrowser.component';
 
-export function HttpLoaderFactory(http: HttpClient) {
+export function HttpLoaderFactory(http: HttpClient)
+{
   return new TranslateHttpLoader(http);
 }
 
@@ -50,7 +52,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TimeAgoPipe,
     FighterNamePipe,
     FooterComponent,
-    RoundsViewerComponent
+    RoundsViewerComponent,
+    MatchbrowserComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -59,7 +62,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     AngularFontAwesomeModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuardService] },
+      { path: '', component: MatchbrowserComponent, pathMatch: 'full', canActivate: [AuthGuardService] },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'roster', component: RosterComponent, canActivate: [AuthGuardService] },

@@ -12,6 +12,11 @@
       </div>
 
       <div class="card-body">
+        <div>
+          <label>Private match</label>
+          <input type="checkbox" [(ngModel)]="matchOptions.isPrivate">
+        </div>
+
         <div class="col col-3">
           <label>Max powerlevel</label>
           <input type="number" [(ngModel)]="matchOptions.maxPowerlevel">
