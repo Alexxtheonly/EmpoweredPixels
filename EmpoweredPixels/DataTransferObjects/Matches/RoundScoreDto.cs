@@ -6,6 +6,8 @@ namespace EmpoweredPixels.DataTransferObjects.Matches
   {
     public Guid Id { get; set; }
 
+    public int Powerlevel { get; set; }
+
     public int DamageDone { get; set; }
 
     public int DamageTaken { get; set; }
