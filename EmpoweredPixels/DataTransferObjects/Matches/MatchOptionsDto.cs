@@ -5,6 +5,8 @@ namespace EmpoweredPixels.DataTransferObjects.Matches
 {
   public class MatchOptionsDto
   {
+    public bool IsPrivate { get; set; }
+
     public int? MaxPowerlevel { get; set; }
 
     public int ActionsPerRound { get; set; }

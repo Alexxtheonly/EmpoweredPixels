@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using EmpoweredPixels.DataTransferObjects.Matches;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Factories.Matches;
@@ -10,6 +11,8 @@ using EmpoweredPixels.Hubs.Matches;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Matches;
 using EmpoweredPixels.Providers.DateTime;
+using EmpoweredPixels.Utilities.Paging;
+using EmpoweredPixels.Utilities.Paging.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -70,11 +73,17 @@ namespace EmpoweredPixels.Controllers.Matches
       var match = new Match()
       {
         CreatorUserId = userId,
+        Created = dateTimeProvider.Now,
         Options = dto,
       };
 
       Context.Add(match);
       await Context.SaveChangesAsync();
+
+      if (!match.Options.IsPrivate)
+      {
+        _ = matchHubContext.Clients.All.UpdateMatchBrowser();
+      }
 
       return Ok(Mapper.Map<MatchDto>(match));
     }
@@ -89,6 +98,17 @@ namespace EmpoweredPixels.Controllers.Matches
         .FirstOrDefaultAsync(o => o.Id == id);
 
       return Ok(Mapper.Map<MatchDto>(match));
+    }
+
+    [HttpPost("browse")]
+    public async Task<ActionResult<Page<MatchDto>>> GetMatches([FromBody]PagingOptions options)
+    {
+      return Ok(await Context.Matches
+        .Include(o => o.Registrations)
+        .Where(o => o.Started == null)
+        .Where(o => !o.Options.IsPrivate) // todo: use https://github.com/aspnet/EntityFrameworkCore/issues/11295#issuecomment-373852015
+        .ProjectTo<MatchDto>(Mapper.ConfigurationProvider)
+        .GetPage(options));
     }
 
     [HttpPost("join")]
@@ -138,6 +158,11 @@ namespace EmpoweredPixels.Controllers.Matches
       Context.MatchRegistrations.Add(registration);
       await Context.SaveChangesAsync();
 
+      if (!match.Options.IsPrivate)
+      {
+        _ = matchHubContext.Clients.All.UpdateMatchBrowser();
+      }
+
       await PushMatchUpdate(match.Id);
 
       return Ok();
@@ -174,6 +199,11 @@ namespace EmpoweredPixels.Controllers.Matches
 
       Context.MatchRegistrations.Remove(registration);
       await Context.SaveChangesAsync();
+
+      if (!match.Options.IsPrivate)
+      {
+        _ = matchHubContext.Clients.All.UpdateMatchBrowser();
+      }
 
       await PushMatchUpdate(match.Id);
 

@@ -20,5 +20,10 @@ namespace EmpoweredPixels.Hubs.Matches
     {
       return Clients.Group(matchDto.Id.ToString()).UpdateMatch(matchDto);
     }
+
+    public Task UpdateMatchBrowser()
+    {
+      return Clients.All.UpdateMatchBrowser();
+    }
   }
 }

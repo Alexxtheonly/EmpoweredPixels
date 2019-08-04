@@ -9,6 +9,8 @@ namespace EmpoweredPixels.Models.Matches
   {
     public Guid Id { get; set; }
 
+    public DateTimeOffset? Created { get; set; }
+
     public DateTimeOffset? Started { get; set; }
 
     public long? CreatorUserId { get; set; }

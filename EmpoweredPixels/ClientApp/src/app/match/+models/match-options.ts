@@ -1,4 +1,7 @@
-export class MatchOptions {
+export class MatchOptions
+{
+    public isPrivate: boolean;
+
     public maxPowerlevel: number;
 
     public actionsPerRound: number;
