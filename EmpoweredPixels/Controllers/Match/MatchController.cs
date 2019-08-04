@@ -80,6 +80,11 @@ namespace EmpoweredPixels.Controllers.Matches
       Context.Add(match);
       await Context.SaveChangesAsync();
 
+      if (!match.Options.IsPrivate)
+      {
+        _ = matchHubContext.Clients.All.UpdateMatchBrowser();
+      }
+
       return Ok(Mapper.Map<MatchDto>(match));
     }
 
@@ -153,6 +158,11 @@ namespace EmpoweredPixels.Controllers.Matches
       Context.MatchRegistrations.Add(registration);
       await Context.SaveChangesAsync();
 
+      if (!match.Options.IsPrivate)
+      {
+        _ = matchHubContext.Clients.All.UpdateMatchBrowser();
+      }
+
       await PushMatchUpdate(match.Id);
 
       return Ok();
@@ -189,6 +199,11 @@ namespace EmpoweredPixels.Controllers.Matches
 
       Context.MatchRegistrations.Remove(registration);
       await Context.SaveChangesAsync();
+
+      if (!match.Options.IsPrivate)
+      {
+        _ = matchHubContext.Clients.All.UpdateMatchBrowser();
+      }
 
       await PushMatchUpdate(match.Id);
 

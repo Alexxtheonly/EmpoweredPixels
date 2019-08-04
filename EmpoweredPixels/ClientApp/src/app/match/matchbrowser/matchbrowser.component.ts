@@ -16,9 +16,20 @@ export class MatchbrowserComponent implements OnInit
   public loading: boolean;
   public page: Page<Match>;
 
-  constructor(private matchService: MatchService, private matchHubService: MatchHubService)
+  constructor(private matchService: MatchService, matchHubService: MatchHubService)
   {
-    matchHubService.connect().then();
+    matchHubService.connect().then(() =>
+    {
+      matchHubService.matchCreated$.subscribe(() =>
+      {
+        if (this.options.pageNumber !== 1)
+        {
+          return;
+        }
+
+        this.loadMatches();
+      });
+    });
   }
 
   ngOnInit()
