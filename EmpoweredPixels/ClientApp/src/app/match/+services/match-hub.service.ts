@@ -6,44 +6,66 @@ import { Match } from '../+models/match';
 @Injectable({
   providedIn: 'root'
 })
-export class MatchHubService extends BaseHubService {
+export class MatchHubService extends BaseHubService
+{
   public matchUpdated$ = new Subject<Match>();
+  public matchCreated$ = new Subject<any>();
 
-  constructor() {
+  constructor()
+  {
     super('hub/match');
   }
 
-  public joinGroup(match: Match): Promise<any> {
-    if (this.IsConnected()) {
+  public joinGroup(match: Match): Promise<any>
+  {
+    if (this.IsConnected())
+    {
       return this.hubConnection.invoke('JoinGroup', match.id);
-    } else {
-      this.connectionEstablished$.subscribe(result => {
-        if (result) {
+    } else
+    {
+      this.connectionEstablished$.subscribe(result =>
+      {
+        if (result)
+        {
           return this.hubConnection.invoke('JoinGroup', match.id);
         }
       });
     }
   }
 
-  public leaveGroup(match: Match): Promise<any> {
-    if (this.IsConnected) {
+  public leaveGroup(match: Match): Promise<any>
+  {
+    if (this.IsConnected)
+    {
       return this.hubConnection.invoke('LeaveGroup', match.id);
-    } else {
-      this.connectionEstablished$.subscribe(result => {
-        if (result) {
+    } else
+    {
+      this.connectionEstablished$.subscribe(result =>
+      {
+        if (result)
+        {
           return this.hubConnection.invoke('LeaveGroup', match.id);
         }
       });
     }
   }
 
-  protected register(): void {
-    this.hubConnection.on('UpdateMatch', (data: Match) => {
+  protected register(): void
+  {
+    this.hubConnection.on('UpdateMatch', (data: Match) =>
+    {
       this.matchUpdated$.next(data);
+    });
+
+    this.hubConnection.on('UpdateMatchBrowser', () =>
+    {
+      this.matchCreated$.next();
     });
   }
 
-  protected unregister(): void {
+  protected unregister(): void
+  {
     this.hubConnection.off('UpdateMatch');
+    this.hubConnection.off('UpdateMatchBrowser');
   }
 }

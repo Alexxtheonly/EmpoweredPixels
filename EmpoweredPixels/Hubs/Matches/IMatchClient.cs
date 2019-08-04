@@ -10,5 +10,7 @@ namespace EmpoweredPixels.Hubs.Matches
     Task LeaveGroup(string group);
 
     Task UpdateMatch(MatchDto matchDto);
+
+    Task UpdateMatchBrowser();
   }
 }
