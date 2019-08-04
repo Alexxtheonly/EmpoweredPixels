@@ -6,6 +6,8 @@ namespace EmpoweredPixels.DataTransferObjects.Matches
   {
     public Guid Id { get; set; }
 
+    public int Powerlevel { get; set; }
+
     public int MaxHealth { get; set; }
 
     public int MaxEnergy { get; set; }
@@ -25,5 +27,7 @@ namespace EmpoweredPixels.DataTransferObjects.Matches
     public int TotalRegeneratedHealth { get; set; }
 
     public int TotalRegeneratedEnergy { get; set; }
+
+    public int RoundsAlive { get; set; }
   }
 }
