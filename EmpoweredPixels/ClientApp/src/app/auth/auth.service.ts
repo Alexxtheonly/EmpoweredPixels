@@ -9,16 +9,20 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService
+{
 
   private jwtHelper: JwtHelperService = new JwtHelperService();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient)
+  {
   }
 
-  public isAuthenticated(): boolean {
+  public isAuthenticated(): boolean
+  {
     const token = this.getToken();
-    if (!token) {
+    if (!token)
+    {
       return false;
     }
 
@@ -27,19 +31,46 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(jwt);
   }
 
-  public login(login: Login): Observable<Token> {
-    return this.http.post<Token>('api/authentication/token', login).pipe(map(token => {
+  public login(login: Login): Observable<Token>
+  {
+    return this.http.post<Token>('api/authentication/token', login).pipe(map(token =>
+    {
       localStorage.setItem('token', JSON.stringify(token));
 
       return token;
     }));
   }
 
-  public logout() {
+  public logout()
+  {
     localStorage.removeItem('token');
   }
 
-  private getToken(): Token {
+  public getJwtToken(): any
+  {
+    const token = this.getToken();
+    if (!token)
+    {
+      return;
+    }
+
+    return this.jwtHelper.decodeToken(token.token);
+  }
+
+  public getUserId(): number
+  {
+    const jwt = this.getJwtToken();
+
+    if (!jwt)
+    {
+      return;
+    }
+
+    return Number(jwt.unique_name);
+  }
+
+  private getToken(): Token
+  {
     const json = JSON.parse(localStorage.getItem('token'));
     const token: Token = json;
 

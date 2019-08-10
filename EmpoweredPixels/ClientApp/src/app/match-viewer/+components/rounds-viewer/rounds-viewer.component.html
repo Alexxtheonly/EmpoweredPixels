@@ -37,29 +37,29 @@
 
                 <!--Console-->
                 <div *ngFor="let round of roundsConsole; let i = index">
-                    <div style="border:1px solid;margin-top: 5px;padding: 2px;"> Runde : {{round.Round}} </div>
+                    <div style="border:1px solid;margin-top: 5px;padding: 2px;"> Runde : {{round.round}} </div>
 
-                    <div *ngFor="let tick of round.Ticks">
-                        {{tick.FighterId | fightername | async}}
+                    <div *ngFor="let tick of round.ticks">
+                        {{tick.fighterId | fightername | async}}
                         -
 
-                        <span *ngIf="tick.NextX;else attack">
+                        <span *ngIf="tick.nextX;else attack">
                             {{setPositionOfFighter(tick)}}
-                            move to (X,Y) : {{tick.NextX}}, {{tick.NextY}}
+                            move to (X,Y) : {{tick.nextX}}, {{tick.nextY}}
                         </span>
 
-                        <span #attack *ngIf="tick.TargetId; else energyReg">
+                        <span #attack *ngIf="tick.targetId; else energyReg">
                             <img src="assets/sword.png" width="12px" /> Angriff auf
-                            {{tick.TargetId | fightername | async}}
-                            <span>, Schaden : {{tick.Damage}}</span>
+                            {{tick.targetId | fightername | async}}
+                            <span>, Schaden : {{tick.damage}}</span>
                         </span>
 
-                        <span #energyReg *ngIf="tick.RegeneratedEnergy; else healthReg">
-                            Energy Regenerierung {{ tick.RegeneratedEnergy}}
+                        <span #energyReg *ngIf="tick.regeneratedEnergy; else healthReg">
+                            Energy Regenerierung {{ tick.regeneratedEnergy}}
                         </span>
 
-                        <span #healthReg *ngIf="tick.HealthPointsRegenerated; else healthReg">
-                            Leben Regenerierung {{ tick.HealthPointsRegenerated}}
+                        <span #healthReg *ngIf="tick.healthPointsRegenerated; else healthReg">
+                            Leben Regenerierung {{ tick.realthPointsRegenerated}}
                         </span>
 
                     </div>

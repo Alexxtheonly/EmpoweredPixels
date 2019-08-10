@@ -1,42 +1,44 @@
 <div class="container" *ngIf="match$ | async as match">
-    <h4 *ngIf="match">Rounds: {{ match?.Ticks.length - 1 }}</h4>
+    <h4 *ngIf="match">Rounds: {{ match?.ticks.length - 1 }}</h4>
+    <div class="table-responsive-md">
+        <table class="nes-table is-bordered">
+            <thead>
+                <th>Team</th>
+                <th>Name</th>
+                <th>Powerlevel</th>
+                <th>Max health</th>
+                <th>Max energy</th>
+                <th>Rounds alive</th>
+                <th>Damage done</th>
+                <th>Damage taken</th>
+                <th>Energy used</th>
+                <th>Kills</th>
+                <th>Deaths</th>
+                <th>Distance traveled</th>
+                <th>Regenerated health</th>
+                <th>Regenerated Energy</th>
+            </thead>
 
-    <table class=" nes-table is-bordered">
-        <thead>
-            <th>Name</th>
-            <th>Powerlevel</th>
-            <th>Max health</th>
-            <th>Max energy</th>
-            <th>Rounds alive</th>
-            <th>Damage done</th>
-            <th>Damage taken</th>
-            <th>Energy used</th>
-            <th>Kills</th>
-            <th>Deaths</th>
-            <th>Distance traveled</th>
-            <th>Regenerated health</th>
-            <th>Regenerated Energy</th>
-        </thead>
-
-        <tbody *ngIf="match">
-            <tr *ngFor="let matchScore of match.Scores">
-                <td>{{ matchScore.Id | fightername | async}}</td>
-                <td>{{ matchScore.Powerlevel }}</td>
-                <td>{{ matchScore.MaxHealth }}</td>
-                <td>{{ matchScore.MaxEnergy }}</td>
-                <td>{{ matchScore.RoundsAlive }}</td>
-                <td>{{ matchScore.TotalDamageDone }}</td>
-                <td>{{ matchScore.TotalDamageTaken }}</td>
-                <td>{{ matchScore.TotalEnergyUsed }}</td>
-                <td>{{ matchScore.TotalKills }}</td>
-                <td>{{ matchScore.TotalDeaths }}</td>
-                <td>{{ matchScore.TotalDistanceTraveled }}</td>
-                <td>{{ matchScore.TotalRegeneratedHealth }}</td>
-                <td>{{ matchScore.TotalRegeneratedEnergy }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <app-rounds-viewer [matchScores]="match.Scores" [ticks]="match.Ticks"></app-rounds-viewer>
+            <tbody *ngIf="match">
+                <tr *ngFor="let matchScore of match.scores">
+                    <td [ngStyle]="{'background-color': getTeamColor(matchScore.teamId)}"></td>
+                    <td>{{ matchScore.id | fightername | async}}</td>
+                    <td>{{ matchScore.powerlevel }}</td>
+                    <td>{{ matchScore.maxHealth }}</td>
+                    <td>{{ matchScore.maxEnergy }}</td>
+                    <td>{{ matchScore.roundsAlive }}</td>
+                    <td>{{ matchScore.totalDamageDone }}</td>
+                    <td>{{ matchScore.totalDamageTaken }}</td>
+                    <td>{{ matchScore.totalEnergyUsed }}</td>
+                    <td>{{ matchScore.totalKills }}</td>
+                    <td>{{ matchScore.totalDeaths }}</td>
+                    <td>{{ matchScore.totalDistanceTraveled }}</td>
+                    <td>{{ matchScore.totalRegeneratedHealth }}</td>
+                    <td>{{ matchScore.totalRegeneratedEnergy }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <app-rounds-viewer [matchScores]="match.scores" [ticks]="match.ticks"></app-rounds-viewer>
 
 </div>

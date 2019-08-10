@@ -6,6 +6,10 @@ namespace EmpoweredPixels.Models.Matches
   {
     public Guid MatchId { get; set; }
 
+    public int RoundsAlive { get; set; }
+
+    public int Powerlevel { get; set; }
+
     public int MaxHealth { get; set; }
 
     public int MaxEnergy { get; set; }

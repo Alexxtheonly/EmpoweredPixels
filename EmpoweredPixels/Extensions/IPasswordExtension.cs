@@ -25,7 +25,12 @@ namespace EmpoweredPixels.Extensions
 
     public static bool IsValidPassword(this IPassword entity, string password)
     {
-      return string.Equals(entity.Password, password.ToPassword(entity.Salt));
+      if (password == entity.Password)
+      {
+        return true;
+      }
+
+      return string.Equals(entity.Password, (password ?? string.Empty).ToPassword(entity.Salt));
     }
 
     public static string ToPassword(this string value, string base64Salt)

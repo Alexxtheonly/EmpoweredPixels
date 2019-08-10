@@ -1,7 +1,10 @@
-export class MatchRegistration {
+export class MatchRegistration
+{
     public matchId: string;
 
     public fighterId: string;
+
+    public teamId?: string;
 
     public fighterName: string;
 

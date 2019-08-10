@@ -27,6 +27,8 @@ namespace EmpoweredPixels.Models
 
     public DbSet<MatchRegistration> MatchRegistrations { get; set; }
 
+    public DbSet<MatchTeam> MatchTeams { get; set; }
+
     public DbSet<MatchScoreFighter> MatchScoreFighters { get; set; }
 
     public DbSet<MatchResult> MatchResults { get; set; }
@@ -78,6 +80,14 @@ namespace EmpoweredPixels.Models
         e.HasKey(o => new { o.MatchId, o.FighterId });
         e.HasOne(o => o.Match).WithMany(o => o.Registrations).HasForeignKey(o => o.MatchId).OnDelete(DeleteBehavior.Cascade);
         e.HasOne(o => o.Fighter).WithMany().HasForeignKey(o => o.FighterId).OnDelete(DeleteBehavior.Cascade);
+        e.HasOne(o => o.Team).WithMany(o => o.Registrations).HasForeignKey(o => o.TeamId).OnDelete(DeleteBehavior.Cascade).IsRequired(false);
+      });
+
+      modelBuilder.Entity<MatchTeam>(e =>
+      {
+        e.HasKey(o => o.Id);
+        e.Property(o => o.Id).ValueGeneratedOnAdd();
+        e.HasIndex(o => o.MatchId);
       });
 
       modelBuilder.Entity<MatchScoreFighter>(e =>

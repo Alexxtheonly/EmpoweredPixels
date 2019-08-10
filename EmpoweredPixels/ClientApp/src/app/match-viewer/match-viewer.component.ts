@@ -13,7 +13,8 @@ import { MatchResult } from './+models/match-result';
   styleUrls: ['./match-viewer.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MatchViewerComponent implements OnInit {
+export class MatchViewerComponent implements OnInit
+{
 
   public match$: Observable<MatchResult>;
 
@@ -21,11 +22,23 @@ export class MatchViewerComponent implements OnInit {
     private changeDetectionRef: ChangeDetectorRef,
     private matchService: MatchService,
     private route: ActivatedRoute,
-    private rosterService: RosterService) {
+    private rosterService: RosterService)
+  {
   }
 
-  ngOnInit() {
+  ngOnInit()
+  {
     const id: string = this.route.snapshot.paramMap.get('id');
     this.match$ = this.matchService.getMatchResult(id);
+  }
+
+  public getTeamColor(teamId: string): string
+  {
+    if (!teamId)
+    {
+      return;
+    }
+
+    return '#' + teamId.substring(0, 6);
   }
 }
