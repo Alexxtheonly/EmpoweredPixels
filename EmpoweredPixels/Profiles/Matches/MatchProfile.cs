@@ -15,6 +15,9 @@ namespace EmpoweredPixels.Profiles.Matches
         .ForMember(o => o.FighterName, opt => opt.MapFrom(o => o.Fighter.Name))
         .ForMember(o => o.Username, opt => opt.MapFrom(o => o.Fighter.User.Name))
         .ForMember(o => o.Joined, opt => opt.MapFrom(o => o.Date));
+
+      CreateMap<MatchTeam, MatchTeamDto>()
+        .ForMember(o => o.HasPassword, opt => opt.MapFrom(o => !string.IsNullOrEmpty(o.Password)));
     }
   }
 }

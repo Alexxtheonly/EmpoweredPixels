@@ -88,6 +88,34 @@ namespace EmpoweredPixels.Controllers.Matches
       return Ok(Mapper.Map<MatchDto>(match));
     }
 
+    [HttpPut("create/team")]
+    public async Task<ActionResult<MatchTeamDto>> CreateTeam([FromBody] MatchTeamOperationDto dto)
+    {
+      var match = await Context.Matches
+        .Where(o => o.Started == null)
+        .FirstOrDefaultAsync(o => o.Id == dto.MatchId);
+
+      if (match == null)
+      {
+        return BadRequest();
+      }
+
+      var team = new MatchTeam()
+      {
+        MatchId = match.Id,
+      };
+
+      if (!string.IsNullOrEmpty(dto.Password))
+      {
+        team.SetPassword(dto.Password);
+      }
+
+      Context.Add(team);
+      await Context.SaveChangesAsync();
+
+      return Ok(Mapper.Map<MatchTeamDto>(team));
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<MatchDto>> GetMatch(Guid id)
     {
@@ -98,6 +126,15 @@ namespace EmpoweredPixels.Controllers.Matches
         .FirstOrDefaultAsync(o => o.Id == id);
 
       return Ok(Mapper.Map<MatchDto>(match));
+    }
+
+    [HttpGet("{id}/teams")]
+    public async Task<ActionResult<MatchTeamDto>> GetMatchTeams(Guid id)
+    {
+      return Ok(await Context.MatchTeams
+        .Where(o => o.MatchId == id)
+        .ProjectTo<MatchTeamDto>(Mapper.ConfigurationProvider)
+        .ToListAsync());
     }
 
     [HttpPost("browse")]
@@ -168,6 +205,78 @@ namespace EmpoweredPixels.Controllers.Matches
       return Ok();
     }
 
+    [HttpPost("join/team")]
+    public async Task<ActionResult> JoinTeam([FromBody] MatchTeamOperationDto dto)
+    {
+      var userId = User.Claims.GetUserId();
+      if (userId == null)
+      {
+        return Forbid();
+      }
+
+      var match = await Context.Matches
+        .Where(o => o.Started == null)
+        .FirstOrDefaultAsync(o => o.Id == dto.MatchId);
+
+      if (match == null)
+      {
+        return BadRequest();
+      }
+
+      var team = await Context.MatchTeams
+        .FirstOrDefaultAsync(o => o.Id == dto.Id);
+
+      if (team == null)
+      {
+        return BadRequest();
+      }
+
+      if (!team.IsValidPassword(dto.Password))
+      {
+        return BadRequest();
+      }
+
+      var fighter = await Context.Fighters
+        .Where(o => o.UserId == userId)
+        .FirstOrDefaultAsync(o => o.Id == dto.FighterId);
+
+      if (fighter == null)
+      {
+        return BadRequest();
+      }
+
+      var registration = await Context.MatchRegistrations
+        .AsTracking()
+        .Include(o => o.Fighter)
+        .Where(o => o.Fighter.UserId == userId)
+        .Where(o => o.MatchId == match.Id)
+        .FirstOrDefaultAsync(o => o.FighterId == dto.FighterId);
+
+      if (registration == null)
+      {
+        registration = new MatchRegistration()
+        {
+          MatchId = match.Id,
+          FighterId = fighter.Id,
+          Date = dateTimeProvider.Now,
+        };
+        Context.MatchRegistrations.Add(registration);
+      }
+
+      if (registration.TeamId == team.Id)
+      {
+        return Ok();
+      }
+
+      registration.TeamId = team.Id;
+
+      await Context.SaveChangesAsync();
+
+      await PushMatchUpdate(match.Id);
+
+      return Ok();
+    }
+
     [HttpPost("leave")]
     public async Task<ActionResult> LeaveMatch([FromBody] MatchRegistrationDto dto)
     {
@@ -204,6 +313,49 @@ namespace EmpoweredPixels.Controllers.Matches
       {
         _ = matchHubContext.Clients.All.UpdateMatchBrowser();
       }
+
+      await PushMatchUpdate(match.Id);
+
+      return Ok();
+    }
+
+    [HttpPost("leave/team")]
+    public async Task<ActionResult> LeaveTeam([FromBody] MatchTeamOperationDto dto)
+    {
+      var userId = User.Claims.GetUserId();
+      if (userId == null)
+      {
+        return Forbid();
+      }
+
+      var match = await Context.Matches
+        .Where(o => o.Started == null)
+        .FirstOrDefaultAsync(o => o.Id == dto.MatchId);
+
+      if (match == null)
+      {
+        return BadRequest();
+      }
+
+      var registration = await Context.MatchRegistrations
+        .AsTracking()
+        .Include(o => o.Fighter)
+        .Where(o => o.Fighter.UserId == userId)
+        .Where(o => o.MatchId == match.Id)
+        .FirstOrDefaultAsync(o => o.FighterId == dto.FighterId);
+
+      if (registration == null)
+      {
+        return BadRequest();
+      }
+
+      if (registration.TeamId == dto.Id)
+      {
+        return Ok();
+      }
+
+      registration.TeamId = null;
+      await Context.SaveChangesAsync();
 
       await PushMatchUpdate(match.Id);
 
@@ -270,20 +422,20 @@ namespace EmpoweredPixels.Controllers.Matches
       match.Started = dateTimeProvider.Now;
 
       var fighters = match.Registrations
-        .Select(o => o.Fighter)
         .Select(o => new GenericFighter()
         {
-          Id = o.Id,
-          Accuracy = o.Accuracy,
-          Agility = o.Agility,
-          Expertise = o.Expertise,
-          Power = o.Power,
-          Regeneration = o.Regeneration,
-          Speed = o.Speed,
-          Stamina = o.Stamina,
-          Toughness = o.Toughness,
-          Vision = o.Vision,
-          Vitality = o.Vitality,
+          Id = o.Fighter.Id,
+          Team = o.TeamId,
+          Accuracy = o.Fighter.Accuracy,
+          Agility = o.Fighter.Agility,
+          Expertise = o.Fighter.Expertise,
+          Power = o.Fighter.Power,
+          Regeneration = o.Fighter.Regeneration,
+          Speed = o.Fighter.Speed,
+          Stamina = o.Fighter.Stamina,
+          Toughness = o.Fighter.Toughness,
+          Vision = o.Fighter.Vision,
+          Vitality = o.Fighter.Vitality,
         });
 
       var engine = engineFactory.GetEngine(fighters, match.Options);
@@ -311,6 +463,8 @@ namespace EmpoweredPixels.Controllers.Matches
           Created = dateTimeProvider.Now,
           FighterId = fighterScore.Id,
           MatchId = match.Id,
+          RoundsAlive = fighterScore.RoundsAlive,
+          Powerlevel = fighterScore.Powerlevel,
           TotalDamageDone = fighterScore.TotalDamageDone,
           MaxEnergy = fighterScore.MaxEnergy,
           MaxHealth = fighterScore.MaxHealth,

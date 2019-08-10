@@ -4,6 +4,8 @@ export class Match
 {
     public id: string;
 
+    public creatorUserId: number;
+
     public created: Date;
 
     public started: Date;
