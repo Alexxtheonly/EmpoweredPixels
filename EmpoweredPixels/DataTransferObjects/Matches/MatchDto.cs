@@ -7,6 +7,8 @@ namespace EmpoweredPixels.DataTransferObjects.Matches
   {
     public Guid Id { get; set; }
 
+    public long CreatorUserId { get; set; }
+
     public DateTimeOffset Created { get; set; }
 
     public DateTimeOffset Started { get; set; }

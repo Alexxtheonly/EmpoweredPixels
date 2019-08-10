@@ -27,7 +27,8 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RoundsViewerComponent } from './match-viewer/+components/rounds-viewer/rounds-viewer.component';
 import { MatchbrowserComponent } from './match/matchbrowser/matchbrowser.component';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { NgAggregatePipesModule, NgArrayPipesModule } from 'angular-pipes';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -63,6 +64,8 @@ export function HttpLoaderFactory(http: HttpClient)
     ReactiveFormsModule,
     AngularFontAwesomeModule,
     NgxPaginationModule,
+    NgAggregatePipesModule,
+    NgArrayPipesModule,
     RouterModule.forRoot([
       { path: '', component: MatchbrowserComponent, pathMatch: 'full', canActivate: [AuthGuardService] },
       { path: 'login', component: LoginComponent },

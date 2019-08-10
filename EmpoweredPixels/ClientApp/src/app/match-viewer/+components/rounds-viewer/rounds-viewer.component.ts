@@ -99,7 +99,7 @@ export class RoundsViewerComponent implements OnInit
 
   public showAllRounds(): void
   {
-    this.roundsConsole = JSON.parse(JSON.stringify(this.ticks));
+    this.roundsConsole = this.ticks;
   }
 
   public setPositionOfFighter(tick: any): void

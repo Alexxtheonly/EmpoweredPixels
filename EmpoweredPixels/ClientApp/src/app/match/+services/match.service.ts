@@ -1,3 +1,5 @@
+import { Fighter } from './../../roster/+models/fighter';
+import { MatchTeam } from './../+models/match-team';
 import { Match } from './../+models/match';
 import { PagingOptions } from './../+models/paging-options';
 import { MatchRegistration } from '../+models/match-registration';
@@ -7,6 +9,7 @@ import { Observable } from 'rxjs';
 import { MatchResult } from 'src/app/match-viewer/+models/match-result';
 import { MatchOptions } from '../+models/match-options';
 import { Page } from '../+models/page';
+import { MatchTeamOperation } from '../+models/match-team-operation';
 
 @Injectable({
   providedIn: 'root'
@@ -59,5 +62,39 @@ export class MatchService
   public browse(options: PagingOptions): Observable<Page<Match>>
   {
     return this.http.post<Page<Match>>('api/match/browse', options);
+  }
+
+  public createTeam(match: Match, password?: string): Observable<MatchTeam>
+  {
+    const operation = new MatchTeamOperation();
+    operation.matchId = match.id;
+    operation.password = password;
+
+    return this.http.put<MatchTeam>('api/match/create/team', operation);
+  }
+
+  public getTeams(match: Match): Observable<MatchTeam[]>
+  {
+    return this.http.get<MatchTeam[]>(`api/match/${match.id}/teams`);
+  }
+
+  public joinTeam(match: Match, teamId: string, fighterId: string, password?: string): Observable<any>
+  {
+    const operation = new MatchTeamOperation();
+    operation.id = teamId;
+    operation.matchId = match.id;
+    operation.password = password;
+    operation.fighterId = fighterId;
+
+    return this.http.post('api/match/join/team', operation);
+  }
+
+  public leaveTeam(match: Match, fighterId: string): Observable<any>
+  {
+    const operation = new MatchTeamOperation();
+    operation.matchId = match.id;
+    operation.fighterId = fighterId;
+
+    return this.http.post('api/match/leave/team', operation);
   }
 }

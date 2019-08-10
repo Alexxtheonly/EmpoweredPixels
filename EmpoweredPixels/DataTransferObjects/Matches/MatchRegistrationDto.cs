@@ -8,6 +8,8 @@ namespace EmpoweredPixels.DataTransferObjects.Matches
 
     public Guid FighterId { get; set; }
 
+    public Guid? TeamId { get; set; }
+
     public string FighterName { get; set; }
 
     public string Username { get; set; }

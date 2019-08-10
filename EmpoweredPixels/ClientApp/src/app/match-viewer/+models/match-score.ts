@@ -4,6 +4,8 @@ export class MatchScore extends Tick
 {
     public id: string;
 
+    public teamId: string;
+
     public powerlevel: number;
 
     public maxHealth: number;
