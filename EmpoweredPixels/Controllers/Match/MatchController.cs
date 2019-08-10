@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using SharpFightingEngine.Engines;
 using SharpFightingEngine.Fighters;
 
@@ -403,7 +404,7 @@ namespace EmpoweredPixels.Controllers.Matches
         return BadRequest();
       }
 
-      return Content(matchResult.ResultJson);
+      return Content(matchResult.ResultJson.Decompress());
     }
 
     private async Task PushMatchUpdate(Guid id)
@@ -445,7 +446,10 @@ namespace EmpoweredPixels.Controllers.Matches
       Context.MatchResults.Add(new Models.Matches.MatchResult()
       {
         MatchId = match.Id,
-        ResultJson = JsonConvert.SerializeObject(result.AsDto()),
+        ResultJson = JsonConvert.SerializeObject(result.AsDto(), new JsonSerializerSettings()
+        {
+          ContractResolver = new CamelCasePropertyNamesContractResolver(),
+        }).Compress(),
       });
     }
 

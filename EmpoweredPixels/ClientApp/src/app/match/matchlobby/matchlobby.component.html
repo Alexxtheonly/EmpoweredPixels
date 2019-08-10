@@ -16,10 +16,10 @@
         </select>
       </div>
       <div>
-        <button class="nes-btn is-success" (click)="join()">Join match</button>
-        <button class="nes-btn is-error" (click)="leave()">Leave match</button>
-        <button class="nes-btn" (click)="teamId=null;showTeamModal=true;">Create and join team</button>
-        <button class="nes-btn" (click)="leaveTeam()">Leave team</button>
+        <button *ngIf="fighterId" class="nes-btn is-success" (click)="join()">Join match</button>
+        <button *ngIf="fighterId" class="nes-btn is-error" (click)="leave()">Leave match</button>
+        <button *ngIf="fighterId" class="nes-btn" (click)="teamId=null;showTeamModal=true;">Create and join team</button>
+        <button *ngIf="fighterId" class="nes-btn" (click)="leaveTeam()">Leave team</button>
       </div>
     </div>
   </div>

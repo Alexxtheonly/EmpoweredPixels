@@ -152,7 +152,15 @@ namespace EmpoweredPixels.Extensions
       }
     }
 
-    public static MatchScoreDto AsDto(this MatchScore score)
+    public static MatchScoreDto AsDto(this FighterMatchScore fighterScore)
+    {
+      var score = AsDto((IMatchScore)fighterScore);
+      score.TeamId = fighterScore.TeamId;
+
+      return score;
+    }
+
+    public static MatchScoreDto AsDto(this IMatchScore score)
     {
       return new MatchScoreDto()
       {

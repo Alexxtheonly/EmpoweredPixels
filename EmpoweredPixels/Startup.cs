@@ -30,6 +30,8 @@ namespace EmpoweredPixels
     {
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+      services.AddResponseCompression();
+
       services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
       services.AddSingleton<IVersionProvider, VersionProvider>();
       services.AddTransient<IEngineFactory, EngineFactory>();
@@ -66,6 +68,7 @@ namespace EmpoweredPixels
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
+      app.UseResponseCompression();
       app.UseAuthentication();
       app.UseStaticFiles();
       app.UseSpaStaticFiles();
