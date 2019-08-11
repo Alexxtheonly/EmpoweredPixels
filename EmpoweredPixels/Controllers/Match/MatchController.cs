@@ -217,9 +217,18 @@ namespace EmpoweredPixels.Controllers.Matches
 
       var match = await Context.Matches
         .Where(o => o.Started == null)
+        .Include(o => o.Registrations)
         .FirstOrDefaultAsync(o => o.Id == dto.MatchId);
 
       if (match == null)
+      {
+        return BadRequest();
+      }
+
+      if (match.Options.MaxFightersPerUser != null &&
+        match.Registrations
+        .Where(o => o.Fighter.UserId == userId)
+        .Count() >= match.Options.MaxFightersPerUser)
       {
         return BadRequest();
       }
