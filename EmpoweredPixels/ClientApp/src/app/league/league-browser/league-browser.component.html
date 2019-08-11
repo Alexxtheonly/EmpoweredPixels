@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row">
+        <div class="card col col-3" *ngFor="let league of leagues | async">
+            <div class="card-body">
+                <h5 class="card-title">{{ league.name }}</h5>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Max powerlevel: {{ league.maxPowerlevel }}</li>
+                    <li class="list-group-item">Subscribers: {{ league.subscriberCount }}</li>
+                    <li class="list-group-item">Next match: {{ league.nextMatch | date:'short' }}</li>
+                </ul>
+
+                <a class="nes-btn col" routerLink="/league/{{ league.id }}">Show</a>
+            </div>
+        </div>
+    </div>
+</div>

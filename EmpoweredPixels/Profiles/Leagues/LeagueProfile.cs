@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AutoMapper;
 using Cronos;
 using EmpoweredPixels.DataTransferObjects.Leagues;
@@ -15,13 +16,27 @@ namespace EmpoweredPixels.Profiles.Leagues
        .ForMember(o => o.IsTeam, opt => opt.MapFrom(o => o.Options.IsTeam))
        .ForMember(o => o.TeamSize, opt => opt.MapFrom(o => o.Options.TeamSize))
        .ForMember(o => o.MaxPowerlevel, opt => opt.MapFrom(o => o.Options.MatchOptions.MaxPowerlevel))
-       .ForMember(o => o.NextMatch, opt => opt.MapFrom(o => CronExpression.Parse(o.Options.IntervalCron).GetNextOccurrence(DateTimeOffset.UtcNow.DateTime, false)));
+       .ForMember(o => o.NextMatch, opt => opt.MapFrom(o => CronExpression.Parse(o.Options.IntervalCron).GetNextOccurrence(DateTimeOffset.UtcNow, TimeZoneInfo.Local, false)))
+       .Include<League, LeagueDetailDto>();
 
-      CreateMap<LeagueSubscription, LeagueSubscriptionDto>();
+      CreateMap<League, LeagueDetailDto>();
+
+      CreateMap<LeagueSubscription, LeagueSubscriptionDto>()
+        .ForMember(o => o.FighterName, opt => opt.MapFrom(o => o.Fighter.Name))
+        .ForMember(o => o.User, opt => opt.MapFrom(o => o.Fighter.User.Name));
+
       CreateMap<LeagueSubscriptionDto, LeagueSubscription>();
 
       CreateMap<LeagueMatch, LeagueMatchDto>()
-        .ForMember(o => o.Started, opt => opt.MapFrom(o => o.Match.Started));
+        .ForMember(o => o.Started, opt => opt.MapFrom(o => o.Match.Started))
+        .ForMember(o => o.HasWinner, opt => opt.MapFrom(o => GetWinningFighterResult(o) == null ? false : true))
+        .ForMember(o => o.WinnerFighterName, opt => opt.MapFrom(o => GetWinningFighterResult(o) == null ? string.Empty : GetWinningFighterResult(o).Fighter.Name))
+        .ForMember(o => o.WinnerUser, opt => opt.MapFrom(o => GetWinningFighterResult(o) == null ? string.Empty : GetWinningFighterResult(o).Fighter.User.Name));
+    }
+
+    private static Models.Matches.MatchFighterResult GetWinningFighterResult(LeagueMatch o)
+    {
+      return o.Match.MatchFighterResults.OrderBy(u => u.Position).FirstOrDefault(u => u.Result == Enums.Matches.Result.Win);
     }
   }
 }

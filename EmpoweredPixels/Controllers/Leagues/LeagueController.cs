@@ -10,6 +10,7 @@ using EmpoweredPixels.Models.Leagues;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SharpFightingEngine.Fighters;
 
 namespace EmpoweredPixels.Controllers.Leagues
 {
@@ -27,6 +28,17 @@ namespace EmpoweredPixels.Controllers.Leagues
         .Include(o => o.Subscriptions)
         .ProjectTo<LeagueDto>(Mapper.ConfigurationProvider)
         .ToListAsync());
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<LeagueDetailDto>> GetLeague(int id)
+    {
+      return Ok(await Context.Leagues
+        .Include(o => o.Subscriptions)
+        .ThenInclude(o => o.Fighter)
+        .ThenInclude(o => o.User)
+        .ProjectTo<LeagueDetailDto>(Mapper.ConfigurationProvider)
+        .FirstOrDefaultAsync(o => o.Id == id));
     }
 
     [HttpPost("subscribe")]
@@ -52,6 +64,11 @@ namespace EmpoweredPixels.Controllers.Leagues
         .FirstOrDefaultAsync(o => o.Id == dto.FighterId);
 
       if (fighter == null)
+      {
+        return BadRequest();
+      }
+
+      if (fighter.PowerLevel() > league.Options.MatchOptions.MaxPowerlevel)
       {
         return BadRequest();
       }
@@ -102,10 +119,44 @@ namespace EmpoweredPixels.Controllers.Leagues
       var subscription = await Context.LeagueSubscriptions
         .FirstOrDefaultAsync(o => o.FighterId == fighter.Id && o.LeagueId == league.Id);
 
+      if (subscription == null)
+      {
+        return BadRequest();
+      }
+
       Context.Remove(subscription);
       await Context.SaveChangesAsync();
 
       return Ok();
+    }
+
+    [HttpGet("{id}/subscriptions")]
+    public async Task<ActionResult<IEnumerable<LeagueSubscriptionDto>>> GetLeagueSubscriptions(int id)
+    {
+      return Ok(await Context.LeagueSubscriptions
+        .Where(o => o.LeagueId == id)
+        .Include(o => o.Fighter)
+        .ThenInclude(o => o.User)
+        .ProjectTo<LeagueSubscriptionDto>(Mapper.ConfigurationProvider)
+        .ToListAsync());
+    }
+
+    [HttpGet("{id}/subscriptions/user")]
+    public async Task<ActionResult<IEnumerable<LeagueSubscriptionDto>>> GetLeagueSubscriptionsForUser(int id)
+    {
+      var userId = User.Claims.GetUserId();
+      if (userId == null)
+      {
+        return Forbid();
+      }
+
+      return Ok(await Context.LeagueSubscriptions
+        .Where(o => o.LeagueId == id)
+        .Include(o => o.Fighter)
+        .ThenInclude(o => o.User)
+        .Where(o => o.Fighter.UserId == userId)
+        .ProjectTo<LeagueSubscriptionDto>(Mapper.ConfigurationProvider)
+        .ToListAsync());
     }
 
     [HttpGet("{id}/matches")]
@@ -114,6 +165,10 @@ namespace EmpoweredPixels.Controllers.Leagues
       return Ok(await Context.LeagueMatches
         .Where(o => o.LeagueId == id)
         .Include(o => o.Match)
+        .ThenInclude(o => o.MatchFighterResults)
+        .ThenInclude(o => o.Fighter)
+        .ThenInclude(o => o.User)
+        .OrderByDescending(o => o.Match.Started)
         .ProjectTo<LeagueMatchDto>(Mapper.ConfigurationProvider)
         .ToListAsync());
     }

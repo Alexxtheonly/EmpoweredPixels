@@ -29,6 +29,8 @@ import { RoundsViewerComponent } from './match-viewer/+components/rounds-viewer/
 import { MatchbrowserComponent } from './match/matchbrowser/matchbrowser.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgAggregatePipesModule, NgArrayPipesModule } from 'angular-pipes';
+import { LeagueBrowserComponent } from './league/league-browser/league-browser.component';
+import { LeagueDetailComponent } from './league/league-detail/league-detail.component';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -55,7 +57,9 @@ export function HttpLoaderFactory(http: HttpClient)
     FighterNamePipe,
     FooterComponent,
     RoundsViewerComponent,
-    MatchbrowserComponent
+    MatchbrowserComponent,
+    LeagueBrowserComponent,
+    LeagueDetailComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -76,6 +80,8 @@ export function HttpLoaderFactory(http: HttpClient)
       { path: 'match/create', component: MatchCreationComponent, canActivate: [AuthGuardService] },
       { path: 'match/:id', component: MatchlobbyComponent, canActivate: [AuthGuardService] },
       { path: 'match/:id/result', component: MatchViewerComponent, canActivate: [AuthGuardService] },
+      { path: 'league', component: LeagueBrowserComponent, canActivate: [AuthGuardService] },
+      { path: 'league/:id', component: LeagueDetailComponent, canActivate: [AuthGuardService] },
     ]),
     TranslateModule.forRoot({
       loader: {

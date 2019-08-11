@@ -117,9 +117,9 @@ namespace EmpoweredPixels.Models
 
       modelBuilder.Entity<MatchFighterResult>(e =>
       {
-        e.HasKey(o => new { o.FighterId, o.MatchId });
-        e.HasOne<Match>().WithMany().HasForeignKey(o => o.MatchId).OnDelete(DeleteBehavior.Cascade);
-        e.HasOne<Fighter>().WithMany().HasForeignKey(o => o.FighterId).OnDelete(DeleteBehavior.Cascade);
+        e.HasKey(o => new { o.MatchId, o.FighterId });
+        e.HasOne(o => o.Match).WithMany(o => o.MatchFighterResults).HasForeignKey(o => o.MatchId);
+        e.HasOne(o => o.Fighter).WithMany().HasForeignKey(o => o.FighterId);
         e.HasIndex(o => o.Result);
       });
 

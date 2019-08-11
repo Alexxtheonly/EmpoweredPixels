@@ -24,6 +24,32 @@ namespace EmpoweredPixels.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MatchFighterResults",
+                columns: table => new
+                {
+                    FighterId = table.Column<Guid>(nullable: false),
+                    MatchId = table.Column<Guid>(nullable: false),
+                    Position = table.Column<int>(nullable: false),
+                    Result = table.Column<short>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MatchFighterResults", x => new { x.MatchId, x.FighterId });
+                    table.ForeignKey(
+                        name: "FK_MatchFighterResults_Fighters_FighterId",
+                        column: x => x.FighterId,
+                        principalTable: "Fighters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MatchFighterResults_Matches_MatchId",
+                        column: x => x.MatchId,
+                        principalTable: "Matches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LeagueMatches",
                 columns: table => new
                 {
@@ -90,6 +116,16 @@ namespace EmpoweredPixels.Migrations
                 name: "IX_LeagueSubscriptions_FighterId",
                 table: "LeagueSubscriptions",
                 column: "FighterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MatchFighterResults_FighterId",
+                table: "MatchFighterResults",
+                column: "FighterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MatchFighterResults_Result",
+                table: "MatchFighterResults",
+                column: "Result");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -99,6 +135,9 @@ namespace EmpoweredPixels.Migrations
 
             migrationBuilder.DropTable(
                 name: "LeagueSubscriptions");
+
+            migrationBuilder.DropTable(
+                name: "MatchFighterResults");
 
             migrationBuilder.DropTable(
                 name: "Leagues");

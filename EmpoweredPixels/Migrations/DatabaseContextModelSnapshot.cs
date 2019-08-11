@@ -170,17 +170,17 @@ namespace EmpoweredPixels.Migrations
 
             modelBuilder.Entity("EmpoweredPixels.Models.Matches.MatchFighterResult", b =>
                 {
-                    b.Property<Guid>("FighterId");
-
                     b.Property<Guid>("MatchId");
+
+                    b.Property<Guid>("FighterId");
 
                     b.Property<int>("Position");
 
                     b.Property<short>("Result");
 
-                    b.HasKey("FighterId", "MatchId");
+                    b.HasKey("MatchId", "FighterId");
 
-                    b.HasIndex("MatchId");
+                    b.HasIndex("FighterId");
 
                     b.HasIndex("Result");
 
@@ -370,13 +370,13 @@ namespace EmpoweredPixels.Migrations
 
             modelBuilder.Entity("EmpoweredPixels.Models.Matches.MatchFighterResult", b =>
                 {
-                    b.HasOne("EmpoweredPixels.Models.Roster.Fighter")
+                    b.HasOne("EmpoweredPixels.Models.Roster.Fighter", "Fighter")
                         .WithMany()
                         .HasForeignKey("FighterId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("EmpoweredPixels.Models.Matches.Match")
-                        .WithMany()
+                    b.HasOne("EmpoweredPixels.Models.Matches.Match", "Match")
+                        .WithMany("MatchFighterResults")
                         .HasForeignKey("MatchId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

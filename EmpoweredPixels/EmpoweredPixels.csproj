@@ -46,6 +46,14 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190715185259_FixUserMatch.cs" />
     <Compile Remove="Migrations\20190715185259_FixUserMatch.Designer.cs" />
+    <Compile Remove="Migrations\20190811075918_AddFighterMatchResult.cs" />
+    <Compile Remove="Migrations\20190811075918_AddFighterMatchResult.Designer.cs" />
+    <Compile Remove="Migrations\20190811104240_AddLeagues.cs" />
+    <Compile Remove="Migrations\20190811104240_AddLeagues.Designer.cs" />
+    <Compile Remove="Migrations\20190811162637_AddAdditionalLeagueColumns.cs" />
+    <Compile Remove="Migrations\20190811162637_AddAdditionalLeagueColumns.Designer.cs" />
+    <Compile Remove="Migrations\20190811163133_AddLeagues.cs" />
+    <Compile Remove="Migrations\20190811163133_AddLeagues.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,5 +20,7 @@ namespace EmpoweredPixels.Models.Matches
     public virtual User User { get; set; }
 
     public virtual ICollection<MatchRegistration> Registrations { get; set; } = new List<MatchRegistration>();
+
+    public ICollection<MatchFighterResult> MatchFighterResults { get; set; } = new List<MatchFighterResult>();
   }
 }
