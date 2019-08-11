@@ -1,7 +1,10 @@
-﻿using EmpoweredPixels.Models;
+﻿using EmpoweredPixels.Jobs;
+using EmpoweredPixels.Models;
+using Hangfire;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace EmpoweredPixels.Extensions
 {

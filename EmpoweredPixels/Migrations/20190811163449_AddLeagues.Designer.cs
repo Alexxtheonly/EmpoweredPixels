@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmpoweredPixels.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190811075918_AddFighterMatchResult")]
-    partial class AddFighterMatchResult
+    [Migration("20190811163449_AddLeagues")]
+    partial class AddLeagues
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -91,6 +91,65 @@ namespace EmpoweredPixels.Migrations
                     b.ToTable("Verifications");
                 });
 
+            modelBuilder.Entity("EmpoweredPixels.Models.Leagues.League", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsDeactivated");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Options");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Leagues");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsDeactivated = false,
+                            Name = "League 300",
+                            Options = "{\"IntervalCron\":\"0 */3 * * *\",\"IsTeam\":false,\"TeamSize\":null,\"MatchOptions\":{\"IsPrivate\":true,\"MaxPowerlevel\":300,\"ActionsPerRound\":2,\"MaxFightersPerUser\":1,\"BotCount\":null,\"BotPowerlevel\":null,\"Features\":[\"e800723c-6324-47ab-9593-1952346ad772\",\"77c70366-24fb-4af3-8a34-869f930bc420\"],\"Battlefield\":\"dc937e88-f307-4cf0-aef5-b468d27aed4b\",\"Bounds\":\"fb1698b4-809b-40cd-94d6-0a3b257255c3\",\"PositionGenerator\":\"f88be549-9be0-4dd2-aabc-5af599dcc140\",\"MoveOrder\":\"12e9e0ae-eca3-440d-a649-48d687f6d97b\",\"WinCondition\":\"f5f16639-7796-40ee-b15b-f16eb6e946c4\",\"StaleCondition\":\"04616688-2cd1-4341-b757-afdae8af4035\"}}"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsDeactivated = false,
+                            Name = "League 500",
+                            Options = "{\"IntervalCron\":\"0 */3 * * *\",\"IsTeam\":false,\"TeamSize\":null,\"MatchOptions\":{\"IsPrivate\":true,\"MaxPowerlevel\":500,\"ActionsPerRound\":2,\"MaxFightersPerUser\":1,\"BotCount\":null,\"BotPowerlevel\":null,\"Features\":[\"e800723c-6324-47ab-9593-1952346ad772\",\"77c70366-24fb-4af3-8a34-869f930bc420\"],\"Battlefield\":\"dc937e88-f307-4cf0-aef5-b468d27aed4b\",\"Bounds\":\"fb1698b4-809b-40cd-94d6-0a3b257255c3\",\"PositionGenerator\":\"f88be549-9be0-4dd2-aabc-5af599dcc140\",\"MoveOrder\":\"12e9e0ae-eca3-440d-a649-48d687f6d97b\",\"WinCondition\":\"f5f16639-7796-40ee-b15b-f16eb6e946c4\",\"StaleCondition\":\"04616688-2cd1-4341-b757-afdae8af4035\"}}"
+                        });
+                });
+
+            modelBuilder.Entity("EmpoweredPixels.Models.Leagues.LeagueMatch", b =>
+                {
+                    b.Property<int>("LeagueId");
+
+                    b.Property<Guid>("MatchId");
+
+                    b.HasKey("LeagueId", "MatchId");
+
+                    b.HasIndex("MatchId");
+
+                    b.ToTable("LeagueMatches");
+                });
+
+            modelBuilder.Entity("EmpoweredPixels.Models.Leagues.LeagueSubscription", b =>
+                {
+                    b.Property<int>("LeagueId");
+
+                    b.Property<Guid>("FighterId");
+
+                    b.HasKey("LeagueId", "FighterId");
+
+                    b.HasIndex("FighterId");
+
+                    b.ToTable("LeagueSubscriptions");
+                });
+
             modelBuilder.Entity("EmpoweredPixels.Models.Matches.Match", b =>
                 {
                     b.Property<Guid>("Id")
@@ -113,17 +172,17 @@ namespace EmpoweredPixels.Migrations
 
             modelBuilder.Entity("EmpoweredPixels.Models.Matches.MatchFighterResult", b =>
                 {
-                    b.Property<Guid>("FighterId");
-
                     b.Property<Guid>("MatchId");
+
+                    b.Property<Guid>("FighterId");
 
                     b.Property<int>("Position");
 
                     b.Property<short>("Result");
 
-                    b.HasKey("FighterId", "MatchId");
+                    b.HasKey("MatchId", "FighterId");
 
-                    b.HasIndex("MatchId");
+                    b.HasIndex("FighterId");
 
                     b.HasIndex("Result");
 
@@ -277,6 +336,32 @@ namespace EmpoweredPixels.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("EmpoweredPixels.Models.Leagues.LeagueMatch", b =>
+                {
+                    b.HasOne("EmpoweredPixels.Models.Leagues.League", "League")
+                        .WithMany()
+                        .HasForeignKey("LeagueId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EmpoweredPixels.Models.Matches.Match", "Match")
+                        .WithMany()
+                        .HasForeignKey("MatchId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EmpoweredPixels.Models.Leagues.LeagueSubscription", b =>
+                {
+                    b.HasOne("EmpoweredPixels.Models.Roster.Fighter", "Fighter")
+                        .WithMany()
+                        .HasForeignKey("FighterId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EmpoweredPixels.Models.Leagues.League", "League")
+                        .WithMany("Subscriptions")
+                        .HasForeignKey("LeagueId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("EmpoweredPixels.Models.Matches.Match", b =>
                 {
                     b.HasOne("EmpoweredPixels.Models.Identity.User", "User")
@@ -287,13 +372,13 @@ namespace EmpoweredPixels.Migrations
 
             modelBuilder.Entity("EmpoweredPixels.Models.Matches.MatchFighterResult", b =>
                 {
-                    b.HasOne("EmpoweredPixels.Models.Roster.Fighter")
+                    b.HasOne("EmpoweredPixels.Models.Roster.Fighter", "Fighter")
                         .WithMany()
                         .HasForeignKey("FighterId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("EmpoweredPixels.Models.Matches.Match")
-                        .WithMany()
+                    b.HasOne("EmpoweredPixels.Models.Matches.Match", "Match")
+                        .WithMany("MatchFighterResults")
                         .HasForeignKey("MatchId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

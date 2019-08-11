@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using EmpoweredPixels.DataTransferObjects.Matches;
-using EmpoweredPixels.Enums.Matches;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Factories.Matches;
 using EmpoweredPixels.Hubs.Matches;
@@ -18,9 +17,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using SharpFightingEngine.Engines;
 using SharpFightingEngine.Fighters;
 
 namespace EmpoweredPixels.Controllers.Matches
@@ -394,7 +390,7 @@ namespace EmpoweredPixels.Controllers.Matches
         return BadRequest();
       }
 
-      await StartMatchInternal(match);
+      await Context.StartMatch(match, dateTimeProvider, engineFactory);
 
       await Context.SaveChangesAsync();
 
@@ -426,100 +422,6 @@ namespace EmpoweredPixels.Controllers.Matches
         .FirstOrDefaultAsync(o => o.Id == id);
 
       await matchHubContext.Clients.Group(id.ToString()).UpdateMatch(Mapper.Map<MatchDto>(match));
-    }
-
-    private async Task StartMatchInternal(Match match)
-    {
-      match.Started = dateTimeProvider.Now;
-
-      var fighters = match.Registrations
-        .Select(o => new GenericFighter()
-        {
-          Id = o.Fighter.Id,
-          Team = o.TeamId,
-          Accuracy = o.Fighter.Accuracy,
-          Agility = o.Fighter.Agility,
-          Expertise = o.Fighter.Expertise,
-          Power = o.Fighter.Power,
-          Regeneration = o.Fighter.Regeneration,
-          Speed = o.Fighter.Speed,
-          Stamina = o.Fighter.Stamina,
-          Toughness = o.Fighter.Toughness,
-          Vision = o.Fighter.Vision,
-          Vitality = o.Fighter.Vitality,
-        });
-
-      var engine = engineFactory.GetEngine(fighters, match.Options);
-      var result = engine.StartMatch();
-
-      await CreateFighterResults(match, result);
-      await CreateFighterScores(match, result);
-      Context.MatchResults.Add(new Models.Matches.MatchResult()
-      {
-        MatchId = match.Id,
-        ResultJson = JsonConvert.SerializeObject(result.AsDto(), new JsonSerializerSettings()
-        {
-          ContractResolver = new CamelCasePropertyNamesContractResolver(),
-        }).Compress(),
-      });
-    }
-
-    private async Task CreateFighterScores(Match match, IMatchResult result)
-    {
-      foreach (var fighterScore in result.Scores)
-      {
-        if (!await Context.Fighters.AnyAsync(o => o.Id == fighterScore.Id))
-        {
-          continue;
-        }
-
-        Context.MatchScoreFighters.Add(new MatchScoreFighter()
-        {
-          Created = dateTimeProvider.Now,
-          FighterId = fighterScore.Id,
-          MatchId = match.Id,
-          RoundsAlive = fighterScore.RoundsAlive,
-          Powerlevel = fighterScore.Powerlevel,
-          TotalDamageDone = fighterScore.TotalDamageDone,
-          MaxEnergy = fighterScore.MaxEnergy,
-          MaxHealth = fighterScore.MaxHealth,
-          TotalDamageTaken = fighterScore.TotalDamageTaken,
-          TotalDeaths = fighterScore.TotalDeaths,
-          TotalDistanceTraveled = fighterScore.TotalDistanceTraveled,
-          TotalEnergyUsed = fighterScore.TotalEnergyUsed,
-          TotalKills = fighterScore.TotalKills,
-          TotalRegeneratedEnergy = fighterScore.TotalRegeneratedEnergy,
-          TotalRegeneratedHealth = fighterScore.TotalRegeneratedHealth,
-        });
-      }
-    }
-
-    private async Task CreateFighterResults(Match match, IMatchResult result)
-    {
-      await CreateFighterResult(result.Wins, Result.Win, match);
-      await CreateFighterResult(result.Draws, Result.Draw, match);
-      await CreateFighterResult(result.Loses, Result.Lose, match);
-    }
-
-    private async Task CreateFighterResult(IEnumerable<IFighter> fighters, Result result, Match match)
-    {
-      for (int i = 0; i < fighters.Count(); i++)
-      {
-        var fighter = fighters.ElementAt(i);
-
-        if (!await Context.Fighters.AnyAsync(o => o.Id == fighter.Id))
-        {
-          continue;
-        }
-
-        Context.Add(new MatchFighterResult()
-        {
-          MatchId = match.Id,
-          FighterId = fighter.Id,
-          Position = i,
-          Result = result,
-        });
-      }
     }
   }
 }
