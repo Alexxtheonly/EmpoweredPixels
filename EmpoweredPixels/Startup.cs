@@ -2,9 +2,11 @@ using AutoMapper;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Factories.Matches;
 using EmpoweredPixels.Hubs.Matches;
+using EmpoweredPixels.Jobs;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Providers.DateTime;
 using EmpoweredPixels.Providers.Version;
+using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,11 +32,15 @@ namespace EmpoweredPixels
     {
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+      services.AddHangfire(o => o.UseSqlServerStorage(Configuration.GetConnectionString()));
+      services.AddHangfireServer();
+
       services.AddResponseCompression();
 
       services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
       services.AddSingleton<IVersionProvider, VersionProvider>();
       services.AddTransient<IEngineFactory, EngineFactory>();
+      services.AddTransient<ILeagueJob, LeagueJob>();
 
       services.AddDbContextPool<DatabaseContext>(o => o.ConfigureDatabase(Configuration));
       services.AddAutoMapper(typeof(Startup));
@@ -66,8 +72,14 @@ namespace EmpoweredPixels
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(
+      IApplicationBuilder app,
+      IHostingEnvironment env,
+      IRecurringJobManager recurringJobManager,
+      DatabaseContext databaseContext)
     {
+      recurringJobManager.AddLeagueJobs(databaseContext);
+
       app.UseResponseCompression();
       app.UseAuthentication();
       app.UseStaticFiles();

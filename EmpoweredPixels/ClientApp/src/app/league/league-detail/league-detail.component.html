@@ -1,0 +1,74 @@
+<div class="container" *ngIf="leagueDetail">
+    <h1>{{ leagueDetail.name }}</h1>
+
+    <div class="row">
+        <div class="card col col-4">
+            <div class="card-body">
+                <h5 class="card-title">Options</h5>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Max powerlevel: {{ leagueDetail.maxPowerlevel }}</li>
+                    <li class="list-group-item">Subscribers: {{ leagueDetail.subscriberCount }}</li>
+                    <li class="list-group-item">Next match: {{ leagueDetail.nextMatch | date:'short' }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card card-body col-4">
+            <h5>Subscribers</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Fighter</th>
+                        <th>User</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let sub of leagueDetail.subscriptions">
+                        <td>{{ sub.fighterName }}</td>
+                        <td>{{ sub.user }} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card card-body col-4">
+            <h5>Manage subscriptions</h5>
+            <select class="nes-select" [(ngModel)]="fighterId">
+                <option [ngValue]="fighter.id" *ngFor="let fighter of fighters | async">{{ fighter.name }}</option>
+            </select>
+
+            <button class="nes-btn" *ngIf="fighterId" (click)="subscribe()">Subscribe</button>
+            <button class="nes-btn" *ngIf="fighterId" (click)="unsubscribe()">Unsubscribe</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="card card-body col-12">
+            <h4>Recent matches</h4>
+            <span *ngIf="matches?.length === 0">No matches yet.</span>
+            <div *ngIf="matches?.length > 0">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Match</th>
+                            <th>Started</th>
+                            <th>Has winner</th>
+                            <th>Fighter</th>
+                            <th>User</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let match of matches">
+                            <td><a routerLink="/match/{{ match.matchId }}">{{ match.matchId }}</a></td>
+                            <td>{{ match.started | timeAgo }}</td>
+                            <td>{{ match.hasWinner }}</td>
+                            <td>{{ match.winnerFighterName }}</td>
+                            <td>{{ match.winnerUser }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
