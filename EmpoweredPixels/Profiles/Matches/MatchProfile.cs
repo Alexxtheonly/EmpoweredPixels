@@ -18,6 +18,8 @@ namespace EmpoweredPixels.Profiles.Matches
 
       CreateMap<MatchTeam, MatchTeamDto>()
         .ForMember(o => o.HasPassword, opt => opt.MapFrom(o => !string.IsNullOrEmpty(o.Password)));
+
+      CreateMap<MatchFighterResult, MatchFighterResultDto>();
     }
   }
 }
