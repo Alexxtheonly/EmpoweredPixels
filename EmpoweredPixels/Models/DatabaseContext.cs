@@ -162,7 +162,7 @@ namespace EmpoweredPixels.Models
           },
           new League()
           {
-            Id = 1,
+            Id = 2,
             Name = "League 500",
             Options = new LeagueOptionsDto()
             {
