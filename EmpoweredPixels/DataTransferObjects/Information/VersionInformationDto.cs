@@ -1,4 +1,4 @@
-﻿namespace EmpoweredPixels.Models.Information
+﻿namespace EmpoweredPixels.DataTransferObjects.Information
 {
   public class VersionInformationDto
   {

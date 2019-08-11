@@ -33,6 +33,8 @@ namespace EmpoweredPixels.Models
 
     public DbSet<MatchResult> MatchResults { get; set; }
 
+    public DbSet<MatchFighterResult> MatchFighterResults { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.Entity<User>(e =>
@@ -102,6 +104,14 @@ namespace EmpoweredPixels.Models
         e.HasKey(o => o.Id);
         e.Property(o => o.Id).ValueGeneratedOnAdd();
         e.HasOne<Match>().WithOne().HasForeignKey<MatchResult>(o => o.MatchId).OnDelete(DeleteBehavior.Cascade);
+      });
+
+      modelBuilder.Entity<MatchFighterResult>(e =>
+      {
+        e.HasKey(o => new { o.FighterId, o.MatchId });
+        e.HasOne<Match>().WithMany().HasForeignKey(o => o.MatchId).OnDelete(DeleteBehavior.Cascade);
+        e.HasOne<Fighter>().WithMany().HasForeignKey(o => o.FighterId).OnDelete(DeleteBehavior.Cascade);
+        e.HasIndex(o => o.Result);
       });
     }
   }

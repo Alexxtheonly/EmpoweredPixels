@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using EmpoweredPixels.DataTransferObjects.Information;
 using EmpoweredPixels.Models;
-using EmpoweredPixels.Models.Information;
 using EmpoweredPixels.Providers.Version;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
