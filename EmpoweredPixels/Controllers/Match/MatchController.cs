@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using EmpoweredPixels.DataTransferObjects.Matches;
+using EmpoweredPixels.Enums.Matches;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Factories.Matches;
 using EmpoweredPixels.Hubs.Matches;
@@ -451,6 +452,7 @@ namespace EmpoweredPixels.Controllers.Matches
       var engine = engineFactory.GetEngine(fighters, match.Options);
       var result = engine.StartMatch();
 
+      await CreateFighterResults(match, result);
       await CreateFighterScores(match, result);
       Context.MatchResults.Add(new Models.Matches.MatchResult()
       {
@@ -488,6 +490,34 @@ namespace EmpoweredPixels.Controllers.Matches
           TotalKills = fighterScore.TotalKills,
           TotalRegeneratedEnergy = fighterScore.TotalRegeneratedEnergy,
           TotalRegeneratedHealth = fighterScore.TotalRegeneratedHealth,
+        });
+      }
+    }
+
+    private async Task CreateFighterResults(Match match, IMatchResult result)
+    {
+      await CreateFighterResult(result.Wins, Result.Win, match);
+      await CreateFighterResult(result.Draws, Result.Draw, match);
+      await CreateFighterResult(result.Loses, Result.Lose, match);
+    }
+
+    private async Task CreateFighterResult(IEnumerable<IFighter> fighters, Result result, Match match)
+    {
+      for (int i = 0; i < fighters.Count(); i++)
+      {
+        var fighter = fighters.ElementAt(i);
+
+        if (!await Context.Fighters.AnyAsync(o => o.Id == fighter.Id))
+        {
+          continue;
+        }
+
+        Context.Add(new MatchFighterResult()
+        {
+          MatchId = match.Id,
+          FighterId = fighter.Id,
+          Position = i,
+          Result = result,
         });
       }
     }
