@@ -5,6 +5,7 @@ using EmpoweredPixels.Hubs.Matches;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Providers.DateTime;
 using EmpoweredPixels.Providers.Version;
+using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +30,9 @@ namespace EmpoweredPixels
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+      services.AddHangfire(o => o.UseSqlServerStorage(Configuration.GetConnectionString()));
+      services.AddHangfireServer();
 
       services.AddResponseCompression();
 
