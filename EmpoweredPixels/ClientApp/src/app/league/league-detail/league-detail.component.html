@@ -62,7 +62,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let match of matches">
-                            <td><a routerLink="/match/{{ match.matchId }}">{{ match.matchId }}</a></td>
+                            <td><a routerLink="/match/{{ match.matchId }}/result">{{ match.matchId }}</a></td>
                             <td>{{ match.started | timeAgo }}</td>
                             <td>{{ match.hasWinner }}</td>
                             <td>{{ match.winnerFighterName }}</td>
