@@ -1,0 +1,5 @@
+<div class="map overflow-auto">
+  <div [ngStyle]="{'height': (height * 10) + 'px', 'width': (width * 10) + 'px'}">
+    <app-game-fighter class="fighter" *ngFor="let fighter of fighters" fighter="fighter" [ngStyle]="{'left': (fighter.positionX *10 ) + 'pt','top': (fighter.positionY * 10 ) + 'pt'}"></app-game-fighter>
+  </div>
+</div>

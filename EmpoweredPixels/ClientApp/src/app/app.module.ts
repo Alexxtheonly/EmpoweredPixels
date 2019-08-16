@@ -31,6 +31,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgAggregatePipesModule, NgArrayPipesModule } from 'angular-pipes';
 import { LeagueBrowserComponent } from './league/league-browser/league-browser.component';
 import { LeagueDetailComponent } from './league/league-detail/league-detail.component';
+import { GameFighterComponent } from './game-viewer/+components/game-fighter/game-fighter.component';
+import { GameViewerComponent } from './game-viewer/game-viewer.component';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -59,7 +61,9 @@ export function HttpLoaderFactory(http: HttpClient)
     RoundsViewerComponent,
     MatchbrowserComponent,
     LeagueBrowserComponent,
-    LeagueDetailComponent
+    LeagueDetailComponent,
+    GameViewerComponent,
+    GameFighterComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

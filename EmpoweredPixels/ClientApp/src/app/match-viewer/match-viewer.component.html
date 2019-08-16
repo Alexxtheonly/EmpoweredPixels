@@ -39,6 +39,6 @@
             </tbody>
         </table>
     </div>
-    <app-rounds-viewer [matchScores]="match.scores" [ticks]="match.ticks"></app-rounds-viewer>
+    <app-game-viewer class="overflow-auto" [mapWidth]="100" [mapHeight]="100" [roundTicks]="match.ticks"></app-game-viewer>
 
 </div>
