@@ -36,12 +36,14 @@
 
         <div class="card card-body col-12 col-md-4">
             <h5>Manage subscriptions</h5>
-            <select class="nes-select" [(ngModel)]="fighterId">
+            <select class="form-control" [(ngModel)]="fighterId">
                 <option [ngValue]="fighter.id" *ngFor="let fighter of fighters | async">{{ fighter.name }}</option>
             </select>
 
-            <button class="nes-btn" *ngIf="fighterId" (click)="subscribe()">Subscribe</button>
-            <button class="nes-btn" *ngIf="fighterId" (click)="unsubscribe()">Unsubscribe</button>
+            <div class="row" style="margin-top: 1em;">
+                <button class="btn btn-outline-success col-md-6" *ngIf="fighterId" (click)="subscribe()">Subscribe</button>
+                <button class="btn btn-outline-warning col-md-6" *ngIf="fighterId" (click)="unsubscribe()">Unsubscribe</button>
+            </div>
         </div>
     </div>
 

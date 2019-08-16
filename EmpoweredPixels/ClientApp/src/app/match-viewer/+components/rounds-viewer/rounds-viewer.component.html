@@ -1,13 +1,10 @@
 <ng-container *ngIf="ticks">
 
-    <button class="nes-btn is-primary" (click)="replayMatchResult()">Show match rounds</button>
+    <button class="btn btn-secondary" (click)="replayMatchResult()">Show match rounds</button>
 
     <ng-container *ngIf="isReplayMatchResult">
 
         <div>
-
-            <br>
-            <br>
             <a (click)="zoomIn()">+</a>
             <a style="margin-left: 10px;" (click)="zoomOut()">-</a>
             <div #ele class="arena-view" [style.zoom]="zoom">
@@ -22,13 +19,13 @@
 
             <hr>
 
-            <button class="nes-btn is-primary" (click)="backward()">
-                << </button> <button class="nes-btn is-primary" (click)="play()">Play
+            <button class="btn btn-secondary" (click)="backward()">
+                << </button> <button class="btn btn-secondary" (click)="play()">Play
             </button>
-            <button class="nes-btn is-primary" (click)="forward()">
+            <button class="btn btn-secondary" (click)="forward()">
                 >>
-            </button> <button class="nes-btn is-primary" (click)="showAllRounds()">Show all</button>
-            <div #consolePanel class="console-view nes-container is-rounded is-dark">
+            </button> <button class="btn btn-secondary" (click)="showAllRounds()">Show all</button>
+            <div #consolePanel class="console-view container is-rounded is-dark">
 
                 <!--Spawn-->
                 <div>
