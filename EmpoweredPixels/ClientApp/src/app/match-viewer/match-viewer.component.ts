@@ -18,6 +18,8 @@ export class MatchViewerComponent implements OnInit
 
   public match$: Observable<MatchResult>;
 
+  public id: string;
+
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
     private matchService: MatchService,
@@ -28,8 +30,8 @@ export class MatchViewerComponent implements OnInit
 
   ngOnInit()
   {
-    const id: string = this.route.snapshot.paramMap.get('id');
-    this.match$ = this.matchService.getMatchResult(id);
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.match$ = this.matchService.getMatchResult(this.id);
   }
 
   public getTeamColor(teamId: string): string

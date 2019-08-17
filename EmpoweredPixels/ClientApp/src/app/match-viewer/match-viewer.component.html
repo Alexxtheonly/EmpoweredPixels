@@ -39,6 +39,6 @@
             </tbody>
         </table>
     </div>
-    <app-game-viewer class="overflow-auto" [mapWidth]="100" [mapHeight]="100" [roundTicks]="match.ticks"></app-game-viewer>
 
+    <a *ngIf="match" class="btn btn-secondary" [routerLink]="'/replay/' + id">Watch replay</a>
 </div>

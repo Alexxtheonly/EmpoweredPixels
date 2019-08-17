@@ -3,9 +3,9 @@ export class FighterSpawnedTick {
 
     public spawned: boolean;
 
-    public Health: number;
+    public health: number;
 
-    public Energy: number;
+    public energy: number;
 
     public positionX: number;
 

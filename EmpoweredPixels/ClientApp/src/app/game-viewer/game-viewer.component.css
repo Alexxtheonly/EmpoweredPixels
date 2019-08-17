@@ -2,10 +2,11 @@
     position: absolute;
     width: 25px;
     height: 25px;
+    transition: 250ms;
 }
 
 .map{
     position: relative;
-    width: 50vw;
-    height: 25vh;
+    width: 75vw;
+    height: 75vh;
 }

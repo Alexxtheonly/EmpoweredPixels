@@ -86,6 +86,7 @@ export function HttpLoaderFactory(http: HttpClient)
       { path: 'match/:id/result', component: MatchViewerComponent, canActivate: [AuthGuardService] },
       { path: 'league', component: LeagueBrowserComponent, canActivate: [AuthGuardService] },
       { path: 'league/:id', component: LeagueDetailComponent, canActivate: [AuthGuardService] },
+      { path: 'replay/:id', component: GameViewerComponent, canActivate: [AuthGuardService] },
     ]),
     TranslateModule.forRoot({
       loader: {
