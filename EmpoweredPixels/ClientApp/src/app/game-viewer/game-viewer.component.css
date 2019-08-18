@@ -1,0 +1,18 @@
+.fighter {
+    position: absolute;
+    width: 50px;
+    height: auto;
+    transition: 250ms;
+    z-index: 1;
+}
+
+.dead {
+    opacity: 0.2;
+    z-index: 0;
+}
+
+.map {
+    position: relative;
+    width: 75vw;
+    height: 75vh;
+}

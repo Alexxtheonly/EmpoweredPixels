@@ -12,6 +12,8 @@ namespace EmpoweredPixels.DataTransferObjects.Matches
 
     public int Damage { get; set; }
 
+    public int Energy { get; set; }
+
     public bool Dodged { get; set; }
 
     public bool Critical { get; set; }
