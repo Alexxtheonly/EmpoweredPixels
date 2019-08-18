@@ -84,7 +84,7 @@ export class GameViewerComponent implements OnInit
     });
   }
 
-  private reset()
+  public reset()
   {
     if (this.playing)
     {
@@ -116,7 +116,7 @@ export class GameViewerComponent implements OnInit
     this.prepareReplay();
   }
 
-  private async play(): Promise<any>
+  public async play(): Promise<any>
   {
     this.playing = true;
     const rounds = this.roundTicks.filter(round => round.round > 0);
@@ -217,7 +217,7 @@ export class GameViewerComponent implements OnInit
     }
   }
 
-  private scrollTo(id: string)
+  public scrollTo(id: string)
   {
     document.getElementById(id).scrollIntoView({
       behavior: 'auto',
