@@ -1,0 +1,28 @@
+<div style="height: 25em;" class="card card-body w-100 overflow-auto">
+  <div *ngFor="let round of print | async">
+    <h5 class="border-bottom border-top">Round: {{ round.round }}</h5>
+    <div *ngFor="let tick of round.ticks">
+      <span *ngIf="tick.nextX"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span>
+        <span class="text-muted"> moved to </span>{{ tick.nextX }}, {{ tick.nextY }}</span>
+
+      <span *ngIf="tick.targetId"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> attacked <span
+          class="font-weight-bold text-muted">
+          {{ getName(tick.targetId) }} </span> <span class="text-muted">
+          <span class="text-danger">{{ tick.damage }}</span> damage <span *ngIf="tick.critical"
+            class="text-danger">critical</span><span *ngIf="tick.dodged" class="text-info">dodged</span> </span>
+      </span>
+
+      <span *ngIf="tick.died"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> died</span>
+
+      <span *ngIf="tick.healthPointsRegenerated"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span>
+        regenerated
+        <span class="text-success">{{ tick.healthPointsRegenerated }}</span>
+        health</span>
+
+      <span *ngIf="tick.regeneratedEnergy"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span>
+        regenerated
+        <span class="text-warning">{{ tick.regeneratedEnergy }}</span>
+        energy</span>
+    </div>
+  </div>
+</div>

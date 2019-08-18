@@ -29,6 +29,7 @@ namespace EmpoweredPixels.Extensions
           TargetId = tick.Target.Id,
           SkillId = tick.Skill.Id,
           Damage = tick.Damage,
+          Energy = tick.Energy,
           Critical = tick.Critical,
           Dodged = tick.Dodged,
           InsufficientEnergy = tick.InsufficientEnergy,

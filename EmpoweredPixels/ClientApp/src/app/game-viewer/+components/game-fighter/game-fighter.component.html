@@ -1,0 +1,25 @@
+<div class="fighter-name text-overflow-center">
+  {{ fighter.name }}
+</div>
+
+<div class="progress">
+  <div
+    class="progress-bar text-dark bg-success"
+    [ngStyle]="{ width: (fighter.currentHealth / fighter.health) * 100 + '%' }"
+  >
+    {{ fighter.currentHealth }}
+  </div>
+</div>
+
+<div class="border">
+  <img class="rounded" src="/assets/images/abstract/abstract-099.svg" />
+</div>
+
+<div class="progress">
+  <div
+    class="progress-bar text-dark bg-warning"
+    [ngStyle]="{ width: (fighter.currentEnergy / fighter.energy) * 100 + '%' }"
+  >
+    {{ fighter.currentEnergy }}
+  </div>
+</div>

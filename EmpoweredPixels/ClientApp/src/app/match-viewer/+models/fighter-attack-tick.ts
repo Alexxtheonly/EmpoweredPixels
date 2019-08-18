@@ -1,6 +1,7 @@
 import { Tick } from './tick';
 
-export class FighterAttackTick extends Tick {
+export class FighterAttackTick extends Tick
+{
    public targetId: string;
 
    public fighterId: string;
@@ -8,6 +9,8 @@ export class FighterAttackTick extends Tick {
    public skillId: string;
 
    public damage: number;
+
+   public energy: number;
 
    public dodged: boolean;
 
