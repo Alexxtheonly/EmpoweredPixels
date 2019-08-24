@@ -34,6 +34,10 @@ import { LeagueDetailComponent } from './league/league-detail/league-detail.comp
 import { GameFighterComponent } from './game-viewer/+components/game-fighter/game-fighter.component';
 import { GameViewerComponent } from './game-viewer/game-viewer.component';
 import { MatchLogComponent } from './match-viewer/+components/match-log/match-log.component';
+import { RewardComponent } from './rewards/+components/reward/reward.component';
+import { RewardsComponent } from './rewards/rewards/rewards.component';
+import { RewardContentComponent } from './rewards/+components/reward-content/reward-content.component';
+import { ItemComponent } from './rewards/+components/item/item.component';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -65,7 +69,11 @@ export function HttpLoaderFactory(http: HttpClient)
     LeagueDetailComponent,
     GameViewerComponent,
     GameFighterComponent,
-    MatchLogComponent
+    MatchLogComponent,
+    RewardComponent,
+    RewardsComponent,
+    RewardContentComponent,
+    ItemComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -89,6 +97,7 @@ export function HttpLoaderFactory(http: HttpClient)
       { path: 'league', component: LeagueBrowserComponent, canActivate: [AuthGuardService] },
       { path: 'league/:id', component: LeagueDetailComponent, canActivate: [AuthGuardService] },
       { path: 'replay/:id', component: GameViewerComponent, canActivate: [AuthGuardService] },
+      { path: 'rewards', component: RewardsComponent, canActivate: [AuthGuardService] },
     ]),
     TranslateModule.forRoot({
       loader: {

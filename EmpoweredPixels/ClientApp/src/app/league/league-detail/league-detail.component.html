@@ -50,8 +50,8 @@
     <div class="row">
         <div class="card card-body col-12">
             <h4>Recent matches</h4>
-            <span *ngIf="matches?.length === 0">No matches yet.</span>
-            <div class="table-responsive" *ngIf="matches?.length > 0">
+            <span *ngIf="page?.total === 0">No matches yet.</span>
+            <div class="table-responsive" *ngIf="page?.total > 0">
                 <table class="table table-sm">
                     <thead>
                         <tr>
@@ -63,7 +63,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let match of matches">
+                        <tr *ngFor="let match of page?.items | paginate: { id: 'server', itemsPerPage: options.pageSize, currentPage: options.pageNumber, totalItems: page.total }">
                             <td><a routerLink="/match/{{ match.matchId }}/result">{{ match.matchId }}</a></td>
                             <td>{{ match.started | timeAgo }}</td>
                             <td>{{ match.hasWinner }}</td>
@@ -72,6 +72,10 @@
                         </tr>
                     </tbody>
                 </table>
+                <div style="text-align: center;">
+                    <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+                    <pagination-controls (pageChange)="loadPage($event)" id="server"></pagination-controls>
+                </div>
             </div>
         </div>
     </div>

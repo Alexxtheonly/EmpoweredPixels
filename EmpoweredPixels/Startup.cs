@@ -1,8 +1,10 @@
 using AutoMapper;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Factories.Matches;
+using EmpoweredPixels.Factories.Rewards;
 using EmpoweredPixels.Hubs.Matches;
 using EmpoweredPixels.Jobs;
+using EmpoweredPixels.Jobs.Rewards;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Providers.DateTime;
 using EmpoweredPixels.Providers.Version;
@@ -41,6 +43,8 @@ namespace EmpoweredPixels
       services.AddSingleton<IVersionProvider, VersionProvider>();
       services.AddTransient<IEngineFactory, EngineFactory>();
       services.AddTransient<ILeagueJob, LeagueJob>();
+      services.AddTransient<ILoginRewardJob, LoginRewardJob>();
+      services.AddSingleton<IRewardFactory, RewardFactory>();
 
       services.AddDbContextPool<DatabaseContext>(o => o.ConfigureDatabase(Configuration));
       services.AddAutoMapper(typeof(Startup));
@@ -79,11 +83,14 @@ namespace EmpoweredPixels
       DatabaseContext databaseContext)
     {
       recurringJobManager.AddLeagueJobs(databaseContext);
+      recurringJobManager.AddLoginRewardJob();
 
       app.UseResponseCompression();
       app.UseAuthentication();
       app.UseStaticFiles();
       app.UseSpaStaticFiles();
+
+      app.UseHangfireDashboard();
 
       app.UseMvc(routes =>
       {

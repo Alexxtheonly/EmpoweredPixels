@@ -2,8 +2,10 @@
 using EmpoweredPixels.DataTransferObjects.Leagues;
 using EmpoweredPixels.DataTransferObjects.Matches;
 using EmpoweredPixels.Models.Identity;
+using EmpoweredPixels.Models.Items;
 using EmpoweredPixels.Models.Leagues;
 using EmpoweredPixels.Models.Matches;
+using EmpoweredPixels.Models.Rewards;
 using EmpoweredPixels.Models.Roster;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -43,6 +45,10 @@ namespace EmpoweredPixels.Models
     public DbSet<LeagueMatch> LeagueMatches { get; set; }
 
     public DbSet<LeagueSubscription> LeagueSubscriptions { get; set; }
+
+    public DbSet<Reward> Rewards { get; set; }
+
+    public DbSet<Item> Items { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -202,6 +208,20 @@ namespace EmpoweredPixels.Models
         e.HasKey(o => new { o.LeagueId, o.FighterId });
         e.HasOne(o => o.League).WithMany(o => o.Subscriptions).HasForeignKey(o => o.LeagueId).OnDelete(DeleteBehavior.Cascade);
         e.HasOne(o => o.Fighter).WithMany().HasForeignKey(o => o.FighterId).OnDelete(DeleteBehavior.Cascade);
+      });
+
+      modelBuilder.Entity<Reward>(e =>
+      {
+        e.HasKey(o => o.Id);
+        e.Property(o => o.Id).ValueGeneratedOnAdd();
+        e.HasOne(o => o.User).WithMany().HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
+      });
+
+      modelBuilder.Entity<Item>(e =>
+      {
+        e.HasKey(o => o.Id);
+        e.Property(o => o.Id).ValueGeneratedOnAdd();
+        e.HasOne(o => o.User).WithMany().HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
       });
     }
   }

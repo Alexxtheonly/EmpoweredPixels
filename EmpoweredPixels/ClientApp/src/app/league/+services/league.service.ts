@@ -1,3 +1,4 @@
+import { PagingOptions } from './../../match/+models/paging-options';
 import { LeagueDetail } from './../+models/league-detail';
 import { LeagueSubscription } from './../+models/league-subscription';
 import { Observable } from 'rxjs';
@@ -5,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { League } from '../+models/league';
 import { LeagueMatch } from '../+models/league-match';
+import { Page } from 'src/app/match/+models/page';
 
 @Injectable({
   providedIn: 'root'
@@ -52,8 +54,8 @@ export class LeagueService
     return this.http.get<LeagueSubscription[]>(`api/league/${leagueId}/user`);
   }
 
-  public getLeagueMatches(leagueId: number): Observable<LeagueMatch[]>
+  public getLeagueMatches(leagueId: number, pagingOptions: PagingOptions): Observable<Page<LeagueMatch>>
   {
-    return this.http.get<LeagueMatch[]>(`api/league/${leagueId}/matches`);
+    return this.http.post<Page<LeagueMatch>>(`api/league/${leagueId}/matches`, pagingOptions);
   }
 }

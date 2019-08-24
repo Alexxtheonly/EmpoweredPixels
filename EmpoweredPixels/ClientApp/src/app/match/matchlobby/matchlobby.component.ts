@@ -29,6 +29,8 @@ export class MatchlobbyComponent implements OnInit, OnDestroy
   public teamId: string;
   public showTeamModal: boolean;
 
+  public matchInProgress: boolean;
+
   constructor(
     private matchService: MatchService,
     private route: ActivatedRoute,
@@ -133,6 +135,7 @@ export class MatchlobbyComponent implements OnInit, OnDestroy
 
   public startMatch(): void
   {
+    this.matchInProgress = true;
     this.matchService.startMatch(this.match).subscribe(result =>
     {
       this.navigateToResult();
