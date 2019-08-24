@@ -6,6 +6,9 @@ import { LeagueDetail } from './../+models/league-detail';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Fighter } from 'src/app/roster/+models/fighter';
+import { PagingOptions } from 'src/app/match/+models/paging-options';
+import { Match } from 'src/app/match/+models/match';
+import { Page } from 'src/app/match/+models/page';
 
 @Component({
   selector: 'app-league-detail',
@@ -15,8 +18,11 @@ import { Fighter } from 'src/app/roster/+models/fighter';
 export class LeagueDetailComponent implements OnInit
 {
   public leagueDetail: LeagueDetail;
-  public matches: LeagueMatch[];
   public fighters: Observable<Fighter[]>;
+
+  public options: PagingOptions = new PagingOptions();
+  public loading: boolean;
+  public page: Page<LeagueMatch>;
 
   public fighterId: string;
 
@@ -26,10 +32,7 @@ export class LeagueDetailComponent implements OnInit
   {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.loadLeague();
-    leagueService.getLeagueMatches(this.id).subscribe(result =>
-    {
-      this.matches = result;
-    });
+    this.loadLeagueMatches();
     this.fighters = rosterService.getFighters();
   }
 
@@ -68,6 +71,23 @@ export class LeagueDetailComponent implements OnInit
     this.leagueService.getLeague(this.id).subscribe(result =>
     {
       this.leagueDetail = result;
+      this.loading = false;
     });
+  }
+
+  private loadLeagueMatches()
+  {
+   this.leagueService.getLeagueMatches(this.id, this.options).subscribe(result =>
+    {
+      this.page = result;
+      this.loading = false;
+    });
+  }
+
+  public loadPage(page: number)
+  {
+    this.loading = true;
+    this.options.pageNumber = page;
+    this.loadLeagueMatches();
   }
 }

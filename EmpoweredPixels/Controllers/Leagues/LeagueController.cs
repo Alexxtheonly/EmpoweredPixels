@@ -7,6 +7,8 @@ using EmpoweredPixels.DataTransferObjects.Leagues;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Leagues;
+using EmpoweredPixels.Utilities.Paging;
+using EmpoweredPixels.Utilities.Paging.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -159,8 +161,8 @@ namespace EmpoweredPixels.Controllers.Leagues
         .ToListAsync());
     }
 
-    [HttpGet("{id}/matches")]
-    public async Task<ActionResult<IEnumerable<LeagueMatchDto>>> GetMatches(int id)
+    [HttpPost("{id}/matches")]
+    public async Task<ActionResult<Page<LeagueMatchDto>>> GetMatches(int id, [FromBody] PagingOptions options)
     {
       return Ok(await Context.LeagueMatches
         .Where(o => o.LeagueId == id)
@@ -170,7 +172,7 @@ namespace EmpoweredPixels.Controllers.Leagues
         .ThenInclude(o => o.User)
         .OrderByDescending(o => o.Match.Started)
         .ProjectTo<LeagueMatchDto>(Mapper.ConfigurationProvider)
-        .ToListAsync());
+        .GetPage(options));
     }
   }
 }

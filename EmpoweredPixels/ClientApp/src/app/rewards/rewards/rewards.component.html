@@ -1,0 +1,4 @@
+<div class="row">
+    <span *ngIf="(rewards | async)?.length===0">You don't have any unclaimed rewards. Login daily to get rewards.</span>
+    <app-reward class="col-md-3 col-12" *ngFor="let reward of rewards | async" [reward]="reward"></app-reward>
+</div>

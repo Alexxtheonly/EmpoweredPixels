@@ -21,7 +21,7 @@ namespace EmpoweredPixels.Extensions
       match.Started = dateTimeProvider.Now;
 
       var fighters = match.Registrations
-        .Select(o => new GenericFighter()
+        .Select(o => new SmartFighter()
         {
           Id = o.Fighter.Id,
           Team = o.TeamId,
