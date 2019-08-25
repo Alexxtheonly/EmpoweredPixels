@@ -90,8 +90,6 @@ namespace EmpoweredPixels
       app.UseStaticFiles();
       app.UseSpaStaticFiles();
 
-      app.UseHangfireDashboard();
-
       app.UseMvc(routes =>
       {
         routes.MapRoute(
