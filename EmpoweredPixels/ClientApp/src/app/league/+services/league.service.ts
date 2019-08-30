@@ -1,3 +1,4 @@
+import { LeagueHighscoreOptions } from './../+models/league-highscore-options';
 import { PagingOptions } from './../../match/+models/paging-options';
 import { LeagueDetail } from './../+models/league-detail';
 import { LeagueSubscription } from './../+models/league-subscription';
@@ -7,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { League } from '../+models/league';
 import { LeagueMatch } from '../+models/league-match';
 import { Page } from 'src/app/match/+models/page';
+import { LeagueHighscore } from '../+models/league-highscore';
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +59,10 @@ export class LeagueService
   public getLeagueMatches(leagueId: number, pagingOptions: PagingOptions): Observable<Page<LeagueMatch>>
   {
     return this.http.post<Page<LeagueMatch>>(`api/league/${leagueId}/matches`, pagingOptions);
+  }
+
+  public getLeagueHighscores(leagueId: number, options: LeagueHighscoreOptions): Observable<LeagueHighscore[]>
+  {
+    return this.http.post<LeagueHighscore[]>(`api/league/${leagueId}/highscores`, options);
   }
 }

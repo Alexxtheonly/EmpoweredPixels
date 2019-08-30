@@ -1,21 +1,88 @@
 <div class="container" *ngIf="leagueDetail">
-    <h1>{{ leagueDetail.name }}</h1>
+    <span class="text-muted float-right">Max powerlevel: {{ leagueDetail.maxPowerlevel }}</span>
+
+    <h1>{{ leagueDetail.name }} <h5 class="text-muted">Next match: {{ leagueDetail.nextMatch | date:'short' }}</h5>
+    </h1>
 
     <div class="row">
-        <div class="card col-12 col-md-4">
-            <div class="card-body">
-                <h5 class="card-title">Options</h5>
-
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Max powerlevel: {{ leagueDetail.maxPowerlevel }}</li>
-                    <li class="list-group-item">Subscribers: {{ leagueDetail.subscriberCount }}</li>
-                    <li class="list-group-item">Next match: {{ leagueDetail.nextMatch | date:'short' }}</li>
-                </ul>
+        <div class="card card-body col-12">
+            <h4>Recent matches</h4>
+            <span *ngIf="page?.total === 0">No matches yet.</span>
+            <div class="table-responsive" *ngIf="page?.total > 0">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Started</th>
+                            <th>Winner</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let match of page?.items | paginate: { id: 'server', itemsPerPage: options.pageSize, currentPage: options.pageNumber, totalItems: page.total }">
+                            <td>{{ match.started | timeAgo }}</td>
+                            <td>
+                                <span>{{ match.winnerFighterName }}</span>
+                                <span class="ml-2 text-muted">{{ match.winnerUser }}</span>
+                            </td>
+                            <td></td>
+                            <td>
+                                <a class="btn btn-outline-primary col-12 col-md-6"
+                                    routerLink="/match/{{ match.matchId }}/result">Scores</a>
+                                <a class="btn btn-outline-secondary col-12 col-md-6"
+                                    routerLink="/replay/{{ match.matchId }}">Replay</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="text-align: center;">
+                    <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+                    <pagination-controls (pageChange)="loadPage($event)" id="server"></pagination-controls>
+                </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="card card-body col-12 col-md-6">
+            <h5>Highscores</h5>
+            <span class="text-muted">Top {{ leagueHighscoreOptions.top }}, last
+                {{ leagueHighscoreOptions.lastMatches }} matches</span>
 
-        <div class="card card-body col-12 col-md-4">
-            <h5>Subscribers</h5>
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Wins</th>
+                            <th>Fighter</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let score of highscores">
+                            <td><span class="badge">{{ score.score }}</span></td>
+                            <td><span>{{ score.fighterName }}</span><span
+                                    class="ml-2 text-muted">{{ score.username }}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="card card-body col-12 col-md-6">
+            <h4>Subscribers <span class="badge badge-light">{{ leagueDetail.subscriberCount }}</span></h4>
+
+            <h5>Manage subscriptions</h5>
+            <select class="form-control" [(ngModel)]="fighterId">
+                <option [ngValue]="fighter.id" *ngFor="let fighter of fighters | async">{{ fighter.name }}</option>
+            </select>
+
+            <div class="row" style="margin-top: 1em;">
+                <button class="btn btn-outline-success col-md-6" *ngIf="fighterId"
+                    (click)="subscribe()">Subscribe</button>
+                <button class="btn btn-outline-warning col-md-6" *ngIf="fighterId"
+                    (click)="unsubscribe()">Unsubscribe</button>
+            </div>
+
             <div class="table-responsive">
                 <table class="table table-sm">
                     <thead>
@@ -31,51 +98,6 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
-
-        <div class="card card-body col-12 col-md-4">
-            <h5>Manage subscriptions</h5>
-            <select class="form-control" [(ngModel)]="fighterId">
-                <option [ngValue]="fighter.id" *ngFor="let fighter of fighters | async">{{ fighter.name }}</option>
-            </select>
-
-            <div class="row" style="margin-top: 1em;">
-                <button class="btn btn-outline-success col-md-6" *ngIf="fighterId" (click)="subscribe()">Subscribe</button>
-                <button class="btn btn-outline-warning col-md-6" *ngIf="fighterId" (click)="unsubscribe()">Unsubscribe</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="card card-body col-12">
-            <h4>Recent matches</h4>
-            <span *ngIf="page?.total === 0">No matches yet.</span>
-            <div class="table-responsive" *ngIf="page?.total > 0">
-                <table class="table table-sm">
-                    <thead>
-                        <tr>
-                            <th>Match</th>
-                            <th>Started</th>
-                            <th>Has winner</th>
-                            <th>Fighter</th>
-                            <th>User</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let match of page?.items | paginate: { id: 'server', itemsPerPage: options.pageSize, currentPage: options.pageNumber, totalItems: page.total }">
-                            <td><a routerLink="/match/{{ match.matchId }}/result">{{ match.matchId }}</a></td>
-                            <td>{{ match.started | timeAgo }}</td>
-                            <td>{{ match.hasWinner }}</td>
-                            <td>{{ match.winnerFighterName }}</td>
-                            <td>{{ match.winnerUser }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div style="text-align: center;">
-                    <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
-                    <pagination-controls (pageChange)="loadPage($event)" id="server"></pagination-controls>
-                </div>
             </div>
         </div>
     </div>
