@@ -174,5 +174,32 @@ namespace EmpoweredPixels.Controllers.Leagues
         .ProjectTo<LeagueMatchDto>(Mapper.ConfigurationProvider)
         .GetPage(options));
     }
+
+    [HttpPost("{id}/highscores")]
+    public async Task<ActionResult<IEnumerable<LeagueHighscoreDto>>> GetHighscores(int id, [FromBody] LeagueHighscoreOptionsDto optionsDto)
+    {
+      var matches = Context.LeagueMatches
+        .Where(o => o.LeagueId == id)
+        .Include(o => o.Match)
+        .OrderByDescending(o => o.Match.Started)
+        .Take(optionsDto.LastMatches);
+
+      var scores = await Context.MatchFighterResults
+        .Where(o => matches.Any(m => m.MatchId == o.MatchId))
+        .Where(o => o.Result == Enums.Matches.Result.Win)
+        .Include(o => o.Fighter.User)
+        .GroupBy(o => o.Fighter)
+        .ToListAsync();
+
+      return Ok(scores
+        .Select(o => new LeagueHighscoreDto()
+        {
+          FighterId = o.Key.Id,
+          FighterName = o.Key.Name,
+          Username = o.Key.User.Name,
+          Score = o.Count(),
+        })
+        .OrderByDescending(o => o.Score));
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { LeagueHighscoreOptions } from './../+models/league-highscore-options';
 import { RosterService } from './../../roster/+services/roster.service';
 import { LeagueMatch } from './../+models/league-match';
 import { LeagueService } from './../+services/league.service';
@@ -9,6 +10,7 @@ import { Fighter } from 'src/app/roster/+models/fighter';
 import { PagingOptions } from 'src/app/match/+models/paging-options';
 import { Match } from 'src/app/match/+models/match';
 import { Page } from 'src/app/match/+models/page';
+import { LeagueHighscore } from '../+models/league-highscore';
 
 @Component({
   selector: 'app-league-detail',
@@ -26,6 +28,9 @@ export class LeagueDetailComponent implements OnInit
 
   public fighterId: string;
 
+  public highscores: LeagueHighscore[];
+  public leagueHighscoreOptions: LeagueHighscoreOptions = new LeagueHighscoreOptions();
+
   private id: number;
 
   constructor(private leagueService: LeagueService, private route: ActivatedRoute, private rosterService: RosterService)
@@ -34,6 +39,10 @@ export class LeagueDetailComponent implements OnInit
     this.loadLeague();
     this.loadLeagueMatches();
     this.fighters = rosterService.getFighters();
+
+    this.leagueHighscoreOptions.lastMatches = 25;
+    this.leagueHighscoreOptions.top = 5;
+    this.loadLeagueHighscores();
   }
 
   ngOnInit()
@@ -77,10 +86,18 @@ export class LeagueDetailComponent implements OnInit
 
   private loadLeagueMatches()
   {
-   this.leagueService.getLeagueMatches(this.id, this.options).subscribe(result =>
+    this.leagueService.getLeagueMatches(this.id, this.options).subscribe(result =>
     {
       this.page = result;
       this.loading = false;
+    });
+  }
+
+  private loadLeagueHighscores()
+  {
+    this.leagueService.getLeagueHighscores(this.id, this.leagueHighscoreOptions).subscribe(result =>
+    {
+      this.highscores = result;
     });
   }
 
