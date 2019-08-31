@@ -199,7 +199,8 @@ namespace EmpoweredPixels.Controllers.Leagues
           Username = o.Key.User.Name,
           Score = o.Count(),
         })
-        .OrderByDescending(o => o.Score));
+        .OrderByDescending(o => o.Score)
+        .Take(5));
     }
   }
 }

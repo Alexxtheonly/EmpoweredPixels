@@ -89,6 +89,14 @@ namespace EmpoweredPixels.Extensions
           PositionZ = tick.Fighter.Z,
         };
       }
+      else if (engineTick.GetType() == typeof(FighterSacrificedTick))
+      {
+        var tick = (FighterSacrificedTick)engineTick;
+        return new FighterSacrificedTickDto()
+        {
+          FighterId = tick.Fighter.Id,
+        };
+      }
       else
       {
         throw new ArgumentException($"No suitable dto for type {engineTick.GetType().Name} found.");
