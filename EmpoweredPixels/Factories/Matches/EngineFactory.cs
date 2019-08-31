@@ -46,6 +46,7 @@ namespace EmpoweredPixels.Factories.Matches
     {
       new FeatureRegenerateEnergy(),
       new FeatureRegenerateHealth(),
+      new FeatureSacrificeToEntity(),
     };
 
     private readonly IEnumerable<IFighterPositionGenerator> fighterPositionGenerators = new IFighterPositionGenerator[]

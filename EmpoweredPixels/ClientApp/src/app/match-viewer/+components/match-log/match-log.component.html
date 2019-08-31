@@ -23,6 +23,11 @@
         regenerated
         <span class="text-warning">{{ tick.regeneratedEnergy }}</span>
         energy</span>
+
+      <span *ngIf="tick.sacrificed">
+        <span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> has been <span
+          class="text-danger">sacrificed</span>
+      </span>
     </div>
   </div>
 </div>

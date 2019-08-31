@@ -9,6 +9,8 @@ using EmpoweredPixels.Models.Rewards;
 using EmpoweredPixels.Models.Roster;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using SharpFightingEngine.Battlefields.Constants;
+using SharpFightingEngine.Constants;
 
 namespace EmpoweredPixels.Models
 {
@@ -151,18 +153,19 @@ namespace EmpoweredPixels.Models
                 ActionsPerRound = 2,
                 MaxFightersPerUser = 1,
                 MaxPowerlevel = 300,
-                Battlefield = new Guid("DC937E88-F307-4CF0-AEF5-B468D27AED4B"),
-                Bounds = new Guid("FB1698B4-809B-40CD-94D6-0A3B257255C3"),
+                Battlefield = BattlefieldConstants.Plain,
+                Bounds = BoundsConstants.Tiny,
                 IsPrivate = true,
                 Features = new Guid[]
                 {
-                  new Guid("E800723C-6324-47AB-9593-1952346AD772"),
-                  new Guid("77C70366-24FB-4AF3-8A34-869F930BC420"),
+                  FeatureConstants.RegenerateHealth,
+                  FeatureConstants.RegenerateEnergy,
+                  FeatureConstants.SacrificeToEntity,
                 },
-                MoveOrder = new Guid("12E9E0AE-ECA3-440D-A649-48D687F6D97B"),
-                PositionGenerator = new Guid("F88BE549-9BE0-4DD2-AABC-5AF599DCC140"),
-                StaleCondition = new Guid("04616688-2CD1-4341-B757-AFDAE8AF4035"),
-                WinCondition = new Guid("F5F16639-7796-40EE-B15B-F16EB6E946C4"),
+                MoveOrder = MoveOrderConstants.AllRandom,
+                PositionGenerator = FighterPositionGeneratorConstants.AllRandom,
+                StaleCondition = StaleConditionConstants.NoWinnerCanBeDetermined,
+                WinCondition = WinConditionConstants.LastManStanding,
               }
             }
           },
@@ -179,18 +182,48 @@ namespace EmpoweredPixels.Models
                 ActionsPerRound = 2,
                 MaxFightersPerUser = 1,
                 MaxPowerlevel = 500,
-                Battlefield = new Guid("DC937E88-F307-4CF0-AEF5-B468D27AED4B"),
-                Bounds = new Guid("FB1698B4-809B-40CD-94D6-0A3B257255C3"),
+                Battlefield = BattlefieldConstants.Plain,
+                Bounds = BoundsConstants.Small,
                 IsPrivate = true,
                 Features = new Guid[]
                 {
-                  new Guid("E800723C-6324-47AB-9593-1952346AD772"),
-                  new Guid("77C70366-24FB-4AF3-8A34-869F930BC420"),
+                  FeatureConstants.RegenerateHealth,
+                  FeatureConstants.RegenerateEnergy,
+                  FeatureConstants.SacrificeToEntity,
                 },
-                MoveOrder = new Guid("12E9E0AE-ECA3-440D-A649-48D687F6D97B"),
-                PositionGenerator = new Guid("F88BE549-9BE0-4DD2-AABC-5AF599DCC140"),
-                StaleCondition = new Guid("04616688-2CD1-4341-B757-AFDAE8AF4035"),
-                WinCondition = new Guid("F5F16639-7796-40EE-B15B-F16EB6E946C4"),
+                MoveOrder = MoveOrderConstants.AllRandom,
+                PositionGenerator = FighterPositionGeneratorConstants.AllRandom,
+                StaleCondition = StaleConditionConstants.NoWinnerCanBeDetermined,
+                WinCondition = WinConditionConstants.LastManStanding,
+              }
+            }
+          },
+          new League()
+          {
+            Id = 3,
+            Name = "League 750",
+            Options = new LeagueOptionsDto()
+            {
+              IntervalCron = "0 */3 * * *",
+              IsTeam = false,
+              MatchOptions = new MatchOptionsDto()
+              {
+                ActionsPerRound = 2,
+                MaxFightersPerUser = 1,
+                MaxPowerlevel = 750,
+                Battlefield = BattlefieldConstants.Plain,
+                Bounds = BoundsConstants.Small,
+                IsPrivate = true,
+                Features = new Guid[]
+                {
+                  FeatureConstants.RegenerateHealth,
+                  FeatureConstants.RegenerateEnergy,
+                  FeatureConstants.SacrificeToEntity,
+                },
+                MoveOrder = MoveOrderConstants.AllRandom,
+                PositionGenerator = FighterPositionGeneratorConstants.AllRandom,
+                StaleCondition = StaleConditionConstants.NoWinnerCanBeDetermined,
+                WinCondition = WinConditionConstants.LastManStanding,
               }
             }
           });
