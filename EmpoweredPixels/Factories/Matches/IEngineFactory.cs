@@ -8,6 +8,8 @@ namespace EmpoweredPixels.Factories.Matches
 {
   public interface IEngineFactory
   {
+    EngineCalculationValues CalculationValues { get; }
+
     MatchOptionsDto GetDefaultOptions();
 
     Engine GetEngine(IEnumerable<IFighterStats> fighters, MatchOptionsDto optionsDto);

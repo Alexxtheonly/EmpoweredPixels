@@ -4,7 +4,7 @@
 
     <div class="card col-sm-3" *ngFor="let fighter of fighters">
       <div class="card-header">
-        <a href="roster/fighter/{{ fighter.id }}">{{ fighter.name }}</a>
+        <a [routerLink]="'fighter/' + fighter.id">{{ fighter.name }}</a>
       </div>
 
       <div class="card-body">
@@ -14,7 +14,7 @@
     <div class="card col-sm-3">
       <div class="card-body">
       </div>
-      <a class="btn btn-primary" href="roster/fighter/new">Create new fighter</a>
+      <a class="btn btn-primary" [routerLink]="'fighter/new'">Create new fighter</a>
     </div>
   </div>
 </div>
