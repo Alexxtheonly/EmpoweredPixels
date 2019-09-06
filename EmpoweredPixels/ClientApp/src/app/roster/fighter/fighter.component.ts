@@ -1,7 +1,7 @@
 import { AlertService } from 'src/app/+services/alert.service';
 import { RosterService } from './../+services/roster.service';
 import { Fighter } from './../+models/fighter';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -9,20 +9,25 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './fighter.component.html',
   styleUrls: ['./fighter.component.css']
 })
-export class FighterComponent implements OnInit {
+export class FighterComponent implements OnInit
+{
   public fighter: Fighter;
+
   public powerlevel: number;
   constructor(private route: ActivatedRoute, private rosterService: RosterService, private alertService: AlertService) { }
 
-  ngOnInit() {
+  ngOnInit()
+  {
     const id: string = this.route.snapshot.paramMap.get('id');
-    this.rosterService.getFighter(id).subscribe(result => {
+    this.rosterService.getFighter(id).subscribe(result =>
+    {
       this.fighter = result;
       this.powerlevel = this.getPowerlevel();
     }, error => console.error(error));
   }
 
-  public getPowerlevel(): number {
+  public getPowerlevel(): number
+  {
     return this.fighter.agility
       + this.fighter.expertise
       + this.fighter.power
@@ -35,18 +40,22 @@ export class FighterComponent implements OnInit {
       + this.fighter.accuracy;
   }
 
-  public updateFighter(): void {
-    this.rosterService.updateFighter(this.fighter).subscribe(result => {
+  public updateFighter(): void
+  {
+    this.rosterService.updateFighter(this.fighter).subscribe(result =>
+    {
       this.fighter = result;
       this.powerlevel = this.getPowerlevel();
       this.alertService.success('Fighter attributes successfully saved');
-    }, error => {
+    }, error =>
+    {
       console.error(error);
       this.alertService.error('Error while saving');
     });
   }
 
-  public resetFighter(): void {
+  public resetFighter(): void
+  {
     this.fighter.agility = 1;
     this.fighter.expertise = 1;
     this.fighter.power = 1;

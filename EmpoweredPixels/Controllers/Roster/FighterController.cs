@@ -6,12 +6,14 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using EmpoweredPixels.DataTransferObjects.Roster;
 using EmpoweredPixels.Extensions;
+using EmpoweredPixels.Factories.Matches;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Roster;
 using EmpoweredPixels.Providers.DateTime;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SharpFightingEngine.Fighters;
 
 namespace EmpoweredPixels.Controllers.Roster
 {
@@ -131,6 +133,42 @@ namespace EmpoweredPixels.Controllers.Roster
       await Context.SaveChangesAsync();
 
       return Mapper.Map<FighterDto>(fighter);
+    }
+
+    [HttpPost("forecast")]
+    public ActionResult<FighterStatForecastDto> GetForecast([FromBody] FighterDto dto, [FromServices]IEngineFactory engineFactory)
+    {
+      IFighterStats fighter = new GenericFighter()
+      {
+        Accuracy = dto.Accuracy,
+        Agility = dto.Agility,
+        Expertise = dto.Expertise,
+        Power = dto.Power,
+        Regeneration = dto.Regeneration,
+        Speed = dto.Speed,
+        Stamina = dto.Stamina,
+        Toughness = dto.Toughness,
+        Vision = dto.Vision,
+        Vitality = dto.Vitality,
+      };
+
+      var calculationValues = engineFactory.CalculationValues;
+      var forecast = new FighterStatForecastDto()
+      {
+        CritChance = fighter.CriticalHitChance(calculationValues),
+        DodgeChance = fighter.DodgeChance(calculationValues),
+        Energy = fighter.Energy(calculationValues),
+        EnergyRegeneration = fighter.EnergyRegeneration(calculationValues),
+        Health = fighter.Health(calculationValues),
+        HealthRegeneration = fighter.HealthRegeneration(calculationValues),
+        Velocity = fighter.Velocity(calculationValues),
+        Vision = fighter.VisualRange(calculationValues),
+        MissChance = fighter.HitChance(calculationValues),
+        PotentialDefense = fighter.PotentialDefense(calculationValues),
+        PotentialPower = fighter.PotentialPower(calculationValues),
+      };
+
+      return Ok(forecast);
     }
   }
 }

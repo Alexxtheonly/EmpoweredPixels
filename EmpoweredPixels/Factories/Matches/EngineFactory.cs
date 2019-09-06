@@ -59,6 +59,8 @@ namespace EmpoweredPixels.Factories.Matches
       new AllRandomMoveOrder(),
     };
 
+    public EngineCalculationValues CalculationValues => new EngineCalculationValues();
+
     public Engine GetEngine(IEnumerable<IFighterStats> fighters, MatchOptionsDto optionsDto)
     {
       var qualified = fighters;

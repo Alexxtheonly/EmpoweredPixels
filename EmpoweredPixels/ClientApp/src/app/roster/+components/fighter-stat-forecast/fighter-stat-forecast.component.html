@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-6 col-md-4 col-lg-3">
+        <span class="badge badge-success">Health: {{ forecast.health }} + {{ forecast.healthRegeneration }}
+            reg.</span>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <span class="badge badge-warning">Energy: {{ forecast.energy }} + {{ forecast.energyRegeneration }}
+            reg.</span>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <span class="badge badge-secondary">Potential power: {{ forecast.potentialPower | number }}</span>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <span class="badge badge-secondary">Potential defense: {{ forecast.potentialDefense | number }}</span>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <span class="badge badge-secondary">Velocity: {{ forecast.velocity }}m</span>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <span class="badge badge-secondary">Vision: {{ forecast.vision }}m</span>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <span class="badge badge-secondary">Crit chance: {{ forecast.critChance | number }}%</span>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <span class="badge badge-secondary">Dodge chance: {{ forecast.dodgeChance | number }}%</span>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-3">
+        <span class="badge badge-secondary">Hit chance: {{ forecast.missChance | number }}%</span>
+    </div>
+</div>

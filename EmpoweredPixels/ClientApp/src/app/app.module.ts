@@ -38,6 +38,7 @@ import { RewardComponent } from './rewards/+components/reward/reward.component';
 import { RewardsComponent } from './rewards/rewards/rewards.component';
 import { RewardContentComponent } from './rewards/+components/reward-content/reward-content.component';
 import { ItemComponent } from './rewards/+components/item/item.component';
+import { FighterStatForecastComponent } from './roster/+components/fighter-stat-forecast/fighter-stat-forecast.component';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -73,7 +74,8 @@ export function HttpLoaderFactory(http: HttpClient)
     RewardComponent,
     RewardsComponent,
     RewardContentComponent,
-    ItemComponent
+    ItemComponent,
+    FighterStatForecastComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
