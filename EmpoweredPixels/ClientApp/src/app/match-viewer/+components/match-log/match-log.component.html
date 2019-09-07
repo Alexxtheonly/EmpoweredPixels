@@ -7,9 +7,9 @@
 
       <span *ngIf="tick.targetId"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> attacked <span
           class="font-weight-bold text-muted">
-          {{ getName(tick.targetId) }} </span> <span class="text-muted">with {{ tick.skillId | translate }}(<span
-            class="text-warning">{{ tick.energy }}</span>)
-          <span class="text-danger">{{ tick.damage }}</span> damage <span *ngIf="tick.critical"
+          {{ getName(tick.targetId) }} </span> <span class="text-muted">with {{ 'skills.' + tick.skillId | translate }}
+          <span class="badge badge-warning mr-1">{{ tick.energy }}</span>
+          <span class="badge badge-danger">{{ tick.damage }}</span> damage <span *ngIf="tick.critical"
             class="text-danger">critical</span><span *ngIf="tick.dodged" class="text-info">dodged</span> </span>
       </span>
 
