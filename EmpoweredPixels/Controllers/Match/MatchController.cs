@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using EmpoweredPixels.DataTransferObjects.Matches;
+using EmpoweredPixels.Exceptions.Leagues;
+using EmpoweredPixels.Exceptions.Matches;
+using EmpoweredPixels.Exceptions.Roster;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Factories.Matches;
 using EmpoweredPixels.Hubs.Matches;
@@ -95,7 +98,7 @@ namespace EmpoweredPixels.Controllers.Matches
 
       if (match == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidMatchException());
       }
 
       var team = new MatchTeam()
@@ -165,9 +168,14 @@ namespace EmpoweredPixels.Controllers.Matches
         .Where(o => o.UserId == userId)
         .FirstOrDefaultAsync(o => o.Id == dto.FighterId);
 
-      if (match == null || fighter == null)
+      if (match == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidMatchException());
+      }
+
+      if (fighter == null)
+      {
+        return BadRequest(new InvalidFighterException());
       }
 
       if (match.Options.MaxFightersPerUser != null &&
@@ -175,13 +183,13 @@ namespace EmpoweredPixels.Controllers.Matches
         .Where(o => o.Fighter.UserId == userId)
         .Count() >= match.Options.MaxFightersPerUser)
       {
-        return BadRequest();
+        return BadRequest(new MatchFighterLimitExceededException());
       }
 
       if (match.Options.MaxPowerlevel != null &&
         fighter.PowerLevel() > match.Options.MaxPowerlevel)
       {
-        return BadRequest();
+        return BadRequest(new IllegalFighterPowerlevelException());
       }
 
       var registration = new MatchRegistration()
@@ -220,7 +228,7 @@ namespace EmpoweredPixels.Controllers.Matches
 
       if (match == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidMatchException());
       }
 
       if (match.Options.MaxFightersPerUser != null &&
@@ -228,7 +236,7 @@ namespace EmpoweredPixels.Controllers.Matches
         .Where(o => o.Fighter.UserId == userId && o.FighterId != dto.FighterId)
         .Count() >= match.Options.MaxFightersPerUser)
       {
-        return BadRequest();
+        return BadRequest(new MatchFighterLimitExceededException());
       }
 
       var team = await Context.MatchTeams
@@ -236,12 +244,12 @@ namespace EmpoweredPixels.Controllers.Matches
 
       if (team == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidTeamException());
       }
 
       if (!team.IsValidPassword(dto.Password))
       {
-        return BadRequest();
+        return BadRequest(new InvalidTeamPasswordException());
       }
 
       var fighter = await Context.Fighters
@@ -250,7 +258,7 @@ namespace EmpoweredPixels.Controllers.Matches
 
       if (fighter == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidFighterException());
       }
 
       var registration = await Context.MatchRegistrations
@@ -302,16 +310,21 @@ namespace EmpoweredPixels.Controllers.Matches
         .Where(o => o.UserId == userId)
         .FirstOrDefaultAsync(o => o.Id == dto.FighterId);
 
-      if (match == null || fighter == null)
+      if (match == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidMatchException());
+      }
+
+      if (fighter == null)
+      {
+        return BadRequest(new InvalidFighterException());
       }
 
       var registration = await Context.MatchRegistrations
         .FirstOrDefaultAsync(o => o.FighterId == dto.FighterId && o.MatchId == dto.MatchId);
       if (registration == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidMatchRegistrationException());
       }
 
       Context.MatchRegistrations.Remove(registration);
@@ -342,7 +355,7 @@ namespace EmpoweredPixels.Controllers.Matches
 
       if (match == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidMatchException());
       }
 
       var registration = await Context.MatchRegistrations
@@ -354,7 +367,7 @@ namespace EmpoweredPixels.Controllers.Matches
 
       if (registration == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidMatchRegistrationException());
       }
 
       if (registration.TeamId == dto.Id)
@@ -386,9 +399,14 @@ namespace EmpoweredPixels.Controllers.Matches
         .Where(o => o.CreatorUserId == userId && o.Started == null)
         .FirstOrDefaultAsync(o => o.Id == dto.Id);
 
-      if (match == null || !match.Registrations.Any())
+      if (match == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidMatchException());
+      }
+
+      if (!match.Registrations.Any())
+      {
+        return BadRequest(new InsufficientMatchRegistrationsException());
       }
 
       await Context.StartMatch(match, dateTimeProvider, engineFactory);
@@ -408,7 +426,7 @@ namespace EmpoweredPixels.Controllers.Matches
 
       if (matchResult == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidMatchResultException());
       }
 
       return Content(matchResult.ResultJson.Decompress());

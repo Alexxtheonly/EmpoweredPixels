@@ -12,6 +12,7 @@ export class FighterStatForecastComponent implements OnInit, DoCheck
 {
 
   public forecast: FighterStatForecast;
+  public powerlevel: number;
 
   @Input()
   public fighter: Fighter;
@@ -42,10 +43,26 @@ export class FighterStatForecastComponent implements OnInit, DoCheck
       return;
     }
 
+    this.powerlevel = this.getPowerlevel();
+
     this.rosterService.getFighterStatForecast(this.fighter).subscribe(forecast =>
     {
       this.forecast = forecast;
     });
+  }
+
+  public getPowerlevel(): number
+  {
+    return this.fighter.agility
+      + this.fighter.expertise
+      + this.fighter.power
+      + this.fighter.regeneration
+      + this.fighter.speed
+      + this.fighter.stamina
+      + this.fighter.toughness
+      + this.fighter.vision
+      + this.fighter.vitality
+      + this.fighter.accuracy;
   }
 
   private hasChanged(left: Fighter, right: Fighter): boolean

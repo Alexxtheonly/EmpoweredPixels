@@ -1,3 +1,4 @@
+import { UserFeedbackService } from './../../+services/userfeedback.service';
 import { MatchTeamOperation } from './../+models/match-team-operation';
 import { MatchTeam } from './../+models/match-team';
 import { AuthService } from './../../auth/auth.service';
@@ -37,7 +38,8 @@ export class MatchlobbyComponent implements OnInit, OnDestroy
     private rosterService: RosterService,
     private router: Router,
     private matchHubService: MatchHubService,
-    private authService: AuthService)
+    private authService: AuthService,
+    private userfeedbackService: UserFeedbackService)
   {
     matchHubService.connect().then(() =>
     {
@@ -89,7 +91,12 @@ export class MatchlobbyComponent implements OnInit, OnDestroy
     registration.matchId = this.match.id;
     registration.fighterId = this.fighterId;
 
-    this.matchService.joinMatch(registration).subscribe();
+    this.matchService.joinMatch(registration).subscribe(result =>
+    {
+    }, error =>
+    {
+      this.userfeedbackService.error(error);
+    });
   }
 
   public leave(): void
@@ -101,7 +108,12 @@ export class MatchlobbyComponent implements OnInit, OnDestroy
         const registration = this.match.registrations.find(o => o.fighterId === fighter.id);
         if (registration)
         {
-          this.matchService.leaveMatch(registration).subscribe();
+          this.matchService.leaveMatch(registration).subscribe(result =>
+          {
+          }, error =>
+          {
+            this.userfeedbackService.error(error);
+          });
         }
       }
     });
@@ -110,7 +122,7 @@ export class MatchlobbyComponent implements OnInit, OnDestroy
   public async createAndJoinTeam(): Promise<void>
   {
     const team = await this.matchService.createTeam(this.match, this.password).toPromise();
-    await this.matchService.joinTeam(this.match, team.id, this.fighterId, this.password).subscribe();
+    await this.matchService.joinTeam(this.match, team.id, this.fighterId, this.password).toPromise();
   }
 
   public joinTeam(teamId: string): void
@@ -139,6 +151,9 @@ export class MatchlobbyComponent implements OnInit, OnDestroy
     this.matchService.startMatch(this.match).subscribe(result =>
     {
       this.navigateToResult();
+    }, error =>
+    {
+      this.userfeedbackService.error(error);
     });
   }
 

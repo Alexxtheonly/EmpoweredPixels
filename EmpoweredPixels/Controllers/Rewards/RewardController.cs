@@ -5,6 +5,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using EmpoweredPixels.DataTransferObjects.Items;
 using EmpoweredPixels.DataTransferObjects.Rewards;
+using EmpoweredPixels.Exceptions.Rewards;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Factories.Rewards;
 using EmpoweredPixels.Models;
@@ -61,7 +62,7 @@ namespace EmpoweredPixels.Controllers.Rewards
 
       if (reward == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidRewardException());
       }
 
       reward.Claimed = dateTimeProvider.Now;

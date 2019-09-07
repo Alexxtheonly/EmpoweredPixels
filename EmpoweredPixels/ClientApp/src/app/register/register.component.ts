@@ -1,4 +1,4 @@
-import { AlertService } from './../+services/alert.service';
+import { UserFeedbackService } from './../+services/userfeedback.service';
 import { RegisterData } from './+modules/register-data';
 import { RegisterService } from './+services/register.service';
 import { Component, OnInit } from '@angular/core';
@@ -10,18 +10,20 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit
+{
   public registerForm: FormGroup;
   public loading = false;
   public submitted = false;
 
   constructor(
     private registerService: RegisterService,
-    private alertService: AlertService,
+    private userfeedbackService: UserFeedbackService,
     private formbuilder: FormBuilder,
     private router: Router) { }
 
-  ngOnInit() {
+  ngOnInit()
+  {
     this.registerForm = this.formbuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required, Validators.minLength(6)],
@@ -33,10 +35,12 @@ export class RegisterComponent implements OnInit {
 
   get f() { return this.registerForm.controls; }
 
-  public register(): void {
+  public register(): void
+  {
     this.submitted = true;
 
-    if (this.registerForm.invalid) {
+    if (this.registerForm.invalid)
+    {
       return;
     }
 
@@ -47,11 +51,13 @@ export class RegisterComponent implements OnInit {
     data.password = this.registerForm.controls.password.value;
     data.email = this.registerForm.controls.email.value;
 
-    this.registerService.register(data).subscribe(() => {
-      this.alertService.success('successfully registered', true);
+    this.registerService.register(data).subscribe(() =>
+    {
+      this.userfeedbackService.success('successfully registered');
       this.router.navigate(['login']);
-    }, error => {
-      this.alertService.error('registration unsuccessful');
+    }, error =>
+    {
+      this.userfeedbackService.error(error);
       this.loading = false;
     });
   }

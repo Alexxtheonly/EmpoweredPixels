@@ -42,4 +42,9 @@ export class RosterService
   {
     return this.http.post<FighterStatForecast>('api/fighter/forecast', fighter);
   }
+
+  public deleteFighter(id: string): Observable<any>
+  {
+    return this.http.delete(`api/fighter/${id}`);
+  }
 }

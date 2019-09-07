@@ -336,6 +336,8 @@ namespace EmpoweredPixels.Migrations
 
                     b.Property<float>("Expertise");
 
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<string>("Name");
 
                     b.Property<float>("Power");

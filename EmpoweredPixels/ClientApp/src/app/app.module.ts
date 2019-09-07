@@ -11,7 +11,6 @@ import { HomeComponent } from './home/home.component';
 import { MatchViewerComponent } from './match-viewer/match-viewer.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { AlertComponent } from './+directives/alert/alert/alert.component';
 import { RosterComponent } from './roster/roster.component';
 import { JwtInterceptor } from './+helpers/jwt-interceptor';
 import { FighterComponent } from './roster/fighter/fighter.component';
@@ -39,6 +38,8 @@ import { RewardsComponent } from './rewards/rewards/rewards.component';
 import { RewardContentComponent } from './rewards/+components/reward-content/reward-content.component';
 import { ItemComponent } from './rewards/+components/item/item.component';
 import { FighterStatForecastComponent } from './roster/+components/fighter-stat-forecast/fighter-stat-forecast.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -53,7 +54,6 @@ export function HttpLoaderFactory(http: HttpClient)
     MatchViewerComponent,
     LoginComponent,
     RegisterComponent,
-    AlertComponent,
     RosterComponent,
     FighterComponent,
     NewFighterComponent,
@@ -86,6 +86,8 @@ export function HttpLoaderFactory(http: HttpClient)
     NgxPaginationModule,
     NgAggregatePipesModule,
     NgArrayPipesModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: '', component: MatchbrowserComponent, pathMatch: 'full', canActivate: [AuthGuardService] },
       { path: 'login', component: LoginComponent },

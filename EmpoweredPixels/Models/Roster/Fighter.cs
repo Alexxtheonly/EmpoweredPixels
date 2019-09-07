@@ -34,6 +34,8 @@ namespace EmpoweredPixels.Models.Roster
 
     public float Vision { get; set; }
 
+    public bool IsDeleted { get; set; }
+
     public virtual User User { get; set; }
 
     public bool Equals(Fighter other)
@@ -113,6 +115,11 @@ namespace EmpoweredPixels.Models.Roster
         return false;
       }
 
+      if (IsDeleted != other.IsDeleted)
+      {
+        return false;
+      }
+
       return true;
     }
 
@@ -123,7 +130,7 @@ namespace EmpoweredPixels.Models.Roster
 
     public override int GetHashCode()
     {
-      return new { Id, Name, UserId, Accuracy, Speed, Power, Expertise, Agility, Toughness, Vitality, Stamina, Regeneration, Vision }.GetHashCode();
+      return new { Id, Name, UserId, Accuracy, Speed, Power, Expertise, Agility, Toughness, Vitality, Stamina, Regeneration, Vision, IsDeleted }.GetHashCode();
     }
 
     public override string ToString()

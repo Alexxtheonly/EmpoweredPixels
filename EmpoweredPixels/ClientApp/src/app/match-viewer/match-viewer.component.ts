@@ -21,10 +21,8 @@ export class MatchViewerComponent implements OnInit
   public id: string;
 
   constructor(
-    private changeDetectionRef: ChangeDetectorRef,
     private matchService: MatchService,
-    private route: ActivatedRoute,
-    private rosterService: RosterService)
+    private route: ActivatedRoute)
   {
   }
 

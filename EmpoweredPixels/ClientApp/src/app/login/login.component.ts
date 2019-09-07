@@ -1,5 +1,5 @@
+import { UserFeedbackService } from './../+services/userfeedback.service';
 import { Login } from './../auth/+models/login';
-import { AlertService } from 'src/app/+services/alert.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,7 +11,8 @@ import { first } from 'rxjs/operators';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit
+{
   public loginForm: FormGroup;
   public loading = false;
   public submitted = false;
@@ -20,9 +21,10 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private alert: AlertService) { }
+    private userfeedbackService: UserFeedbackService) { }
 
-  ngOnInit() {
+  ngOnInit()
+  {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -33,11 +35,13 @@ export class LoginComponent implements OnInit {
 
   get f() { return this.loginForm.controls; }
 
-  public submit(): void {
+  public submit(): void
+  {
     this.submitted = true;
 
     // stop here if form is invalid
-    if (this.loginForm.invalid) {
+    if (this.loginForm.invalid)
+    {
       return;
     }
 
@@ -50,11 +54,13 @@ export class LoginComponent implements OnInit {
     this.auth.login(login)
       .pipe(first())
       .subscribe(
-        data => {
+        data =>
+        {
           this.router.navigate(['/']);
         },
-        error => {
-          this.alert.error(error);
+        error =>
+        {
+          this.userfeedbackService.error(error);
           this.loading = false;
         });
   }

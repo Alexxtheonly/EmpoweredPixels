@@ -1,3 +1,4 @@
+import { UserFeedbackService } from './../+services/userfeedback.service';
 import { GameFighterDamageinfo } from './+models/game-fighter-damageinfo';
 import { async } from '@angular/core/testing';
 import { FighterRegeneratedEnergy } from './../match-viewer/+models/fighter-regenerated-energy';
@@ -43,7 +44,8 @@ export class GameViewerComponent implements OnInit
     private rosterService: RosterService,
     private changeDetectorRef: ChangeDetectorRef,
     private matchService: MatchService,
-    private route: ActivatedRoute)
+    private route: ActivatedRoute,
+    private userfeedbackService: UserFeedbackService)
   {
   }
 
@@ -79,6 +81,9 @@ export class GameViewerComponent implements OnInit
           return;
         }
         fighter.name = result.name;
+      }, error =>
+      {
+        this.userfeedbackService.error(error);
       });
       this.fighters.set(fighter.id, fighter);
     });

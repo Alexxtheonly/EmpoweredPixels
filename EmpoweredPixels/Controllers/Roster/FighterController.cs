@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using EmpoweredPixels.DataTransferObjects.Roster;
+using EmpoweredPixels.Exceptions.Roster;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Factories.Matches;
 using EmpoweredPixels.Models;
@@ -133,6 +134,37 @@ namespace EmpoweredPixels.Controllers.Roster
       await Context.SaveChangesAsync();
 
       return Mapper.Map<FighterDto>(fighter);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteFighter(Guid id)
+    {
+      var userId = User.Claims.GetUserId();
+      if (userId == null)
+      {
+        return Forbid();
+      }
+
+      var fighter = await Context.Fighters
+        .AsTracking()
+        .Where(o => o.UserId == userId)
+        .FirstOrDefaultAsync(o => o.Id == id);
+
+      if (fighter == null)
+      {
+        return BadRequest(new InvalidFighterException());
+      }
+
+      fighter.IsDeleted = true;
+
+      var subscriptions = await Context.LeagueSubscriptions
+        .Where(o => o.FighterId == fighter.Id)
+        .ToListAsync();
+
+      Context.LeagueSubscriptions.RemoveRange(subscriptions);
+      await Context.SaveChangesAsync();
+
+      return Ok();
     }
 
     [HttpPost("forecast")]

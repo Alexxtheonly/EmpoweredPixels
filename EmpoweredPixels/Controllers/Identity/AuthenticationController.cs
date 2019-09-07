@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using EmpoweredPixels.DataTransferObjects.Identity;
+using EmpoweredPixels.Exceptions.Identity;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Identity;
@@ -43,7 +44,7 @@ namespace EmpoweredPixels.Controllers.Identity
 
       if (user == null || !user.IsValidPassword(login.Password))
       {
-        return BadRequest();
+        return BadRequest(new InvalidCredentialsException());
       }
 
       user.LastLogin = dateTimeProvider.Now;
@@ -75,7 +76,7 @@ namespace EmpoweredPixels.Controllers.Identity
 
       if (token == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidRefreshTokenException());
       }
 
       return await GetToken(token);

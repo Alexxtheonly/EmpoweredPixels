@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using EmpoweredPixels.DataTransferObjects.Leagues;
+using EmpoweredPixels.Exceptions.Leagues;
+using EmpoweredPixels.Exceptions.Roster;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Leagues;
@@ -58,7 +60,7 @@ namespace EmpoweredPixels.Controllers.Leagues
 
       if (league == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidLeagueException());
       }
 
       var fighter = await Context.Fighters
@@ -67,12 +69,12 @@ namespace EmpoweredPixels.Controllers.Leagues
 
       if (fighter == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidFighterException());
       }
 
       if (fighter.PowerLevel() > league.Options.MatchOptions.MaxPowerlevel)
       {
-        return BadRequest();
+        return BadRequest(new IllegalFighterPowerlevelException());
       }
 
       var subscriptions = await Context.LeagueSubscriptions
@@ -82,7 +84,7 @@ namespace EmpoweredPixels.Controllers.Leagues
 
       if ((subscriptions.Count + 1) > league.Options.MatchOptions.MaxFightersPerUser)
       {
-        return BadRequest();
+        return BadRequest(new LeagueSubscriptionLimitExceededException());
       }
 
       Context.Add(Mapper.Map<LeagueSubscription>(dto));
@@ -106,7 +108,7 @@ namespace EmpoweredPixels.Controllers.Leagues
 
       if (league == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidLeagueException());
       }
 
       var fighter = await Context.Fighters
@@ -115,7 +117,7 @@ namespace EmpoweredPixels.Controllers.Leagues
 
       if (fighter == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidFighterException());
       }
 
       var subscription = await Context.LeagueSubscriptions
@@ -123,7 +125,7 @@ namespace EmpoweredPixels.Controllers.Leagues
 
       if (subscription == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidLeagueSubscriptionException());
       }
 
       Context.Remove(subscription);

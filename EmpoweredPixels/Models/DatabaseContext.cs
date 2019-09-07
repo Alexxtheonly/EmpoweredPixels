@@ -83,6 +83,7 @@ namespace EmpoweredPixels.Models
         e.HasKey(o => o.Id);
         e.Property(o => o.Id).ValueGeneratedOnAdd();
         e.HasOne(o => o.User).WithMany().HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
+        e.HasQueryFilter(o => !o.IsDeleted);
       });
 
       modelBuilder.Entity<Match>(e =>
