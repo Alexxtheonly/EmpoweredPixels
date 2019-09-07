@@ -1,3 +1,4 @@
+import { UserFeedbackService } from './../+services/userfeedback.service';
 import { Fighter } from './+models/fighter';
 import { Component, OnInit } from '@angular/core';
 import { RosterService } from './+services/roster.service';
@@ -8,20 +9,40 @@ import { observable, Observable } from 'rxjs';
   templateUrl: './roster.component.html',
   styleUrls: ['./roster.component.css']
 })
-export class RosterComponent implements OnInit {
+export class RosterComponent implements OnInit
+{
   public fighters: Fighter[] = new Array();
 
-  constructor(private rosterService: RosterService) { }
+  constructor(private rosterService: RosterService, private userfeedbackService: UserFeedbackService) { }
 
-  ngOnInit() {
+  ngOnInit()
+  {
     this.loadFighters();
   }
 
-  private loadFighters() {
-    this.rosterService.getFighters().subscribe(result => {
+  public deleteFighter(fighter: Fighter)
+  {
+    if (confirm(`Are you sure you want to delete ${fighter.name}?`))
+    {
+      this.rosterService.deleteFighter(fighter.id).subscribe(result =>
+      {
+        this.userfeedbackService.success(`Fighter successfully deleted. Farewell ${fighter.name} you shall be missed.`);
+        this.loadFighters();
+      }, error =>
+      {
+        this.userfeedbackService.error(error);
+      });
+    }
+  }
+
+  private loadFighters()
+  {
+    this.rosterService.getFighters().subscribe(result =>
+    {
       this.fighters = result;
-    }, error => {
-      console.error(error);
+    }, error =>
+    {
+      this.userfeedbackService.error(error);
     });
   }
 }

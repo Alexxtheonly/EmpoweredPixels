@@ -1,10 +1,11 @@
+import { UserFeedbackService } from '../+services/userfeedback.service';
 import { Login } from './+models/login';
 import { HttpClient } from '@angular/common/http';
 import { Token } from './+models/token';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

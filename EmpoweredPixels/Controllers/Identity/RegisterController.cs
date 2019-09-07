@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using EmpoweredPixels.DataTransferObjects.Identity;
+using EmpoweredPixels.Exceptions.Identity;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Identity;
@@ -51,7 +52,7 @@ namespace EmpoweredPixels.Controllers.Identity
 
       if (verification == null)
       {
-        return BadRequest();
+        return BadRequest(new InvalidVerificationException());
       }
 
       Context.Verifications.Remove(verification);

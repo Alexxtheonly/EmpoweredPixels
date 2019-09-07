@@ -104,7 +104,7 @@ export class RoundsViewerComponent implements OnInit
 
   public setPositionOfFighter(tick: any): void
   {
-    const fighter = this.fighters.find(o => o.fighterId == tick.FighterId);
+    const fighter = this.fighters.find(o => o.fighterId === tick.FighterId);
 
     if (fighter == null)
     {

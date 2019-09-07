@@ -1,3 +1,4 @@
+import { UserFeedbackService } from './../../+services/userfeedback.service';
 import { LeagueHighscoreOptions } from './../+models/league-highscore-options';
 import { RosterService } from './../../roster/+services/roster.service';
 import { LeagueMatch } from './../+models/league-match';
@@ -33,7 +34,11 @@ export class LeagueDetailComponent implements OnInit
 
   private id: number;
 
-  constructor(private leagueService: LeagueService, private route: ActivatedRoute, private rosterService: RosterService)
+  constructor(
+    private leagueService: LeagueService,
+    private route: ActivatedRoute,
+    private rosterService: RosterService,
+    private userfeedbackService: UserFeedbackService)
   {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.loadLeague();
@@ -59,6 +64,9 @@ export class LeagueDetailComponent implements OnInit
     this.leagueService.subscribeLeague(this.id, this.fighterId).subscribe(result =>
     {
       this.loadLeague();
+    }, error =>
+    {
+      this.userfeedbackService.error(error);
     });
   }
 
@@ -72,6 +80,9 @@ export class LeagueDetailComponent implements OnInit
     this.leagueService.unsubscribeLeague(this.id, this.fighterId).subscribe(result =>
     {
       this.loadLeague();
+    }, error =>
+    {
+      this.userfeedbackService.error(error);
     });
   }
 
@@ -81,6 +92,9 @@ export class LeagueDetailComponent implements OnInit
     {
       this.leagueDetail = result;
       this.loading = false;
+    }, error =>
+    {
+      this.userfeedbackService.error(error);
     });
   }
 
@@ -90,6 +104,9 @@ export class LeagueDetailComponent implements OnInit
     {
       this.page = result;
       this.loading = false;
+    }, error =>
+    {
+      this.userfeedbackService.error(error);
     });
   }
 
@@ -98,6 +115,9 @@ export class LeagueDetailComponent implements OnInit
     this.leagueService.getLeagueHighscores(this.id, this.leagueHighscoreOptions).subscribe(result =>
     {
       this.highscores = result;
+    }, error =>
+    {
+      this.userfeedbackService.error(error);
     });
   }
 

@@ -1,3 +1,4 @@
+import { UserFeedbackService } from './../../+services/userfeedback.service';
 import { MatchHubService } from './../+services/match-hub.service';
 import { MatchService } from './../+services/match.service';
 import { PagingOptions } from './../+models/paging-options';
@@ -16,7 +17,7 @@ export class MatchbrowserComponent implements OnInit
   public loading: boolean;
   public page: Page<Match>;
 
-  constructor(private matchService: MatchService, matchHubService: MatchHubService)
+  constructor(private matchService: MatchService, matchHubService: MatchHubService, private userfeedbackService: UserFeedbackService)
   {
     matchHubService.connect().then(() =>
     {
@@ -50,6 +51,9 @@ export class MatchbrowserComponent implements OnInit
     {
       this.page = result;
       this.loading = false;
+    }, error =>
+    {
+      this.userfeedbackService.error(error);
     });
   }
 

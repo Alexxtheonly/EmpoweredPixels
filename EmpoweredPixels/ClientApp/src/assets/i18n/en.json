@@ -5,5 +5,34 @@
     "03fdda5b-a644-4b9d-b257-a02e4d763556": "Big (250 x 250)",
     "03b94283-d252-4842-b224-724422671cdc": "Large (500 x 500)",
     "206128e9-2a59-449d-ae2e-61db923643c0": "Login reward",
-    "a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702": "Empowered particle"
+    "a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702": "Empowered particle",
+    "skills": {
+        "8c8229c8-a0a8-47f0-ad04-3dbe61ec6d32": "Execute",
+        "a3480692-af37-4d23-95da-50c005f82929": "Frenzy Smash",
+        "f6d2c3e2-908c-4d07-9cb5-598973ae7d4e": "Punch",
+        "7b71cee4-0567-4786-986e-b30ba2e83e17": "Smash",
+        "3f4fe7fc-497e-4894-b5b3-d9102c65728b": "Bombardment",
+        "abe67626-471d-499d-aa44-2c1468771c3e": "Perforate",
+        "69d6e8c5-3fae-4602-a66c-236a5c4271c7": "Reckless Shot",
+        "a99a67a3-f03a-4d5b-8dbd-f34dd886fa78": "Stone Throw"
+    },
+    "errorcodes": {
+        "1": "Invalid credentials",
+        "2": "Invalid refresh token",
+        "3": "Invalid verification",
+        "4": "Invalid league",
+        "5": "Invalid fighter",
+        "6": "Illegal fighter powerlevel",
+        "7": "League subscription limit exceeded",
+        "8": "Invalid league subscription",
+        "9": "Invalid match",
+        "10": "Match fighter limit exceeded",
+        "11": "Invalid team",
+        "12": "Invalid team password",
+        "13": "Invalid match registration",
+        "14": "Insufficient match registrations",
+        "15": "Invalid match result",
+        "16": "Invalid reward",
+        "17": "Invalid fighter name"
+    }
 }

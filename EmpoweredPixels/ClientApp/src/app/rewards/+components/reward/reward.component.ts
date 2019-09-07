@@ -1,3 +1,4 @@
+import { UserFeedbackService } from './../../../+services/userfeedback.service';
 import { Item } from './../../+models/item';
 import { RewardService } from './../../+services/reward.service';
 import { Reward } from './../../+models/reward';
@@ -21,7 +22,7 @@ export class RewardComponent implements OnInit
 
   public claimed: boolean;
 
-  constructor(private rewardService: RewardService) { }
+  constructor(private rewardService: RewardService, private userfeedbackService: UserFeedbackService) { }
 
   ngOnInit()
   {
@@ -36,6 +37,10 @@ export class RewardComponent implements OnInit
       this.items = result;
       this.showModal = true;
       this.claimed = true;
+    }, error =>
+    {
+      this.loading = false;
+      this.userfeedbackService.error(error);
     });
   }
 

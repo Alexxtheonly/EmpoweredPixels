@@ -1,7 +1,9 @@
+import { UserFeedbackService } from './../../+services/userfeedback.service';
 import { LeagueService } from './../+services/league.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { League } from './../+models/league';
 import { Component, OnInit } from '@angular/core';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-league-browser',
@@ -12,9 +14,13 @@ export class LeagueBrowserComponent implements OnInit
 {
   public leagues: Observable<League[]>;
 
-  constructor(private leagueService: LeagueService)
+  constructor(private leagueService: LeagueService, private userfeedbackService: UserFeedbackService)
   {
-    this.leagues = this.leagueService.getLeagues();
+    this.leagues = this.leagueService.getLeagues().pipe(catchError((error) =>
+    {
+      this.userfeedbackService.error(error);
+      return of(new Array());
+    }));
   }
 
   ngOnInit()

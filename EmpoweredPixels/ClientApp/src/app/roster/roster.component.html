@@ -1,20 +1,14 @@
 <div class="container">
-  <div class="content">
-    <h1>Roster</h1>
-
-    <div class="card col-sm-3" *ngFor="let fighter of fighters">
-      <div class="card-header">
-        <a [routerLink]="'fighter/' + fighter.id">{{ fighter.name }}</a>
+  <h1>Roster <a class="btn btn-primary" [routerLink]="'fighter/new'">Create new fighter</a></h1>
+  <div class="row">
+    <div class="col-12" *ngFor="let fighter of fighters">
+      <div class="card card-body">
+        <h5 class="card-title">{{ fighter.name }}
+          <button class="btn btn-danger float-right" (click)="deleteFighter(fighter)">Delete</button>
+          <a class="btn btn-info float-right" [routerLink]="'fighter/' + fighter.id">Edit</a>
+        </h5>
+        <app-fighter-stat-forecast [fighter]="fighter"></app-fighter-stat-forecast>
       </div>
-
-      <div class="card-body">
-        todo
-      </div>
-    </div>
-    <div class="card col-sm-3">
-      <div class="card-body">
-      </div>
-      <a class="btn btn-primary" [routerLink]="'fighter/new'">Create new fighter</a>
     </div>
   </div>
 </div>
