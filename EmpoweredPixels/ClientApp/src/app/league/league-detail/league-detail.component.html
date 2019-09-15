@@ -1,15 +1,31 @@
 <div class="container" *ngIf="leagueDetail">
-    <span class="text-muted float-right">Max powerlevel: {{ leagueDetail.maxPowerlevel }}</span>
 
-    <h1>{{ leagueDetail.name }} <h5 class="text-muted">Next match: {{ leagueDetail.nextMatch | date:'short' }}</h5>
-    </h1>
+    <div class="row">
+        <div class="col-sm-12 col-md-4">
+            <h1>{{ leagueDetail.name }} <h5 class="text-muted">Next match: {{ leagueDetail.nextMatch | date:'short' }}
+                </h5>
+            </h1>
+        </div>
+        <div class="col-sm-12 col-md-4 champ d-flex">
+            <div class="inline" style="margin-top: 10px;">
+                <img src="assets/images/laurel-crown.svg" />
+            </div>
+            <div class="inline" style="margin-top: 10px;text-align: left; margin-left: 15px;">
+                <p *ngIf="highscores&&highscores.length!=0">{{highscores[0].username}}</p>
+                <label class="text-muted">League champ</label>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <span class="text-muted" style="line-height: 70px;">Max powerlevel: {{ leagueDetail.maxPowerlevel }}</span>
+        </div>
+    </div>
 
     <div class="row">
         <div class="card card-body col-12">
             <h4>Recent matches</h4>
             <span *ngIf="page?.total === 0">No matches yet.</span>
             <div class="table-responsive" *ngIf="page?.total > 0">
-                <table class="table table-sm">
+                <table class="table table-sm clickable">
                     <thead>
                         <tr>
                             <th>Started</th>
@@ -18,26 +34,24 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            *ngFor="let match of page?.items | paginate: { id: 'server', itemsPerPage: options.pageSize, currentPage: options.pageNumber, totalItems: page.total }">
+                        <tr *ngFor="let match of page?.items | paginate: { id: 'server', itemsPerPage: options.pageSize, currentPage: options.pageNumber, totalItems: page.total }"
+                            routerLink="/match/{{ match.matchId }}/result">
                             <td>{{ match.started | timeAgo }}</td>
                             <td>
                                 <span>{{ match.winnerFighterName }}</span>
                                 <span class="ml-2 text-muted">{{ match.winnerUser }}</span>
                             </td>
-                            <td></td>
                             <td>
-                                <a class="btn btn-outline-primary col-12 col-md-6"
-                                    routerLink="/match/{{ match.matchId }}/result">Scores</a>
-                                <a class="btn btn-outline-secondary col-12 col-md-6"
-                                    routerLink="/replay/{{ match.matchId }}">Replay</a>
+                                <a class="replay" routerLink="/replay/{{ match.matchId }}">
+                                    <img src="assets/images/play-button.svg" />
+                                    Replay</a>
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <div style="text-align: center;">
                     <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
-                    <pagination-controls (pageChange)="loadPage($event)" id="server"></pagination-controls>
+                    <pagination-controls class="ep-pagination" (pageChange)="loadPage($event)" id="server"></pagination-controls>
                 </div>
             </div>
         </div>

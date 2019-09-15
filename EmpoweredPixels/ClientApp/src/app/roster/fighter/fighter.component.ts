@@ -2,7 +2,7 @@ import { UserFeedbackService } from './../../+services/userfeedback.service';
 import { RosterService } from './../+services/roster.service';
 import { Fighter } from './../+models/fighter';
 import { Component, OnInit, Output, EventEmitter, OnChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-fighter',
@@ -13,7 +13,11 @@ export class FighterComponent implements OnInit
 {
   public fighter: Fighter;
 
-  constructor(private route: ActivatedRoute, private rosterService: RosterService, private userfeedbackService: UserFeedbackService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private rosterService: RosterService,
+    private userfeedbackService: UserFeedbackService,
+    private router: Router) { }
 
   ngOnInit()
   {
@@ -49,6 +53,21 @@ export class FighterComponent implements OnInit
     this.fighter.vision = 1;
     this.fighter.vitality = 1;
     this.fighter.accuracy = 1;
+  }
+
+  public deleteFighter(fighter: Fighter)
+  {
+    if (confirm(`Are you sure you want to delete ${fighter.name}?`))
+    {
+      this.rosterService.deleteFighter(fighter.id).subscribe(result =>
+      {
+        this.userfeedbackService.success(`Fighter successfully deleted. Farewell ${fighter.name} you shall be missed.`);
+        this.router.navigate(['/roster']);
+      }, error =>
+      {
+        this.userfeedbackService.error(error);
+      });
+    }
   }
 
 }

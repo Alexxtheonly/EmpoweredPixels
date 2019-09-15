@@ -2,13 +2,14 @@ import { LeagueHighscoreOptions } from './../+models/league-highscore-options';
 import { PagingOptions } from './../../match/+models/paging-options';
 import { LeagueDetail } from './../+models/league-detail';
 import { LeagueSubscription } from './../+models/league-subscription';
-import { Observable } from 'rxjs';
+import { Observable, observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { League } from '../+models/league';
 import { LeagueMatch } from '../+models/league-match';
 import { Page } from 'src/app/match/+models/page';
 import { LeagueHighscore } from '../+models/league-highscore';
+import { LeagueMatchWinner } from '../+models/league-match-winner';
 
 @Injectable({
   providedIn: 'root'
@@ -64,5 +65,10 @@ export class LeagueService
   public getLeagueHighscores(leagueId: number, options: LeagueHighscoreOptions): Observable<LeagueHighscore[]>
   {
     return this.http.post<LeagueHighscore[]>(`api/league/${leagueId}/highscores`, options);
+  }
+
+  public getLastLeagueWinner(leagueId: number): Observable<LeagueMatchWinner>
+  {
+    return this.http.get<LeagueMatchWinner>(`api/league/${leagueId}/winner`);
   }
 }

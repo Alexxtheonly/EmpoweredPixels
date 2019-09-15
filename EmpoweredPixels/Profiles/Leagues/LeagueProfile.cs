@@ -16,7 +16,7 @@ namespace EmpoweredPixels.Profiles.Leagues
        .ForMember(o => o.IsTeam, opt => opt.MapFrom(o => o.Options.IsTeam))
        .ForMember(o => o.TeamSize, opt => opt.MapFrom(o => o.Options.TeamSize))
        .ForMember(o => o.MaxPowerlevel, opt => opt.MapFrom(o => o.Options.MatchOptions.MaxPowerlevel))
-       .ForMember(o => o.NextMatch, opt => opt.MapFrom(o => CronExpression.Parse(o.Options.IntervalCron).GetNextOccurrence(DateTimeOffset.UtcNow, TimeZoneInfo.Local, false)))
+       .ForMember(o => o.NextMatch, opt => opt.MapFrom(o => CronExpression.Parse(o.Options.IntervalCron).GetNextOccurrence(DateTimeOffset.UtcNow, TimeZoneInfo.Utc, false)))
        .Include<League, LeagueDetailDto>();
 
       CreateMap<League, LeagueDetailDto>();
@@ -32,6 +32,10 @@ namespace EmpoweredPixels.Profiles.Leagues
         .ForMember(o => o.HasWinner, opt => opt.MapFrom(o => GetWinningFighterResult(o) == null ? false : true))
         .ForMember(o => o.WinnerFighterName, opt => opt.MapFrom(o => GetWinningFighterResult(o) == null ? string.Empty : GetWinningFighterResult(o).Fighter.Name))
         .ForMember(o => o.WinnerUser, opt => opt.MapFrom(o => GetWinningFighterResult(o) == null ? string.Empty : GetWinningFighterResult(o).Fighter.User.Name));
+
+      CreateMap<LeagueMatch, LeagueLastWinnerDto>()
+        .ForMember(o => o.Username, opt => opt.MapFrom(o => GetWinningFighterResult(o) == null ? string.Empty : GetWinningFighterResult(o).Fighter.User.Name))
+        .ForMember(o => o.Fightername, opt => opt.MapFrom(o => GetWinningFighterResult(o) == null ? string.Empty : GetWinningFighterResult(o).Fighter.Name));
     }
 
     private static Models.Matches.MatchFighterResult GetWinningFighterResult(LeagueMatch o)

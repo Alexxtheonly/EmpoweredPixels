@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,9 @@ export class AppComponent
 {
   title = 'app';
 
-  constructor(translate: TranslateService)
+  constructor(
+    public authService : AuthService,
+    translate: TranslateService)
   {
     // this language will be used as a fallback when a translation isn't found in the current language
     translate.setDefaultLang('en');

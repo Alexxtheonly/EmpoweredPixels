@@ -1,7 +1,6 @@
-<body>
-  <app-nav-menu></app-nav-menu>
-  <div class="container" style="margin-bottom: 40px;">
-    <router-outlet></router-outlet>
-  </div>
-  <app-footer></app-footer>
-</body>
+<app-nav-menu *ngIf="authService.isAuthenticated()"></app-nav-menu>
+
+<div class="container h-100" style="margin-bottom: 20px;">
+  <router-outlet></router-outlet>
+</div>
+<app-footer></app-footer>
