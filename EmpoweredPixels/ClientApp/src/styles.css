@@ -1,1 +1,77 @@
 /* You can add global styles to this file, and also import other style files */
+
+@font-face {
+  font-family: emp;
+  src: url('assets/Exo2-Medium.otf');
+}
+
+body {
+  font-family: emp;
+  background: linear-gradient(rgb(17, 37, 100), rgb(18, 8, 38));
+  color: rgb(255, 255, 255);
+  min-height: 100vh;
+}
+
+.card {
+  background: transparent;
+  background-image: linear-gradient(135deg, #b6cfff2b 40%, #453ace24 100%);
+}
+
+.btn-primary {
+  background: linear-gradient(rgba(125, 116, 255, 0.32), rgba(61, 82, 255, 0.57));
+  border-color: rgba(255, 255, 255, 0.13);
+}
+
+.text-muted {
+  color: #c4c4c4 !important;
+}
+
+.container {
+  width: 100%;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+h1 {
+  color: white;
+}
+.list-group-item {
+  background-color: rgba(11, 12, 61, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.btn-info {
+  background: linear-gradient(rgba(116, 245, 255, 0.32), rgba(61, 244, 255, 0.57));
+}
+
+.btn-success {
+    color: #fff;
+    border-color: #28a745;
+    background-image: linear-gradient( 135deg, #70f570bf 10%, #49c628ad 100%);
+}
+
+.table td,
+.table th {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+table {
+  color: white !important;
+}
+
+.ngx-pagination a,
+.ngx-pagination button {
+  color: white !important;
+}
+
+.ngx-pagination .current {
+  background: rgba(33, 153, 232, 0.2) !important;
+}
+
+@media only screen and (max-width: 1024px) {
+  .ngx-pagination {
+    font-size: 11px;
+  }
+}

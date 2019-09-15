@@ -20,21 +20,6 @@ export class RosterComponent implements OnInit
     this.loadFighters();
   }
 
-  public deleteFighter(fighter: Fighter)
-  {
-    if (confirm(`Are you sure you want to delete ${fighter.name}?`))
-    {
-      this.rosterService.deleteFighter(fighter.id).subscribe(result =>
-      {
-        this.userfeedbackService.success(`Fighter successfully deleted. Farewell ${fighter.name} you shall be missed.`);
-        this.loadFighters();
-      }, error =>
-      {
-        this.userfeedbackService.error(error);
-      });
-    }
-  }
-
   private loadFighters()
   {
     this.rosterService.getFighters().subscribe(result =>

@@ -40,6 +40,9 @@ import { ItemComponent } from './rewards/+components/item/item.component';
 import { FighterStatForecastComponent } from './roster/+components/fighter-stat-forecast/fighter-stat-forecast.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MomentModule } from 'ngx-moment';
+import { VarDirective } from './+helpers/directives/var.directive';
+import { LastLeagueWinnerPipe } from './league/+pipes/last-league-winner.pipe';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -75,9 +78,12 @@ export function HttpLoaderFactory(http: HttpClient)
     RewardsComponent,
     RewardContentComponent,
     ItemComponent,
-    FighterStatForecastComponent
+    FighterStatForecastComponent,
+    VarDirective,
+    LastLeagueWinnerPipe
   ],
   imports: [
+    MomentModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,

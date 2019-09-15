@@ -4,6 +4,8 @@ import { Observable, of } from 'rxjs';
 import { League } from './../+models/league';
 import { Component, OnInit } from '@angular/core';
 import { catchError } from 'rxjs/operators';
+import * as moment from 'moment';
+import { LeagueMatchWinner } from '../+models/league-match-winner';
 
 @Component({
   selector: 'app-league-browser',
@@ -25,6 +27,16 @@ export class LeagueBrowserComponent implements OnInit
 
   ngOnInit()
   {
+  }
+
+  public getDiff(date: Date): string
+  {
+    return moment(date).fromNow();
+  }
+
+  public async getLeagueWinner(leagueId: number): Promise<LeagueMatchWinner>
+  {
+    return await this.leagueService.getLastLeagueWinner(leagueId).toPromise();
   }
 
 }

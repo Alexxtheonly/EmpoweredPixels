@@ -1,14 +1,14 @@
 <div class="container">
-  <h1>Roster <a class="btn btn-primary" [routerLink]="'fighter/new'">Create new fighter</a></h1>
+  <a class="btn btn-primary" style="margin:10px 0px;" [routerLink]="'fighter/new'">Create new fighter</a>
   <div class="row">
-    <div class="col-12" *ngFor="let fighter of fighters">
+    <a class="col-12" *ngFor="let fighter of fighters" [routerLink]="'fighter/' + fighter.id">
       <div class="card card-body">
+        <div class="blur"></div>
         <h5 class="card-title">{{ fighter.name }}
-          <button class="btn btn-danger float-right" (click)="deleteFighter(fighter)">Delete</button>
-          <a class="btn btn-info float-right" [routerLink]="'fighter/' + fighter.id">Edit</a>
         </h5>
         <app-fighter-stat-forecast [fighter]="fighter"></app-fighter-stat-forecast>
+        <img src="assets/mighty-force.png">
       </div>
-    </div>
+    </a>
   </div>
 </div>

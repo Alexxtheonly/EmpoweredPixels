@@ -45,6 +45,22 @@ namespace EmpoweredPixels.Controllers.Leagues
         .FirstOrDefaultAsync(o => o.Id == id));
     }
 
+    [HttpGet("{id}/winner")]
+    public async Task<ActionResult<LeagueLastWinnerDto>> GetLastWinner(int id)
+    {
+      var winner = await Context.LeagueMatches
+        .Where(o => o.LeagueId == id)
+        .Include(o => o.Match)
+        .ThenInclude(o => o.MatchFighterResults)
+        .ThenInclude(o => o.Fighter)
+        .ThenInclude(o => o.User)
+        .OrderByDescending(o => o.Match.Started)
+        .ProjectTo<LeagueLastWinnerDto>(Mapper.ConfigurationProvider)
+        .FirstOrDefaultAsync();
+
+      return Ok(winner);
+    }
+
     [HttpPost("subscribe")]
     public async Task<ActionResult> Subscribe([FromBody] LeagueSubscriptionDto dto)
     {

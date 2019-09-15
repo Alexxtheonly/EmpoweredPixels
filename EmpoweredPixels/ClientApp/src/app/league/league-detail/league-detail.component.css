@@ -1,0 +1,48 @@
+.replay {
+  color: #ffb804;
+}
+
+.replay img {
+  width: 24px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .table-sm td {
+    font-size: 10px;
+  }
+
+  .replay img {
+    width: 16px;
+  }
+}
+
+.clickable tbody tr:hover {
+  background: rgba(3, 0, 33, 0.2);
+  cursor: pointer;
+}
+
+.champ {
+  text-align: center;
+}
+
+.champ img {
+  width: 50px;
+}
+
+.champ p {
+  margin-bottom: -5px;
+  font-size: 20px;
+}
+
+.champ label {
+  font-size: 11px;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.ep-pagination /deep/ .ngx-pagination a:hover {
+  color: #ffb804 !important;
+  background: transparent !important;
+}

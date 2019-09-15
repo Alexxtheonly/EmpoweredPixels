@@ -1,0 +1,4 @@
+.ep-pagination /deep/ .ngx-pagination a:hover {
+    color: #ffb804 !important;
+    background: transparent !important;
+  }

@@ -1,62 +1,63 @@
 <div class="container">
-    <h1>{{fighter.name}}</h1>
-    <div>
-        <a class="btn btn-outline-success" (click)="updateFighter()">Save</a>
-        <a class="btn  btn-outline-warning" (click)="resetFighter()">Reset</a>
+    <div class="btn-group mb-1 col-12 col-md-6 col-lg-4 float-right">
+        <a class="btn btn-outline-success" (click)="updateFighter()" style="margin-right: 1px;">Save</a>
+        <a class="btn btn-outline-warning" (click)="resetFighter()" style="margin-right: 1px;">Reset</a>
+        <a class="btn btn-outline-danger" (click)="deleteFighter(fighter)">Delete</a>
     </div>
-    <div class="card card-body" style="position: sticky; top: 0; z-index: 999;">
+
+    <h1>{{fighter.name}}</h1>
+
+    <div class="card card-body forecast" style="position: sticky; top: 0; z-index: 999; backdrop-filter: blur(20px);">
         <app-fighter-stat-forecast [(fighter)]="fighter"></app-fighter-stat-forecast>
     </div>
 
     <h3>Offensive</h3>
     <div class="row">
-        <app-fighter-stat class="col col-lg-4 col-md-6 col-12" [(value)]="fighter.power" [name]="'Power'"
-            [description]="'Increases the fighters attack damage'" >
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.power" [name]="'Power'"
+            [description]="'Increases the fighters attack damage'">
         </app-fighter-stat>
 
-        <app-fighter-stat class="col col-lg-4 col-md-6 col-12" [(value)]="fighter.accuracy" [name]="'Accuracy'"
-            [description]="'Reduces the chance of missing attacks'" >
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.accuracy" [name]="'Accuracy'"
+            [description]="'Reduces the chance of missing attacks'">
         </app-fighter-stat>
 
-        <app-fighter-stat class="col col-lg-4 col-md-6 col-12" [(value)]="fighter.expertise" [name]="'Expertise'"
-            [description]="'Increases the chance of critical hits'" >
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.expertise" [name]="'Expertise'"
+            [description]="'Increases the chance of critical hits'">
         </app-fighter-stat>
     </div>
 
     <h3>Defensive</h3>
     <div class="row">
-        <app-fighter-stat class="col col-lg-4 col-md-6 col-12" [(value)]="fighter.agility" [name]="'Agility'"
-            [description]="'Increases the chance of avoiding enemy attacks'" >
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.agility" [name]="'Agility'"
+            [description]="'Increases the chance of avoiding enemy attacks'">
         </app-fighter-stat>
 
-        <app-fighter-stat class="col col-lg-4 col-md-6 col-12" [(value)]="fighter.toughness" [name]="'Toughness'"
-            [description]="'Reduces the damage taken by enemy attacks'" >
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.toughness" [name]="'Toughness'"
+            [description]="'Reduces the damage taken by enemy attacks'">
         </app-fighter-stat>
 
-        <app-fighter-stat class="col col-lg-4 col-md-6 col-12" [(value)]="fighter.vitality" [name]="'Vitality'"
-            [description]="'Increases the fighters life points'" >
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.vitality" [name]="'Vitality'"
+            [description]="'Increases the fighters life points'">
         </app-fighter-stat>
     </div>
 
     <h3>Utility</h3>
     <div class="row">
-        <app-fighter-stat class="col col-lg-4 col-md-6 col-12" [(value)]="fighter.speed" [name]="'Speed'"
-            [description]="'Increases the distance that can be covered with each move'" >
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.speed" [name]="'Speed'"
+            [description]="'Increases the distance that can be covered with each move'">
         </app-fighter-stat>
 
-        <app-fighter-stat class="col col-lg-4 col-md-6 col-12" [(value)]="fighter.stamina" [name]="'Stamina'"
-            [description]="'Increases the fighters energy. Energy is used to perform skills.'"
-            >
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.stamina" [name]="'Stamina'"
+            [description]="'Increases the fighters energy. Energy is used to perform skills.'">
         </app-fighter-stat>
 
-        <app-fighter-stat class="col col-lg-4 col-md-6 col-12" [(value)]="fighter.regeneration" [name]="'Regeneration'"
-            [description]="'Increases the fighters ability to regenerate. Regeneration restores life points every round.'"
-            >
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.regeneration"
+            [name]="'Regeneration'"
+            [description]="'Increases the fighters ability to regenerate. Regeneration restores life points every round.'">
         </app-fighter-stat>
 
-        <app-fighter-stat class="col col-lg-4 col-md-6 col-12" [(value)]="fighter.vision" [name]="'Vision'"
-            [description]="'Increases the fighters vision. The vision affects the distance the enemy can be seen at.'"
-            >
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.vision" [name]="'Vision'"
+            [description]="'Increases the fighters vision. The vision affects the distance the enemy can be seen at.'">
         </app-fighter-stat>
     </div>
 </div>

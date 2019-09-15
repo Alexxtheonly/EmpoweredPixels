@@ -1,16 +1,34 @@
 <div class="container">
     <div class="row">
-        <div class="col-12 col-md-6 col-lg-4" *ngFor="let league of leagues | async">
-            <div class="card card-body">
-                <h5 class="card-title">{{ league.name }}</h5>
+        <div class="col-12 col-md-6 col-lg-4 mb-1" *ngFor="let league of leagues | async">
+            <div class="card card-body" routerLink="/league/{{ league.id }}">
+                <h5 class="card-title">{{ league.name }}
+                    <span>
+                        {{ getDiff(league.nextMatch) }}</span>
+                </h5>
 
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Max powerlevel: {{ league.maxPowerlevel }}</li>
+                    <li class="list-group-item">Max power: {{ league.maxPowerlevel }}</li>
                     <li class="list-group-item">Subscribers: {{ league.subscriberCount }}</li>
-                    <li class="list-group-item">Next match: {{ league.nextMatch | date:'short' }}</li>
                 </ul>
 
-                <a class="btn btn-info col" routerLink="/league/{{ league.id }}">Show</a>
+                <div class="matchwinner" *ngVar="(league.id | lastLeagueWinner | async) as winner">
+                    <div *ngIf="winner?.fightername">
+                        <img src="assets/images/laurel-crown.svg" />
+                        <div style="text-align: center;">
+                            <p>{{ winner.fightername }}</p>
+                            <p class="text-muted">{{ winner.username }}</p>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!winner?.fightername">
+                        <img src="assets/images/no-winner.svg" />
+                        <div style="text-align: center;">
+                            <p>No winner</p>
+                            <p class="text-muted">Last match was a draw</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

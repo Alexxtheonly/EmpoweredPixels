@@ -1,0 +1,13 @@
+.card {
+  font-size: 11px;
+  text-align: center;
+}
+
+.hover {
+    cursor: pointer;
+  }
+  
+  .hover:hover i{
+    color: orange;
+  }
+  
