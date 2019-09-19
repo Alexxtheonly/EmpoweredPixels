@@ -159,6 +159,7 @@ namespace EmpoweredPixels.Models
                 IsPrivate = true,
                 Features = new Guid[]
                 {
+                  FeatureConstants.ApplyCondition,
                   FeatureConstants.RegenerateHealth,
                   FeatureConstants.RegenerateEnergy,
                   FeatureConstants.SacrificeToEntity,
@@ -188,6 +189,7 @@ namespace EmpoweredPixels.Models
                 IsPrivate = true,
                 Features = new Guid[]
                 {
+                  FeatureConstants.ApplyCondition,
                   FeatureConstants.RegenerateHealth,
                   FeatureConstants.RegenerateEnergy,
                   FeatureConstants.SacrificeToEntity,
@@ -217,6 +219,7 @@ namespace EmpoweredPixels.Models
                 IsPrivate = true,
                 Features = new Guid[]
                 {
+                  FeatureConstants.ApplyCondition,
                   FeatureConstants.RegenerateHealth,
                   FeatureConstants.RegenerateEnergy,
                   FeatureConstants.SacrificeToEntity,

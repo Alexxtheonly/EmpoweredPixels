@@ -2,31 +2,64 @@
   <div *ngFor="let round of print | async">
     <h5 class="border-bottom border-top">Round: {{ round.round }}</h5>
     <div *ngFor="let tick of round.ticks">
-      <span *ngIf="tick.nextX"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span>
+
+      <!--Fighter moved tick-->
+      <span *ngIf="tick.fighterId && tick.targetId && tick.nextX">
+        <span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> moved <span
+          class="font-weight-bold text-muted">{{ getName(tick.targetId) }}</span> to {{ tick.nextX }}, {{ tick.nextY }}
+      </span>
+
+      <!--Fighter applied condition tick-->
+      <span *ngIf="tick.fighterId && tick.targetId && tick.conditionId">
+        <span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> applied
+        <span class="text-muted">{{ 'conditions.' + tick.conditionId | translate }}</span>
+        on <span class="font-weight-bold text-muted">{{ getName(tick.targetId) }}</span>
+      </span>
+
+      <!--Fighter condition damage tick-->
+      <span *ngIf="tick.conditionId && tick.damage">
+        <span class="font-weight-bold">{{ getName(tick.fighterId) }}</span>
+        <span class="text-muted"> {{ 'conditions.' + tick.conditionId | translate }} </span> <span
+          class="badge badge-danger">{{ tick.damage }}</span> damage
+      </span>
+
+      <!--Fighter move tick-->
+      <span *ngIf="tick.fighterId && !tick.targetId && tick.nextX"><span
+          class="font-weight-bold">{{ getName(tick.fighterId) }}</span>
         <span class="text-muted"> moved to </span>{{ tick.nextX }}, {{ tick.nextY }}</span>
 
-      <span *ngIf="tick.targetId"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> attacked <span
-          class="font-weight-bold text-muted">
+      <!--Fighter attack tick-->
+      <span *ngIf="tick.damage && tick.energy"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span>
+        attacked <span class="font-weight-bold text-muted">
           {{ getName(tick.targetId) }} </span> <span class="text-muted">with {{ 'skills.' + tick.skillId | translate }}
           <span class="badge badge-danger">{{ tick.damage }}</span> damage <span *ngIf="tick.critical"
             class="text-danger">critical</span><span *ngIf="tick.dodged" class="text-info">dodged</span> </span>
       </span>
 
+      <!--Fighter died tick-->
       <span *ngIf="tick.died"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> died</span>
 
+      <!--Fighter health regenerated tick-->
       <span *ngIf="tick.healthPointsRegenerated"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span>
         regenerated
         <span class="text-success">{{ tick.healthPointsRegenerated }}</span>
         health</span>
 
+      <!--Fighter energy regenerated tick-->
       <span *ngIf="tick.regeneratedEnergy"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span>
         regenerated
         <span class="text-warning">{{ tick.regeneratedEnergy }}</span>
         energy</span>
 
+      <!--Fighter sacrificed tick-->
       <span *ngIf="tick.sacrificed">
         <span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> has been <span
           class="text-danger">sacrificed</span>
+      </span>
+
+      <!--Fighter stunned tick-->
+      <span *ngIf="tick.isStunned">
+        <span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> is stunned and can not perform any actions
       </span>
     </div>
   </div>

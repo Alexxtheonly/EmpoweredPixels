@@ -97,6 +97,47 @@ namespace EmpoweredPixels.Extensions
           FighterId = tick.Fighter.Id,
         };
       }
+      else if (engineTick.GetType() == typeof(FighterMovedByAttackTick))
+      {
+        var tick = (FighterMovedByAttackTick)engineTick;
+        return new FighterMovedByAttackTickDto()
+        {
+          FighterId = tick.Fighter.Id,
+          TargetId = tick.Target.Id,
+          CurrentX = tick.Current.X,
+          CurrentY = tick.Current.Y,
+          NextX = tick.Next.X,
+          NextY = tick.Next.Y,
+        };
+      }
+      else if (engineTick.GetType() == typeof(FighterConditionAppliedTick))
+      {
+        var tick = (FighterConditionAppliedTick)engineTick;
+        return new FighterConditionAppliedTickDto()
+        {
+          ConditionId = tick.Condition.Id,
+          FighterId = tick.Fighter.Id,
+          TargetId = tick.Target.Id,
+        };
+      }
+      else if (engineTick.GetType() == typeof(FighterConditionDamageTick))
+      {
+        var tick = (FighterConditionDamageTick)engineTick;
+        return new FighterConditionDamageTickDto()
+        {
+          ConditionId = tick.Condition.Id,
+          Damage = tick.Damage,
+          FighterId = tick.Fighter.Id,
+        };
+      }
+      else if (engineTick.GetType() == typeof(FighterStunnedTick))
+      {
+        var tick = (FighterStunnedTick)engineTick;
+        return new FighterStunnedTickDto()
+        {
+          FighterId = tick.Fighter.Id,
+        };
+      }
       else
       {
         throw new ArgumentException($"No suitable dto for type {engineTick.GetType().Name} found.");

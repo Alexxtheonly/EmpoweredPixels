@@ -30,5 +30,10 @@ namespace EmpoweredPixels.DataTransferObjects.Roster
     public float Regeneration { get; set; }
 
     public float Vision { get; set; }
+
+    public IStats Clone()
+    {
+      return this;
+    }
   }
 }
