@@ -44,6 +44,8 @@ namespace EmpoweredPixels.Factories.Matches
 
     private readonly IEnumerable<IEngineFeature> engineFeatures = new IEngineFeature[]
     {
+      new FeatureApplyCondition(),
+      new FeatureApplyBuff(),
       new FeatureRegenerateEnergy(),
       new FeatureRegenerateHealth(),
       new FeatureSacrificeToEntity(),
@@ -66,7 +68,7 @@ namespace EmpoweredPixels.Factories.Matches
       var qualified = fighters;
       if (optionsDto.MaxPowerlevel != null)
       {
-        qualified = qualified.Where(o => o.PowerLevel() <= optionsDto.MaxPowerlevel);
+        qualified = qualified.Where(o => o.Stats.PowerLevel() <= optionsDto.MaxPowerlevel);
       }
 
       if ((optionsDto.BotCount > 0 && optionsDto.BotCount < 1000) && optionsDto.BotPowerlevel > 10)

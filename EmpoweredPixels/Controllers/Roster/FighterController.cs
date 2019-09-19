@@ -172,16 +172,19 @@ namespace EmpoweredPixels.Controllers.Roster
     {
       IFighterStats fighter = new GenericFighter()
       {
-        Accuracy = dto.Accuracy,
-        Agility = dto.Agility,
-        Expertise = dto.Expertise,
-        Power = dto.Power,
-        Regeneration = dto.Regeneration,
-        Speed = dto.Speed,
-        Stamina = dto.Stamina,
-        Toughness = dto.Toughness,
-        Vision = dto.Vision,
-        Vitality = dto.Vitality,
+        Stats = new Stats()
+        {
+          Accuracy = dto.Accuracy,
+          Agility = dto.Agility,
+          Expertise = dto.Expertise,
+          Power = dto.Power,
+          Regeneration = dto.Regeneration,
+          Speed = dto.Speed,
+          Stamina = dto.Stamina,
+          Toughness = dto.Toughness,
+          Vision = dto.Vision,
+          Vitality = dto.Vitality,
+        }
       };
 
       var calculationValues = engineFactory.CalculationValues;

@@ -38,6 +38,11 @@ namespace EmpoweredPixels.Models.Roster
 
     public virtual User User { get; set; }
 
+    public IStats Clone()
+    {
+      return this;
+    }
+
     public bool Equals(Fighter other)
     {
       if (other == null)

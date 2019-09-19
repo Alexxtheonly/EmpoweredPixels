@@ -39,15 +39,14 @@
 
         <!-- Small devices -->
         <button class="btn btn-primary dropdown-toggle"
-          style="vertical-align: middle; background:transparent; height:100%;" (click)="toggle()"
-          type="button">
+          style="vertical-align: middle; background:transparent; height:100%;" (click)="toggle()" type="button">
           Menu
         </button>
         <div class="dropdown-menu" *ngIf="isExpanded">
-          <a class="dropdown-item" [routerLink]='["/league"]'>Leagues</a>
-          <a class="dropdown-item" [routerLink]='["/match/create"]'>Create match</a>
-          <a class="dropdown-item" [routerLink]='["/roster"]'>Roster</a>
-          <a class="dropdown-item" [routerLink]='["/rewards"]'>Rewards
+          <a class="dropdown-item" [routerLink]='["/league"]' (click)="isExpanded=false">Leagues</a>
+          <a class="dropdown-item" [routerLink]='["/match/create"]' (click)="isExpanded=false">Create match</a>
+          <a class="dropdown-item" [routerLink]='["/roster"]' (click)="isExpanded=false">Roster</a>
+          <a class="dropdown-item" [routerLink]='["/rewards"]' (click)="isExpanded=false">Rewards
             <span class="badge badge-primary" *ngIf="rewardCount>0">{{ rewardCount }}</span></a>
         </div>
       </div>

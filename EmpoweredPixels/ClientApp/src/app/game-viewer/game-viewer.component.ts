@@ -1,3 +1,5 @@
+import { FighterConditionDamage } from './../match-viewer/+models/fighter-condition-damage';
+import { FighterMovedByAttack } from './../match-viewer/+models/fighter-moved-by-attack';
 import { UserFeedbackService } from './../+services/userfeedback.service';
 import { GameFighterDamageinfo } from './+models/game-fighter-damageinfo';
 import { async } from '@angular/core/testing';
@@ -152,13 +154,25 @@ export class GameViewerComponent implements OnInit
    */
   private async handleTick(tick: any): Promise<boolean>
   {
+    if (tick.fighterId && tick.targetId && tick.nextX)
+    {
+      this.handleFighterMovedByAttack(tick as FighterMovedByAttack);
+      return false;
+    }
+
+    if (tick.conditionId && tick.damage)
+    {
+      this.handleFighterConditionDamage(tick as FighterConditionDamage);
+      return false;
+    }
+
     if (tick.nextX)
     {
       this.handleFighterMove(tick as FighterMove);
       return true;
     }
 
-    if (tick.targetId)
+    if (tick.damage && tick.energy)
     {
       await this.handleFighterAttack(tick as FighterAttackTick);
       return true;
@@ -201,6 +215,23 @@ export class GameViewerComponent implements OnInit
     }
 
     attacker.currentEnergy -= attack.energy;
+  }
+
+  private handleFighterMovedByAttack(moved: FighterMovedByAttack)
+  {
+    const fighter = this.fighters.get(moved.targetId);
+    fighter.positionX = moved.nextX;
+    fighter.positionY = moved.nextY;
+  }
+
+  private handleFighterConditionDamage(conditionDamage: FighterConditionDamage)
+  {
+    const fighter = this.fighters.get(conditionDamage.fighterId);
+    fighter.currentHealth -= conditionDamage.damage;
+    if (fighter.currentHealth < 0)
+    {
+      fighter.currentHealth = 0;
+    }
   }
 
   private handleFighterDied(died: FighterDiedTick)

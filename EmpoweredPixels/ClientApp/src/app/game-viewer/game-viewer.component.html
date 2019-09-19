@@ -13,23 +13,16 @@
 
     <div class="card card-body">
       <label>Follow fighter:</label>
-      <select
-        class="form-control"
-        [(ngModel)]="followFighterId"
-        (change)="scrollTo(followFighterId)"
-      >
+      <select class="form-control" [(ngModel)]="followFighterId" (change)="scrollTo(followFighterId)">
         <option value="">None</option>
-        <option
-          value="{{ fighter.value.id }}"
-          *ngFor="let fighter of fighters | keyvalue"
-          >{{ fighter.value.name }}</option
-        >
+        <option value="{{ fighter.value.id }}" *ngFor="let fighter of fighters | keyvalue">{{ fighter.value.name }}
+        </option>
       </select>
     </div>
 
     <div class="card card-body">
-      <button class="btn btn-primary" (click)="play()">Play</button
-      ><button class="btn btn-secondary" (click)="reset()">Reset</button>
+      <button class="btn btn-primary" (click)="play()">Play</button><button class="btn btn-secondary"
+        (click)="reset()">Reset</button>
     </div>
   </div>
   <div class="border map overflow-auto col-12 col-md-9">
@@ -37,18 +30,13 @@
       id="viewer"
       [ngStyle]="{
         transform: 'scale(' + scale + ')'
-      }"
-    >
-      <app-game-fighter
-        [ngClass]="fighter.value.isDead ? 'fighter dead' : 'fighter'"
-        [id]="fighter.value.id"
-        *ngFor="let fighter of fighters | keyvalue"
-        [fighter]="fighter.value"
-        [ngStyle]="{
+      }">
+      <app-game-fighter [ngClass]="fighter.value.isDead ? 'fighter dead' : 'fighter'" [id]="fighter.value.id"
+        *ngFor="let fighter of fighters | keyvalue" [fighter]="fighter.value" [ngStyle]="{
           left: fighter.value.positionX * 10 + 'pt',
           top: fighter.value.positionY * 10 + 'pt'
-        }"
-      ></app-game-fighter>
+        }">
+      </app-game-fighter>
     </div>
   </div>
 </div>

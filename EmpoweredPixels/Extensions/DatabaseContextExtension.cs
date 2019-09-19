@@ -11,6 +11,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SharpFightingEngine.Engines;
 using SharpFightingEngine.Fighters;
+using SharpFightingEngine.Skills;
+using SharpFightingEngine.Skills.Melee;
+using SharpFightingEngine.Skills.Range;
 
 namespace EmpoweredPixels.Extensions
 {
@@ -25,17 +28,47 @@ namespace EmpoweredPixels.Extensions
         {
           Id = o.Fighter.Id,
           Team = o.TeamId,
-          Accuracy = o.Fighter.Accuracy,
-          Agility = o.Fighter.Agility,
-          Expertise = o.Fighter.Expertise,
-          Power = o.Fighter.Power,
-          Regeneration = o.Fighter.Regeneration,
-          Speed = o.Fighter.Speed,
-          Stamina = o.Fighter.Stamina,
-          Toughness = o.Fighter.Toughness,
-          Vision = o.Fighter.Vision,
-          Vitality = o.Fighter.Vitality,
-        });
+          Stats = new Stats()
+          {
+            Accuracy = o.Fighter.Accuracy,
+            Agility = o.Fighter.Agility,
+            Expertise = o.Fighter.Expertise,
+            Power = o.Fighter.Power,
+            Regeneration = o.Fighter.Regeneration,
+            Speed = o.Fighter.Speed,
+            Stamina = o.Fighter.Stamina,
+            Toughness = o.Fighter.Toughness,
+            Vision = o.Fighter.Vision,
+            Vitality = o.Fighter.Vitality,
+          }
+        })
+        .ToList();
+
+      var skills = new ISkill[]
+      {
+        new StrongSmash(),
+        new BleedingSmash(),
+        new PoisonSmash(),
+        new BurningSmash(),
+        new FreezingSmash(),
+        new CripplingSmash(),
+        new PullingSmash(),
+        new StunningSmash(),
+        new StrongArrow(),
+        new BleedingArrow(),
+        new BurningArrow(),
+        new CripplingArrow(),
+        new FreezingArrow(),
+        new KnockbackArrow(),
+        new PoisionArrow(),
+        new StrongArrow(),
+        new StunningArrow(),
+      };
+
+      foreach (var fighter in fighters)
+      {
+        fighter.Skills = skills;
+      }
 
       var engine = engineFactory.GetEngine(fighters, match.Options);
       var result = engine.StartMatch();
