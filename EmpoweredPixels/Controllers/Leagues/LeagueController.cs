@@ -51,7 +51,7 @@ namespace EmpoweredPixels.Controllers.Leagues
       var winner = await Context.LeagueMatches
         .Where(o => o.LeagueId == id)
         .Include(o => o.Match)
-        .ThenInclude(o => o.MatchFighterResults)
+        .ThenInclude(o => o.MatchContributions)
         .ThenInclude(o => o.Fighter)
         .ThenInclude(o => o.User)
         .OrderByDescending(o => o.Match.Started)
@@ -185,7 +185,7 @@ namespace EmpoweredPixels.Controllers.Leagues
       return Ok(await Context.LeagueMatches
         .Where(o => o.LeagueId == id)
         .Include(o => o.Match)
-        .ThenInclude(o => o.MatchFighterResults)
+        .ThenInclude(o => o.MatchContributions)
         .ThenInclude(o => o.Fighter)
         .ThenInclude(o => o.User)
         .OrderByDescending(o => o.Match.Started)
@@ -202,9 +202,9 @@ namespace EmpoweredPixels.Controllers.Leagues
         .OrderByDescending(o => o.Match.Started)
         .Take(optionsDto.LastMatches);
 
-      var scores = await Context.MatchFighterResults
+      var scores = await Context.MatchContributions
         .Where(o => matches.Any(m => m.MatchId == o.MatchId))
-        .Where(o => o.Result == Enums.Matches.Result.Win)
+        .Where(o => o.HasWon)
         .Include(o => o.Fighter.User)
         .GroupBy(o => o.Fighter)
         .ToListAsync();

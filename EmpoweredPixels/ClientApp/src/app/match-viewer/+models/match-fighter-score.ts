@@ -1,16 +1,16 @@
 import { Tick } from './tick';
 
-export class MatchScore extends Tick
+export class MatchFighterScore extends Tick
 {
-    public id: string;
+    public fighterId: string;
+
+    public fighterName: string;
+
+    public username: string;
+
+    public points: number;
 
     public teamId: string;
-
-    public powerlevel: number;
-
-    public maxHealth: number;
-
-    public maxEnergy: number;
 
     public totalDamageDone: number;
 

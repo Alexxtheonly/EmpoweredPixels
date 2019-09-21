@@ -2,17 +2,17 @@
 
 namespace EmpoweredPixels.DataTransferObjects.Matches
 {
-  public class MatchScoreDto
+  public class MatchScoreFighterDto
   {
-    public Guid Id { get; set; }
+    public Guid FighterId { get; set; }
+
+    public string FighterName { get; set; }
+
+    public string Username { get; set; }
+
+    public int Points { get; set; }
 
     public Guid? TeamId { get; set; }
-
-    public int Powerlevel { get; set; }
-
-    public int MaxHealth { get; set; }
-
-    public int MaxEnergy { get; set; }
 
     public int TotalDamageDone { get; set; }
 

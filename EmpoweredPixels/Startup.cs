@@ -8,6 +8,8 @@ using EmpoweredPixels.Jobs.Rewards;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Providers.DateTime;
 using EmpoweredPixels.Providers.Version;
+using EmpoweredPixels.Utilities.ContributionPointCalculation;
+using EmpoweredPixels.Utilities.EloCalculation;
 using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -45,6 +47,8 @@ namespace EmpoweredPixels
       services.AddTransient<ILeagueJob, LeagueJob>();
       services.AddTransient<ILoginRewardJob, LoginRewardJob>();
       services.AddSingleton<IRewardFactory, RewardFactory>();
+      services.AddSingleton<IContributionPointCalculator, ContributionPointCalculator>();
+      services.AddSingleton<IEloCalculator, EloCalculator>();
 
       services.AddDbContextPool<DatabaseContext>(o => o.ConfigureDatabase(Configuration));
       services.AddAutoMapper(typeof(Startup));

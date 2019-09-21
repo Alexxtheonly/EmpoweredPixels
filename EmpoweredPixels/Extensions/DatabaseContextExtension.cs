@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EmpoweredPixels.Enums.Matches;
 using EmpoweredPixels.Factories.Matches;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Matches;
+using EmpoweredPixels.Models.Ratings;
 using EmpoweredPixels.Providers.DateTime;
+using EmpoweredPixels.Utilities.ContributionPointCalculation;
+using EmpoweredPixels.Utilities.EloCalculation;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -19,7 +21,13 @@ namespace EmpoweredPixels.Extensions
 {
   public static class DatabaseContextExtension
   {
-    public static async Task StartMatch(this DatabaseContext context, Match match, IDateTimeProvider dateTimeProvider, IEngineFactory engineFactory)
+    public static async Task StartMatch(
+      this DatabaseContext context,
+      Match match,
+      IDateTimeProvider dateTimeProvider,
+      IEngineFactory engineFactory,
+      IContributionPointCalculator contributionPointCalculator,
+      IEloCalculator eloCalculator)
     {
       match.Started = dateTimeProvider.Now;
 
@@ -71,14 +79,15 @@ namespace EmpoweredPixels.Extensions
       }
 
       var engine = engineFactory.GetEngine(fighters, match.Options);
-      var result = engine.StartMatch();
+      var result = await Task.Run(() => engine.StartMatch());
 
-      await context.CreateFighterResults(match, result);
       await context.CreateFighterScores(match, result, dateTimeProvider);
+      await context.UpdateFighterElos(result, contributionPointCalculator, eloCalculator, dateTimeProvider);
+
       context.MatchResults.Add(new Models.Matches.MatchResult()
       {
         MatchId = match.Id,
-        ResultJson = JsonConvert.SerializeObject(result.AsDto(), new JsonSerializerSettings()
+        RoundTicks = JsonConvert.SerializeObject(result.Ticks.AsDto(), new JsonSerializerSettings()
         {
           ContractResolver = new CamelCasePropertyNamesContractResolver(),
         }).Compress(),
@@ -100,10 +109,7 @@ namespace EmpoweredPixels.Extensions
           FighterId = fighterScore.Id,
           MatchId = match.Id,
           RoundsAlive = fighterScore.RoundsAlive,
-          Powerlevel = fighterScore.Powerlevel,
           TotalDamageDone = fighterScore.TotalDamageDone,
-          MaxEnergy = fighterScore.MaxEnergy,
-          MaxHealth = fighterScore.MaxHealth,
           TotalDamageTaken = fighterScore.TotalDamageTaken,
           TotalDeaths = fighterScore.TotalDeaths,
           TotalDistanceTraveled = fighterScore.TotalDistanceTraveled,
@@ -112,35 +118,64 @@ namespace EmpoweredPixels.Extensions
           TotalRegeneratedEnergy = fighterScore.TotalRegeneratedEnergy,
           TotalRegeneratedHealth = fighterScore.TotalRegeneratedHealth,
         });
+
+        var contribution = result.Contributions.FirstOrDefault(o => o.FighterId == fighterScore.Id);
+
+        context.MatchContributions.Add(new MatchContribution()
+        {
+          FighterId = fighterScore.Id,
+          HasWon = contribution.HasWon,
+          KillsAndAssists = contribution.KillsAndAssists,
+          MatchId = match.Id,
+          MatchParticipation = contribution.MatchParticipation,
+          PercentageOfRoundsAlive = contribution.PercentageOfRoundsAlive,
+        });
       }
     }
 
-    public static async Task CreateFighterResults(this DatabaseContext context, Match match, IMatchResult result)
+    public static async Task UpdateFighterElos(
+      this DatabaseContext context,
+      IMatchResult result,
+      IContributionPointCalculator contributionPointCalculator,
+      IEloCalculator eloCalculator,
+      IDateTimeProvider dateTimeProvider)
     {
-      await CreateFighterResult(result.Wins, Result.Win, match, context);
-      await CreateFighterResult(result.Draws, Result.Draw, match, context);
-      await CreateFighterResult(result.Loses, Result.Lose, match, context);
-    }
-
-    private static async Task CreateFighterResult(IEnumerable<IFighter> fighters, Result result, Match match, DatabaseContext context)
-    {
-      for (int i = 0; i < fighters.Count(); i++)
+      var positions = new List<EloPosition>();
+      var ratings = new List<IEloRating>();
+      foreach (var contribution in result.Contributions)
       {
-        var fighter = fighters.ElementAt(i);
-
-        if (!await context.Fighters.AnyAsync(o => o.Id == fighter.Id))
+        if (!await context.Fighters.AnyAsync(o => o.Id == contribution.FighterId))
         {
           continue;
         }
 
-        context.Add(new MatchFighterResult()
+        positions.Add(new EloPosition()
         {
-          MatchId = match.Id,
-          FighterId = fighter.Id,
-          Position = i,
-          Result = result,
+          Id = contribution.FighterId,
+          Points = contributionPointCalculator.Calculate(contribution),
         });
+
+        var eloRating = await context.FighterEloRatings
+          .AsTracking()
+          .FirstOrDefaultAsync(o => o.FighterId == contribution.FighterId);
+
+        if (eloRating == null)
+        {
+          eloRating = new FighterEloRating()
+          {
+            FighterId = contribution.FighterId,
+            CurrentElo = 1500,
+            PreviousElo = 1500,
+          };
+          context.FighterEloRatings.Add(eloRating);
+        }
+
+        eloRating.LastUpdate = dateTimeProvider.Now;
+
+        ratings.Add(eloRating);
       }
+
+      eloCalculator.Calculate(ratings, positions);
     }
   }
 }

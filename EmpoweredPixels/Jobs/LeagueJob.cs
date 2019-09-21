@@ -6,6 +6,8 @@ using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Leagues;
 using EmpoweredPixels.Models.Matches;
 using EmpoweredPixels.Providers.DateTime;
+using EmpoweredPixels.Utilities.ContributionPointCalculation;
+using EmpoweredPixels.Utilities.EloCalculation;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmpoweredPixels.Jobs
@@ -15,12 +17,21 @@ namespace EmpoweredPixels.Jobs
     private readonly DatabaseContext context;
     private readonly IEngineFactory engineFactory;
     private readonly IDateTimeProvider dateTimeProvider;
+    private readonly IContributionPointCalculator contributionPointCalculator;
+    private readonly IEloCalculator eloCalculator;
 
-    public LeagueJob(DatabaseContext context, IEngineFactory engineFactory, IDateTimeProvider dateTimeProvider)
+    public LeagueJob(
+      DatabaseContext context,
+      IEngineFactory engineFactory,
+      IDateTimeProvider dateTimeProvider,
+      IContributionPointCalculator contributionPointCalculator,
+      IEloCalculator eloCalculator)
     {
       this.context = context;
       this.engineFactory = engineFactory;
       this.dateTimeProvider = dateTimeProvider;
+      this.contributionPointCalculator = contributionPointCalculator;
+      this.eloCalculator = eloCalculator;
     }
 
     public async Task RunMatchAsync(int leagueId)
@@ -72,7 +83,7 @@ namespace EmpoweredPixels.Jobs
         MatchId = match.Id,
       });
 
-      await context.StartMatch(match, dateTimeProvider, engineFactory);
+      await context.StartMatch(match, dateTimeProvider, engineFactory, contributionPointCalculator, eloCalculator);
 
       await context.SaveChangesAsync();
     }

@@ -3,28 +3,33 @@ import { RoundTick } from '../../+models/round-tick';
 import { RosterService } from 'src/app/roster/+services/roster.service';
 import { FighterSpawnedTick } from '../../+models/fighter-spawned-tick';
 import { GameFighter } from 'src/app/game-viewer/+models/game-fighter';
+import { MatchService } from 'src/app/match/+services/match.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-match-log',
   templateUrl: './match-log.component.html',
   styleUrls: ['./match-log.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MatchLogComponent implements OnInit
 {
-
-  @Input()
   public roundTicks: RoundTick[];
 
-  public print: Promise<RoundTick[]>;
+  public print: RoundTick[];
 
   public fighters = new Map<string, GameFighter>();
 
-  constructor(private rosterService: RosterService) { }
+  constructor(
+    private rosterService: RosterService,
+    private matchService: MatchService,
+    private route: ActivatedRoute) { }
 
-  ngOnInit()
+  async ngOnInit()
   {
-    this.print = this.getPrint();
+    const id = this.route.snapshot.paramMap.get('id');
+
+    this.roundTicks = await this.matchService.getMatchRoundTicks(id).toPromise();
+    this.print = await this.getPrint();
   }
 
   private async getPrint()

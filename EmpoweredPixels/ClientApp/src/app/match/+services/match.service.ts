@@ -1,3 +1,5 @@
+import { MatchFighterScore } from '../../match-viewer/+models/match-fighter-score';
+import { RoundTick } from './../../match-viewer/+models/round-tick';
 import { Fighter } from './../../roster/+models/fighter';
 import { MatchTeam } from './../+models/match-team';
 import { Match } from './../+models/match';
@@ -6,7 +8,6 @@ import { MatchRegistration } from '../+models/match-registration';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MatchResult } from 'src/app/match-viewer/+models/match-result';
 import { MatchOptions } from '../+models/match-options';
 import { Page } from '../+models/page';
 import { MatchTeamOperation } from '../+models/match-team-operation';
@@ -44,9 +45,14 @@ export class MatchService
     return this.http.post('api/match/start', match);
   }
 
-  public getMatchResult(id: string): Observable<MatchResult>
+  public getMatchRoundTicks(id: string): Observable<RoundTick[]>
   {
-    return this.http.get<MatchResult>(`api/match/${id}/result`);
+    return this.http.get<RoundTick[]>(`api/match/${id}/roundticks`);
+  }
+
+  public getMatchFighterScores(id: string): Observable<MatchFighterScore[]>
+  {
+    return this.http.get<MatchFighterScore[]>(`api/match/${id}/fighterscores`);
   }
 
   public joinMatch(registration: MatchRegistration): Observable<any>

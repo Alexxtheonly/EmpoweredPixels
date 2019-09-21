@@ -8,12 +8,6 @@ namespace EmpoweredPixels.Models.Matches
 
     public int RoundsAlive { get; set; }
 
-    public int Powerlevel { get; set; }
-
-    public int MaxHealth { get; set; }
-
-    public int MaxEnergy { get; set; }
-
     public int TotalDamageDone { get; set; }
 
     public int TotalDamageTaken { get; set; }

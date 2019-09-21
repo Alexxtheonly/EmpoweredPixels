@@ -1,5 +1,5 @@
-<div style="height: 25em;" class="card card-body w-100 overflow-auto">
-  <div *ngFor="let round of print | async">
+<div class="card card-body w-100 overflow-auto">
+  <div *ngFor="let round of print">
     <h5 class="border-bottom border-top">Round: {{ round.round }}</h5>
     <div *ngFor="let tick of round.ticks">
 

@@ -14,6 +14,8 @@ using EmpoweredPixels.Hubs.Matches;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Matches;
 using EmpoweredPixels.Providers.DateTime;
+using EmpoweredPixels.Utilities.ContributionPointCalculation;
+using EmpoweredPixels.Utilities.EloCalculation;
 using EmpoweredPixels.Utilities.Paging;
 using EmpoweredPixels.Utilities.Paging.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -384,7 +386,7 @@ namespace EmpoweredPixels.Controllers.Matches
     }
 
     [HttpPost("start")]
-    public async Task<ActionResult> StartMatch([FromBody] MatchDto dto)
+    public async Task<ActionResult> StartMatch([FromBody] MatchDto dto, [FromServices] IContributionPointCalculator contributionPointCalculator, [FromServices]IEloCalculator eloCalculator)
     {
       var userId = User.Claims.GetUserId();
       if (userId == null)
@@ -409,7 +411,7 @@ namespace EmpoweredPixels.Controllers.Matches
         return BadRequest(new InsufficientMatchRegistrationsException());
       }
 
-      await Context.StartMatch(match, dateTimeProvider, engineFactory);
+      await Context.StartMatch(match, dateTimeProvider, engineFactory, contributionPointCalculator, eloCalculator);
 
       await Context.SaveChangesAsync();
 
@@ -418,8 +420,8 @@ namespace EmpoweredPixels.Controllers.Matches
       return Ok();
     }
 
-    [HttpGet("{id}/result")]
-    public async Task<ActionResult<MatchResultDto>> GetMatchResult(Guid id)
+    [HttpGet("{id}/roundticks")]
+    public async Task<ActionResult<IEnumerable<RoundTickDto>>> GetMatchRoundTicks(Guid id)
     {
       var matchResult = await Context.MatchResults
         .FirstOrDefaultAsync(o => o.MatchId == id);
@@ -429,7 +431,30 @@ namespace EmpoweredPixels.Controllers.Matches
         return BadRequest(new InvalidMatchResultException());
       }
 
-      return Content(matchResult.ResultJson.Decompress());
+      return Content(matchResult.RoundTicks.Decompress(), "application/json");
+    }
+
+    [HttpGet("{id}/fighterscores")]
+    public async Task<ActionResult<IEnumerable<MatchScoreFighterDto>>> GetMatchFighterScores(Guid id, [FromServices] IContributionPointCalculator pointCalculator)
+    {
+      var scores = await Context.MatchScoreFighters
+        .Where(o => o.MatchId == id)
+        .ProjectTo<MatchScoreFighterDto>(Mapper.ConfigurationProvider)
+        .ToListAsync();
+
+      foreach (var score in scores)
+      {
+        var contribution = await Context.MatchContributions
+          .FirstOrDefaultAsync(o => o.MatchId == id && o.FighterId == score.FighterId);
+        if (contribution == null)
+        {
+          throw new NullReferenceException($"{nameof(contribution)} is null. MatchId {id}, FighterId {score.FighterId}");
+        }
+
+        score.Points = pointCalculator.Calculate(contribution);
+      }
+
+      return Ok(scores.OrderByDescending(o => o.Points));
     }
 
     private async Task PushMatchUpdate(Guid id)

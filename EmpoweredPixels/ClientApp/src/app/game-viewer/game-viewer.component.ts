@@ -118,8 +118,7 @@ export class GameViewerComponent implements OnInit
   private async init()
   {
     const id: string = this.route.snapshot.paramMap.get('id');
-    const match = await this.matchService.getMatchResult(id).toPromise();
-    this.roundTicks = match.ticks;
+    this.roundTicks = await this.matchService.getMatchRoundTicks(id).toPromise();
     this.prepareReplay();
   }
 
