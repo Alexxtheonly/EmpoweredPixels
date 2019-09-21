@@ -4,6 +4,7 @@ using AutoMapper;
 using Cronos;
 using EmpoweredPixels.DataTransferObjects.Leagues;
 using EmpoweredPixels.Models.Leagues;
+using EmpoweredPixels.Models.Matches;
 
 namespace EmpoweredPixels.Profiles.Leagues
 {
@@ -38,9 +39,9 @@ namespace EmpoweredPixels.Profiles.Leagues
         .ForMember(o => o.Fightername, opt => opt.MapFrom(o => GetWinningFighterResult(o) == null ? string.Empty : GetWinningFighterResult(o).Fighter.Name));
     }
 
-    private static Models.Matches.MatchFighterResult GetWinningFighterResult(LeagueMatch o)
+    private static MatchContribution GetWinningFighterResult(LeagueMatch o)
     {
-      return o.Match.MatchFighterResults.OrderBy(u => u.Position).FirstOrDefault(u => u.Result == Enums.Matches.Result.Win);
+      return o.Match.MatchContributions.FirstOrDefault(c => c.HasWon);
     }
   }
 }

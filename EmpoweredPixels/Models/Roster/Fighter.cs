@@ -1,5 +1,6 @@
 ﻿using System;
 using EmpoweredPixels.Models.Identity;
+using EmpoweredPixels.Models.Ratings;
 using SharpFightingEngine.Fighters;
 
 namespace EmpoweredPixels.Models.Roster
@@ -35,6 +36,8 @@ namespace EmpoweredPixels.Models.Roster
     public float Vision { get; set; }
 
     public bool IsDeleted { get; set; }
+
+    public virtual FighterEloRating EloRating { get; set; }
 
     public virtual User User { get; set; }
 

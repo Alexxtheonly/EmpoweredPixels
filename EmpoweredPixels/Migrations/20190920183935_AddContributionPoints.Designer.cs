@@ -4,14 +4,16 @@ using EmpoweredPixels.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EmpoweredPixels.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20190920183935_AddContributionPoints")]
+    partial class AddContributionPoints
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -334,28 +336,6 @@ namespace EmpoweredPixels.Migrations
                     b.ToTable("MatchTeams");
                 });
 
-            modelBuilder.Entity("EmpoweredPixels.Models.Ratings.FighterEloRating", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CurrentElo");
-
-                    b.Property<Guid>("FighterId");
-
-                    b.Property<DateTimeOffset?>("LastUpdate");
-
-                    b.Property<int>("PreviousElo");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FighterId")
-                        .IsUnique();
-
-                    b.ToTable("FighterEloRatings");
-                });
-
             modelBuilder.Entity("EmpoweredPixels.Models.Rewards.Reward", b =>
                 {
                     b.Property<Guid>("Id")
@@ -536,14 +516,6 @@ namespace EmpoweredPixels.Migrations
                     b.HasOne("EmpoweredPixels.Models.Matches.MatchTeam")
                         .WithMany()
                         .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("EmpoweredPixels.Models.Ratings.FighterEloRating", b =>
-                {
-                    b.HasOne("EmpoweredPixels.Models.Roster.Fighter", "Fighter")
-                        .WithOne("EloRating")
-                        .HasForeignKey("EmpoweredPixels.Models.Ratings.FighterEloRating", "FighterId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

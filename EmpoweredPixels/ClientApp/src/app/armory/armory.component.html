@@ -1,0 +1,44 @@
+<div *ngIf="fighterArmory" class="row">
+    <div class="col-12">
+        <span class="float-right">Level: {{ fighterArmory.level }}</span>
+    </div>
+    <div class="col-12">
+        <div class="card card-body">
+            <h2 class="card-title ">{{ fighterArmory.fighterName }}<span
+                    class="text-muted float-right">{{ fighterArmory.username }}</span></h2>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="card card-body">
+            <h4 class="card-title">Stats</h4>
+            <div class="table-responsive-sm">
+                <table class="table-sm">
+                    <tbody>
+                        <tr>
+                            <td>Elo</td>
+                            <td> <span>{{ fighterArmory.eloRating }} </span>
+                                <span *ngIf="fighterArmory.eloRatingChange > 0" class="text-success">+</span>
+                                <span
+                                    [ngClass]="fighterArmory.eloRatingChange < 0 ? 'text-danger' : 'text-success'">{{ fighterArmory.eloRatingChange }}</span>
+                                <span class="badge">{{ fighterArmory.lastEloRatingUpdate | timeAgo }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Kills</td>
+                            <td>{{ fighterArmory.kills }}</td>
+                        </tr>
+                        <tr>
+                            <td>Deaths</td>
+                            <td>{{ fighterArmory.deaths }}</td>
+                        </tr>
+                        <tr>
+                            <td>K/D ratio</td>
+                            <td>{{ fighterArmory.killDeathRatio | number }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

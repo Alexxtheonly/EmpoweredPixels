@@ -43,6 +43,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MomentModule } from 'ngx-moment';
 import { VarDirective } from './+helpers/directives/var.directive';
 import { LastLeagueWinnerPipe } from './league/+pipes/last-league-winner.pipe';
+import { ArmoryComponent } from './armory/armory.component';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -80,7 +81,8 @@ export function HttpLoaderFactory(http: HttpClient)
     ItemComponent,
     FighterStatForecastComponent,
     VarDirective,
-    LastLeagueWinnerPipe
+    LastLeagueWinnerPipe,
+    ArmoryComponent
   ],
   imports: [
     MomentModule,
@@ -104,10 +106,12 @@ export function HttpLoaderFactory(http: HttpClient)
       { path: 'match/create', component: MatchCreationComponent, canActivate: [AuthGuardService] },
       { path: 'match/:id', component: MatchlobbyComponent, canActivate: [AuthGuardService] },
       { path: 'match/:id/result', component: MatchViewerComponent, canActivate: [AuthGuardService] },
+      { path: 'match/:id/log', component: MatchLogComponent, canActivate: [AuthGuardService] },
       { path: 'league', component: LeagueBrowserComponent, canActivate: [AuthGuardService] },
       { path: 'league/:id', component: LeagueDetailComponent, canActivate: [AuthGuardService] },
       { path: 'replay/:id', component: GameViewerComponent, canActivate: [AuthGuardService] },
       { path: 'rewards', component: RewardsComponent, canActivate: [AuthGuardService] },
+      { path: 'armory/:id', component: ArmoryComponent, canActivate: [AuthGuardService] },
     ]),
     TranslateModule.forRoot({
       loader: {

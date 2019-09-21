@@ -7,7 +7,5 @@ namespace EmpoweredPixels.DataTransferObjects.Matches
     public int Round { get; set; }
 
     public IEnumerable<TickDto> Ticks { get; set; }
-
-    public IEnumerable<RoundScoreDto> Scores { get; set; }
   }
 }

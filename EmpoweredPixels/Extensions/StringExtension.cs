@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.IO.Compression;
 using System.Text;
 
@@ -34,30 +33,29 @@ namespace EmpoweredPixels.Extensions
       return result;
     }
 
-    public static string Compress(this string s)
+    public static byte[] Compress(this string s)
     {
       var bytes = Encoding.Unicode.GetBytes(s);
       using (var memoryStreamIn = new MemoryStream(bytes))
       using (var memoryStreamOut = new MemoryStream())
       {
-        using (var gs = new GZipStream(memoryStreamOut, CompressionMode.Compress))
+        using (var compressionStream = new BrotliStream(memoryStreamOut, CompressionLevel.Optimal))
         {
-          memoryStreamIn.CopyTo(gs);
+          memoryStreamIn.CopyTo(compressionStream);
         }
 
-        return Convert.ToBase64String(memoryStreamOut.ToArray());
+        return memoryStreamOut.ToArray();
       }
     }
 
-    public static string Decompress(this string s)
+    public static string Decompress(this byte[] bytes)
     {
-      var bytes = Convert.FromBase64String(s);
       using (var memoryStreamIn = new MemoryStream(bytes))
       using (var memoryStreamOut = new MemoryStream())
       {
-        using (var gs = new GZipStream(memoryStreamIn, CompressionMode.Decompress))
+        using (var decompressionStream = new BrotliStream(memoryStreamIn, CompressionMode.Decompress))
         {
-          gs.CopyTo(memoryStreamOut);
+          decompressionStream.CopyTo(memoryStreamOut);
         }
 
         return Encoding.Unicode.GetString(memoryStreamOut.ToArray());

@@ -8,6 +8,6 @@ namespace EmpoweredPixels.Models.Matches
 
     public Guid MatchId { get; set; }
 
-    public string ResultJson { get; set; }
+    public byte[] RoundTicks { get; set; }
   }
 }
