@@ -1,11 +1,12 @@
 <div class="container">
   <div class="card card-body">
-    <h5 class="card-title">Add new fighter</h5>
+    <h5 class="card-title">{{ 'roster.addNewFighter' | translate }}</h5>
     <div class="row">
       <div class="col-12 col-md-6">
         <input class="form-control" type="text" [(ngModel)]="name" placeholder="Enter fighter name">
 
-        <button type="button" class="btn btn-primary btn-block" (click)="submit()" [disabled]="loading">Add</button>
+        <button type="button" class="btn btn-primary btn-block" (click)="submit()"
+          [disabled]="loading">{{ 'roster.add' | translate}}</button>
       </div>
     </div>
   </div>
