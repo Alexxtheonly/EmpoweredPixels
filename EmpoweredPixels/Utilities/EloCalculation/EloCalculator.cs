@@ -14,6 +14,7 @@ namespace EmpoweredPixels.Utilities.EloCalculation
         .ToList();
 
       var count = positionsOrdered.Count();
+      UpdatePreviousRating(eloRatings);
 
       for (int i = 0; i < count; i++)
       {
@@ -30,14 +31,19 @@ namespace EmpoweredPixels.Utilities.EloCalculation
       }
     }
 
+    private void UpdatePreviousRating(IEnumerable<IEloRating> eloRatings)
+    {
+      foreach (var eloRating in eloRatings)
+      {
+        eloRating.PreviousElo = eloRating.CurrentElo;
+      }
+    }
+
     private void CalculateElo(IEloRating winner, IEloRating loser)
     {
       var result = CalculateElo(winner.CurrentElo, loser.CurrentElo, Outcome.Win);
 
-      winner.PreviousElo = result.OldRatingPlayerLeft;
       winner.CurrentElo = result.NewRatingPlayerLeft;
-
-      loser.PreviousElo = result.OldRatingPlayerRight;
       loser.CurrentElo = result.NewRatingPlayerRight;
     }
 
