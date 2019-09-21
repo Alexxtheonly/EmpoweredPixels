@@ -29,7 +29,7 @@
         <span class="text-muted"> moved to </span>{{ tick.nextX }}, {{ tick.nextY }}</span>
 
       <!--Fighter attack tick-->
-      <span *ngIf="tick.damage && tick.energy"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span>
+      <span *ngIf="tick.skillId && tick.targetId"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span>
         attacked <span class="font-weight-bold text-muted">
           {{ getName(tick.targetId) }} </span> <span class="text-muted">with {{ 'skills.' + tick.skillId | translate }}
           <span class="badge badge-danger">{{ tick.damage }}</span> damage <span *ngIf="tick.critical"
