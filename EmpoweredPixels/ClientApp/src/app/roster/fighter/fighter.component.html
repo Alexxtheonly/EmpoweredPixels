@@ -1,8 +1,10 @@
 <div class="container">
     <div class="btn-group mb-1 col-12 col-md-6 col-lg-4 float-right">
-        <a class="btn btn-outline-success" (click)="updateFighter()" style="margin-right: 1px;">Save</a>
-        <a class="btn btn-outline-warning" (click)="resetFighter()" style="margin-right: 1px;">Reset</a>
-        <a class="btn btn-outline-danger" (click)="deleteFighter(fighter)">Delete</a>
+        <a class="btn btn-outline-success" (click)="updateFighter()"
+            style="margin-right: 1px;">{{ 'roster.save' | translate }}</a>
+        <a class="btn btn-outline-warning" (click)="resetFighter()"
+            style="margin-right: 1px;">{{ 'roster.reset' | translate }}</a>
+        <a class="btn btn-outline-danger" (click)="deleteFighter(fighter)">{{ 'roster.delete' | translate }}</a>
     </div>
 
     <h1>{{fighter.name}}</h1>
@@ -11,53 +13,52 @@
         <app-fighter-stat-forecast [(fighter)]="fighter"></app-fighter-stat-forecast>
     </div>
 
-    <h3>Offensive</h3>
+    <h3>{{ 'roster.offensive' | translate}}</h3>
     <div class="row">
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.power" [name]="'Power'"
-            [description]="'Increases the fighters attack damage'">
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.power"
+            [name]="'roster.power' | translate" [description]="'roster.powerDescription' | translate">
         </app-fighter-stat>
 
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.accuracy" [name]="'Accuracy'"
-            [description]="'Reduces the chance of missing attacks'">
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.accuracy"
+            [name]="'roster.accuracy' | translate" [description]="'roster.accuracyDescription' | translate">
         </app-fighter-stat>
 
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.expertise" [name]="'Expertise'"
-            [description]="'Increases the chance of critical hits'">
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.expertise"
+            [name]="'roster.expertise' | translate" [description]="'roster.expertiseDescription' | translate">
         </app-fighter-stat>
     </div>
 
-    <h3>Defensive</h3>
+    <h3>{{ 'roster.defensive' | translate }}</h3>
     <div class="row">
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.agility" [name]="'Agility'"
-            [description]="'Increases the chance of avoiding enemy attacks'">
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.agility"
+            [name]="'roster.agility' | translate" [description]="'roster.agilityDescription' | translate">
         </app-fighter-stat>
 
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.toughness" [name]="'Toughness'"
-            [description]="'Reduces the damage taken by enemy attacks'">
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.toughness"
+            [name]="'roster.toughness' | translate" [description]="'roster.toughnessDescription' | translate">
         </app-fighter-stat>
 
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.vitality" [name]="'Vitality'"
-            [description]="'Increases the fighters life points'">
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.vitality"
+            [name]="'roster.vitality' | translate" [description]="'roster.vitalityDescription' | translate">
         </app-fighter-stat>
     </div>
 
-    <h3>Utility</h3>
+    <h3>{{ 'roster.utility' | translate }}</h3>
     <div class="row">
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.speed" [name]="'Speed'"
-            [description]="'Increases the distance that can be covered with each move'">
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.speed"
+            [name]="'roster.speed' | translate" [description]="'roster.speedDescription' | translate">
         </app-fighter-stat>
 
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.stamina" [name]="'Stamina'"
-            [description]="'Increases the fighters energy. Energy is used to perform skills.'">
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.stamina"
+            [name]="'roster.stamina' | translate" [description]="'roster.staminaDescription' | translate">
         </app-fighter-stat>
 
         <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.regeneration"
-            [name]="'Regeneration'"
-            [description]="'Increases the fighters ability to regenerate. Regeneration restores life points every round.'">
+            [name]="'roster.regeneration' | translate" [description]="'roster.regenerationDescription' | translate">
         </app-fighter-stat>
 
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.vision" [name]="'Vision'"
-            [description]="'Increases the fighters vision. The vision affects the distance the enemy can be seen at.'">
+        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.vision"
+            [name]="'roster.vision' | translate" [description]="'roster.visionDescription' | translate">
         </app-fighter-stat>
     </div>
 </div>

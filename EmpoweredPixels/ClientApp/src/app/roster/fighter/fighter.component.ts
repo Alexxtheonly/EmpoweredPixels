@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { UserFeedbackService } from './../../+services/userfeedback.service';
 import { RosterService } from './../+services/roster.service';
 import { Fighter } from './../+models/fighter';
@@ -17,7 +18,8 @@ export class FighterComponent implements OnInit
     private route: ActivatedRoute,
     private rosterService: RosterService,
     private userfeedbackService: UserFeedbackService,
-    private router: Router) { }
+    private router: Router,
+    private translateService: TranslateService) { }
 
   ngOnInit()
   {
@@ -33,7 +35,7 @@ export class FighterComponent implements OnInit
     this.rosterService.updateFighter(this.fighter).subscribe(result =>
     {
       this.fighter = result;
-      this.userfeedbackService.success('Fighter attributes successfully saved');
+      this.userfeedbackService.success(this.translateService.instant('roster.fighterSuccessfullySaved'));
     }, error =>
     {
       console.error(error);
@@ -57,11 +59,11 @@ export class FighterComponent implements OnInit
 
   public deleteFighter(fighter: Fighter)
   {
-    if (confirm(`Are you sure you want to delete ${fighter.name}?`))
+    if (confirm(this.translateService.instant('roster.fighterDeleteConfirm', { name: fighter.name })))
     {
       this.rosterService.deleteFighter(fighter.id).subscribe(result =>
       {
-        this.userfeedbackService.success(`Fighter successfully deleted. Farewell ${fighter.name} you shall be missed.`);
+        this.userfeedbackService.success(this.translateService.instant('roster.fighterDeleted', { name: fighter.name }));
         this.router.navigate(['/roster']);
       }, error =>
       {
