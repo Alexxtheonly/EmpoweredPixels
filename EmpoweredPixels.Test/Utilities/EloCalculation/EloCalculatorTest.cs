@@ -61,7 +61,7 @@ namespace EmpoweredPixels.Test.Utilities.EloCalculation
       Assert.Equal(1500, player0.CurrentElo);
       Assert.Equal(1488, player2.CurrentElo);
 
-      Assert.Equal(1488, player0.PreviousElo);
+      Assert.Equal(1500, player0.PreviousElo);
       Assert.Equal(1500, player1.PreviousElo);
       Assert.Equal(1500, player2.PreviousElo);
     }
