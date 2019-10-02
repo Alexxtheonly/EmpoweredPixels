@@ -4,10 +4,10 @@
   <div class="row">
     <a class="col-12" *ngFor="let fighter of fighters" [routerLink]="'fighter/' + fighter.id">
       <div class="card card-body">
-        <div class="blur"></div>
         <h5 class="card-title">{{ fighter.name }}
+          <span class="badge">{{ 'roster.level' | translate }} {{ fighter.level }}</span>
         </h5>
-        <app-fighter-stat-forecast [fighter]="fighter"></app-fighter-stat-forecast>
+        <app-fighter-gear style="zoom: 0.5" [fighter]="fighter" [disableContext]="true"></app-fighter-gear>
         <img src="assets/mighty-force.png">
       </div>
     </a>

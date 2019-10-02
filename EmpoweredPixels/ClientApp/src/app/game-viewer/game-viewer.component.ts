@@ -1,20 +1,15 @@
+import { FighterHealTick } from './../match-viewer/+models/fighter-heal-tick';
 import { FighterConditionDamage } from './../match-viewer/+models/fighter-condition-damage';
 import { FighterMovedByAttack } from './../match-viewer/+models/fighter-moved-by-attack';
 import { UserFeedbackService } from './../+services/userfeedback.service';
-import { GameFighterDamageinfo } from './+models/game-fighter-damageinfo';
-import { async } from '@angular/core/testing';
-import { FighterRegeneratedEnergy } from './../match-viewer/+models/fighter-regenerated-energy';
-import { FighterRegeneratedHealth } from './../match-viewer/+models/fighter-regenerated-health';
 import { FighterDiedTick } from './../match-viewer/+models/fighter-died-tick';
 import { FighterAttackTick } from './../match-viewer/+models/fighter-attack-tick';
 import { FighterMove } from './../match-viewer/+models/fighter-move';
 import { RosterService } from './../roster/+services/roster.service';
-import { map } from 'rxjs/operators';
 import { FighterSpawnedTick } from './../match-viewer/+models/fighter-spawned-tick';
 import { GameFighter } from './+models/game-fighter';
 import { RoundTick } from './../match-viewer/+models/round-tick';
 import { Component, OnInit, Input, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Tick } from '../match-viewer/+models/tick';
 import { ActivatedRoute } from '@angular/router';
 import { MatchService } from '../match/+services/match.service';
 
@@ -71,8 +66,6 @@ export class GameViewerComponent implements OnInit
       fighter.id = spawnTick.fighterId;
       fighter.health = spawnTick.health;
       fighter.currentHealth = fighter.health;
-      fighter.energy = spawnTick.energy;
-      fighter.currentEnergy = fighter.energy;
       fighter.positionX = spawnTick.positionX;
       fighter.positionY = spawnTick.positionY;
       this.rosterService.getFighterName(fighter.id).subscribe(result =>
@@ -107,8 +100,6 @@ export class GameViewerComponent implements OnInit
       const fighter = this.fighters.get(spawnTick.fighterId);
       fighter.health = spawnTick.health;
       fighter.currentHealth = fighter.health;
-      fighter.energy = spawnTick.energy;
-      fighter.currentEnergy = fighter.energy;
       fighter.positionX = spawnTick.positionX;
       fighter.positionY = spawnTick.positionY;
       fighter.isDead = false;
@@ -171,7 +162,7 @@ export class GameViewerComponent implements OnInit
       return true;
     }
 
-    if (tick.damage && tick.energy)
+    if (tick.damage && tick.skillId && tick.targetId)
     {
       await this.handleFighterAttack(tick as FighterAttackTick);
       return true;
@@ -183,16 +174,9 @@ export class GameViewerComponent implements OnInit
       return false;
     }
 
-    if (tick.healthPointsRegenerated)
+    if (tick.appliedHealing || tick.potentialHealing)
     {
-      this.handleFighterHealthReg(tick as FighterRegeneratedHealth);
-      return false;
-    }
-
-    if (tick.regeneratedEnergy)
-    {
-      this.handleFighterEnergyReg(tick as FighterRegeneratedEnergy);
-      return false;
+      this.handleFighterHeal(tick as FighterHealTick);
     }
   }
 
@@ -212,8 +196,6 @@ export class GameViewerComponent implements OnInit
     {
       target.currentHealth = 0;
     }
-
-    attacker.currentEnergy -= attack.energy;
   }
 
   private handleFighterMovedByAttack(moved: FighterMovedByAttack)
@@ -261,15 +243,9 @@ export class GameViewerComponent implements OnInit
     });
   }
 
-  private handleFighterHealthReg(healthReg: FighterRegeneratedHealth)
+  private handleFighterHeal(heal: FighterHealTick)
   {
-    const fighter = this.fighters.get(healthReg.fighterId);
-    fighter.currentHealth += healthReg.healthPointsRegenerated;
-  }
-
-  private handleFighterEnergyReg(energyReg: FighterRegeneratedEnergy)
-  {
-    const fighter = this.fighters.get(energyReg.fighterId);
-    fighter.currentEnergy += energyReg.regeneratedEnergy;
+    const fighter = this.fighters.get(heal.targetId);
+    fighter.currentHealth += heal.appliedHealing;
   }
 }

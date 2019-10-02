@@ -8,6 +8,7 @@ using EmpoweredPixels.Models.Matches;
 using EmpoweredPixels.Models.Ratings;
 using EmpoweredPixels.Models.Rewards;
 using EmpoweredPixels.Models.Roster;
+using EmpoweredPixels.Rewards.Pools.Chests;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SharpFightingEngine.Battlefields.Constants;
@@ -31,6 +32,8 @@ namespace EmpoweredPixels.Models
 
     public DbSet<Fighter> Fighters { get; set; }
 
+    public DbSet<FighterExperience> FighterExperiences { get; set; }
+
     public DbSet<Match> Matches { get; set; }
 
     public DbSet<MatchRegistration> MatchRegistrations { get; set; }
@@ -53,12 +56,27 @@ namespace EmpoweredPixels.Models
 
     public DbSet<Reward> Rewards { get; set; }
 
+    public DbSet<RewardTrack> RewardTracks { get; set; }
+
+    public DbSet<RewardTier> RewardTiers { get; set; }
+
+    public DbSet<RewardTrackProgress> RewardTrackProgresses { get; set; }
+
     public DbSet<Item> Items { get; set; }
+
+    public DbSet<Equipment> Equipment { get; set; }
+
+    public DbSet<SocketStone> SocketStones { get; set; }
 
     public DbSet<FighterEloRating> FighterEloRatings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+      if (modelBuilder == null)
+      {
+        throw new ArgumentNullException(nameof(modelBuilder));
+      }
+
       modelBuilder.Entity<User>(e =>
       {
         e.HasKey(o => o.Id);
@@ -89,6 +107,13 @@ namespace EmpoweredPixels.Models
         e.Property(o => o.Id).ValueGeneratedOnAdd();
         e.HasOne(o => o.User).WithMany().HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
         e.HasQueryFilter(o => !o.IsDeleted);
+      });
+
+      modelBuilder.Entity<FighterExperience>(e =>
+      {
+        e.HasKey(o => o.Id);
+        e.Property(o => o.Id).ValueGeneratedOnAdd();
+        e.HasOne(o => o.Fighter).WithOne().HasForeignKey<FighterExperience>(o => o.FighterId).OnDelete(DeleteBehavior.Cascade);
       });
 
       modelBuilder.Entity<Match>(e =>
@@ -154,86 +179,22 @@ namespace EmpoweredPixels.Models
         e.HasData(
           new League()
           {
-            Id = 1,
-            Name = "League 300",
+            Id = 4,
+            Name = "league.lastmanstanding",
             Options = new LeagueOptionsDto()
             {
               IntervalCron = "0 */3 * * *",
-              IsTeam = false,
               MatchOptions = new MatchOptionsDto()
               {
                 ActionsPerRound = 2,
-                MaxFightersPerUser = 1,
-                MaxPowerlevel = 300,
-                Battlefield = BattlefieldConstants.Plain,
-                Bounds = BoundsConstants.Tiny,
-                IsPrivate = true,
-                Features = new Guid[]
-                {
-                  FeatureConstants.ApplyCondition,
-                  FeatureConstants.RegenerateHealth,
-                  FeatureConstants.RegenerateEnergy,
-                  FeatureConstants.SacrificeToEntity,
-                },
-                MoveOrder = MoveOrderConstants.AllRandom,
-                PositionGenerator = FighterPositionGeneratorConstants.AllRandom,
-                StaleCondition = StaleConditionConstants.NoWinnerCanBeDetermined,
-                WinCondition = WinConditionConstants.LastManStanding,
-              }
-            }
-          },
-          new League()
-          {
-            Id = 2,
-            Name = "League 500",
-            Options = new LeagueOptionsDto()
-            {
-              IntervalCron = "0 */3 * * *",
-              IsTeam = false,
-              MatchOptions = new MatchOptionsDto()
-              {
-                ActionsPerRound = 2,
-                MaxFightersPerUser = 1,
-                MaxPowerlevel = 500,
                 Battlefield = BattlefieldConstants.Plain,
                 Bounds = BoundsConstants.Small,
                 IsPrivate = true,
-                Features = new Guid[]
-                {
-                  FeatureConstants.ApplyCondition,
-                  FeatureConstants.RegenerateHealth,
-                  FeatureConstants.RegenerateEnergy,
-                  FeatureConstants.SacrificeToEntity,
-                },
-                MoveOrder = MoveOrderConstants.AllRandom,
-                PositionGenerator = FighterPositionGeneratorConstants.AllRandom,
-                StaleCondition = StaleConditionConstants.NoWinnerCanBeDetermined,
-                WinCondition = WinConditionConstants.LastManStanding,
-              }
-            }
-          },
-          new League()
-          {
-            Id = 3,
-            Name = "League 750",
-            Options = new LeagueOptionsDto()
-            {
-              IntervalCron = "0 */3 * * *",
-              IsTeam = false,
-              MatchOptions = new MatchOptionsDto()
-              {
-                ActionsPerRound = 2,
                 MaxFightersPerUser = 1,
-                MaxPowerlevel = 750,
-                Battlefield = BattlefieldConstants.Plain,
-                Bounds = BoundsConstants.Small,
-                IsPrivate = true,
                 Features = new Guid[]
                 {
                   FeatureConstants.ApplyCondition,
-                  FeatureConstants.RegenerateHealth,
-                  FeatureConstants.RegenerateEnergy,
-                  FeatureConstants.SacrificeToEntity,
+                  FeatureConstants.ApplyBuff,
                 },
                 MoveOrder = MoveOrderConstants.AllRandom,
                 PositionGenerator = FighterPositionGeneratorConstants.AllRandom,
@@ -265,11 +226,56 @@ namespace EmpoweredPixels.Models
         e.HasOne(o => o.User).WithMany().HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
       });
 
+      modelBuilder.Entity<RewardTrack>(e =>
+      {
+        e.HasKey(o => o.Id);
+        e.Property(o => o.Id).ValueGeneratedOnAdd();
+        e.HasQueryFilter(o => o.IsActive);
+        e.HasData(
+          new RewardTrack()
+          {
+            Id = 1,
+            IsActive = true,
+            TotalPoints = 10000,
+          });
+      });
+
+      modelBuilder.Entity<RewardTier>(e =>
+      {
+        e.HasKey(o => o.Id);
+        e.Property(o => o.Id).ValueGeneratedOnAdd();
+        e.HasOne(o => o.RewardTrack).WithMany(o => o.Tiers).HasForeignKey(o => o.RewardTrackId).OnDelete(DeleteBehavior.Cascade);
+        SeedRewardTiers(e);
+      });
+
+      modelBuilder.Entity<RewardTrackProgress>(e =>
+      {
+        e.HasKey(o => new { o.UserId, o.RewardTrackId });
+        e.HasOne(o => o.RewardTrack).WithMany().HasForeignKey(o => o.RewardTrackId).OnDelete(DeleteBehavior.Cascade);
+        e.HasOne(o => o.User).WithMany().HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
+      });
+
       modelBuilder.Entity<Item>(e =>
       {
         e.HasKey(o => o.Id);
         e.Property(o => o.Id).ValueGeneratedOnAdd();
         e.HasOne(o => o.User).WithMany().HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
+      });
+
+      modelBuilder.Entity<Equipment>(e =>
+      {
+        e.HasKey(o => o.Id);
+        e.Property(o => o.Id).ValueGeneratedOnAdd();
+        e.HasOne(o => o.User).WithMany().HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
+        e.HasOne(o => o.Fighter).WithMany(o => o.Equipment).HasForeignKey(o => o.FighterId).IsRequired(false).OnDelete(DeleteBehavior.ClientSetNull);
+      });
+
+      modelBuilder.Entity<SocketStone>(e =>
+      {
+        e.HasKey(o => o.Id);
+        e.Property(o => o.Id).ValueGeneratedOnAdd();
+        e.HasOne(o => o.User).WithMany().HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
+        e.HasOne(o => o.Equipment).WithMany(o => o.SocketStones).HasForeignKey(o => o.EquipmentId).IsRequired(false).OnDelete(DeleteBehavior.ClientSetNull);
       });
 
       modelBuilder.Entity<FighterEloRating>(e =>
@@ -278,6 +284,39 @@ namespace EmpoweredPixels.Models
         e.Property(o => o.Id).ValueGeneratedOnAdd();
         e.HasOne(o => o.Fighter).WithOne(o => o.EloRating).HasForeignKey<FighterEloRating>(o => o.FighterId).OnDelete(DeleteBehavior.Cascade);
       });
+    }
+
+    private static void SeedRewardTiers(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<RewardTier> e)
+    {
+      e.HasData(
+                new RewardTier()
+                {
+                  Id = 1,
+                  Points = 250,
+                  RewardTrackId = 1,
+                  RewardPoolId = EmpoweredChestRewardPool.Common,
+                },
+                new RewardTier()
+                {
+                  Id = 2,
+                  Points = 500,
+                  RewardTrackId = 1,
+                  RewardPoolId = EmpoweredChestRewardPool.Rare,
+                },
+                new RewardTier()
+                {
+                  Id = 3,
+                  Points = 1250,
+                  RewardTrackId = 1,
+                  RewardPoolId = EmpoweredChestRewardPool.Fabled,
+                },
+                new RewardTier()
+                {
+                  Id = 4,
+                  Points = 5000,
+                  RewardTrackId = 1,
+                  RewardPoolId = EmpoweredChestRewardPool.Mythic,
+                });
     }
   }
 }

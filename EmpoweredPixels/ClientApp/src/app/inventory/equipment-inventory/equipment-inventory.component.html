@@ -1,0 +1,12 @@
+<div *ngIf="page">
+    <app-equipment
+        *ngFor="let equip of page?.items | paginate: { id: 'server', itemsPerPage: options.pageSize, currentPage: options.pageNumber, totalItems: page.total }"
+        class="col-12 col-md-6" style="display: inline-block; padding-left: 0px; padding-right: 0px;"
+        [equipment]="equip" [fighter]="fighter" (fighterChange)="fighterChange($event)"
+        (salvaged)="updateSalvage($event)"></app-equipment>
+    <div style="text-align: center;">
+        <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+        <pagination-controls class="ep-pagination" (pageChange)="loadPage($event)" id="server">
+        </pagination-controls>
+    </div>
+</div>

@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using EmpoweredPixels.Models.Items;
 using EmpoweredPixels.Models.Rewards;
-using EmpoweredPixels.Rewards.Items;
 
 namespace EmpoweredPixels.Rewards.Pools
 {
-  public abstract class RewardPoolBase
+  public abstract class RewardPoolBase<T>
   {
     protected static readonly Random Random = new Random();
 
     protected abstract Dictionary<Guid, PoolItemOption> ItemOptions { get; }
 
-    public abstract IEnumerable<Item> Claim(Reward reward);
+    public abstract IEnumerable<T> Claim(Reward reward);
 
     protected class PoolItemOption
     {

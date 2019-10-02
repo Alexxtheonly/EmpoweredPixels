@@ -5,20 +5,23 @@ using EmpoweredPixels.Factories.Matches;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Matches;
 using EmpoweredPixels.Models.Ratings;
+using EmpoweredPixels.Models.Roster;
 using EmpoweredPixels.Providers.DateTime;
 using EmpoweredPixels.Utilities.ContributionPointCalculation;
 using EmpoweredPixels.Utilities.EloCalculation;
+using EmpoweredPixels.Utilities.FighterProgress;
+using EmpoweredPixels.Utilities.FighterSkillSelection;
+using EmpoweredPixels.Utilities.FighterStatCalculation;
+using EmpoweredPixels.Utilities.RewardTrackCalculation;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SharpFightingEngine.Engines;
 using SharpFightingEngine.Fighters;
-using SharpFightingEngine.Skills;
-using SharpFightingEngine.Skills.Melee;
-using SharpFightingEngine.Skills.Range;
 
 namespace EmpoweredPixels.Extensions
 {
+  // TODO: refactor start match in smaller parts like prepare match, start match and post process match, maybe even more
   public static class DatabaseContextExtension
   {
     public static async Task StartMatch(
@@ -27,7 +30,13 @@ namespace EmpoweredPixels.Extensions
       IDateTimeProvider dateTimeProvider,
       IEngineFactory engineFactory,
       IContributionPointCalculator contributionPointCalculator,
-      IEloCalculator eloCalculator)
+      IEloCalculator eloCalculator,
+      IFighterExperienceCalculator fighterExperienceCalculator,
+      IFighterLevelUpHandler fighterLevelUpHandler,
+      IFighterStatCalculator fighterStatCalculator,
+      IFighterSkillSelector fighterSkillSelector,
+      IRewardTrackCalculator rewardTrackCalculator,
+      bool isExperienceeligable)
     {
       match.Started = dateTimeProvider.Now;
 
@@ -36,53 +45,21 @@ namespace EmpoweredPixels.Extensions
         {
           Id = o.Fighter.Id,
           Team = o.TeamId,
-          Stats = new Stats()
-          {
-            Accuracy = o.Fighter.Accuracy,
-            Agility = o.Fighter.Agility,
-            Expertise = o.Fighter.Expertise,
-            Power = o.Fighter.Power,
-            Regeneration = o.Fighter.Regeneration,
-            Speed = o.Fighter.Speed,
-            Stamina = o.Fighter.Stamina,
-            Toughness = o.Fighter.Toughness,
-            Vision = o.Fighter.Vision,
-            Vitality = o.Fighter.Vitality,
-          }
+          Stats = fighterStatCalculator.Calculate(o.Fighter),
+          Skills = fighterSkillSelector.GetSkills(o.Fighter),
         })
         .ToList();
-
-      var skills = new ISkill[]
-      {
-        new StrongSmash(),
-        new BleedingSmash(),
-        new PoisonSmash(),
-        new BurningSmash(),
-        new FreezingSmash(),
-        new CripplingSmash(),
-        new PullingSmash(),
-        new StunningSmash(),
-        new StrongArrow(),
-        new BleedingArrow(),
-        new BurningArrow(),
-        new CripplingArrow(),
-        new FreezingArrow(),
-        new KnockbackArrow(),
-        new PoisionArrow(),
-        new StrongArrow(),
-        new StunningArrow(),
-      };
-
-      foreach (var fighter in fighters)
-      {
-        fighter.Skills = skills;
-      }
 
       var engine = engineFactory.GetEngine(fighters, match.Options);
       var result = await Task.Run(() => engine.StartMatch());
 
       await context.CreateFighterScores(match, result, dateTimeProvider);
       await context.UpdateFighterElos(result, contributionPointCalculator, eloCalculator, dateTimeProvider);
+      if (isExperienceeligable)
+      {
+        await context.UpdateFighterExperiences(result, fighterExperienceCalculator, fighterLevelUpHandler);
+        await context.UpdateRewardTracks(result, contributionPointCalculator, rewardTrackCalculator);
+      }
 
       context.MatchResults.Add(new Models.Matches.MatchResult()
       {
@@ -113,10 +90,7 @@ namespace EmpoweredPixels.Extensions
           TotalDamageTaken = fighterScore.TotalDamageTaken,
           TotalDeaths = fighterScore.TotalDeaths,
           TotalDistanceTraveled = fighterScore.TotalDistanceTraveled,
-          TotalEnergyUsed = fighterScore.TotalEnergyUsed,
           TotalKills = fighterScore.TotalKills,
-          TotalRegeneratedEnergy = fighterScore.TotalRegeneratedEnergy,
-          TotalRegeneratedHealth = fighterScore.TotalRegeneratedHealth,
         });
 
         var contribution = result.Contributions.FirstOrDefault(o => o.FighterId == fighterScore.Id);
@@ -176,6 +150,65 @@ namespace EmpoweredPixels.Extensions
       }
 
       eloCalculator.Calculate(ratings, positions);
+    }
+
+    public static async Task UpdateFighterExperiences(
+      this DatabaseContext context,
+      IMatchResult result,
+      IFighterExperienceCalculator fighterExperienceCalculator,
+      IFighterLevelUpHandler fighterLevelUpHandler)
+    {
+      foreach (var contribution in result.Contributions)
+      {
+        var fighter = await context.Fighters
+          .AsTracking()
+          .FirstOrDefaultAsync(o => o.Id == contribution.FighterId);
+        if (fighter == null)
+        {
+          continue;
+        }
+
+        var fighterExperience = await context.FighterExperiences
+          .AsTracking()
+          .FirstOrDefaultAsync(o => o.FighterId == contribution.FighterId);
+
+        if (fighterExperience == null)
+        {
+          fighterExperience = new FighterExperience()
+          {
+            FighterId = contribution.FighterId,
+          };
+          context.FighterExperiences.Add(fighterExperience);
+        }
+
+        var levelBefore = fighterExperienceCalculator.GetLevel(fighterExperience);
+        fighterExperienceCalculator.AddExperience(fighterExperience, contribution);
+        var levelAfter = fighterExperienceCalculator.GetLevel(fighterExperience);
+
+        if (levelBefore.Level < levelAfter.Level)
+        {
+          context.AddRange(fighterLevelUpHandler.Up(fighter));
+        }
+      }
+    }
+
+    public static async Task UpdateRewardTracks(
+      this DatabaseContext context,
+      IMatchResult result,
+      IContributionPointCalculator contributionPointCalculator,
+      IRewardTrackCalculator rewardTrackCalculator)
+    {
+      foreach (var contribution in result.Contributions)
+      {
+        var fighter = await context.Fighters.FirstOrDefaultAsync(o => o.Id == contribution.FighterId);
+        if (fighter == null)
+        {
+          continue;
+        }
+
+        var points = contributionPointCalculator.Calculate(contribution);
+        await rewardTrackCalculator.Calculate(fighter, points);
+      }
     }
   }
 }

@@ -1,8 +1,10 @@
+import { Item } from './../../rewards/+models/item';
+import { EquipmentInventoryComponent } from './../../inventory/equipment-inventory/equipment-inventory.component';
 import { TranslateService } from '@ngx-translate/core';
 import { UserFeedbackService } from './../../+services/userfeedback.service';
 import { RosterService } from './../+services/roster.service';
 import { Fighter } from './../+models/fighter';
-import { Component, OnInit, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -13,6 +15,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class FighterComponent implements OnInit
 {
   public fighter: Fighter;
+
+  public showSalvage: boolean;
+
+  public items: Item[];
+
+  @ViewChild('inventory', { static: false })
+  inventory: EquipmentInventoryComponent;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,33 +39,6 @@ export class FighterComponent implements OnInit
     }, error => this.userfeedbackService.error(error));
   }
 
-  public updateFighter(): void
-  {
-    this.rosterService.updateFighter(this.fighter).subscribe(result =>
-    {
-      this.fighter = result;
-      this.userfeedbackService.success(this.translateService.instant('roster.fighterSuccessfullySaved'));
-    }, error =>
-    {
-      console.error(error);
-      this.userfeedbackService.error(error);
-    });
-  }
-
-  public resetFighter(): void
-  {
-    this.fighter.agility = 1;
-    this.fighter.expertise = 1;
-    this.fighter.power = 1;
-    this.fighter.regeneration = 1;
-    this.fighter.speed = 1;
-    this.fighter.stamina = 1;
-    this.fighter.toughness = 1;
-    this.fighter.vision = 1;
-    this.fighter.vitality = 1;
-    this.fighter.accuracy = 1;
-  }
-
   public deleteFighter(fighter: Fighter)
   {
     if (confirm(this.translateService.instant('roster.fighterDeleteConfirm', { name: fighter.name })))
@@ -72,4 +54,18 @@ export class FighterComponent implements OnInit
     }
   }
 
+  public updateFighter(fighter: Fighter): void
+  {
+    this.fighter = fighter;
+    this.inventory.loadEquipment();
+  }
+
+  public updateSalvage(items: Item[]): void
+  {
+    this.items = items;
+    if (items.length > 0)
+    {
+      this.showSalvage = true;
+    }
+  }
 }

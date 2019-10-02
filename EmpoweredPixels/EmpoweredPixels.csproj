@@ -12,7 +12,7 @@
 
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
-    <Version>0.13.1</Version>
+    <Version>0.14.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,11 +26,11 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
-    <PackageReference Include="SharpFightingEngine" Version="0.12.0" />
-    <PackageReference Include="SharpFightingEngine.Battlefields" Version="0.12.0" />
-    <PackageReference Include="SharpFightingEngine.Fighters" Version="0.12.0" />
-    <PackageReference Include="SharpFightingEngine.Items" Version="0.12.0" />
-    <PackageReference Include="SharpFightingEngine.Skills" Version="0.12.0" />
+    <PackageReference Include="SharpFightingEngine" Version="0.13.0" />
+    <PackageReference Include="SharpFightingEngine.Battlefields" Version="0.13.0" />
+    <PackageReference Include="SharpFightingEngine.Fighters" Version="0.13.0" />
+    <PackageReference Include="SharpFightingEngine.Items" Version="0.13.0" />
+    <PackageReference Include="SharpFightingEngine.Skills" Version="0.13.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" Condition="'$(Configuration)' == 'Debug'">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -57,6 +57,10 @@
     <Compile Remove="Migrations\20190811163133_AddLeagues.Designer.cs" />
     <Compile Remove="Migrations\20190824074418_LoginRewards.cs" />
     <Compile Remove="Migrations\20190824074418_LoginRewards.Designer.cs" />
+    <Compile Remove="Migrations\20190927173753_AddTempDeleteLater.cs" />
+    <Compile Remove="Migrations\20190927173753_AddTempDeleteLater.Designer.cs" />
+    <Compile Remove="Migrations\20190930162851_UpdateForEquipment.cs" />
+    <Compile Remove="Migrations\20190930162851_UpdateForEquipment.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -65,6 +69,9 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\app\match-viewer\" />
+    <Folder Include="DataTransferObjects\Players\" />
+    <Folder Include="Jobs\FighterLevel\" />
+    <Folder Include="Skills\Heal\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

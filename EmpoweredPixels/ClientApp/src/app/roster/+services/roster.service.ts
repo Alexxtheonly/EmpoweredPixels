@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FighterStatForecast } from '../+models/fighter-stat-forecast';
+import { Equipment } from '../+models/equipment';
 
 @Injectable({
   providedIn: 'root'
@@ -33,18 +34,18 @@ export class RosterService
     return this.http.put<Fighter>('api/fighter', fighter);
   }
 
-  public updateFighter(fighter: Fighter): Observable<Fighter>
-  {
-    return this.http.post<Fighter>('api/fighter', fighter);
-  }
-
-  public getFighterStatForecast(fighter: Fighter): Observable<FighterStatForecast>
-  {
-    return this.http.post<FighterStatForecast>('api/fighter/forecast', fighter);
-  }
-
   public deleteFighter(id: string): Observable<any>
   {
     return this.http.delete(`api/fighter/${id}`);
+  }
+
+  public equip(id: string, equipment: Equipment): Observable<Fighter>
+  {
+    return this.http.post<Fighter>(`api/fighter/${id}/equip`, equipment);
+  }
+
+  public unequip(id: string, equipment: Equipment): Observable<Fighter>
+  {
+    return this.http.post<Fighter>(`api/fighter/${id}/unequip`, equipment);
   }
 }

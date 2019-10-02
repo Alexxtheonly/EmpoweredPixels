@@ -1,4 +1,27 @@
-<div class="row">
-    <span *ngIf="(rewards | async)?.length===0">You don't have any unclaimed rewards. Login daily to get rewards.</span>
-    <app-reward class="col-md-3 col-12" *ngFor="let reward of rewards | async" [reward]="reward"></app-reward>
+<div class="card card-body">
+    <div class="row">
+        <button class="btn btn-primary" (click)="claimAll()">Claim all</button>
+    </div>
+    <hr />
+    <div class="row">
+        <span *ngIf="(rewards | async)?.length===0">You don't have any unclaimed rewards. Login daily to get
+            rewards.</span>
+        <app-reward class="col-md-3 col-12 mb-1" *ngFor="let reward of rewards | async" [reward]="reward"
+            (rewardClaimed)="setRewardContent($event)"></app-reward>
+    </div>
+</div>
+
+<div class="modal modal-dialog-centered" [ngStyle]="{ display: showModal ? 'flex' : 'none' }">
+    <div class="modal-dialog modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title justify-content-center">You got:</h5>
+            <button type="button" class="close" (click)="showModal = false">
+                <span>&times;</span>
+            </button>
+        </div>
+        <div class="modal-body reward-content">
+            <app-reward-content [items]="rewardContent?.items" [equipment]="rewardContent?.equipment">
+            </app-reward-content>
+        </div>
+    </div>
 </div>

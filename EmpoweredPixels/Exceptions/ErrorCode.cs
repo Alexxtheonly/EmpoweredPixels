@@ -20,5 +20,8 @@
     InvalidMatchResult = 15,
     InvalidReward = 16,
     InvalidFighterName = 17,
+    InvalidEquipmentOperation = 18,
+    FighterInvalidOutfit = 19,
+    InsufficientEmpoweredParticles = 20,
   }
 }

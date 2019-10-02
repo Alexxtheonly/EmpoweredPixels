@@ -1,5 +1,7 @@
+import { Equipment } from './../../../roster/+models/equipment';
+import { RewardContent } from './../../+models/reward-content';
 import { Item } from './../../+models/item';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-reward-content',
@@ -11,6 +13,9 @@ export class RewardContentComponent implements OnInit
 
   @Input()
   public items: Item[];
+
+  @Input()
+  public equipment: Equipment[];
 
   constructor() { }
 

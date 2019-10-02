@@ -6,6 +6,7 @@
       <!--Fighter moved tick-->
       <span *ngIf="tick.fighterId && tick.targetId && tick.nextX">
         <span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> moved <span
+          *ngIf="tick.fighterId !== tick.targetId"
           class="font-weight-bold text-muted">{{ getName(tick.targetId) }}</span> to {{ tick.nextX }}, {{ tick.nextY }}
       </span>
 
@@ -39,17 +40,14 @@
       <!--Fighter died tick-->
       <span *ngIf="tick.died"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> died</span>
 
-      <!--Fighter health regenerated tick-->
-      <span *ngIf="tick.healthPointsRegenerated"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span>
-        regenerated
-        <span class="text-success">{{ tick.healthPointsRegenerated }}</span>
+      <!--Fighter healed tick-->
+      <span *ngIf="tick.appliedHealing || tick.potentialHealing"><span
+          class="font-weight-bold">{{ getName(tick.fighterId) }}</span>
+        healed <span *ngIf="tick.fighterId !== tick.targetId"
+          class="font-weight-bold text-muted">{{ getName(tick.targetId) }}</span>
+        with {{ 'skills.' + tick.healSkillId | translate }}
+        <span class="text-success">{{ tick.appliedHealing }}</span>
         health</span>
-
-      <!--Fighter energy regenerated tick-->
-      <span *ngIf="tick.regeneratedEnergy"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span>
-        regenerated
-        <span class="text-warning">{{ tick.regeneratedEnergy }}</span>
-        energy</span>
 
       <!--Fighter sacrificed tick-->
       <span *ngIf="tick.sacrificed">

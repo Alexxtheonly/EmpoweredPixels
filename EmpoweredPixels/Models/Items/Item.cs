@@ -1,9 +1,10 @@
 ﻿using System;
 using EmpoweredPixels.Models.Identity;
+using EmpoweredPixels.Rewards;
 
 namespace EmpoweredPixels.Models.Items
 {
-  public class Item
+  public class Item : IReward
   {
     public Guid Id { get; set; }
 

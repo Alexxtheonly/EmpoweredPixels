@@ -46,8 +46,6 @@ namespace EmpoweredPixels.Factories.Matches
     {
       new FeatureApplyCondition(),
       new FeatureApplyBuff(),
-      new FeatureRegenerateEnergy(),
-      new FeatureRegenerateHealth(),
       new FeatureSacrificeToEntity(),
     };
 
@@ -88,6 +86,8 @@ namespace EmpoweredPixels.Factories.Matches
         cfg.PositionGenerator = fighterPositionGenerators.FirstOrDefault(o => o.Id == optionsDto.PositionGenerator);
         cfg.StaleCondition = staleConditions.FirstOrDefault(o => o.Id == optionsDto.StaleCondition);
         cfg.WinCondition = winConditions.FirstOrDefault(o => o.Id == optionsDto.WinCondition);
+
+        cfg.CalculationValues.VisionFactor = 10;
 
         return cfg;
       }, qualified.ToList());

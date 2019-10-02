@@ -9,7 +9,9 @@ using EmpoweredPixels.Exceptions.Rewards;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Factories.Rewards;
 using EmpoweredPixels.Models;
+using EmpoweredPixels.Models.Items;
 using EmpoweredPixels.Providers.DateTime;
+using EmpoweredPixels.Rewards;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -47,7 +49,7 @@ namespace EmpoweredPixels.Controllers.Rewards
     }
 
     [HttpPost("claim")]
-    public async Task<ActionResult<IEnumerable<ItemDto>>> ClaimReward([FromBody] RewardDto dto)
+    public async Task<ActionResult<RewardContentDto>> ClaimReward([FromBody] RewardDto dto)
     {
       var userId = User.Claims.GetUserId();
       if (userId == null)
@@ -75,7 +77,56 @@ namespace EmpoweredPixels.Controllers.Rewards
 
       await Context.SaveChangesAsync();
 
-      return Ok(Mapper.Map<IEnumerable<ItemDto>>(items));
+      var content = new RewardContentDto()
+      {
+        Items = Mapper.Map<ICollection<ItemDto>>(items.OfType<Item>()),
+        Equipment = Mapper.Map<ICollection<EquipmentDto>>(items.OfType<Equipment>()),
+      };
+
+      return Ok(content);
+    }
+
+    [HttpPost("claim/all")]
+    public async Task<ActionResult<RewardContentDto>> ClaimAll()
+    {
+      var userId = User.Claims.GetUserId();
+      if (userId == null)
+      {
+        return Forbid();
+      }
+
+      var rewards = await Context.Rewards
+        .AsTracking()
+        .Where(o => o.Claimed == null && o.UserId == userId)
+        .ToListAsync();
+
+      if (!rewards.Any())
+      {
+        return BadRequest();
+      }
+
+      var rewarded = new List<IReward>();
+      foreach (var reward in rewards)
+      {
+        reward.Claimed = dateTimeProvider.Now;
+        var items = rewardFactory.Claim(reward).ToList();
+        rewarded.AddRange(items);
+
+        foreach (var item in items)
+        {
+          Context.Add(item);
+        }
+      }
+
+      await Context.SaveChangesAsync();
+
+      var content = new RewardContentDto()
+      {
+        Items = Mapper.Map<ICollection<ItemDto>>(rewarded.OfType<Item>()),
+        Equipment = Mapper.Map<ICollection<EquipmentDto>>(rewarded.OfType<Equipment>()),
+      };
+
+      return Ok(content);
     }
   }
 }

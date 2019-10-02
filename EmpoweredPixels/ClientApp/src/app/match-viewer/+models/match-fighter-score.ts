@@ -16,17 +16,11 @@ export class MatchFighterScore extends Tick
 
     public totalDamageTaken: number;
 
-    public totalEnergyUsed: number;
-
     public totalKills: number;
 
     public totalDeaths: number;
 
     public totalDistanceTraveled: number;
-
-    public totalRegeneratedHealth: number;
-
-    public totalRegeneratedEnergy: number;
 
     public roundsAlive: number;
 }

@@ -2,7 +2,7 @@
 
     <div class="row">
         <div class="col-sm-12 col-md-4">
-            <h1>{{ leagueDetail.name }} <h5 class="text-muted">Next match: {{ leagueDetail.nextMatch | date:'short' }}
+            <h1>{{ leagueDetail.name | translate }} <h5 class="text-muted">Next match: {{ leagueDetail.nextMatch | date:'short' }}
                 </h5>
             </h1>
         </div>
@@ -14,9 +14,6 @@
                 <p *ngIf="highscores&&highscores.length!=0">{{highscores[0].username}}</p>
                 <label class="text-muted">League champ</label>
             </div>
-        </div>
-        <div class="col-sm-12 col-md-4">
-            <span class="text-muted" style="line-height: 70px;">Max powerlevel: {{ leagueDetail.maxPowerlevel }}</span>
         </div>
     </div>
 

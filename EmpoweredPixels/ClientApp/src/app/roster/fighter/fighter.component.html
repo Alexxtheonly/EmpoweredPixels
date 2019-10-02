@@ -1,64 +1,30 @@
 <div class="container">
-    <div class="btn-group mb-1 col-12 col-md-6 col-lg-4 float-right">
-        <a class="btn btn-outline-success" (click)="updateFighter()"
-            style="margin-right: 1px;">{{ 'roster.save' | translate }}</a>
-        <a class="btn btn-outline-warning" (click)="resetFighter()"
-            style="margin-right: 1px;">{{ 'roster.reset' | translate }}</a>
+    <div class="btn-group mb-1 col-6 col-md-3 col-lg-2 float-right">
         <a class="btn btn-outline-danger" (click)="deleteFighter(fighter)">{{ 'roster.delete' | translate }}</a>
     </div>
+    <div class="card card-body col-12">
+        <h3 class="card-title">{{fighter?.name}} <span class="badge">{{ 'roster.level' | translate }}
+                {{ fighter?.level }}</span></h3>
+        <div class="card card-body">
+            <h5 class="card-title">{{ 'roster.equipment' | translate }}</h5>
+            <app-fighter-gear [fighter]="fighter" (fighterChanged)="updateFighter($event)"
+                (salvaged)="updateSalvage($event)">
+            </app-fighter-gear>
+        </div>
 
-    <h1>{{fighter.name}}</h1>
-
-    <div class="card card-body forecast" style="position: sticky; top: 0; z-index: 999; backdrop-filter: blur(20px);">
-        <app-fighter-stat-forecast [(fighter)]="fighter"></app-fighter-stat-forecast>
+        <div class="card card-body mt-2">
+            <h3 class="card-title">{{ 'roster.inventory' | translate }}</h3>
+            <app-equipment-inventory #inventory [fighter]="fighter" (fighterChanged)="updateFighter($event)"
+                (salvaged)="updateSalvage($event)"></app-equipment-inventory>
+        </div>
     </div>
+</div>
 
-    <h3>{{ 'roster.offensive' | translate}}</h3>
-    <div class="row">
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.power"
-            [name]="'roster.power' | translate" [description]="'roster.powerDescription' | translate">
-        </app-fighter-stat>
-
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.accuracy"
-            [name]="'roster.accuracy' | translate" [description]="'roster.accuracyDescription' | translate">
-        </app-fighter-stat>
-
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.expertise"
-            [name]="'roster.expertise' | translate" [description]="'roster.expertiseDescription' | translate">
-        </app-fighter-stat>
-    </div>
-
-    <h3>{{ 'roster.defensive' | translate }}</h3>
-    <div class="row">
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.agility"
-            [name]="'roster.agility' | translate" [description]="'roster.agilityDescription' | translate">
-        </app-fighter-stat>
-
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.toughness"
-            [name]="'roster.toughness' | translate" [description]="'roster.toughnessDescription' | translate">
-        </app-fighter-stat>
-
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.vitality"
-            [name]="'roster.vitality' | translate" [description]="'roster.vitalityDescription' | translate">
-        </app-fighter-stat>
-    </div>
-
-    <h3>{{ 'roster.utility' | translate }}</h3>
-    <div class="row">
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.speed"
-            [name]="'roster.speed' | translate" [description]="'roster.speedDescription' | translate">
-        </app-fighter-stat>
-
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.stamina"
-            [name]="'roster.stamina' | translate" [description]="'roster.staminaDescription' | translate">
-        </app-fighter-stat>
-
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.regeneration"
-            [name]="'roster.regeneration' | translate" [description]="'roster.regenerationDescription' | translate">
-        </app-fighter-stat>
-
-        <app-fighter-stat class="col-lg-4 col-md-6 col-sm-12 mb-1" [(value)]="fighter.vision"
-            [name]="'roster.vision' | translate" [description]="'roster.visionDescription' | translate">
-        </app-fighter-stat>
+<div class="modal modal-dialog-centered" [ngStyle]="{ display: showSalvage ? 'flex' : 'none' }"
+    (click)="showSalvage=false">
+    <div class="modal-dialog modal-content">
+        <div class="modal-body">
+            <app-reward-content [items]="items"></app-reward-content>
+        </div>
     </div>
 </div>

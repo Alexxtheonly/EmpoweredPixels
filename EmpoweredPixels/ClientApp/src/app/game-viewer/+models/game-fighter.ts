@@ -9,10 +9,6 @@ export class GameFighter
 
     public currentHealth: number;
 
-    public energy: number;
-
-    public currentEnergy: number;
-
     public positionX: number;
 
     public positionY: number;

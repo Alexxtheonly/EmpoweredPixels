@@ -9,12 +9,14 @@ export class UserFeedbackService
 {
   private toastSettings = {
     closeButton: true,
+    enableHtml: true,
+    progressBar: true,
   };
 
   constructor(private toastService: ToastrService, private translateService: TranslateService)
   {
   }
-
+  
   public success(text: string): void
   {
     if (!text || text.length === 0)

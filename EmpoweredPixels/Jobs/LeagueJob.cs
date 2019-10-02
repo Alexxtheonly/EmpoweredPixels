@@ -8,6 +8,10 @@ using EmpoweredPixels.Models.Matches;
 using EmpoweredPixels.Providers.DateTime;
 using EmpoweredPixels.Utilities.ContributionPointCalculation;
 using EmpoweredPixels.Utilities.EloCalculation;
+using EmpoweredPixels.Utilities.FighterProgress;
+using EmpoweredPixels.Utilities.FighterSkillSelection;
+using EmpoweredPixels.Utilities.FighterStatCalculation;
+using EmpoweredPixels.Utilities.RewardTrackCalculation;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmpoweredPixels.Jobs
@@ -19,19 +23,34 @@ namespace EmpoweredPixels.Jobs
     private readonly IDateTimeProvider dateTimeProvider;
     private readonly IContributionPointCalculator contributionPointCalculator;
     private readonly IEloCalculator eloCalculator;
+    private readonly IFighterExperienceCalculator fighterExperienceCalculator;
+    private readonly IFighterLevelUpHandler fighterLevelUpHandler;
+    private readonly IFighterStatCalculator fighterStatCalculator;
+    private readonly IFighterSkillSelector fighterSkillSelector;
+    private readonly IRewardTrackCalculator rewardTrackCalculator;
 
     public LeagueJob(
       DatabaseContext context,
       IEngineFactory engineFactory,
       IDateTimeProvider dateTimeProvider,
       IContributionPointCalculator contributionPointCalculator,
-      IEloCalculator eloCalculator)
+      IEloCalculator eloCalculator,
+      IFighterExperienceCalculator fighterExperienceCalculator,
+      IFighterLevelUpHandler fighterLevelUpHandler,
+      IFighterStatCalculator fighterStatCalculator,
+      IFighterSkillSelector fighterSkillSelector,
+      IRewardTrackCalculator rewardTrackCalculator)
     {
       this.context = context;
       this.engineFactory = engineFactory;
       this.dateTimeProvider = dateTimeProvider;
       this.contributionPointCalculator = contributionPointCalculator;
       this.eloCalculator = eloCalculator;
+      this.fighterExperienceCalculator = fighterExperienceCalculator;
+      this.fighterLevelUpHandler = fighterLevelUpHandler;
+      this.fighterStatCalculator = fighterStatCalculator;
+      this.fighterSkillSelector = fighterSkillSelector;
+      this.rewardTrackCalculator = rewardTrackCalculator;
     }
 
     public async Task RunMatchAsync(int leagueId)
@@ -75,6 +94,8 @@ namespace EmpoweredPixels.Jobs
         .AsTracking()
         .Include(o => o.Registrations)
         .ThenInclude(o => o.Fighter)
+        .ThenInclude(o => o.Equipment)
+        .ThenInclude(o => o.SocketStones)
         .FirstOrDefaultAsync(o => o.Id == match.Id);
 
       context.Add(new LeagueMatch()
@@ -83,7 +104,18 @@ namespace EmpoweredPixels.Jobs
         MatchId = match.Id,
       });
 
-      await context.StartMatch(match, dateTimeProvider, engineFactory, contributionPointCalculator, eloCalculator);
+      await context.StartMatch(
+        match,
+        dateTimeProvider,
+        engineFactory,
+        contributionPointCalculator,
+        eloCalculator,
+        fighterExperienceCalculator,
+        fighterLevelUpHandler,
+        fighterStatCalculator,
+        fighterSkillSelector,
+        rewardTrackCalculator,
+        true);
 
       await context.SaveChangesAsync();
     }

@@ -1,6 +1,6 @@
-﻿namespace EmpoweredPixels.DataTransferObjects.Players
+﻿namespace EmpoweredPixels.DataTransferObjects.Roster
 {
-  public class PlayerExperienceDto
+  public class FighterExperienceDto
   {
     public int Level { get; set; }
 

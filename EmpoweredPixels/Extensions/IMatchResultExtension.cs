@@ -19,10 +19,8 @@ namespace EmpoweredPixels.Extensions
           TargetId = tick.Target.Id,
           SkillId = tick.Skill.Id,
           Damage = tick.Damage,
-          Energy = tick.Energy,
           Critical = tick.Critical,
           Dodged = tick.Dodged,
-          InsufficientEnergy = tick.InsufficientEnergy,
           OutOfRange = tick.OutOfRange,
         };
       }
@@ -48,22 +46,18 @@ namespace EmpoweredPixels.Extensions
           FighterId = tick.Fighter.Id,
         };
       }
-      else if (engineTick.GetType() == typeof(FighterRegenerateHealthTick))
+      else if (engineTick.GetType() == typeof(FighterHealTick))
       {
-        var tick = (FighterRegenerateHealthTick)engineTick;
-        return new FighterRegeneratedHealthDto()
+        var tick = (FighterHealTick)engineTick;
+        return new FighterHealTickDto()
         {
           FighterId = tick.Fighter.Id,
-          HealthPointsRegenerated = tick.HealthPointsRegenerated,
-        };
-      }
-      else if (engineTick.GetType() == typeof(FighterRegenerateEnergyTick))
-      {
-        var tick = (FighterRegenerateEnergyTick)engineTick;
-        return new FighterRegeneratedEnergyDto()
-        {
-          FighterId = tick.Fighter.Id,
-          RegeneratedEnergy = tick.RegeneratedEnergy,
+          TargetId = tick.Target.Id,
+          HealSkillId = tick.HealSkill.Id,
+          PotentialHealing = tick.PotentialHealing,
+          AppliedHealing = tick.AppliedHealing,
+          OnCooldown = tick.OnCooldown,
+          OutOfRange = tick.OutOfRange,
         };
       }
       else if (engineTick.GetType() == typeof(FighterSpawnTick))
@@ -73,7 +67,6 @@ namespace EmpoweredPixels.Extensions
         {
           FighterId = tick.Fighter.Id,
           Health = tick.Fighter.Health,
-          Energy = tick.Fighter.Energy,
           PositionX = tick.Fighter.X,
           PositionY = tick.Fighter.Y,
           PositionZ = tick.Fighter.Z,

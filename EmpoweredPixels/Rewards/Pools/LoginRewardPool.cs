@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Models.Items;
 using EmpoweredPixels.Models.Rewards;
@@ -8,7 +7,7 @@ using EmpoweredPixels.Rewards.Items;
 
 namespace EmpoweredPixels.Rewards.Pools
 {
-  public class LoginRewardPool : RewardPoolBase
+  public class LoginRewardPool : RewardPoolBase<Item>
   {
     public static readonly Guid Id = new Guid("206128E9-2A59-449D-AE2E-61DB923643C0");
 
@@ -16,8 +15,8 @@ namespace EmpoweredPixels.Rewards.Pools
     {
       [EmpoweredParticle.Id] = new PoolItemOption()
       {
-        QuantityMin = 5,
-        QuantityMax = 20,
+        QuantityMin = 35,
+        QuantityMax = 50,
       }
     };
 

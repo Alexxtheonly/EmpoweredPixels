@@ -1,7 +1,8 @@
-<div>
-    <div class="border border-dark rounded"
-        style="position: relative; width: 75px; height: 75px; margin-left: auto;margin-right: auto;">
-        <span class="badge badge-dark" style="position: absolute; right: 0px;">{{ count }}</span>
-        <object data="assets/images/items/a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702.svg" type="image/svg+xml"></object>
+<div style="padding: 0.5em;">
+    <div class="item-border rounded" style="position: relative; width: 75px; height: 75px; display: inline-block;">
+        <span *ngIf="item" class="badge badge-dark" style="position: absolute; right: 1px;">{{ count }}</span>
+        {{ item.itemId }}
+        <img *ngIf="item" src="assets/images/items/{{ item }}.svg">
     </div>
+    <span *ngIf="item" style="position: absolute; margin-left: 1em;">{{ 'items.' + item | translate }}</span>
 </div>
