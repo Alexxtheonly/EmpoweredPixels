@@ -2,7 +2,7 @@ import { PlayerExperience } from './../player/+models/player-experience';
 import { RewardService } from './../rewards/+services/reward.service';
 import { Component, OnInit } from '@angular/core';
 import { CurrencyBalance } from '../inventory/+models/currency-balance';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-nav-menu',
@@ -21,7 +21,10 @@ export class NavMenuComponent implements OnInit
   {
     router.events.subscribe((event) =>
     {
-      this.loadRewards();
+      if (event instanceof NavigationEnd)
+      {
+        this.loadRewards();
+      }
     });
   }
 
