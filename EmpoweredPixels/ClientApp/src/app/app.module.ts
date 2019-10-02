@@ -48,6 +48,7 @@ import { EquipmentComponent } from './+components/equipment/equipment.component'
 import { FighterGearComponent } from './+components/fighter-gear/fighter-gear.component';
 import { EnhancementComponent } from './inventory/enhancement/enhancement.component';
 import { EquipmentInventoryComponent } from './inventory/equipment-inventory/equipment-inventory.component';
+import { WebpackTranslateLoader } from './+helpers/webpack-translate-loader';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -105,6 +106,7 @@ export function HttpLoaderFactory(http: HttpClient)
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     RouterModule.forRoot([
+      { path: '', component: RosterComponent, canActivate: [AuthGuardService] },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'roster', component: RosterComponent, canActivate: [AuthGuardService] },
@@ -123,7 +125,7 @@ export function HttpLoaderFactory(http: HttpClient)
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
+        useClass: WebpackTranslateLoader,
         deps: [HttpClient]
       }
     }),

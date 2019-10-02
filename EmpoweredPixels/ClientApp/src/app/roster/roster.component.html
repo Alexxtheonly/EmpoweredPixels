@@ -1,8 +1,8 @@
 <div class="container">
   <a class="btn btn-primary" style="margin:10px 0px;"
-    [routerLink]="'fighter/new'">{{ 'roster.createNewFighter' | translate }}</a>
+    [routerLink]="'/roster/fighter/new'">{{ 'roster.createNewFighter' | translate }}</a>
   <div class="row">
-    <a class="col-12" *ngFor="let fighter of fighters" [routerLink]="'fighter/' + fighter.id">
+    <a class="col-12" *ngFor="let fighter of fighters" [routerLink]="'/roster/fighter/' + fighter.id">
       <div class="card card-body">
         <h5 class="card-title">{{ fighter.name }}
           <span class="badge">{{ 'roster.level' | translate }} {{ fighter.level }}</span>
