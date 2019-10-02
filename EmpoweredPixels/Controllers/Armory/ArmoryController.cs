@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using EmpoweredPixels.DataTransferObjects.Armory;
+using EmpoweredPixels.DataTransferObjects.Items;
+using EmpoweredPixels.DataTransferObjects.Roster;
 using EmpoweredPixels.Exceptions.Roster;
 using EmpoweredPixels.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +26,8 @@ namespace EmpoweredPixels.Controllers.Armory
     {
       var fighter = await Context.Fighters
         .Include(o => o.User)
+        .Include(o => o.Equipment)
+        .ThenInclude(o => o.SocketStones)
         .FirstOrDefaultAsync(o => o.Id == id);
 
       if (fighter == null)
@@ -42,9 +47,6 @@ namespace EmpoweredPixels.Controllers.Armory
 
       var armory = new FighterArmoryDto()
       {
-        FighterId = fighter.Id,
-        FighterName = fighter.Name,
-        Level = 1,
         UserId = fighter.UserId,
         Username = fighter.User.Name,
         EloRating = eloRating?.CurrentElo,
@@ -53,6 +55,7 @@ namespace EmpoweredPixels.Controllers.Armory
         Kills = kills,
         Deaths = deaths,
         KillDeathRatio = kills / (double)deaths,
+        Fighter = Mapper.Map<FighterDto>(fighter),
       };
 
       return Ok(armory);

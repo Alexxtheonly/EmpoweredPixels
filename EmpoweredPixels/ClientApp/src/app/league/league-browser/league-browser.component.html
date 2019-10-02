@@ -2,13 +2,12 @@
     <div class="row">
         <div class="col-12 col-md-6 col-lg-4 mb-1" *ngFor="let league of leagues | async">
             <div class="card card-body" routerLink="/league/{{ league.id }}">
-                <h5 class="card-title">{{ league.name }}
+                <h5 class="card-title">{{ league.name | translate }}
                     <span>
                         {{ getDiff(league.nextMatch) }}</span>
                 </h5>
 
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Max power: {{ league.maxPowerlevel }}</li>
                     <li class="list-group-item">Subscribers: {{ league.subscriberCount }}</li>
                 </ul>
 

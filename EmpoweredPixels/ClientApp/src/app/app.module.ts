@@ -44,6 +44,10 @@ import { MomentModule } from 'ngx-moment';
 import { VarDirective } from './+helpers/directives/var.directive';
 import { LastLeagueWinnerPipe } from './league/+pipes/last-league-winner.pipe';
 import { ArmoryComponent } from './armory/armory.component';
+import { EquipmentComponent } from './+components/equipment/equipment.component';
+import { FighterGearComponent } from './+components/fighter-gear/fighter-gear.component';
+import { EnhancementComponent } from './inventory/enhancement/enhancement.component';
+import { EquipmentInventoryComponent } from './inventory/equipment-inventory/equipment-inventory.component';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -82,7 +86,11 @@ export function HttpLoaderFactory(http: HttpClient)
     FighterStatForecastComponent,
     VarDirective,
     LastLeagueWinnerPipe,
-    ArmoryComponent
+    ArmoryComponent,
+    EquipmentComponent,
+    FighterGearComponent,
+    EnhancementComponent,
+    EquipmentInventoryComponent
   ],
   imports: [
     MomentModule,
@@ -97,13 +105,11 @@ export function HttpLoaderFactory(http: HttpClient)
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     RouterModule.forRoot([
-      { path: '', component: MatchbrowserComponent, pathMatch: 'full', canActivate: [AuthGuardService] },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'roster', component: RosterComponent, canActivate: [AuthGuardService] },
       { path: 'roster/fighter/new', component: NewFighterComponent, canActivate: [AuthGuardService] },
       { path: 'roster/fighter/:id', component: FighterComponent, canActivate: [AuthGuardService] },
-      { path: 'match/create', component: MatchCreationComponent, canActivate: [AuthGuardService] },
       { path: 'match/:id', component: MatchlobbyComponent, canActivate: [AuthGuardService] },
       { path: 'match/:id/result', component: MatchViewerComponent, canActivate: [AuthGuardService] },
       { path: 'match/:id/log', component: MatchLogComponent, canActivate: [AuthGuardService] },
@@ -112,6 +118,7 @@ export function HttpLoaderFactory(http: HttpClient)
       { path: 'replay/:id', component: GameViewerComponent, canActivate: [AuthGuardService] },
       { path: 'rewards', component: RewardsComponent, canActivate: [AuthGuardService] },
       { path: 'armory/:id', component: ArmoryComponent, canActivate: [AuthGuardService] },
+      { path: 'equipment/enhance/:id', component: EnhancementComponent, canActivate: [AuthGuardService] },
     ]),
     TranslateModule.forRoot({
       loader: {

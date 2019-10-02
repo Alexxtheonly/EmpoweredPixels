@@ -15,7 +15,6 @@ using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Matches;
 using EmpoweredPixels.Providers.DateTime;
 using EmpoweredPixels.Utilities.ContributionPointCalculation;
-using EmpoweredPixels.Utilities.EloCalculation;
 using EmpoweredPixels.Utilities.Paging;
 using EmpoweredPixels.Utilities.Paging.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -378,41 +377,6 @@ namespace EmpoweredPixels.Controllers.Matches
       }
 
       registration.TeamId = null;
-      await Context.SaveChangesAsync();
-
-      await PushMatchUpdate(match.Id);
-
-      return Ok();
-    }
-
-    [HttpPost("start")]
-    public async Task<ActionResult> StartMatch([FromBody] MatchDto dto, [FromServices] IContributionPointCalculator contributionPointCalculator, [FromServices]IEloCalculator eloCalculator)
-    {
-      var userId = User.Claims.GetUserId();
-      if (userId == null)
-      {
-        return Forbid();
-      }
-
-      var match = await Context.Matches
-        .AsTracking()
-        .Include(o => o.Registrations)
-        .ThenInclude(o => o.Fighter)
-        .Where(o => o.CreatorUserId == userId && o.Started == null)
-        .FirstOrDefaultAsync(o => o.Id == dto.Id);
-
-      if (match == null)
-      {
-        return BadRequest(new InvalidMatchException());
-      }
-
-      if (!match.Registrations.Any())
-      {
-        return BadRequest(new InsufficientMatchRegistrationsException());
-      }
-
-      await Context.StartMatch(match, dateTimeProvider, engineFactory, contributionPointCalculator, eloCalculator);
-
       await Context.SaveChangesAsync();
 
       await PushMatchUpdate(match.Id);

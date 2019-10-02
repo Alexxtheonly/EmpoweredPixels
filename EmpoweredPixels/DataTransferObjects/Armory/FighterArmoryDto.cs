@@ -1,13 +1,10 @@
 ﻿using System;
+using EmpoweredPixels.DataTransferObjects.Roster;
 
 namespace EmpoweredPixels.DataTransferObjects.Armory
 {
   public class FighterArmoryDto
   {
-    public Guid FighterId { get; set; }
-
-    public string FighterName { get; set; }
-
     public long UserId { get; set; }
 
     public string Username { get; set; }
@@ -18,12 +15,12 @@ namespace EmpoweredPixels.DataTransferObjects.Armory
 
     public DateTimeOffset? LastEloRatingUpdate { get; set; }
 
-    public int Level { get; set; }
-
     public double KillDeathRatio { get; set; }
 
     public int Kills { get; set; }
 
     public int Deaths { get; set; }
+
+    public FighterDto Fighter { get; set; }
   }
 }

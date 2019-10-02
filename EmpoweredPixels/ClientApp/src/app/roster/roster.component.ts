@@ -2,7 +2,6 @@ import { UserFeedbackService } from './../+services/userfeedback.service';
 import { Fighter } from './+models/fighter';
 import { Component, OnInit } from '@angular/core';
 import { RosterService } from './+services/roster.service';
-import { observable, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-roster',

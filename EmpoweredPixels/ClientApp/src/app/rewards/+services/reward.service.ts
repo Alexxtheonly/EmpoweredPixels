@@ -1,3 +1,4 @@
+import { RewardContent } from './../+models/reward-content';
 import { Item } from './../+models/item';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -17,8 +18,13 @@ export class RewardService
     return this.http.get<Reward[]>('api/reward');
   }
 
-  public claim(reward: Reward): Observable<Item[]>
+  public claim(reward: Reward): Observable<RewardContent>
   {
-    return this.http.post<Item[]>('api/reward/claim', reward);
+    return this.http.post<RewardContent>('api/reward/claim', reward);
+  }
+
+  public claimAll(): Observable<RewardContent>
+  {
+    return this.http.post<RewardContent>('api/reward/claim/all', null);
   }
 }

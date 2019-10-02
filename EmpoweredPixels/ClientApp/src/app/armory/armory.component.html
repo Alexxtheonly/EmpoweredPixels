@@ -1,11 +1,15 @@
 <div *ngIf="fighterArmory" class="row">
     <div class="col-12">
-        <span class="float-right">Level: {{ fighterArmory.level }}</span>
+        <div class="card card-body">
+            <h2 class="card-title ">{{ fighterArmory.fighter.name }}<span
+                    class="text-muted float-right">{{ fighterArmory.username }}</span></h2>
+        </div>
     </div>
+
     <div class="col-12">
         <div class="card card-body">
-            <h2 class="card-title ">{{ fighterArmory.fighterName }}<span
-                    class="text-muted float-right">{{ fighterArmory.username }}</span></h2>
+            <h3 class="card-title">{{ 'roster.equipment' | translate }}</h3>
+            <app-fighter-gear [disableContext]="true" [fighter]="fighterArmory.fighter"></app-fighter-gear>
         </div>
     </div>
 
@@ -15,6 +19,10 @@
             <div class="table-responsive-sm">
                 <table class="table-sm">
                     <tbody>
+                        <tr>
+                            <td>{{ 'roster.level' | translate }}</td>
+                            <td>{{ fighterArmory.fighter.level }}</td>
+                        </tr>
                         <tr>
                             <td>Elo</td>
                             <td> <span>{{ fighterArmory.eloRating }} </span>

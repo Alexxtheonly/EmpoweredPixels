@@ -4,17 +4,30 @@ namespace EmpoweredPixels.Utilities.ContributionPointCalculation
 {
   public class ContributionPointCalculator : IContributionPointCalculator
   {
-    private const int WinPoints = 200;
+    private const int PointsFirstPlace = 20;
+    private const int PointsSecondPlace = 15;
+    private const int PointsThirdPlace = 10;
+
     private const int KillAssistPoints = 50;
-    private const int PercentageOfRoundsAlivePoints = 25;
-    private const int MatchParticipationPoints = 15;
+    private const int PercentageOfRoundsAlivePoints = 35;
+    private const int MatchParticipationPoints = 25;
 
     public int Calculate(FighterContribution contribution)
     {
       double points = 0;
       if (contribution.HasWon)
       {
-        points += WinPoints;
+        points += PointsFirstPlace;
+      }
+
+      if (contribution.IsSecond)
+      {
+        points += PointsSecondPlace;
+      }
+
+      if (contribution.IsThird)
+      {
+        points += PointsThirdPlace;
       }
 
       points += contribution.KillsAndAssists * KillAssistPoints;

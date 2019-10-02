@@ -9,6 +9,8 @@ namespace EmpoweredPixels.Models.Rewards
 
     public long UserId { get; set; }
 
+    public int? Level { get; set; }
+
     public DateTimeOffset Created { get; set; }
 
     public DateTimeOffset? Claimed { get; set; }

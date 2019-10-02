@@ -1,11 +1,6 @@
+import { Fighter } from 'src/app/roster/+models/fighter';
 export class FighterArmory
 {
-    public fighterId: string;
-
-    public fighterName: string;
-
-    public userId: number;
-
     public username: string;
 
     public eloRating: number;
@@ -14,11 +9,11 @@ export class FighterArmory
 
     public lastEloRatingUpdate: Date;
 
-    public level: number;
-
     public kills: number;
 
     public deaths: number;
 
     public killDeathRatio: number;
+
+    public fighter: Fighter;
 }

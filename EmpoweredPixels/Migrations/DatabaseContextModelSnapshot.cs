@@ -89,6 +89,54 @@ namespace EmpoweredPixels.Migrations
                     b.ToTable("Verifications");
                 });
 
+            modelBuilder.Entity("EmpoweredPixels.Models.Items.Equipment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Accuracy");
+
+                    b.Property<int>("Agility");
+
+                    b.Property<int>("Armor");
+
+                    b.Property<int>("ConditionPower");
+
+                    b.Property<int>("Enhancement");
+
+                    b.Property<int>("Ferocity");
+
+                    b.Property<Guid?>("FighterId");
+
+                    b.Property<int>("HealingPower");
+
+                    b.Property<int>("Level");
+
+                    b.Property<int>("Power");
+
+                    b.Property<int>("Precision");
+
+                    b.Property<int>("Rarity");
+
+                    b.Property<int>("Speed");
+
+                    b.Property<Guid>("Type");
+
+                    b.Property<long>("UserId");
+
+                    b.Property<int>("Vision");
+
+                    b.Property<int>("Vitality");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FighterId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Equipment");
+                });
+
             modelBuilder.Entity("EmpoweredPixels.Models.Items.Item", b =>
                 {
                     b.Property<Guid>("Id")
@@ -103,6 +151,32 @@ namespace EmpoweredPixels.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("EmpoweredPixels.Models.Items.SocketStone", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Enhancement");
+
+                    b.Property<Guid?>("EquipmentId");
+
+                    b.Property<int>("Level");
+
+                    b.Property<int>("Rarity");
+
+                    b.Property<int>("Stat");
+
+                    b.Property<long>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EquipmentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SocketStones");
                 });
 
             modelBuilder.Entity("EmpoweredPixels.Models.Leagues.League", b =>
@@ -124,24 +198,10 @@ namespace EmpoweredPixels.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = 4,
                             IsDeactivated = false,
-                            Name = "League 300",
-                            Options = "{\"IntervalCron\":\"0 */3 * * *\",\"IsTeam\":false,\"TeamSize\":null,\"MatchOptions\":{\"IsPrivate\":true,\"MaxPowerlevel\":300,\"ActionsPerRound\":2,\"MaxFightersPerUser\":1,\"BotCount\":null,\"BotPowerlevel\":null,\"Features\":[\"5237c31f-570a-42a6-8855-0ccdc2f351e1\",\"e800723c-6324-47ab-9593-1952346ad772\",\"77c70366-24fb-4af3-8a34-869f930bc420\",\"732a2a25-97a6-4fa0-ae65-96a503f9a1ea\"],\"Battlefield\":\"dc937e88-f307-4cf0-aef5-b468d27aed4b\",\"Bounds\":\"86b56a4f-77f4-4624-b67e-1887e77039a0\",\"PositionGenerator\":\"f88be549-9be0-4dd2-aabc-5af599dcc140\",\"MoveOrder\":\"12e9e0ae-eca3-440d-a649-48d687f6d97b\",\"WinCondition\":\"f5f16639-7796-40ee-b15b-f16eb6e946c4\",\"StaleCondition\":\"04616688-2cd1-4341-b757-afdae8af4035\"}}"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsDeactivated = false,
-                            Name = "League 500",
-                            Options = "{\"IntervalCron\":\"0 */3 * * *\",\"IsTeam\":false,\"TeamSize\":null,\"MatchOptions\":{\"IsPrivate\":true,\"MaxPowerlevel\":500,\"ActionsPerRound\":2,\"MaxFightersPerUser\":1,\"BotCount\":null,\"BotPowerlevel\":null,\"Features\":[\"5237c31f-570a-42a6-8855-0ccdc2f351e1\",\"e800723c-6324-47ab-9593-1952346ad772\",\"77c70366-24fb-4af3-8a34-869f930bc420\",\"732a2a25-97a6-4fa0-ae65-96a503f9a1ea\"],\"Battlefield\":\"dc937e88-f307-4cf0-aef5-b468d27aed4b\",\"Bounds\":\"fb1698b4-809b-40cd-94d6-0a3b257255c3\",\"PositionGenerator\":\"f88be549-9be0-4dd2-aabc-5af599dcc140\",\"MoveOrder\":\"12e9e0ae-eca3-440d-a649-48d687f6d97b\",\"WinCondition\":\"f5f16639-7796-40ee-b15b-f16eb6e946c4\",\"StaleCondition\":\"04616688-2cd1-4341-b757-afdae8af4035\"}}"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IsDeactivated = false,
-                            Name = "League 750",
-                            Options = "{\"IntervalCron\":\"0 */3 * * *\",\"IsTeam\":false,\"TeamSize\":null,\"MatchOptions\":{\"IsPrivate\":true,\"MaxPowerlevel\":750,\"ActionsPerRound\":2,\"MaxFightersPerUser\":1,\"BotCount\":null,\"BotPowerlevel\":null,\"Features\":[\"5237c31f-570a-42a6-8855-0ccdc2f351e1\",\"e800723c-6324-47ab-9593-1952346ad772\",\"77c70366-24fb-4af3-8a34-869f930bc420\",\"732a2a25-97a6-4fa0-ae65-96a503f9a1ea\"],\"Battlefield\":\"dc937e88-f307-4cf0-aef5-b468d27aed4b\",\"Bounds\":\"fb1698b4-809b-40cd-94d6-0a3b257255c3\",\"PositionGenerator\":\"f88be549-9be0-4dd2-aabc-5af599dcc140\",\"MoveOrder\":\"12e9e0ae-eca3-440d-a649-48d687f6d97b\",\"WinCondition\":\"f5f16639-7796-40ee-b15b-f16eb6e946c4\",\"StaleCondition\":\"04616688-2cd1-4341-b757-afdae8af4035\"}}"
+                            Name = "league.lastmanstanding",
+                            Options = "{\"IntervalCron\":\"0 */3 * * *\",\"IsTeam\":false,\"TeamSize\":null,\"MatchOptions\":{\"IsPrivate\":true,\"MaxPowerlevel\":null,\"ActionsPerRound\":2,\"MaxFightersPerUser\":1,\"BotCount\":null,\"BotPowerlevel\":null,\"Features\":[\"5237c31f-570a-42a6-8855-0ccdc2f351e1\",\"0b93e657-ebf3-42f4-a049-fc9f7b70add9\"],\"Battlefield\":\"dc937e88-f307-4cf0-aef5-b468d27aed4b\",\"Bounds\":\"fb1698b4-809b-40cd-94d6-0a3b257255c3\",\"PositionGenerator\":\"f88be549-9be0-4dd2-aabc-5af599dcc140\",\"MoveOrder\":\"12e9e0ae-eca3-440d-a649-48d687f6d97b\",\"WinCondition\":\"f5f16639-7796-40ee-b15b-f16eb6e946c4\",\"StaleCondition\":\"04616688-2cd1-4341-b757-afdae8af4035\"}}"
                         });
                 });
 
@@ -198,6 +258,10 @@ namespace EmpoweredPixels.Migrations
                     b.Property<Guid>("MatchId");
 
                     b.Property<bool>("HasWon");
+
+                    b.Property<bool>("IsSecond");
+
+                    b.Property<bool>("IsThird");
 
                     b.Property<int>("KillsAndAssists");
 
@@ -365,6 +429,8 @@ namespace EmpoweredPixels.Migrations
 
                     b.Property<DateTimeOffset>("Created");
 
+                    b.Property<int?>("Level");
+
                     b.Property<Guid>("RewardPoolId");
 
                     b.Property<long>("UserId");
@@ -376,44 +442,158 @@ namespace EmpoweredPixels.Migrations
                     b.ToTable("Rewards");
                 });
 
+            modelBuilder.Entity("EmpoweredPixels.Models.Rewards.RewardTier", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Points");
+
+                    b.Property<Guid>("RewardPoolId");
+
+                    b.Property<int>("RewardTrackId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RewardTrackId");
+
+                    b.ToTable("RewardTiers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Points = 250,
+                            RewardPoolId = new Guid("6c70ddab-5b5c-4b1e-849f-78ceb7d14751"),
+                            RewardTrackId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Points = 500,
+                            RewardPoolId = new Guid("e620ff6f-e081-4588-b1e1-652f06808359"),
+                            RewardTrackId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Points = 1250,
+                            RewardPoolId = new Guid("d00258c4-cb35-4ab3-bd00-bdb356bb6c2c"),
+                            RewardTrackId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Points = 5000,
+                            RewardPoolId = new Guid("b051e5c9-a679-489f-95c6-4e32aed2d15b"),
+                            RewardTrackId = 1
+                        });
+                });
+
+            modelBuilder.Entity("EmpoweredPixels.Models.Rewards.RewardTrack", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int>("TotalPoints");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RewardTracks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsActive = true,
+                            TotalPoints = 10000
+                        });
+                });
+
+            modelBuilder.Entity("EmpoweredPixels.Models.Rewards.RewardTrackProgress", b =>
+                {
+                    b.Property<long>("UserId");
+
+                    b.Property<int>("RewardTrackId");
+
+                    b.Property<DateTimeOffset>("Activated");
+
+                    b.Property<DateTimeOffset?>("Completed");
+
+                    b.Property<long>("Progress");
+
+                    b.HasKey("UserId", "RewardTrackId");
+
+                    b.HasIndex("RewardTrackId");
+
+                    b.ToTable("RewardTrackProgresses");
+                });
+
             modelBuilder.Entity("EmpoweredPixels.Models.Roster.Fighter", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<float>("Accuracy");
+                    b.Property<int>("Accuracy");
 
-                    b.Property<float>("Agility");
+                    b.Property<int>("Agility");
+
+                    b.Property<int>("Armor");
+
+                    b.Property<int>("ConditionPower");
 
                     b.Property<DateTimeOffset>("Created");
 
-                    b.Property<float>("Expertise");
+                    b.Property<int>("Ferocity");
+
+                    b.Property<int>("HealingPower");
 
                     b.Property<bool>("IsDeleted");
 
+                    b.Property<int>("Level");
+
                     b.Property<string>("Name");
 
-                    b.Property<float>("Power");
+                    b.Property<int>("Power");
 
-                    b.Property<float>("Regeneration");
+                    b.Property<int>("Precision");
 
-                    b.Property<float>("Speed");
-
-                    b.Property<float>("Stamina");
-
-                    b.Property<float>("Toughness");
+                    b.Property<int>("Speed");
 
                     b.Property<long>("UserId");
 
-                    b.Property<float>("Vision");
+                    b.Property<int>("Vision");
 
-                    b.Property<float>("Vitality");
+                    b.Property<int>("Vitality");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Fighters");
+                });
+
+            modelBuilder.Entity("EmpoweredPixels.Models.Roster.FighterExperience", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("FighterId");
+
+                    b.Property<DateTimeOffset?>("LastUpdate");
+
+                    b.Property<long>("Points");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FighterId")
+                        .IsUnique();
+
+                    b.ToTable("FighterExperiences");
                 });
 
             modelBuilder.Entity("EmpoweredPixels.Models.Identity.Token", b =>
@@ -432,8 +612,32 @@ namespace EmpoweredPixels.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("EmpoweredPixels.Models.Items.Equipment", b =>
+                {
+                    b.HasOne("EmpoweredPixels.Models.Roster.Fighter", "Fighter")
+                        .WithMany("Equipment")
+                        .HasForeignKey("FighterId");
+
+                    b.HasOne("EmpoweredPixels.Models.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("EmpoweredPixels.Models.Items.Item", b =>
                 {
+                    b.HasOne("EmpoweredPixels.Models.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EmpoweredPixels.Models.Items.SocketStone", b =>
+                {
+                    b.HasOne("EmpoweredPixels.Models.Items.Equipment", "Equipment")
+                        .WithMany("SocketStones")
+                        .HasForeignKey("EquipmentId");
+
                     b.HasOne("EmpoweredPixels.Models.Identity.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -555,11 +759,40 @@ namespace EmpoweredPixels.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("EmpoweredPixels.Models.Rewards.RewardTier", b =>
+                {
+                    b.HasOne("EmpoweredPixels.Models.Rewards.RewardTrack", "RewardTrack")
+                        .WithMany("Tiers")
+                        .HasForeignKey("RewardTrackId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EmpoweredPixels.Models.Rewards.RewardTrackProgress", b =>
+                {
+                    b.HasOne("EmpoweredPixels.Models.Rewards.RewardTrack", "RewardTrack")
+                        .WithMany()
+                        .HasForeignKey("RewardTrackId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EmpoweredPixels.Models.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("EmpoweredPixels.Models.Roster.Fighter", b =>
                 {
                     b.HasOne("EmpoweredPixels.Models.Identity.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EmpoweredPixels.Models.Roster.FighterExperience", b =>
+                {
+                    b.HasOne("EmpoweredPixels.Models.Roster.Fighter", "Fighter")
+                        .WithOne()
+                        .HasForeignKey("EmpoweredPixels.Models.Roster.FighterExperience", "FighterId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

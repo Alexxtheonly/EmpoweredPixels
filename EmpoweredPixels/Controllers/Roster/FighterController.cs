@@ -4,17 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using EmpoweredPixels.DataTransferObjects.Items;
 using EmpoweredPixels.DataTransferObjects.Roster;
+using EmpoweredPixels.Enums.Equipment;
 using EmpoweredPixels.Exceptions.Roster;
 using EmpoweredPixels.Extensions;
-using EmpoweredPixels.Factories.Matches;
 using EmpoweredPixels.Models;
+using EmpoweredPixels.Models.Items;
 using EmpoweredPixels.Models.Roster;
 using EmpoweredPixels.Providers.DateTime;
+using EmpoweredPixels.Utilities.EquipmentGeneration;
+using EmpoweredPixels.Utilities.FighterEquipment;
+using EmpoweredPixels.Utilities.FighterProgress;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SharpFightingEngine.Fighters;
 
 namespace EmpoweredPixels.Controllers.Roster
 {
@@ -40,6 +44,9 @@ namespace EmpoweredPixels.Controllers.Roster
 
       return Ok(await Context.Fighters
         .Where(o => o.UserId == userId)
+        .Include(o => o.Equipment)
+        .ThenInclude(o => o.SocketStones)
+        .ProjectTo<FighterDto>(Mapper.ConfigurationProvider)
         .ToListAsync());
     }
 
@@ -54,6 +61,8 @@ namespace EmpoweredPixels.Controllers.Roster
 
       var fighter = await Context.Fighters
         .Where(o => o.UserId == userId)
+        .Include(o => o.Equipment)
+        .ThenInclude(o => o.SocketStones)
         .FirstOrDefaultAsync(o => o.Id == id);
       if (fighter == null)
       {
@@ -73,7 +82,11 @@ namespace EmpoweredPixels.Controllers.Roster
     }
 
     [HttpPut]
-    public async Task<ActionResult<FighterDto>> CreateFighter([FromBody] FighterDto dto)
+    public async Task<ActionResult<FighterDto>> CreateFighter(
+      [FromBody] FighterDto dto,
+      [FromServices] IFighterLevelUpHandler fighterLevelUpHandler,
+      [FromServices] IFighterOutfitter fighterOutfitter,
+      [FromServices] IEquipmentGenerator equipmentGenerator)
     {
       var userId = User.Claims.GetUserId();
       if (userId == null)
@@ -93,43 +106,109 @@ namespace EmpoweredPixels.Controllers.Roster
         Name = name,
         UserId = userId.Value,
         Created = dateTimeProvider.Now,
-        Accuracy = 1,
-        Agility = 1,
-        Expertise = 1,
-        Power = 1,
-        Regeneration = 1,
-        Speed = 1,
-        Stamina = 1,
-        Toughness = 1,
-        Vision = 1,
-        Vitality = 1,
+        Equipment = new List<Equipment>(),
       };
+
+      fighterLevelUpHandler.Up(fighter);
+
+      var armorHead = equipmentGenerator.GenerateArmorHead(fighter.Level, ItemRarity.Basic, userId.Value);
+      var armorShoulders = equipmentGenerator.GenerateArmorShoulders(fighter.Level, ItemRarity.Basic, userId.Value);
+      var armorChest = equipmentGenerator.GenerateArmorChest(fighter.Level, ItemRarity.Basic, userId.Value);
+      var armorHands = equipmentGenerator.GenerateArmorHands(fighter.Level, ItemRarity.Basic, userId.Value);
+      var armorLegs = equipmentGenerator.GenerateArmorLegs(fighter.Level, ItemRarity.Basic, userId.Value);
+      var armorShoes = equipmentGenerator.GenerateArmorShoes(fighter.Level, ItemRarity.Basic, userId.Value);
+
+      var weapon = equipmentGenerator.GenerateWeaponGreatsword(fighter.Level, ItemRarity.Basic, userId.Value);
+
+      fighterOutfitter.Equip(fighter, armorHead, false);
+      fighterOutfitter.Equip(fighter, armorShoulders, false);
+      fighterOutfitter.Equip(fighter, armorChest, false);
+      fighterOutfitter.Equip(fighter, armorHands, false);
+      fighterOutfitter.Equip(fighter, armorLegs, false);
+      fighterOutfitter.Equip(fighter, armorShoes, false);
+
+      fighterOutfitter.Equip(fighter, weapon, false);
 
       // todo: set max fighters per user
       Context.Fighters.Add(fighter);
+      Context.Equipment.AddRange(armorHead, armorShoulders, armorChest, armorHands, armorLegs, armorShoes, weapon);
       await Context.SaveChangesAsync();
 
       return Mapper.Map<FighterDto>(fighter);
     }
 
-    [HttpPost]
-    public async Task<ActionResult<FighterDto>> UpdateFighter([FromBody] FighterDto dto)
+    [HttpPost("{id}/equip")]
+    public async Task<ActionResult<FighterDto>> Equip(Guid id, [FromBody] EquipmentDto dto, [FromServices] IFighterOutfitter fighterOutfitter)
     {
       var userId = User.Claims.GetUserId();
-      if (userId == null || dto.UserId != userId)
+      if (userId == null)
       {
         return Forbid();
       }
 
       var fighter = await Context.Fighters
         .AsTracking()
-        .SingleOrDefaultAsync(o => o.Id == dto.Id && o.UserId == userId);
+        .Where(o => o.UserId == userId)
+        .Include(o => o.Equipment)
+        .ThenInclude(o => o.SocketStones)
+        .FirstOrDefaultAsync(o => o.Id == id);
+
       if (fighter == null)
       {
-        return NotFound();
+        return BadRequest(new InvalidFighterException());
       }
 
-      Mapper.Map(dto, fighter);
+      var equipment = await Context.Equipment
+        .AsTracking()
+        .Where(o => o.UserId == userId)
+        .Include(o => o.SocketStones)
+        .FirstOrDefaultAsync(o => o.Id == dto.Id);
+
+      if (equipment == null)
+      {
+        return BadRequest();
+      }
+
+      fighterOutfitter.Equip(fighter, equipment, true);
+
+      await Context.SaveChangesAsync();
+
+      return Ok(Mapper.Map<FighterDto>(fighter));
+    }
+
+    [HttpPost("{id}/unequip")]
+    public async Task<ActionResult<FighterDto>> Unequip(Guid id, [FromBody] EquipmentDto dto, [FromServices] IFighterOutfitter fighterOutfitter)
+    {
+      var userId = User.Claims.GetUserId();
+      if (userId == null)
+      {
+        return Forbid();
+      }
+
+      var fighter = await Context.Fighters
+        .AsTracking()
+        .Where(o => o.UserId == userId)
+        .Include(o => o.Equipment)
+        .ThenInclude(o => o.SocketStones)
+        .FirstOrDefaultAsync(o => o.Id == id);
+
+      if (fighter == null)
+      {
+        return BadRequest(new InvalidFighterException());
+      }
+
+      var equipment = await Context.Equipment
+        .AsTracking()
+        .Where(o => o.UserId == userId)
+        .Include(o => o.SocketStones)
+        .FirstOrDefaultAsync(o => o.Id == dto.Id);
+
+      if (equipment == null)
+      {
+        return BadRequest();
+      }
+
+      fighterOutfitter.Unequip(fighter, equipment);
 
       await Context.SaveChangesAsync();
 
@@ -165,45 +244,6 @@ namespace EmpoweredPixels.Controllers.Roster
       await Context.SaveChangesAsync();
 
       return Ok();
-    }
-
-    [HttpPost("forecast")]
-    public ActionResult<FighterStatForecastDto> GetForecast([FromBody] FighterDto dto, [FromServices]IEngineFactory engineFactory)
-    {
-      IFighterStats fighter = new GenericFighter()
-      {
-        Stats = new Stats()
-        {
-          Accuracy = dto.Accuracy,
-          Agility = dto.Agility,
-          Expertise = dto.Expertise,
-          Power = dto.Power,
-          Regeneration = dto.Regeneration,
-          Speed = dto.Speed,
-          Stamina = dto.Stamina,
-          Toughness = dto.Toughness,
-          Vision = dto.Vision,
-          Vitality = dto.Vitality,
-        }
-      };
-
-      var calculationValues = engineFactory.CalculationValues;
-      var forecast = new FighterStatForecastDto()
-      {
-        CritChance = fighter.CriticalHitChance(calculationValues),
-        DodgeChance = fighter.DodgeChance(calculationValues),
-        Energy = fighter.Energy(calculationValues),
-        EnergyRegeneration = fighter.EnergyRegeneration(calculationValues),
-        Health = fighter.Health(calculationValues),
-        HealthRegeneration = fighter.HealthRegeneration(calculationValues),
-        Velocity = fighter.Velocity(calculationValues),
-        Vision = fighter.VisualRange(calculationValues),
-        MissChance = fighter.HitChance(calculationValues),
-        PotentialDefense = fighter.PotentialDefense(calculationValues),
-        PotentialPower = fighter.PotentialPower(calculationValues),
-      };
-
-      return Ok(forecast);
     }
   }
 }

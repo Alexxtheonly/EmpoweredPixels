@@ -1,9 +1,11 @@
-﻿namespace EmpoweredPixels.Exceptions
+﻿using System;
+
+namespace EmpoweredPixels.Exceptions
 {
-  public abstract class ExceptionBase
+  public abstract class ExceptionBase : Exception
   {
     public abstract ErrorCode Code { get; }
 
-    public string Message { get; }
+    public override string Message { get; }
   }
 }

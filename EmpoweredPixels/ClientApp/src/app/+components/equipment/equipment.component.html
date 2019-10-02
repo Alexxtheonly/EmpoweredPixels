@@ -1,0 +1,38 @@
+<div [ngClass]="{'equipment': !disableContext}" style="padding: 0.5em;" (click)="showModal()">
+    <div [ngClass]="getCssRarity()" class="equipment-border rounded"
+        style="position: relative; width: 75px; height: 75px; display: inline-block;">
+        <span *ngIf="equipment" class="badge badge-dark"
+            style="position: absolute; right: 1px;">+{{ equipment?.enhancement }}</span>
+        <img *ngIf="equipment" src="assets/images/equipment/{{ equipment.type }}.svg">
+    </div>
+    <span *ngIf="equipment" style="position: absolute; margin-left: 1em;">{{ getTranslation() | translate }}</span>
+    <span *ngIf="equipment" [ngStyle]="{'text-danger': isLevelTooHigh()}" class="badge"
+        style="margin-left: 1em;">{{ 'equipment.level' | translate}}
+        {{equipment.level}}</span>
+    <span *ngIf="equipment" [ngClass]="getCssRarity()" class="badge"
+        style="margin-left: 1em;">{{ 'rarity.' + equipment.rarity | translate }}</span>
+
+    <span *ngIf="equipment?.armor" class="badge">{{ equipment.armor }} Armor</span>
+    <span *ngIf="equipment?.power" class="badge">{{equipment.power }} Power</span>
+</div>
+
+<div class="modal" [ngStyle]="{ display: modalVisible ? 'flex' : 'none' }">
+    <div class="modal-dialog modal-dialog-centered col-12">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="btn-group-vertical" style="display: block">
+                    <a *ngIf="equipment" routerLink="/equipment/enhance/{{ equipment.id }}"
+                        class="btn btn-sm btn-outline-success">Enhance</a>
+                    <button *ngIf="equipment && isUnequipped()" class="btn btn-sm btn-outline-light"
+                        (click)="equip()">Equip</button>
+                    <button *ngIf="equipment && !isUnequipped()" class="btn btn-sm btn-outline-light"
+                        (click)="unequip()">Unequip</button>
+                    <hr />
+                    <button class="btn btn-sm btn-outline-danger" (click)="salvage()">Salvage</button>
+                    <hr />
+                    <button class="btn btn-sm btn-secondary" (click)="hideModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

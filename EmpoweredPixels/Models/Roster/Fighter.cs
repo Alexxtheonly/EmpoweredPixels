@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using EmpoweredPixels.Models.Identity;
+using EmpoweredPixels.Models.Items;
 using EmpoweredPixels.Models.Ratings;
 using SharpFightingEngine.Fighters;
 
@@ -15,31 +17,37 @@ namespace EmpoweredPixels.Models.Roster
 
     public DateTimeOffset Created { get; set; }
 
-    public float Accuracy { get; set; }
-
-    public float Power { get; set; }
-
-    public float Expertise { get; set; }
-
-    public float Agility { get; set; }
-
-    public float Toughness { get; set; }
-
-    public float Vitality { get; set; }
-
-    public float Speed { get; set; }
-
-    public float Stamina { get; set; }
-
-    public float Regeneration { get; set; }
-
-    public float Vision { get; set; }
-
     public bool IsDeleted { get; set; }
 
     public virtual FighterEloRating EloRating { get; set; }
 
     public virtual User User { get; set; }
+
+    public int Power { get; set; }
+
+    public int ConditionPower { get; set; }
+
+    public int Precision { get; set; }
+
+    public int Ferocity { get; set; }
+
+    public int Accuracy { get; set; }
+
+    public int Agility { get; set; }
+
+    public int Armor { get; set; }
+
+    public int Vitality { get; set; }
+
+    public int HealingPower { get; set; }
+
+    public int Speed { get; set; }
+
+    public int Vision { get; set; }
+
+    public int Level { get; set; }
+
+    public ICollection<Equipment> Equipment { get; set; }
 
     public IStats Clone()
     {
@@ -83,17 +91,7 @@ namespace EmpoweredPixels.Models.Roster
         return false;
       }
 
-      if (Expertise != other.Expertise)
-      {
-        return false;
-      }
-
       if (Agility != other.Agility)
-      {
-        return false;
-      }
-
-      if (Toughness != other.Toughness)
       {
         return false;
       }
@@ -104,16 +102,6 @@ namespace EmpoweredPixels.Models.Roster
       }
 
       if (Speed != other.Speed)
-      {
-        return false;
-      }
-
-      if (Stamina != other.Stamina)
-      {
-        return false;
-      }
-
-      if (Regeneration != other.Regeneration)
       {
         return false;
       }
@@ -138,7 +126,7 @@ namespace EmpoweredPixels.Models.Roster
 
     public override int GetHashCode()
     {
-      return new { Id, Name, UserId, Accuracy, Speed, Power, Expertise, Agility, Toughness, Vitality, Stamina, Regeneration, Vision, IsDeleted }.GetHashCode();
+      return new { Id, Name, UserId, Accuracy, Speed, Power, Agility, Vitality, Vision, IsDeleted }.GetHashCode();
     }
 
     public override string ToString()

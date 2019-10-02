@@ -1,6 +1,11 @@
 <div *ngIf="reward" class="card">
-    <div class="card-header">
-        {{ reward.poolId | translate }}
+    <div class="card-header justify-content-center">
+        <div [ngClass]="getCssRarity()" class="chest-border rounded"
+            style="width: 75px; height: 75px; margin-right: auto;margin-left: auto;">
+            <img src="assets/images/locked-chest.svg">
+        </div>
+        <span [ngClass]="getCssRarity()" class="text-center"
+            style="display: block;">{{ 'rewards.' + reward.poolId | translate }}</span>
     </div>
 
     <div class="card-body">
@@ -8,19 +13,5 @@
             <span *ngIf="!claimed">Claim now</span> <span *ngIf="claimed">Claimed!</span>
             <div *ngIf="loading" class="spinner-border text-info" role="status"></div>
         </button>
-    </div>
-</div>
-
-<div class="modal modal-dialog-centered" [ngStyle]="{ display: showModal ? 'flex' : 'none' }">
-    <div class="modal-dialog modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title justify-content-center">You got:</h5>
-            <button type="button" class="close" (click)="showModal = false">
-                <span>&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <app-reward-content [items]="items"></app-reward-content>
-        </div>
     </div>
 </div>

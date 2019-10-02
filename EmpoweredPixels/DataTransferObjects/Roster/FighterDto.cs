@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using EmpoweredPixels.DataTransferObjects.Items;
 using SharpFightingEngine.Fighters;
 
 namespace EmpoweredPixels.DataTransferObjects.Roster
@@ -11,25 +13,31 @@ namespace EmpoweredPixels.DataTransferObjects.Roster
 
     public long UserId { get; set; }
 
-    public float Accuracy { get; set; }
+    public int Power { get; set; }
 
-    public float Power { get; set; }
+    public int ConditionPower { get; set; }
 
-    public float Expertise { get; set; }
+    public int Precision { get; set; }
 
-    public float Agility { get; set; }
+    public int Ferocity { get; set; }
 
-    public float Toughness { get; set; }
+    public int Accuracy { get; set; }
 
-    public float Vitality { get; set; }
+    public int Agility { get; set; }
 
-    public float Speed { get; set; }
+    public int Armor { get; set; }
 
-    public float Stamina { get; set; }
+    public int Vitality { get; set; }
 
-    public float Regeneration { get; set; }
+    public int HealingPower { get; set; }
 
-    public float Vision { get; set; }
+    public int Speed { get; set; }
+
+    public int Vision { get; set; }
+
+    public int Level { get; set; }
+
+    public IEnumerable<EquipmentDto> Equipment { get; set; }
 
     public IStats Clone()
     {

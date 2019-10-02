@@ -12,6 +12,11 @@ body {
   min-height: 100vh;
 }
 
+.card-title {
+  background: rgba(1, 7, 59, 0.2);
+  padding: 5px;
+}
+
 .card {
   background: transparent;
   background-image: linear-gradient(135deg, #b6cfff2b 40%, #453ace24 100%);
@@ -35,6 +40,7 @@ body {
 h1 {
   color: white;
 }
+
 .list-group-item {
   background-color: rgba(11, 12, 61, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.125);
@@ -45,13 +51,12 @@ h1 {
 }
 
 .btn-success {
-    color: #fff;
-    border-color: #28a745;
-    background-image: linear-gradient( 135deg, #70f570bf 10%, #49c628ad 100%);
+  color: #fff;
+  border-color: #28a745;
+  background-image: linear-gradient( 135deg, #70f570bf 10%, #49c628ad 100%);
 }
 
-.table td,
-.table th {
+.table td, .table th {
   padding: 0.75rem;
   vertical-align: top;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -61,8 +66,7 @@ table {
   color: white !important;
 }
 
-.ngx-pagination a,
-.ngx-pagination button {
+.ngx-pagination a, .ngx-pagination button {
   color: white !important;
 }
 
@@ -74,4 +78,63 @@ table {
   .ngx-pagination {
     font-size: 11px;
   }
+}
+
+.modal {
+  background: linear-gradient(270deg, rgba(17, 36, 100, 0.85), rgba(18, 8, 38, 0.85));
+}
+
+.modal-content {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.modal-header {
+  background: transparent;
+  background-image: linear-gradient(135deg, #b6cfff2b 40%, #453ace24 100%);
+}
+
+.modal-body {
+  background: transparent;
+  background-image: linear-gradient(135deg, #b6cfff2b 40%, #453ace24 100%);
+}
+
+.text-gradient {
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.ep-pagination /deep/ .ngx-pagination a:hover {
+  color: #ffb804 !important;
+  background: transparent !important;
+}
+
+.rarity-basic {
+  color: grey !important;
+  border-color: grey !important;
+}
+
+.rarity-common {
+  color: lightskyblue !important;
+  border-color: lightskyblue !important;
+}
+
+.rarity-rare {
+  color: green !important;
+  border-color: green !important;
+}
+
+.rarity-fabled {
+  color: rgb(185, 2, 185) !important;
+  border-color: rgb(185, 2, 185) !important;
+}
+
+.rarity-mythic {
+  color: orange !important;
+  border-color: orange !important;
+}
+
+.rarity-legendary {
+  color: red !important;
+  border-color: red !important;
 }

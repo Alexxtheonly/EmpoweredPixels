@@ -1,0 +1,4 @@
+.reward-content {
+    max-height: 75vh;
+    overflow-y: auto;
+}

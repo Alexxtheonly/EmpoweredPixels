@@ -43,8 +43,6 @@ export class MatchLogComponent implements OnInit
       fighter.id = spawnTick.fighterId;
       fighter.health = spawnTick.health;
       fighter.currentHealth = fighter.health;
-      fighter.energy = spawnTick.energy;
-      fighter.currentEnergy = fighter.energy;
       fighter.positionX = spawnTick.positionX;
       fighter.positionY = spawnTick.positionY;
 

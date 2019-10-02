@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EmpoweredPixels.DataTransferObjects.Players;
+using EmpoweredPixels.DataTransferObjects.Roster;
 using EmpoweredPixels.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,9 +14,9 @@ namespace EmpoweredPixels.Controllers.Players
     }
 
     [HttpGet("experience")]
-    public ActionResult<PlayerExperienceDto> GetPlayerexperience()
+    public ActionResult<FighterExperienceDto> GetPlayerexperience()
     {
-      return Ok(new PlayerExperienceDto()
+      return Ok(new FighterExperienceDto()
       {
         Level = 1,
         CurrentExp = 0,
