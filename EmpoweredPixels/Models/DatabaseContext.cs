@@ -175,20 +175,33 @@ namespace EmpoweredPixels.Models
         e.Property(o => o.Options).HasConversion(
           o => JsonConvert.SerializeObject(o),
           o => JsonConvert.DeserializeObject<LeagueOptionsDto>(o));
-
+        e.HasQueryFilter(o => !o.IsDeactivated);
         e.HasData(
+          new League()
+          {
+            Id = 1,
+            IsDeactivated = true,
+          }, new League()
+          {
+            Id = 2,
+            IsDeactivated = true,
+          }, new League()
+          {
+            Id = 3,
+            IsDeactivated = true,
+          },
           new League()
           {
             Id = 4,
             Name = "league.lastmanstanding",
             Options = new LeagueOptionsDto()
             {
-              IntervalCron = "0 */3 * * *",
+              IntervalCron = "0 */2 * * *",
               MatchOptions = new MatchOptionsDto()
               {
                 ActionsPerRound = 2,
                 Battlefield = BattlefieldConstants.Plain,
-                Bounds = BoundsConstants.Small,
+                Bounds = BoundsConstants.Tiny,
                 IsPrivate = true,
                 MaxFightersPerUser = 1,
                 Features = new Guid[]
@@ -292,28 +305,28 @@ namespace EmpoweredPixels.Models
                 new RewardTier()
                 {
                   Id = 1,
-                  Points = 250,
+                  Points = 200,
                   RewardTrackId = 1,
                   RewardPoolId = EmpoweredChestRewardPool.Common,
                 },
                 new RewardTier()
                 {
                   Id = 2,
-                  Points = 500,
+                  Points = 300,
                   RewardTrackId = 1,
                   RewardPoolId = EmpoweredChestRewardPool.Rare,
                 },
                 new RewardTier()
                 {
                   Id = 3,
-                  Points = 1250,
+                  Points = 750,
                   RewardTrackId = 1,
                   RewardPoolId = EmpoweredChestRewardPool.Fabled,
                 },
                 new RewardTier()
                 {
                   Id = 4,
-                  Points = 5000,
+                  Points = 1000,
                   RewardTrackId = 1,
                   RewardPoolId = EmpoweredChestRewardPool.Mythic,
                 });

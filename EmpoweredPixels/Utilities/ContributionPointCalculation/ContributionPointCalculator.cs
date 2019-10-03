@@ -8,9 +8,9 @@ namespace EmpoweredPixels.Utilities.ContributionPointCalculation
     private const int PointsSecondPlace = 15;
     private const int PointsThirdPlace = 10;
 
-    private const int KillAssistPoints = 50;
-    private const int PercentageOfRoundsAlivePoints = 35;
-    private const int MatchParticipationPoints = 25;
+    private const int KillAssistPoints = 20;
+    private const int PercentageOfRoundsAlivePoints = 75;
+    private const int MatchParticipationPoints = 75;
 
     public int Calculate(FighterContribution contribution)
     {

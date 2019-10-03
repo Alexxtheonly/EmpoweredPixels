@@ -1,3 +1,4 @@
+import { LeagueSubscription } from './../+models/league-subscription';
 import { UserFeedbackService } from './../../+services/userfeedback.service';
 import { LeagueHighscoreOptions } from './../+models/league-highscore-options';
 import { RosterService } from './../../roster/+services/roster.service';
@@ -21,13 +22,16 @@ import { LeagueHighscore } from '../+models/league-highscore';
 export class LeagueDetailComponent implements OnInit
 {
   public leagueDetail: LeagueDetail;
-  public fighters: Observable<Fighter[]>;
+  public fighters: Fighter[];
 
   public options: PagingOptions = new PagingOptions();
   public loading: boolean;
   public page: Page<LeagueMatch>;
 
-  public fighterId: string;
+  public showModal: boolean;
+
+  public fighterId: string = null;
+  public subs: LeagueSubscription[];
 
   public highscores: LeagueHighscore[];
   public leagueHighscoreOptions: LeagueHighscoreOptions = new LeagueHighscoreOptions();
@@ -43,11 +47,26 @@ export class LeagueDetailComponent implements OnInit
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.loadLeague();
     this.loadLeagueMatches();
-    this.fighters = rosterService.getFighters();
+
+
+    rosterService.getFighters().subscribe(result =>
+    {
+      this.fighters = result;
+    });
+
+    this.loadUserSubs();
 
     this.leagueHighscoreOptions.lastMatches = 25;
     this.leagueHighscoreOptions.top = 5;
     this.loadLeagueHighscores();
+  }
+
+  private loadUserSubs()
+  {
+    this.leagueService.getUserSubscriptions(this.id).subscribe(result =>
+    {
+      this.subs = result;
+    });
   }
 
   ngOnInit()
@@ -56,34 +75,48 @@ export class LeagueDetailComponent implements OnInit
 
   public subscribe(): void
   {
-    if (!this.fighterId)
+    if (!this.fighterId && this.fighters.length > 1)
     {
+      this.showModal = true;
       return;
+    } else
+    {
+      this.fighterId = this.fighters[0].id;
     }
 
     this.leagueService.subscribeLeague(this.id, this.fighterId).subscribe(result =>
     {
       this.loadLeague();
+      this.loadUserSubs();
     }, error =>
     {
       this.userfeedbackService.error(error);
     });
+
+    this.fighterId = null;
   }
 
   public unsubscribe(): void
   {
-    if (!this.fighterId)
+    if (!this.fighterId && this.subs.length > 1)
     {
+      this.showModal = true;
       return;
+    } else
+    {
+      this.fighterId = this.subs[0].fighterId;
     }
 
     this.leagueService.unsubscribeLeague(this.id, this.fighterId).subscribe(result =>
     {
       this.loadLeague();
+      this.loadUserSubs();
     }, error =>
     {
       this.userfeedbackService.error(error);
     });
+
+    this.fighterId = null;
   }
 
   private loadLeague(): void

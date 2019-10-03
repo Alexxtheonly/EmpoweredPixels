@@ -54,7 +54,7 @@ export class LeagueService
 
   public getUserSubscriptions(leagueId: number): Observable<LeagueSubscription[]>
   {
-    return this.http.get<LeagueSubscription[]>(`api/league/${leagueId}/user`);
+    return this.http.get<LeagueSubscription[]>(`api/league/${leagueId}/subscriptions/user`);
   }
 
   public getLeagueMatches(leagueId: number, pagingOptions: PagingOptions): Observable<Page<LeagueMatch>>

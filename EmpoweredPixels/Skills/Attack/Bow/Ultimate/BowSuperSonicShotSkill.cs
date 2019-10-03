@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using SharpFightingEngine.Engines;
+using SharpFightingEngine.Engines.Ticks;
+using SharpFightingEngine.Fighters;
+using SharpFightingEngine.Skills.Extensions;
 
 namespace EmpoweredPixels.Skills.Attack.Bow.Ultimate
 {
@@ -8,10 +13,19 @@ namespace EmpoweredPixels.Skills.Attack.Bow.Ultimate
 
     public override string Name => "Super Sonic Shot";
 
-    public override int DamageLow => 35;
+    public override int DamageLow => 28;
 
-    public override int DamageHigh => 50;
+    public override int DamageHigh => 40;
 
     public override int Cooldown => 5;
+
+    public override IEnumerable<EngineTick> Perform(IFighterStats actor, IFighterStats target, EngineCalculationValues calculationValues)
+    {
+      return new List<EngineTick>
+      {
+        target.ApplyStun(actor, 20),
+        target.ApplyBleeding(actor, 100)
+      };
+    }
   }
 }

@@ -5,12 +5,12 @@
             style="position: absolute; right: 1px;">+{{ equipment?.enhancement }}</span>
         <img *ngIf="equipment" src="assets/images/equipment/{{ equipment.type }}.svg">
     </div>
-    <span *ngIf="equipment" style="position: absolute; margin-left: 1em;">{{ getTranslation() | translate }}</span>
+    <span *ngIf="equipment" style="position: absolute; margin-left: 0.5em;">{{ getTranslation() | translate }}</span>
     <span *ngIf="equipment" [ngStyle]="{'text-danger': isLevelTooHigh()}" class="badge"
-        style="margin-left: 1em;">{{ 'equipment.level' | translate}}
+        style="margin-left: 0.5em;">{{ 'equipment.level' | translate}}
         {{equipment.level}}</span>
-    <span *ngIf="equipment" [ngClass]="getCssRarity()" class="badge"
-        style="margin-left: 1em;">{{ 'rarity.' + equipment.rarity | translate }}</span>
+    <span *ngIf="equipment" [ngClass]="getCssRarity()"
+        class="badge">{{ 'rarity.' + equipment.rarity | translate }}</span>
 
     <span *ngIf="equipment?.armor" class="badge">{{ equipment.armor }} Armor</span>
     <span *ngIf="equipment?.power" class="badge">{{equipment.power }} Power</span>

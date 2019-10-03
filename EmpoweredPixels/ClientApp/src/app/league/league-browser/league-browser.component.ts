@@ -1,3 +1,4 @@
+import { LeagueSubscription } from './../+models/league-subscription';
 import { UserFeedbackService } from './../../+services/userfeedback.service';
 import { LeagueService } from './../+services/league.service';
 import { Observable, of } from 'rxjs';
@@ -33,10 +34,4 @@ export class LeagueBrowserComponent implements OnInit
   {
     return moment(date).fromNow();
   }
-
-  public async getLeagueWinner(leagueId: number): Promise<LeagueMatchWinner>
-  {
-    return await this.leagueService.getLastLeagueWinner(leagueId).toPromise();
-  }
-
 }

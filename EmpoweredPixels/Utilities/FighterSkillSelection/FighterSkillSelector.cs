@@ -10,8 +10,8 @@ using EmpoweredPixels.Skills.Attack.Bow.Ultimate;
 using EmpoweredPixels.Skills.Attack.Greatsword.Basic;
 using EmpoweredPixels.Skills.Attack.Greatsword.Strong;
 using EmpoweredPixels.Skills.Attack.Greatsword.Ultimate;
+using EmpoweredPixels.Skills.Heal;
 using SharpFightingEngine.Skills;
-using SharpFightingEngine.Skills.Heal;
 
 namespace EmpoweredPixels.Utilities.FighterSkillSelection
 {
