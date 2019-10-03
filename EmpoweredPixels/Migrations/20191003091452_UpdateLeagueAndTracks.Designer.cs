@@ -4,14 +4,16 @@ using EmpoweredPixels.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EmpoweredPixels.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20191003091452_UpdateLeagueAndTracks")]
+    partial class UpdateLeagueAndTracks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,21 +198,6 @@ namespace EmpoweredPixels.Migrations
                     b.ToTable("Leagues");
 
                     b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsDeactivated = true
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsDeactivated = true
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IsDeactivated = true
-                        },
                         new
                         {
                             Id = 4,

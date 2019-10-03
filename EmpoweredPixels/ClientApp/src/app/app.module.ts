@@ -49,6 +49,7 @@ import { FighterGearComponent } from './+components/fighter-gear/fighter-gear.co
 import { EnhancementComponent } from './inventory/enhancement/enhancement.component';
 import { EquipmentInventoryComponent } from './inventory/equipment-inventory/equipment-inventory.component';
 import { WebpackTranslateLoader } from './+helpers/webpack-translate-loader';
+import { UserLeagueSubscriptionsPipe } from './league/+pipes/user-league-subscriptions.pipe';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -91,7 +92,8 @@ export function HttpLoaderFactory(http: HttpClient)
     EquipmentComponent,
     FighterGearComponent,
     EnhancementComponent,
-    EquipmentInventoryComponent
+    EquipmentInventoryComponent,
+    UserLeagueSubscriptionsPipe
   ],
   imports: [
     MomentModule,

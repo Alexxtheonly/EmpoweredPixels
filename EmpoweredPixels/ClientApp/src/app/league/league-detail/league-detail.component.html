@@ -2,7 +2,8 @@
 
     <div class="row">
         <div class="col-sm-12 col-md-4">
-            <h1>{{ leagueDetail.name | translate }} <h5 class="text-muted">Next match: {{ leagueDetail.nextMatch | date:'short' }}
+            <h1>{{ leagueDetail.name | translate }} <h5 class="text-muted">Next match:
+                    {{ leagueDetail.nextMatch | date:'short' }}
                 </h5>
             </h1>
         </div>
@@ -48,7 +49,8 @@
                 </table>
                 <div style="text-align: center;">
                     <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
-                    <pagination-controls class="ep-pagination" (pageChange)="loadPage($event)" id="server"></pagination-controls>
+                    <pagination-controls class="ep-pagination" (pageChange)="loadPage($event)" id="server">
+                    </pagination-controls>
                 </div>
             </div>
         </div>
@@ -80,19 +82,14 @@
         </div>
 
         <div class="card card-body col-12 col-md-6">
-            <h4>Subscribers <span class="badge badge-light">{{ leagueDetail.subscriberCount }}</span></h4>
-
-            <h5>Manage subscriptions</h5>
-            <select class="form-control" [(ngModel)]="fighterId">
-                <option [ngValue]="fighter.id" *ngFor="let fighter of fighters | async">{{ fighter.name }}</option>
-            </select>
-
-            <div class="row" style="margin-top: 1em;">
-                <button class="btn btn-outline-success col-md-6" *ngIf="fighterId"
+            <span class="justify-content-end">
+                <button *ngIf="subs?.length===0" class="btn btn-outline-success"
                     (click)="subscribe()">Subscribe</button>
-                <button class="btn btn-outline-warning col-md-6" *ngIf="fighterId"
+                <button *ngIf="subs?.length>0" class="btn btn-outline-danger"
                     (click)="unsubscribe()">Unsubscribe</button>
-            </div>
+            </span>
+
+            <h4>Subscribers <span class="badge badge-light">{{ leagueDetail.subscriberCount }}</span></h4>
 
             <div class="table-responsive">
                 <table class="table table-sm">
@@ -110,6 +107,22 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-dialog-centered" [ngStyle]="{ display: showModal ? 'flex' : 'none' }">
+    <div class="modal-dialog modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title justify-content-center">Choose your fighter</h5>
+            <button type="button" class="close" (click)="showModal = false">
+                <span>&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <select class="form-control" [(ngModel)]="fighterId">
+                <option [ngValue]="fighter.id" *ngFor="let fighter of fighters">{{ fighter.name }}</option>
+            </select>
         </div>
     </div>
 </div>

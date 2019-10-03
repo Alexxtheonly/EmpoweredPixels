@@ -71,7 +71,6 @@ namespace EmpoweredPixels.Controllers.Leagues
       }
 
       var league = await Context.Leagues
-        .Where(o => !o.IsDeactivated)
         .FirstOrDefaultAsync(o => o.Id == dto.LeagueId);
 
       if (league == null)
@@ -119,7 +118,6 @@ namespace EmpoweredPixels.Controllers.Leagues
       }
 
       var league = await Context.Leagues
-        .Where(o => !o.IsDeactivated)
         .FirstOrDefaultAsync(o => o.Id == dto.LeagueId);
 
       if (league == null)

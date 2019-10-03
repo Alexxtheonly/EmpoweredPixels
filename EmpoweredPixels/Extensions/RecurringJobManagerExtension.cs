@@ -1,7 +1,9 @@
-﻿using EmpoweredPixels.Jobs;
+﻿using System.Linq;
+using EmpoweredPixels.Jobs;
 using EmpoweredPixels.Jobs.Rewards;
 using EmpoweredPixels.Models;
 using Hangfire;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmpoweredPixels.Extensions
 {
@@ -9,9 +11,18 @@ namespace EmpoweredPixels.Extensions
   {
     public static void AddLeagueJobs(this IRecurringJobManager jobManager, DatabaseContext context)
     {
-      foreach (var league in context.Leagues)
+      var leagues = context.Leagues
+        .IgnoreQueryFilters()
+        .ToList();
+
+      foreach (var league in leagues.Where(o => !o.IsDeactivated))
       {
         jobManager.AddOrUpdate<ILeagueJob>(league.Id.ToString(), o => o.RunMatchAsync(league.Id), league.Options.IntervalCron);
+      }
+
+      foreach (var league in leagues.Where(o => o.IsDeactivated))
+      {
+        jobManager.RemoveIfExists(league.Id.ToString());
       }
     }
 

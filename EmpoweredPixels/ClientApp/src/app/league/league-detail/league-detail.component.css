@@ -41,3 +41,10 @@
 .inline {
   display: inline-block;
 }
+
+.subscription-status-image {
+  height: 1em;
+  width: 1em;
+  margin-top: -4px;
+  margin-right: 0.25em;
+}
