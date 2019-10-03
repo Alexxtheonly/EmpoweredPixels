@@ -10,6 +10,8 @@ namespace EmpoweredPixels.DataTransferObjects.Matches
 
     public string Username { get; set; }
 
+    public long UserId { get; set; }
+
     public int Points { get; set; }
 
     public Guid? TeamId { get; set; }

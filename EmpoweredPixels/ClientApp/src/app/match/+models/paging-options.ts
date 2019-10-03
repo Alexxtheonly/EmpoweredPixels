@@ -1,10 +1,10 @@
 export class PagingOptions
 {
-    pageNumber = 1;
-    pageSize = 10;
-    stringFilters: StringFilter[] = new Array();
-    numberFilters: NumberFilter[] = new Array();
-    sortSetting?: SortSetting;
+    public pageNumber = 1;
+    public pageSize = 10;
+    public stringFilters: StringFilter[] = new Array();
+    public numberFilters: NumberFilter[] = new Array();
+    public sortSetting?: SortSetting;
 }
 
 export class StringFilter

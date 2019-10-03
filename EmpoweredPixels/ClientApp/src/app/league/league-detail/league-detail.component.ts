@@ -44,10 +44,11 @@ export class LeagueDetailComponent implements OnInit
     private rosterService: RosterService,
     private userfeedbackService: UserFeedbackService)
   {
+    this.options.pageSize = 5;
+
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.loadLeague();
     this.loadLeagueMatches();
-
 
     rosterService.getFighters().subscribe(result =>
     {

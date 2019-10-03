@@ -50,6 +50,7 @@ import { EnhancementComponent } from './inventory/enhancement/enhancement.compon
 import { EquipmentInventoryComponent } from './inventory/equipment-inventory/equipment-inventory.component';
 import { WebpackTranslateLoader } from './+helpers/webpack-translate-loader';
 import { UserLeagueSubscriptionsPipe } from './league/+pipes/user-league-subscriptions.pipe';
+import { ArmoryOverviewComponent } from './armory/armory-overview/armory-overview.component';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -93,7 +94,8 @@ export function HttpLoaderFactory(http: HttpClient)
     FighterGearComponent,
     EnhancementComponent,
     EquipmentInventoryComponent,
-    UserLeagueSubscriptionsPipe
+    UserLeagueSubscriptionsPipe,
+    ArmoryOverviewComponent
   ],
   imports: [
     MomentModule,
@@ -121,6 +123,7 @@ export function HttpLoaderFactory(http: HttpClient)
       { path: 'league/:id', component: LeagueDetailComponent, canActivate: [AuthGuardService] },
       { path: 'replay/:id', component: GameViewerComponent, canActivate: [AuthGuardService] },
       { path: 'rewards', component: RewardsComponent, canActivate: [AuthGuardService] },
+      { path: 'armory', component: ArmoryOverviewComponent, canActivate: [AuthGuardService] },
       { path: 'armory/:id', component: ArmoryComponent, canActivate: [AuthGuardService] },
       { path: 'equipment/enhance/:id', component: EnhancementComponent, canActivate: [AuthGuardService] },
     ]),

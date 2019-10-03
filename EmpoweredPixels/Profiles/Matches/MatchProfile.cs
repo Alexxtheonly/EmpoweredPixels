@@ -23,6 +23,7 @@ namespace EmpoweredPixels.Profiles.Matches
         .ForMember(o => o.FighterId, opt => opt.MapFrom(o => o.FighterId))
         .ForMember(o => o.FighterName, opt => opt.MapFrom(o => o.Fighter.Name))
         .ForMember(o => o.Username, opt => opt.MapFrom(o => o.Fighter.User.Name))
+        .ForMember(o => o.UserId, opt => opt.MapFrom(o => o.Fighter.UserId))
         .ForMember(o => o.RoundsAlive, opt => opt.MapFrom(o => o.RoundsAlive))
         .ForMember(o => o.TeamId, opt => opt.MapFrom(o => o.TeamId))
         .ForMember(o => o.TotalDamageDone, opt => opt.MapFrom(o => o.TotalDamageDone))

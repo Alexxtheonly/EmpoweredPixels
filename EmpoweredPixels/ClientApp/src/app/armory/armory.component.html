@@ -24,6 +24,14 @@
                             <td>{{ fighterArmory.fighter.level }}</td>
                         </tr>
                         <tr>
+                            <td>Offensive Rating</td>
+                            <td>{{ fighterArmory.offensiveRating }}</td>
+                        </tr>
+                        <tr>
+                            <td>Defensive Rating</td>
+                            <td>{{ fighterArmory.defensiveRating }}</td>
+                        </tr>
+                        <tr>
                             <td>Elo</td>
                             <td> <span>{{ fighterArmory.eloRating }} </span>
                                 <span *ngIf="fighterArmory.eloRatingChange > 0" class="text-success">+</span>

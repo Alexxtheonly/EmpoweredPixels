@@ -2,7 +2,7 @@
   <a *ngIf="fighterscores" class="btn btn-outline-secondary" [routerLink]="'/replay/' + id">Watch replay</a>
   <a *ngIf="fighterscores" class="btn btn-outline-info" [routerLink]="'/match/'+ id + '/log'">Log</a>
   <div class="table-responsive-lg">
-    <table class="table table-sm">
+    <table class="table table-sm clickable">
       <thead>
         <th>Team</th>
         <th>Points</th>
@@ -16,10 +16,11 @@
       </thead>
 
       <tbody *ngIf="fighterscores">
-        <tr *ngFor="let score of fighterscores">
+        <tr [ngClass]="{'text-warning': score.userId==userId}" *ngFor="let score of fighterscores"
+          [routerLink]="'/match/'+ id + '/log'" [queryParams]="{ filter: score.fighterId }">
           <td [ngStyle]="{ 'background-color': getTeamColor(score.teamId) }"></td>
           <td>{{ score.points }}</td>
-          <td><a [routerLink]="'/armory/' + score.fighterId">{{ score.fighterName }}</a></td>
+          <td>{{ score.fighterName }}</td>
           <td>{{ score.totalKills }}</td>
           <td>{{ score.totalDeaths }}</td>
           <td>{{ score.roundsAlive }}</td>

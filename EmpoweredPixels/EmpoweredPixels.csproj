@@ -12,7 +12,7 @@
 
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
-    <Version>0.14.2</Version>
+    <Version>0.14.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,11 +26,11 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
-    <PackageReference Include="SharpFightingEngine" Version="0.13.1" />
-    <PackageReference Include="SharpFightingEngine.Battlefields" Version="0.13.1" />
-    <PackageReference Include="SharpFightingEngine.Fighters" Version="0.13.1" />
-    <PackageReference Include="SharpFightingEngine.Items" Version="0.13.1" />
-    <PackageReference Include="SharpFightingEngine.Skills" Version="0.13.1" />
+    <PackageReference Include="SharpFightingEngine" Version="0.13.2" />
+    <PackageReference Include="SharpFightingEngine.Battlefields" Version="0.13.2" />
+    <PackageReference Include="SharpFightingEngine.Fighters" Version="0.13.2" />
+    <PackageReference Include="SharpFightingEngine.Items" Version="0.13.2" />
+    <PackageReference Include="SharpFightingEngine.Skills" Version="0.13.2" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" Condition="'$(Configuration)' == 'Debug'">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

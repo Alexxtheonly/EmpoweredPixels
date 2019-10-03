@@ -8,6 +8,8 @@ export class MatchFighterScore extends Tick
 
     public username: string;
 
+    public userId: number;
+
     public points: number;
 
     public teamId: string;

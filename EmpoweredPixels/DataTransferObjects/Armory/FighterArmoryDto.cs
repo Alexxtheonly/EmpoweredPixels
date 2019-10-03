@@ -9,6 +9,10 @@ namespace EmpoweredPixels.DataTransferObjects.Armory
 
     public string Username { get; set; }
 
+    public float OffensiveRating { get; set; }
+
+    public float DefensiveRating { get; set; }
+
     public int? EloRating { get; set; }
 
     public int? EloRatingChange { get; set; }
