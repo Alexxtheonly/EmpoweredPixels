@@ -1,8 +1,7 @@
+import { AuthService } from './../auth/auth.service';
 import { MatchFighterScore } from './+models/match-fighter-score';
-import { FighterName } from './+models/fighter-name';
 import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { RosterService } from './../roster/+services/roster.service';
-import { observable, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { MatchService } from './../match/+services/match.service';
 import { Component, OnInit } from '@angular/core';
@@ -20,10 +19,14 @@ export class MatchViewerComponent implements OnInit
 
   public id: string;
 
+  public userId: number;
+
   constructor(
     private matchService: MatchService,
-    private route: ActivatedRoute)
+    private route: ActivatedRoute,
+    authService: AuthService)
   {
+    this.userId = authService.getUserId();
   }
 
   ngOnInit()

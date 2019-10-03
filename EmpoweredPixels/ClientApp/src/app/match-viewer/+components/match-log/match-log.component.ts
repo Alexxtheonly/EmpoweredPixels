@@ -19,10 +19,20 @@ export class MatchLogComponent implements OnInit
 
   public fighters = new Map<string, GameFighter>();
 
+  public fightersSelection: GameFighter[];
+
+  public fighterId: string;
+
   constructor(
     private rosterService: RosterService,
     private matchService: MatchService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute)
+  {
+    route.queryParams.subscribe(result =>
+    {
+      this.fighterId = result['filter'];
+    });
+  }
 
   async ngOnInit()
   {
@@ -32,7 +42,7 @@ export class MatchLogComponent implements OnInit
     this.print = await this.getPrint();
   }
 
-  private async getPrint()
+  private async getPrint(): Promise<RoundTick[]>
   {
     const round0 = this.roundTicks.find(o => o.round === 0);
 
@@ -54,6 +64,8 @@ export class MatchLogComponent implements OnInit
 
       this.fighters.set(fighter.id, fighter);
     }
+
+    this.fightersSelection = [...this.fighters.values()];
 
     return this.roundTicks.filter(round => round.round > 0);
   }

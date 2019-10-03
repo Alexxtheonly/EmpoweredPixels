@@ -1,0 +1,24 @@
+<div class="table-responsive" *ngIf="page?.total > 0">
+    <table class="table table-sm clickable">
+        <thead>
+            <th>Level</th>
+            <th>Fightername</th>
+            <th>Username</th>
+        </thead>
+        <tbody>
+            <tr [ngClass]="{'text-warning': armory.userId==userId}"
+                *ngFor="let armory of page?.items | paginate: { id: 'server', itemsPerPage: options.pageSize, currentPage: options.pageNumber, totalItems: page.total }"
+                routerLink="/armory/{{ armory.fighterId }}">
+                <td>{{ armory.fighterLevel }}</td>
+                <td>{{ armory.fighterName }}</td>
+                <td class="text-muted">{{ armory.username }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="text-align: center;">
+    <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+    <pagination-controls class="ep-pagination" (pageChange)="loadPage($event)" id="server">
+    </pagination-controls>
+</div>

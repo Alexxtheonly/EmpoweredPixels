@@ -1,16 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using EmpoweredPixels.DataTransferObjects.Armory;
-using EmpoweredPixels.DataTransferObjects.Items;
 using EmpoweredPixels.DataTransferObjects.Roster;
 using EmpoweredPixels.Exceptions.Roster;
 using EmpoweredPixels.Models;
+using EmpoweredPixels.Utilities.FighterStatCalculation;
+using EmpoweredPixels.Utilities.Paging;
+using EmpoweredPixels.Utilities.Paging.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SharpFightingEngine.Fighters;
 
 namespace EmpoweredPixels.Controllers.Armory
 {
@@ -21,8 +24,18 @@ namespace EmpoweredPixels.Controllers.Armory
     {
     }
 
+    [HttpPost]
+    public async Task<ActionResult<Page<FighterArmoryViewDto>>> GetFighterArmoryPage([FromBody]PagingOptions options)
+    {
+      return Ok(await Context.Fighters
+        .Include(o => o.User)
+        .OrderByDescending(o => o.Level)
+        .ProjectTo<FighterArmoryViewDto>(Mapper.ConfigurationProvider)
+        .GetPage(options));
+    }
+
     [HttpGet("{id}")]
-    public async Task<ActionResult<FighterArmoryDto>> GetFighterArmory(Guid id)
+    public async Task<ActionResult<FighterArmoryDto>> GetFighterArmory(Guid id, [FromServices] IFighterStatCalculator fighterStatCalculator)
     {
       var fighter = await Context.Fighters
         .Include(o => o.User)
@@ -45,16 +58,20 @@ namespace EmpoweredPixels.Controllers.Armory
         .Where(o => o.FighterId == id)
         .SumAsync(o => o.TotalDeaths);
 
+      var calculatedStats = fighterStatCalculator.Calculate(fighter);
+
       var armory = new FighterArmoryDto()
       {
         UserId = fighter.UserId,
         Username = fighter.User.Name,
+        OffensiveRating = calculatedStats.OffensivePowerLevel(),
+        DefensiveRating = calculatedStats.DefensivePowerLevel(),
         EloRating = eloRating?.CurrentElo,
         EloRatingChange = eloRating?.CurrentElo - eloRating?.PreviousElo,
         LastEloRatingUpdate = eloRating?.LastUpdate,
         Kills = kills,
         Deaths = deaths,
-        KillDeathRatio = kills / (double)deaths,
+        KillDeathRatio = deaths == 0 ? kills : kills / (double)deaths,
         Fighter = Mapper.Map<FighterDto>(fighter),
       };
 

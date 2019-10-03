@@ -44,6 +44,7 @@
         </button>
         <div class="dropdown-menu" *ngIf="isExpanded">
           <a class="dropdown-item" [routerLink]='["/league"]' (click)="isExpanded=false">Leagues</a>
+          <a class="dropdown-item" [routerLink]='["/armory"]' (click)="isExpanded=false">Armory</a>
           <a class="dropdown-item" [routerLink]='["/roster"]' (click)="isExpanded=false">Roster</a>
           <a class="dropdown-item" [routerLink]='["/rewards"]' (click)="isExpanded=false">Rewards
             <span class="badge badge-primary" *ngIf="rewardCount>0">{{ rewardCount }}</span></a>
@@ -54,6 +55,7 @@
       <!-- large devices -->
       <div class="nav-panel ">
         <a [routerLink]='["/league"]'>Leagues</a>
+        <a [routerLink]='["/armory"]'>Armory</a>
         <a [routerLink]='["/roster"]'>Roster</a>
         <a [routerLink]='["/rewards"]'>Rewards
           <span class="badge badge-primary" *ngIf="rewardCount>0">{{ rewardCount }}</span></a>

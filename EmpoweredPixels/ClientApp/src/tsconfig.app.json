@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "module": "esNext",
+    "downlevelIteration": true,
     "types": []
   },
   "exclude": [

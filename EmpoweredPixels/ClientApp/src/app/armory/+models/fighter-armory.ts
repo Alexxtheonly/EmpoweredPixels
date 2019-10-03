@@ -3,6 +3,10 @@ export class FighterArmory
 {
     public username: string;
 
+    public offensiveRating: number;
+
+    public defensiveRating: number;
+
     public eloRating: number;
 
     public eloRatingChange: number;
