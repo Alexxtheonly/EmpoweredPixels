@@ -12,7 +12,7 @@
 
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
-    <Version>0.14.3</Version>
+    <Version>0.14.4</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,8 +39,12 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="Jobs\FighterLevel\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="Jobs\FighterLevel\**" />
+    <EmbeddedResource Remove="Jobs\FighterLevel\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="Jobs\FighterLevel\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
@@ -72,7 +76,6 @@
   <ItemGroup>
     <Folder Include="ClientApp\src\app\match-viewer\" />
     <Folder Include="DataTransferObjects\Players\" />
-    <Folder Include="Jobs\FighterLevel\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

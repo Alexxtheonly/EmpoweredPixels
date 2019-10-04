@@ -16,6 +16,8 @@ using EmpoweredPixels.Utilities.FighterEquipment;
 using EmpoweredPixels.Utilities.FighterProgress;
 using EmpoweredPixels.Utilities.FighterSkillSelection;
 using EmpoweredPixels.Utilities.FighterStatCalculation;
+using EmpoweredPixels.Utilities.LeageExecution;
+using EmpoweredPixels.Utilities.MatchExecution;
 using EmpoweredPixels.Utilities.RewardTrackCalculation;
 using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -66,6 +68,18 @@ namespace EmpoweredPixels
       services.AddTransient<IRewardTrackCalculator, RewardTrackCalculator>();
       services.AddSingleton<IEquipmentEnhancer, EquipmentEnhancer>();
       services.AddSingleton<IEquipmentSalvager, EquipmentSalvager>();
+      services.AddTransient<IMatchScoreProcessor, MatchScoreProcessor>();
+      services.AddSingleton<IMatchFighterPreparer, MatchFighterPreparer>();
+      services.AddTransient<IMatchContributionProcessor, MatchContributionProcessor>();
+      services.AddTransient<IMatchFighterEloProcessor, MatchFighterEloProcessor>();
+      services.AddTransient<IMatchFighterExperienceProcessor, MatchFighterExperienceProcessor>();
+      services.AddTransient<IMatchFighterRewardTrackProcessor, MatchFighterRewardTrackProcessor>();
+      services.AddTransient<IMatchLogProcessor, MatchLogProcessor>();
+      services.AddTransient<IMatchProcessor, MatchProcessor>();
+      services.AddTransient<IMatchPostprocessor, MatchPostprocessor>();
+      services.AddTransient<IMatchExecutor, MatchExecutor>();
+      services.AddSingleton<ILeagueDivisionDivider, LeagueDivisionDivider>();
+      services.AddTransient<ILeagueExecutor, LeagueExecutor>();
 
       services.AddDbContextPool<DatabaseContext>(o => o.ConfigureDatabase(Configuration));
       services.AddAutoMapper(typeof(Startup));

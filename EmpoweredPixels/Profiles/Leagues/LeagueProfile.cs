@@ -32,7 +32,8 @@ namespace EmpoweredPixels.Profiles.Leagues
         .ForMember(o => o.Started, opt => opt.MapFrom(o => o.Match.Started))
         .ForMember(o => o.HasWinner, opt => opt.MapFrom(o => GetWinningFighterResult(o) == null ? false : true))
         .ForMember(o => o.WinnerFighterName, opt => opt.MapFrom(o => GetWinningFighterResult(o) == null ? string.Empty : GetWinningFighterResult(o).Fighter.Name))
-        .ForMember(o => o.WinnerUser, opt => opt.MapFrom(o => GetWinningFighterResult(o) == null ? string.Empty : GetWinningFighterResult(o).Fighter.User.Name));
+        .ForMember(o => o.WinnerUser, opt => opt.MapFrom(o => GetWinningFighterResult(o) == null ? string.Empty : GetWinningFighterResult(o).Fighter.User.Name))
+        .ForMember(o => o.Division, opt => opt.MapFrom(o => o.Division));
 
       CreateMap<LeagueMatch, LeagueLastWinnerDto>()
         .ForMember(o => o.Username, opt => opt.MapFrom(o => GetWinningFighterResult(o) == null ? string.Empty : GetWinningFighterResult(o).Fighter.User.Name))
