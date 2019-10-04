@@ -15,5 +15,7 @@ namespace EmpoweredPixels.DataTransferObjects.Leagues
     public string WinnerFighterName { get; set; }
 
     public string WinnerUser { get; set; }
+
+    public int Division { get; set; }
   }
 }

@@ -27,6 +27,7 @@
                     <thead>
                         <tr>
                             <th>Started</th>
+                            <th>Division</th>
                             <th>Winner</th>
                             <th></th>
                         </tr>
@@ -35,6 +36,9 @@
                         <tr *ngFor="let match of page?.items | paginate: { id: 'server', itemsPerPage: options.pageSize, currentPage: options.pageNumber, totalItems: page.total }"
                             routerLink="/match/{{ match.matchId }}/result">
                             <td>{{ match.started | timeAgo }}</td>
+                            <td>
+                                {{ match.division }}
+                            </td>
                             <td>
                                 <span>{{ match.winnerFighterName }}</span>
                                 <span class="ml-2 text-muted">{{ match.winnerUser }}</span>

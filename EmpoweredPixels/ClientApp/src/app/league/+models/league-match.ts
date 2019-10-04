@@ -11,4 +11,6 @@ export class LeagueMatch
     public winnerFighterName: string;
 
     public winnerUser: string;
+
+    public division: number;
 }
