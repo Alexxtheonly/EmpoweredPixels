@@ -26,7 +26,7 @@ namespace EmpoweredPixels.DataTransferObjects.Matches
 
     public int TotalDeaths { get; set; }
 
-    public float TotalDistanceTraveled { get; set; }
+    public double TotalDistanceTraveled { get; set; }
 
     public int TotalRegeneratedHealth { get; set; }
 
