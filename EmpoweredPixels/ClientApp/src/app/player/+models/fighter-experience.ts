@@ -1,4 +1,4 @@
-export class PlayerExperience
+export class FighterExperience
 {
     public level: number;
 

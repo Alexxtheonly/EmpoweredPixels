@@ -4,8 +4,8 @@
   {
     public int Level { get; set; }
 
-    public int CurrentExp { get; set; }
+    public long CurrentExp { get; set; }
 
-    public int LevelExp { get; set; }
+    public long LevelExp { get; set; }
   }
 }

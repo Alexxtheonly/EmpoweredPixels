@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PlayerExperience } from '../+models/player-experience';
+import { FighterExperience } from '../+models/fighter-experience';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,8 @@ export class PlayerService
 
   constructor(private http: HttpClient) { }
 
-  public getPlayerExperience(): Observable<PlayerExperience>
+  public getPlayerExperience(): Observable<FighterExperience>
   {
-    return this.http.get<PlayerExperience>('api/player/experience');
+    return this.http.get<FighterExperience>('api/player/experience');
   }
 }

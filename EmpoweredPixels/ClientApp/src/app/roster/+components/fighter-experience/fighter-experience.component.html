@@ -1,0 +1,13 @@
+<div class="progress">
+    <div class="progress-bar text-dark bg-success" [ngStyle]="{ width: percent + '%' }">
+        {{ percent | number }} %
+    </div>
+</div>
+<div class="float-left exp-text">
+    <span>{{ 'roster.level' | translate }} {{ experience?.level }}</span>
+</div>
+<div class="float-right  exp-text">
+    <span><span class="text-muted mr-2">{{ experience?.levelExp - experience?.currentExp }} exp
+            to</span>
+        {{ 'roster.level' | translate }} {{ experience?.level + 1 }}</span>
+</div>

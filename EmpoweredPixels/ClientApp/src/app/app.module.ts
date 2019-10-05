@@ -51,6 +51,8 @@ import { EquipmentInventoryComponent } from './inventory/equipment-inventory/equ
 import { WebpackTranslateLoader } from './+helpers/webpack-translate-loader';
 import { UserLeagueSubscriptionsPipe } from './league/+pipes/user-league-subscriptions.pipe';
 import { ArmoryOverviewComponent } from './armory/armory-overview/armory-overview.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { FighterExperienceComponent } from './roster/+components/fighter-experience/fighter-experience.component';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -95,7 +97,9 @@ export function HttpLoaderFactory(http: HttpClient)
     EnhancementComponent,
     EquipmentInventoryComponent,
     UserLeagueSubscriptionsPipe,
-    ArmoryOverviewComponent
+    ArmoryOverviewComponent,
+    DashboardComponent,
+    FighterExperienceComponent
   ],
   imports: [
     MomentModule,
@@ -110,7 +114,7 @@ export function HttpLoaderFactory(http: HttpClient)
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     RouterModule.forRoot([
-      { path: '', component: RosterComponent, canActivate: [AuthGuardService] },
+      { path: '', component: DashboardComponent, canActivate: [AuthGuardService] },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'roster', component: RosterComponent, canActivate: [AuthGuardService] },

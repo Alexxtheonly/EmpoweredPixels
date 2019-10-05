@@ -245,5 +245,35 @@ namespace EmpoweredPixels.Controllers.Roster
 
       return Ok();
     }
+
+    [HttpGet("{id}/experience")]
+    public async Task<ActionResult<FighterExperienceDto>> GetExperience(Guid id, [FromServices] IFighterExperienceCalculator fighterExperienceCalculator)
+    {
+      var userId = User.Claims.GetUserId();
+      if (userId == null)
+      {
+        return Forbid();
+      }
+
+      var fighterExperience = await Context.FighterExperiences.FirstOrDefaultAsync(o => o.FighterId == id);
+      if (fighterExperience == null)
+      {
+        return Ok(new FighterExperienceDto()
+        {
+          Level = 1,
+          CurrentExp = 0,
+          LevelExp = fighterExperienceCalculator.GetNeededExperience(1),
+        });
+      }
+
+      var level = fighterExperienceCalculator.GetLevel(fighterExperience);
+
+      return Ok(new FighterExperienceDto()
+      {
+        Level = level.Level,
+        CurrentExp = level.Experience,
+        LevelExp = level.RequiredExperience,
+      });
+    }
   }
 }

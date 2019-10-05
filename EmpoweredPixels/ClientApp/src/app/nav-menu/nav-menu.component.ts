@@ -1,4 +1,4 @@
-import { PlayerExperience } from './../player/+models/player-experience';
+import { FighterExperience } from '../player/+models/fighter-experience';
 import { RewardService } from './../rewards/+services/reward.service';
 import { Component, OnInit } from '@angular/core';
 import { CurrencyBalance } from '../inventory/+models/currency-balance';
