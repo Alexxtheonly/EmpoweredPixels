@@ -3,8 +3,11 @@
         <a class="btn btn-outline-danger" (click)="deleteFighter(fighter)">{{ 'roster.delete' | translate }}</a>
     </div>
     <div class="card card-body col-12">
-        <h3 class="card-title">{{fighter?.name}} <span class="badge">{{ 'roster.level' | translate }}
-                {{ fighter?.level }}</span></h3>
+        <h3 class="card-title">{{fighter?.name}}</h3>
+        <div class="card card-body col-12">
+            <app-fighter-experience [fighterId]="fighter?.id"> </app-fighter-experience>
+        </div>
+
         <div class="card card-body">
             <h5 class="card-title">{{ 'roster.equipment' | translate }}</h5>
             <app-fighter-gear [fighter]="fighter" (fighterChanged)="updateFighter($event)"

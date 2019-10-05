@@ -138,3 +138,7 @@ table {
   color: red !important;
   border-color: red !important;
 }
+
+.router-link-active {
+  color: rgb(255, 191, 37) !important;
+}

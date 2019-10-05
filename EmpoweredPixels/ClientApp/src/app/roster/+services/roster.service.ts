@@ -1,3 +1,4 @@
+import { FighterExperience } from '../../player/+models/fighter-experience';
 import { FighterName } from './../../match-viewer/+models/fighter-name';
 import { Fighter } from './../+models/fighter';
 import { HttpClient } from '@angular/common/http';
@@ -47,5 +48,10 @@ export class RosterService
   public unequip(id: string, equipment: Equipment): Observable<Fighter>
   {
     return this.http.post<Fighter>(`api/fighter/${id}/unequip`, equipment);
+  }
+
+  public getExperience(id: string): Observable<FighterExperience>
+  {
+    return this.http.get<FighterExperience>(`api/fighter/${id}/experience`);
   }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EmpoweredPixels.Models;
@@ -38,7 +39,7 @@ namespace EmpoweredPixels.Utilities.MatchExecution
           TotalDamageDone = fighterScore.TotalDamageDone,
           TotalDamageTaken = fighterScore.TotalDamageTaken,
           TotalDeaths = fighterScore.TotalDeaths,
-          TotalDistanceTraveled = fighterScore.TotalDistanceTraveled,
+          TotalDistanceTraveled = Math.Round(fighterScore.TotalDistanceTraveled, 2),
           TotalKills = fighterScore.TotalKills,
         });
       }

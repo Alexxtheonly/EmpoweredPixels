@@ -1,66 +1,27 @@
 <header>
-  <!-- 
-    
-    <nav class='navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3'>
-      <div class="container">
-        <a class="navbar-brand" [routerLink]='["/"]'>EmpoweredPixels</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
-        aria-label="Toggle navigation" [attr.aria-expanded]="isExpanded" (click)="toggle()">
+  <div class="container">
+    <nav class="navbar navbar-expand-sm navbar-light">
+      <button class="navbar-toggler" style="background-image: linear-gradient(135deg, #b6cfff2b 40%, #453ace24 100%);"
+        type="button" data-toggle="collapse" data-target="#navbar">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]='{"show": isExpanded}'>
-        <ul class="navbar-nav flex-grow">
-          <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="nav-link " [routerLink]='["/league"]'>Leagues</a>
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+            <a class="nav-link" [routerLink]='["/league"]' routerLinkActive="router-link-active">League</a>
           </li>
-
-          <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="nav-link " [routerLink]='["/match/create"]'>Create match</a>
+          <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+            <a class="nav-link" [routerLink]='["/armory"]' routerLinkActive="router-link-active">Armory</a>
           </li>
-          
-          <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="nav-link " [routerLink]='["/roster"]'>Roster</a>
+          <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+            <a class="nav-link" [routerLink]='["/roster"]' routerLinkActive="router-link-active">Roster</a>
           </li>
-          
-          <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="nav-link " [routerLink]='["/rewards"]'>Rewards
-              <span class="badge badge-primary" *ngIf="rewardCount>0">{{ rewardCount }}</span></a>
-            </li>
-          </ul>
-        </div>
+          <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+            <a class="nav-link" [routerLink]='["/rewards"]' routerLinkActive="router-link-active">Rewards<span
+                class="badge badge-primary" *ngIf="rewardCount>0">{{ rewardCount }}</span></a>
+          </li>
+        </ul>
       </div>
     </nav>
-  -->
-
-
-  <nav>
-    <div class="container">
-      <div #ref class="dropdown " style="display: inline-block; height:100%;">
-
-        <!-- Small devices -->
-        <button class="btn btn-primary dropdown-toggle"
-          style="vertical-align: middle; background:transparent; height:100%;" (click)="toggle()" type="button">
-          Menu
-        </button>
-        <div class="dropdown-menu" *ngIf="isExpanded">
-          <a class="dropdown-item" [routerLink]='["/league"]' (click)="isExpanded=false">Leagues</a>
-          <a class="dropdown-item" [routerLink]='["/armory"]' (click)="isExpanded=false">Armory</a>
-          <a class="dropdown-item" [routerLink]='["/roster"]' (click)="isExpanded=false">Roster</a>
-          <a class="dropdown-item" [routerLink]='["/rewards"]' (click)="isExpanded=false">Rewards
-            <span class="badge badge-primary" *ngIf="rewardCount>0">{{ rewardCount }}</span></a>
-        </div>
-      </div>
-
-
-      <!-- large devices -->
-      <div class="nav-panel ">
-        <a [routerLink]='["/league"]'>Leagues</a>
-        <a [routerLink]='["/armory"]'>Armory</a>
-        <a [routerLink]='["/roster"]'>Roster</a>
-        <a [routerLink]='["/rewards"]'>Rewards
-          <span class="badge badge-primary" *ngIf="rewardCount>0">{{ rewardCount }}</span></a>
-      </div>
-    </div>
-  </nav>
-
+  </div>
 </header>
