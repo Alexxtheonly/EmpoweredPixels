@@ -50,6 +50,9 @@
         <!--Fighter died tick-->
         <span *ngIf="tick.died"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> died</span>
 
+        <span *ngIf="tick.spawned"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> spawned at
+          {{ tick.positionX }}, {{ tick.positionY }}</span>
+
         <!--Fighter healed tick-->
         <span *ngIf="tick.appliedHealing || tick.potentialHealing"><span
             class="font-weight-bold">{{ getName(tick.fighterId) }}</span>

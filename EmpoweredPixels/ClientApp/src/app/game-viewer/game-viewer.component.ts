@@ -27,6 +27,8 @@ export class GameViewerComponent implements OnInit
 
   public deadCount = 0;
 
+  public round: number;
+
   public pause: boolean;
 
   public scale = 1;
@@ -92,6 +94,7 @@ export class GameViewerComponent implements OnInit
     }
 
     this.deadCount = 0;
+    this.round = undefined;
 
     const round0 = this.roundTicks.find(o => o.round === 0);
     round0.ticks.forEach(o =>
@@ -120,6 +123,7 @@ export class GameViewerComponent implements OnInit
 
     for (const round of rounds)
     {
+      this.round = round.round;
       for (const tick of round.ticks)
       {
         if (await this.handleTick(tick))
@@ -178,6 +182,11 @@ export class GameViewerComponent implements OnInit
     {
       this.handleFighterHeal(tick as FighterHealTick);
     }
+
+    if (tick.spawned)
+    {
+      this.handleFighterSpawn(tick as FighterSpawnedTick);
+    }
   }
 
   private delay(ms: number): Promise<any>
@@ -227,6 +236,21 @@ export class GameViewerComponent implements OnInit
     const fighter = this.fighters.get(move.fighterId);
     fighter.positionX = move.nextX;
     fighter.positionY = move.nextY;
+
+    if (fighter.id === this.followFighterId)
+    {
+      this.scrollTo(fighter.id);
+    }
+  }
+
+  private handleFighterSpawn(spawn: FighterSpawnedTick)
+  {
+    const fighter = this.fighters.get(spawn.fighterId);
+    fighter.currentHealth = spawn.health;
+    fighter.positionX = spawn.positionX;
+    fighter.positionY = spawn.positionY;
+    fighter.isDead = false;
+    this.deadCount--;
 
     if (fighter.id === this.followFighterId)
     {

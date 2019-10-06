@@ -35,10 +35,12 @@ namespace EmpoweredPixels.Factories.Matches
     private readonly IEnumerable<IWinCondition> winConditions = new IWinCondition[]
     {
       new LastManStandingWinCondition(),
+      new FiftyRoundsWinCondition(),
     };
 
     private readonly IEnumerable<IStaleCondition> staleConditions = new IStaleCondition[]
     {
+      new NoneStaleCondition(),
       new NoWinnerCanBeDeterminedStaleCondition(),
     };
 
@@ -47,6 +49,7 @@ namespace EmpoweredPixels.Factories.Matches
       new FeatureApplyCondition(),
       new FeatureApplyBuff(),
       new FeatureSacrificeToEntity(),
+      new FeatureReviveDeadFighters(),
     };
 
     private readonly IEnumerable<IFighterPositionGenerator> fighterPositionGenerators = new IFighterPositionGenerator[]

@@ -1,6 +1,8 @@
 <div class="container" *ngIf="matchFighterScores$ | async as fighterscores">
-  <a *ngIf="fighterscores" class="btn btn-outline-secondary" [routerLink]="'/replay/' + id">Watch replay</a>
-  <a *ngIf="fighterscores" class="btn btn-outline-info" [routerLink]="'/match/'+ id + '/log'">Log</a>
+  <div class="btn-group col-lg-3 col-sm-6">
+    <a *ngIf="fighterscores" class="btn btn-outline-secondary" [routerLink]="'/replay/' + id">Watch replay</a>
+    <a *ngIf="fighterscores" class="btn btn-outline-info" [routerLink]="'/match/'+ id + '/log'">Log</a>
+  </div>
   <div class="table-responsive-lg">
     <table class="table table-sm clickable">
       <thead>
