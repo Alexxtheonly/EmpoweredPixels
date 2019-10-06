@@ -29,7 +29,9 @@ namespace EmpoweredPixels.Controllers.Armory
     {
       return Ok(await Context.Fighters
         .Include(o => o.User)
+        .Include(o => o.EloRating)
         .OrderByDescending(o => o.Level)
+        .ThenByDescending(o => o.EloRating.CurrentElo)
         .ProjectTo<FighterArmoryViewDto>(Mapper.ConfigurationProvider)
         .GetPage(options));
     }
