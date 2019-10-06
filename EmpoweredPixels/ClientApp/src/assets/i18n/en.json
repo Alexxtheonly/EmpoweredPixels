@@ -57,7 +57,10 @@
         "fb6d6951-7630-4ad8-a005-df72bc02c3bf": "Bow"
     },
     "league": {
-        "lastmanstanding": "Last Man Standing"
+        "lastmanstanding": "Last Fighter Standing",
+        "lastmanstandingDescription": "The last surviving fighter wins the match.",
+        "deathmatch": "Deathmatch",
+        "deathmatchDescription": "The fighter who has the most kills after 50 rounds wins the match."
     },
     "roster": {
         "createNewFighter": "Create new fighter",

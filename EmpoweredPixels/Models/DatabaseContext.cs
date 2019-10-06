@@ -201,7 +201,7 @@ namespace EmpoweredPixels.Models
               {
                 ActionsPerRound = 2,
                 Battlefield = BattlefieldConstants.Plain,
-                Bounds = BoundsConstants.Tiny,
+                Bounds = BoundsConstants.Small,
                 IsPrivate = true,
                 MaxFightersPerUser = 1,
                 Features = new Guid[]
@@ -215,6 +215,33 @@ namespace EmpoweredPixels.Models
                 WinCondition = WinConditionConstants.LastManStanding,
               }
             }
+          },
+          new League()
+          {
+            Id = 5,
+            Name = "league.deathmatch",
+            Options = new LeagueOptionsDto()
+            {
+              IntervalCron = "0 */5 * * *",
+              MatchOptions = new MatchOptionsDto()
+              {
+                ActionsPerRound = 2,
+                Battlefield = BattlefieldConstants.Plain,
+                Bounds = BoundsConstants.Small,
+                IsPrivate = true,
+                MaxFightersPerUser = 1,
+                Features = new Guid[]
+                {
+                  FeatureConstants.ApplyBuff,
+                  FeatureConstants.ApplyCondition,
+                  FeatureConstants.ReviveDeadFighters,
+                },
+                MoveOrder = MoveOrderConstants.AllRandom,
+                PositionGenerator = FighterPositionGeneratorConstants.AllRandom,
+                StaleCondition = StaleConditionConstants.None,
+                WinCondition = WinConditionConstants.FiftyRounds,
+              },
+            },
           });
       });
 

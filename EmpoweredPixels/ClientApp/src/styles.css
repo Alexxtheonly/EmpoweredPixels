@@ -142,3 +142,7 @@ table {
 .router-link-active {
   color: rgb(255, 191, 37) !important;
 }
+
+.jumbotron {
+  background: rgba(1, 7, 59, 0.2);
+}

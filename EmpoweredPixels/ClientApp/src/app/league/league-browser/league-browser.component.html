@@ -7,6 +7,8 @@
                         {{ getDiff(league.nextMatch) }}</span>
                 </h5>
 
+                <div class="jumbotron">{{ league.name + 'Description' | translate }}</div>
+
                 <ul class="list-group list-group-flush">
                     <div *ngVar="(league.id | userLeagueSubscriptions | async) as subs">
                         <li class="list-group-item" *ngIf="subs?.length===0">

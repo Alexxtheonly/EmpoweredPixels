@@ -12,7 +12,7 @@ namespace EmpoweredPixels.Utilities.LeageExecution
     private const int MinSize = 3;
     private const int MaxSize = 20;
 
-    private const int PowerlevelDifferenceSplit = 60;
+    private const int PowerlevelDifferenceSplit = 120;
 
     private readonly IFighterStatCalculator fighterStatCalculator;
 
