@@ -55,7 +55,7 @@ namespace EmpoweredPixels.Utilities.MatchExecution
 
       if (ProcessFighterExperience)
       {
-        await fighterExperienceProcessor.Process(result.Contributions);
+        await fighterExperienceProcessor.Process(match, result.Contributions);
       }
 
       if (ProcessFighterElo)
