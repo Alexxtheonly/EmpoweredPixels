@@ -48,10 +48,10 @@ namespace EmpoweredPixels.Utilities.FighterProgress
       return fighterLevel;
     }
 
-    public void AddExperience(FighterExperience fighterExperience, FighterContribution contribution)
+    public void AddExperience(FighterExperience fighterExperience, FighterContribution contribution, double mutliplicator)
     {
       var experience = contributionPointCalculator.Calculate(contribution);
-      fighterExperience.Points += experience;
+      fighterExperience.Points += experience + (int)(experience * mutliplicator);
       fighterExperience.LastUpdate = dateTimeProvider.Now;
     }
 

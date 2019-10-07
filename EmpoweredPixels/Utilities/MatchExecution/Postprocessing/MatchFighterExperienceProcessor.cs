@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using EmpoweredPixels.Models;
+using EmpoweredPixels.Models.Matches;
 using EmpoweredPixels.Models.Roster;
 using EmpoweredPixels.Utilities.FighterProgress;
 using Microsoft.EntityFrameworkCore;
@@ -24,8 +27,10 @@ namespace EmpoweredPixels.Utilities.MatchExecution
       this.fighterLevelUpHandler = fighterLevelUpHandler;
     }
 
-    public async Task Process(IEnumerable<FighterContribution> contributions)
+    public async Task Process(Match match, IEnumerable<FighterContribution> contributions)
     {
+      var maxLevelInMatch = match.Registrations.Max(o => o.Fighter.Level);
+
       foreach (var contribution in contributions)
       {
         var fighter = await databaseContext.Fighters
@@ -50,7 +55,14 @@ namespace EmpoweredPixels.Utilities.MatchExecution
         }
 
         var levelBefore = fighterExperienceCalculator.GetLevel(fighterExperience);
-        fighterExperienceCalculator.AddExperience(fighterExperience, contribution);
+
+        // to boost low level fighters facing high level fighters we use this multiplicator to give them more experience
+        // based on level difference
+        var levelDifference = maxLevelInMatch - fighter.Level;
+
+        // only boost if difference is > 2 levels
+        var multiplicator = Math.Max(levelDifference - 2, 0);
+        fighterExperienceCalculator.AddExperience(fighterExperience, contribution, multiplicator);
         var levelAfter = fighterExperienceCalculator.GetLevel(fighterExperience);
 
         if (levelBefore.Level < levelAfter.Level)

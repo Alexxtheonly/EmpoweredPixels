@@ -5,7 +5,7 @@ namespace EmpoweredPixels.Utilities.FighterProgress
 {
   public interface IFighterExperienceCalculator
   {
-    void AddExperience(FighterExperience fighterExperience, FighterContribution contribution);
+    void AddExperience(FighterExperience fighterExperience, FighterContribution contribution, double mutliplicator);
 
     FighterLevel GetLevel(FighterExperience fighterExperience);
 

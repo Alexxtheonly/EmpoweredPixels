@@ -25,40 +25,46 @@ namespace EmpoweredPixels.Utilities.LeageExecution
     {
       var sortedByPowerlevel = subscriptions
         .Select(o => new { Subscription = o, Powerlevel = CalculatePowerlevel(o.Fighter) })
-        .OrderByDescending(o => o.Powerlevel)
+        .OrderBy(o => o.Powerlevel)
         .ToList();
 
+      var groups = new List<Group<int, LeagueSubscription>>();
       var group = new Group<int, LeagueSubscription>();
-      int? maxPowerlevelInGroup = null;
+      int? minPowerlevelInGroup = null;
 
-      int division = 1;
       for (int i = 0; i < sortedByPowerlevel.Count; i++)
       {
         var sub = sortedByPowerlevel[i];
 
-        if (maxPowerlevelInGroup == null)
+        if (minPowerlevelInGroup == null)
         {
-          maxPowerlevelInGroup = sub.Powerlevel;
+          minPowerlevelInGroup = sub.Powerlevel;
         }
 
-        bool powerlevelDifferenceTooBig = (maxPowerlevelInGroup - sub.Powerlevel) > PowerlevelDifferenceSplit;
+        bool powerlevelDifferenceTooBig = (sub.Powerlevel - minPowerlevelInGroup) > PowerlevelDifferenceSplit;
         bool canBeDivided = (group.Count >= MinSize && powerlevelDifferenceTooBig) || group.Count >= MaxSize;
         bool remainingAreValidDivisionSize = (sortedByPowerlevel.Count - i) >= MinSize;
 
         if (canBeDivided && remainingAreValidDivisionSize)
         {
-          group.Key = division++;
-          yield return group;
+          groups.Add(group);
 
           group = new Group<int, LeagueSubscription>();
-          maxPowerlevelInGroup = null;
+          minPowerlevelInGroup = null;
         }
 
         group.Add(sub.Subscription);
       }
 
-      group.Key = division;
-      yield return group;
+      groups.Add(group);
+
+      var divisionNumber = groups.Count;
+      foreach (var division in groups)
+      {
+        division.Key = divisionNumber--;
+      }
+
+      return groups;
     }
 
     private int CalculatePowerlevel(Fighter fighter)
