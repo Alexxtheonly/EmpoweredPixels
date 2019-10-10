@@ -3,7 +3,7 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet Condition="'$(Configuration)' == 'Debug'">./../stylecop/ruleset.ruleset</CodeAnalysisRuleSet>
 
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
