@@ -25,5 +25,9 @@ namespace EmpoweredPixels.Utilities.EquipmentGeneration
     Equipment GenerateWeaponBow(int level, ItemRarity rarity, long userId);
 
     Equipment GenerateWeaponGreatsword(int level, ItemRarity rarity, long userId);
+
+    Equipment GenerateWeaponDagger(int level, ItemRarity rarity, long userId);
+
+    Equipment GenerateWeaponGlaive(int level, ItemRarity rarity, long userId);
   }
 }

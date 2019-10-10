@@ -10,6 +10,8 @@ namespace EmpoweredPixels.Skills.Attack.Bow
     /// </summary>
     public override float Range => 27F;
 
+    public override bool CanBeReflected => true;
+
     public override Guid WeaponType => EquipmentConstants.WeaponBow;
   }
 }

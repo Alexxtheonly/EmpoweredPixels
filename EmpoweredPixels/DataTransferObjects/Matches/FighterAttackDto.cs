@@ -6,6 +6,8 @@ namespace EmpoweredPixels.DataTransferObjects.Matches
   {
     public Guid TargetId { get; set; }
 
+    public Guid OriginalTargetId { get; set; }
+
     public Guid FighterId { get; set; }
 
     public Guid SkillId { get; set; }
@@ -21,5 +23,7 @@ namespace EmpoweredPixels.DataTransferObjects.Matches
     public bool OutOfRange { get; set; }
 
     public bool InsufficientEnergy { get; set; }
+
+    public bool Reflected { get; set; }
   }
 }

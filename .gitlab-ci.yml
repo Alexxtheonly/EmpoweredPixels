@@ -18,7 +18,7 @@ build:
  image: mjibrandl/dotnetcore-angular:latest
  script: 
    - dotnet restore
-   - dotnet test 
+   - dotnet test ./EmpoweredPixels.Test/EmpoweredPixels.Test.csproj
 
 push-docker-internal:
  stage: Docker_Internal

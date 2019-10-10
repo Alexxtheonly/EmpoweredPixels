@@ -27,7 +27,17 @@
         "73197285-cc39-4d73-918a-cab70ef67849": "Powerful Strike",
         "5da1fdf2-3060-4c18-8613-162c8df475d2": "Vortex",
         "954d02ec-92c2-4b0d-9a2f-ea3bf4704fd7": "Eviscerating Cut",
-        "90242095-9466-4a71-829a-c1bf968839e6": "Healing Hand"
+        "90242095-9466-4a71-829a-c1bf968839e6": "Healing Hand",
+        "8610f19b-2b90-472d-bda8-519748e6dbc6": "Slice",
+        "d269bb3a-d3ae-4a42-a1dc-28f557b78f4d": "Backstab",
+        "8e2cb0c8-eb08-42a3-aba8-f26c9f2eb418": "Jagged Blade",
+        "3e466473-3a60-4ea8-ab43-a7c9edf97022": "Shadowstep",
+        "44784ee9-f469-4350-8f24-d592d7318b4f": "Venomous Heartseeker",
+        "f0ac2cba-fbcb-4b37-a564-1f333ce58c74": "Swing",
+        "8c15fc1f-052e-4b4d-9195-d62c9e2cc5f7": "Flying Dragon",
+        "2fc48c91-b48f-4df1-845b-cf8e669cabbd": "Pierce",
+        "7718f8b4-ccb8-4f95-89a8-f3727a7f59d6": "Whirlwind",
+        "8ef3017a-40c6-47c0-af0e-88a4fbbba72e": "Multi Strike"
     },
     "conditions": {
         "f84c756e-ce75-4f65-9724-2f289231ec1b": "Bleed",
@@ -35,7 +45,11 @@
         "7233ece4-999d-45e5-8ff8-7d9ab4587dc9": "Cripple",
         "8ddd3b8e-25a4-46c2-bcce-031c21cb396e": "Freeze",
         "2e2767f9-a7d9-4d67-b0fc-d6a1b6f258c8": "Poision",
-        "09fbd6b5-3f0d-4de5-b40b-d7d9c7aa7a92": "Stun"
+        "09fbd6b5-3f0d-4de5-b40b-d7d9c7aa7a92": "Stun",
+        "2dc8cf12-ac65-4cb1-86ac-daf83132accf": "Vulnerability"
+    },
+    "buffs": {
+        "97a1476f-2669-45e9-b511-3f5caca1742e": "Reflect"
     },
     "rarity": {
         "0": "Basic",
@@ -54,7 +68,9 @@
         "922b5587-94e0-4fd1-a896-8e3f64c71304": "Armor Legs",
         "724bc2a7-712a-45c5-8c01-bb9c5582e33b": "Armor Shoes",
         "96753286-fd45-489e-a3fb-25dc758f94f7": "Greatsword",
-        "fb6d6951-7630-4ad8-a005-df72bc02c3bf": "Bow"
+        "fb6d6951-7630-4ad8-a005-df72bc02c3bf": "Bow",
+        "4dd298a2-2405-47cf-b554-6e3db9d57920": "Dagger",
+        "c615e5ec-88c2-4ebc-b338-c71baa24d5c6": "Gaive"
     },
     "league": {
         "lastmanstanding": "Last Fighter Standing",

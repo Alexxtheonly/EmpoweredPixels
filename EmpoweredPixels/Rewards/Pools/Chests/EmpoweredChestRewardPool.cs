@@ -37,6 +37,8 @@ namespace EmpoweredPixels.Rewards.Pools.Chests
       [EquipmentConstants.ArmorShoes] = new PoolItemOption() { QuantityMin = 1, QuantityMax = 1 },
       [EquipmentConstants.WeaponGreatsword] = new PoolItemOption() { QuantityMin = 1, QuantityMax = 1 },
       [EquipmentConstants.WeaponBow] = new PoolItemOption() { QuantityMin = 1, QuantityMax = 1 },
+      [EquipmentConstants.WeaponDagger] = new PoolItemOption() { QuantityMin = 1, QuantityMax = 1 },
+      [EquipmentConstants.WeaponGlaive] = new PoolItemOption() { QuantityMin = 1, QuantityMax = 1 },
     };
 
     public override IEnumerable<Equipment> Claim(Reward reward)

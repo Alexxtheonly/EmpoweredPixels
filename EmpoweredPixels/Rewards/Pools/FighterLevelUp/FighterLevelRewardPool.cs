@@ -38,6 +38,8 @@ namespace EmpoweredPixels.Rewards.Pools.FighterLevelUp
       var shoes = equipmentGenerator.GenerateArmorShoes(level, ItemRarity.Basic, reward.UserId);
       var greatsword = equipmentGenerator.GenerateWeaponGreatsword(level, ItemRarity.Basic, reward.UserId);
       var bow = equipmentGenerator.GenerateWeaponBow(level, ItemRarity.Basic, reward.UserId);
+      var dagger = equipmentGenerator.GenerateWeaponDagger(level, ItemRarity.Basic, reward.UserId);
+      var glaive = equipmentGenerator.GenerateWeaponGlaive(level, ItemRarity.Basic, reward.UserId);
 
       return new Equipment[]
       {
@@ -49,6 +51,8 @@ namespace EmpoweredPixels.Rewards.Pools.FighterLevelUp
         shoes,
         greatsword,
         bow,
+        dagger,
+        glaive,
       };
     }
   }

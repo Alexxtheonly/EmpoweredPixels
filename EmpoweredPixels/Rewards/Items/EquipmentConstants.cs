@@ -22,10 +22,16 @@ namespace EmpoweredPixels.Rewards.Items
 
     public static readonly Guid WeaponBow = new Guid("FB6D6951-7630-4AD8-A005-DF72BC02C3BF");
 
+    public static readonly Guid WeaponDagger = new Guid("4DD298A2-2405-47CF-B554-6E3DB9D57920");
+
+    public static readonly Guid WeaponGlaive = new Guid("C615E5EC-88C2-4EBC-B338-C71BAA24D5C6");
+
     private static readonly IEnumerable<Guid> Weapons = new Guid[]
     {
       WeaponBow,
       WeaponGreatsword,
+      WeaponDagger,
+      WeaponGlaive,
     };
 
     public static bool IsWeaponConstant(Guid equipment)

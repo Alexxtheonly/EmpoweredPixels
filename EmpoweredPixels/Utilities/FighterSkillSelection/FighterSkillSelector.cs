@@ -7,6 +7,12 @@ using EmpoweredPixels.Skills.Attack;
 using EmpoweredPixels.Skills.Attack.Bow.Basic;
 using EmpoweredPixels.Skills.Attack.Bow.Strong;
 using EmpoweredPixels.Skills.Attack.Bow.Ultimate;
+using EmpoweredPixels.Skills.Attack.Dagger.Basic;
+using EmpoweredPixels.Skills.Attack.Dagger.Strong;
+using EmpoweredPixels.Skills.Attack.Dagger.Ultimate;
+using EmpoweredPixels.Skills.Attack.Gaive.Basic;
+using EmpoweredPixels.Skills.Attack.Gaive.Strong;
+using EmpoweredPixels.Skills.Attack.Gaive.Ultimate;
 using EmpoweredPixels.Skills.Attack.Greatsword.Basic;
 using EmpoweredPixels.Skills.Attack.Greatsword.Strong;
 using EmpoweredPixels.Skills.Attack.Greatsword.Ultimate;
@@ -30,6 +36,18 @@ namespace EmpoweredPixels.Utilities.FighterSkillSelection
       new BowPreciseArrowSkill(),
       new BowTripleArrowSkill(),
       new BowSuperSonicShotSkill(),
+
+      new DaggerSliceSkill(),
+      new DaggerShadowstepSkill(),
+      new DaggerJaggedBladeSkill(),
+      new DaggerBackstabSkill(),
+      new DaggerVenomousHeartseekerSkill(),
+
+      new GlaiveSwingSkill(),
+      new GlaivePierceSkill(),
+      new GlaiveFlyingDragonSkill(),
+      new GlaiveWhirlwindSkill(),
+      new GlaiveMultiStrikeSkill(),
     };
 
     private static readonly IEnumerable<IHealSkill> HealSkills = new IHealSkill[]
