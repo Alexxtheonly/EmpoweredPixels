@@ -17,9 +17,11 @@ namespace EmpoweredPixels.Extensions
         {
           FighterId = tick.Fighter.Id,
           TargetId = tick.Target.Id,
+          OriginalTargetId = tick.OriginalTarget.Id,
           SkillId = tick.Skill.Id,
           Damage = tick.Damage,
           Critical = tick.Critical,
+          Reflected = tick.Reflected,
           Dodged = tick.Dodged,
           OutOfRange = tick.OutOfRange,
         };
@@ -119,6 +121,16 @@ namespace EmpoweredPixels.Extensions
         return new FighterStunnedTickDto()
         {
           FighterId = tick.Fighter.Id,
+        };
+      }
+      else if (engineTick.GetType() == typeof(FighterBuffAppliedTick))
+      {
+        var tick = (FighterBuffAppliedTick)engineTick;
+        return new FighterBuffAppliedTickDto()
+        {
+          BuffId = tick.Buff.Id,
+          FighterId = tick.Fighter.Id,
+          TargetId = tick.Target.Id,
         };
       }
       else

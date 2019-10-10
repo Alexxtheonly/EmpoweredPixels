@@ -20,6 +20,8 @@ namespace EmpoweredPixels.Utilities.EquipmentGeneration
       [EquipmentConstants.ArmorShoes] = o => AdjustArmorShoesStats(o),
       [EquipmentConstants.WeaponGreatsword] = o => AdjustWeaponGreatswordStats(o),
       [EquipmentConstants.WeaponBow] = o => AdjustWeaponBowStats(o),
+      [EquipmentConstants.WeaponDagger] = o => AdjustWeaponDaggerStats(o),
+      [EquipmentConstants.WeaponGlaive] = o => AdjustWeaponGlaiveStats(o),
     };
 
     public Equipment GenerateArmorHead(int level, ItemRarity rarity, long userId)
@@ -92,6 +94,24 @@ namespace EmpoweredPixels.Utilities.EquipmentGeneration
       AdjustWeaponBowStats(weaponBow);
 
       return weaponBow;
+    }
+
+    public Equipment GenerateWeaponDagger(int level, ItemRarity rarity, long userId)
+    {
+      var weaponDagger = Generate(EquipmentConstants.WeaponDagger, level, rarity, userId);
+
+      AdjustWeaponDaggerStats(weaponDagger);
+
+      return weaponDagger;
+    }
+
+    public Equipment GenerateWeaponGlaive(int level, ItemRarity rarity, long userId)
+    {
+      var weaponGlaive = Generate(EquipmentConstants.WeaponGlaive, level, rarity, userId);
+
+      AdjustWeaponGlaiveStats(weaponGlaive);
+
+      return weaponGlaive;
     }
 
     public void AdjustStats(Equipment equipment)
@@ -175,7 +195,7 @@ namespace EmpoweredPixels.Utilities.EquipmentGeneration
         throw new ArgumentException("Weapon greatsword is no weapon greatsword");
       }
 
-      AdjustWeaponStat(weaponGreatsword, 1);
+      AdjustWeaponStatPower(weaponGreatsword, 1);
     }
 
     private static void AdjustWeaponBowStats(Equipment weaponBow)
@@ -185,7 +205,28 @@ namespace EmpoweredPixels.Utilities.EquipmentGeneration
         throw new ArgumentException("Weapon bow is no weapon bow");
       }
 
-      AdjustWeaponStat(weaponBow, 1);
+      AdjustWeaponStatPower(weaponBow, 1);
+    }
+
+    private static void AdjustWeaponDaggerStats(Equipment weaponDagger)
+    {
+      if (weaponDagger.Type != EquipmentConstants.WeaponDagger)
+      {
+        throw new ArgumentException("Weapon dagger is no weapon dagger");
+      }
+
+      AdjustWeaponStatConditionPower(weaponDagger, 0.5F);
+      AdjustWeaponStatPower(weaponDagger, 0.5F);
+    }
+
+    private static void AdjustWeaponGlaiveStats(Equipment weaponGlaive)
+    {
+      if (weaponGlaive.Type != EquipmentConstants.WeaponGlaive)
+      {
+        throw new ArgumentException("Weapon glaive is no weapon glaive");
+      }
+
+      AdjustWeaponStatPower(weaponGlaive, 1);
     }
 
     private static void AdjustArmorStat(Equipment armor, float factor)
@@ -193,9 +234,14 @@ namespace EmpoweredPixels.Utilities.EquipmentGeneration
       armor.Armor = CalculateStat(armor, factor);
     }
 
-    private static void AdjustWeaponStat(Equipment weapon, float factor)
+    private static void AdjustWeaponStatPower(Equipment weapon, float factor)
     {
       weapon.Power = CalculateStat(weapon, factor);
+    }
+
+    private static void AdjustWeaponStatConditionPower(Equipment weapon, float factor)
+    {
+      weapon.ConditionPower = CalculateStat(weapon, factor);
     }
 
     private static int CalculateStat(Equipment equipment, float factor)

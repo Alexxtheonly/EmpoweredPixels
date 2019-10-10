@@ -10,7 +10,7 @@
   <div *ngFor="let round of print">
     <h5 class="border-bottom border-top">Round: {{ round.round }}</h5>
     <div *ngFor="let tick of round.ticks">
-      <div *ngIf="!fighterId || tick.fighterId == fighterId || tick.targetId == fighterId">
+      <div *ngIf="!fighterId || tick.fighterId == fighterId || tick.targetId == fighterId || tick.originalTargetId == fighterId">
         <!--Fighter moved tick-->
         <span *ngIf="tick.fighterId && tick.targetId && tick.nextX">
           <span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> moved <span
@@ -23,6 +23,13 @@
         <span *ngIf="tick.fighterId && tick.targetId && tick.conditionId">
           <span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> applied
           <span class="text-muted">{{ 'conditions.' + tick.conditionId | translate }}</span>
+          on <span class="font-weight-bold text-muted">{{ getName(tick.targetId) }}</span>
+        </span>
+
+        <!--Fighter applied buff tick-->
+        <span *ngIf="tick.fighterId && tick.targetId && tick.buffId">
+          <span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> applied
+          <span class="text-muted">{{ 'buffs.' + tick.buffId | translate }}</span>
           on <span class="font-weight-bold text-muted">{{ getName(tick.targetId) }}</span>
         </span>
 
@@ -41,10 +48,13 @@
         <!--Fighter attack tick-->
         <span *ngIf="tick.skillId && tick.targetId"><span class="font-weight-bold">{{ getName(tick.fighterId) }}</span>
           attacked <span class="font-weight-bold text-muted">
-            {{ getName(tick.targetId) }} </span> <span class="text-muted">with
+            {{ getName(tick.originalTargetId) }} </span> <span class="text-muted">with
             {{ 'skills.' + tick.skillId | translate }}
             <span class="badge badge-danger">{{ tick.damage }}</span> damage <span *ngIf="tick.critical"
-              class="text-danger">critical</span><span *ngIf="tick.dodged" class="text-info">dodged</span> </span>
+              class="text-danger">critical</span><span *ngIf="tick.dodged" class="text-info">dodged</span> <span
+              *ngIf="tick.reflected" class="text-warning"> reflected to </span> </span> <span *ngIf="tick.reflected"
+            class="font-weight-bold text-muted">
+            {{ getName(tick.targetId) }} </span>
         </span>
 
         <!--Fighter died tick-->

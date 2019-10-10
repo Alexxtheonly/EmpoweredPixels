@@ -8,9 +8,9 @@ namespace EmpoweredPixels.Skills.Attack.Greatsword.Basic
 
     public override string Name => "Blow";
 
-    public override int DamageLow => 4;
+    public override int DamageLow => 5;
 
-    public override int DamageHigh => 6;
+    public override int DamageHigh => 8;
 
     public override int Cooldown => 0;
   }

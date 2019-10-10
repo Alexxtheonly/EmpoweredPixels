@@ -10,6 +10,8 @@ namespace EmpoweredPixels.Skills.Attack.Greatsword
     /// </summary>
     public override float Range => 1.9F;
 
+    public override bool CanBeReflected => false;
+
     public override Guid WeaponType => EquipmentConstants.WeaponGreatsword;
   }
 }

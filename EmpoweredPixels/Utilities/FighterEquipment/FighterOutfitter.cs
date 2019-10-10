@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using EmpoweredPixels.Exceptions.Roster;
 using EmpoweredPixels.Models.Items;
@@ -10,12 +9,6 @@ namespace EmpoweredPixels.Utilities.FighterEquipment
 {
   public class FighterOutfitter : IFighterOutfitter
   {
-    private static readonly IEnumerable<Guid> WeaponTypes = new Guid[]
-    {
-      EquipmentConstants.WeaponBow,
-      EquipmentConstants.WeaponGreatsword,
-    };
-
     public bool IsValidOutfit(Fighter fighter)
     {
       if (fighter.Equipment == null)
@@ -29,7 +22,7 @@ namespace EmpoweredPixels.Utilities.FighterEquipment
       var handsCount = fighter.Equipment.Count(o => o.Type == EquipmentConstants.ArmorHands);
       var legsCount = fighter.Equipment.Count(o => o.Type == EquipmentConstants.ArmorLegs);
       var shoesCount = fighter.Equipment.Count(o => o.Type == EquipmentConstants.ArmorShoes);
-      var weaponCount = fighter.Equipment.Count(o => WeaponTypes.Contains(o.Type));
+      var weaponCount = fighter.Equipment.Count(o => EquipmentConstants.IsWeaponConstant(o.Type));
 
       var counts = new int[]
       {
@@ -52,9 +45,9 @@ namespace EmpoweredPixels.Utilities.FighterEquipment
         throw new ArgumentNullException(nameof(Fighter.Equipment));
       }
 
-      bool isWeapon = WeaponTypes.Contains(equipment.Type);
+      bool isWeapon = EquipmentConstants.IsWeaponConstant(equipment.Type);
 
-      var existing = fighter.Equipment.FirstOrDefault(o => o.Type == equipment.Type || (isWeapon && WeaponTypes.Contains(o.Type)));
+      var existing = fighter.Equipment.FirstOrDefault(o => o.Type == equipment.Type || (isWeapon && EquipmentConstants.IsWeaponConstant(o.Type)));
       if (existing != null && !unequipExisting)
       {
         throw new InvalidEquipmentOperationException();

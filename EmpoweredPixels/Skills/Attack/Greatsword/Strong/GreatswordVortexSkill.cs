@@ -1,4 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using EmpoweredPixels.Skills.Buffs;
+using SharpFightingEngine.Engines;
+using SharpFightingEngine.Engines.Ticks;
+using SharpFightingEngine.Fighters;
+using SharpFightingEngine.Skills.Extensions;
 
 namespace EmpoweredPixels.Skills.Attack.Greatsword.Strong
 {
@@ -8,10 +14,18 @@ namespace EmpoweredPixels.Skills.Attack.Greatsword.Strong
 
     public override string Name => "Vortex";
 
-    public override int DamageLow => 5;
+    public override int DamageLow => 10;
 
-    public override int DamageHigh => 8;
+    public override int DamageHigh => 15;
 
     public override int Cooldown => 1;
+
+    public override IEnumerable<EngineTick> Perform(IFighterStats actor, IFighterStats target, EngineCalculationValues calculationValues)
+    {
+      return new EngineTick[]
+      {
+        actor.ApplyBuff(actor, 100, new ReflectSkillBuff()),
+      };
+    }
   }
 }

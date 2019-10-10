@@ -4,6 +4,8 @@ export class FighterAttackTick extends Tick
 {
    public targetId: string;
 
+   public originalTargetId: string;
+
    public fighterId: string;
 
    public skillId: string;
@@ -19,4 +21,6 @@ export class FighterAttackTick extends Tick
    public outOfRange: boolean;
 
    public insufficientEnergy: boolean;
+
+   public reflected: boolean;
 }

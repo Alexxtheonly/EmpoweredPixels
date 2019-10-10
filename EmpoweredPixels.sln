@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmpoweredPixels", "EmpoweredPixels\EmpoweredPixels.csproj", "{2DF1D332-7AC1-434C-90C7-0A458F2708DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmpoweredPixels", "EmpoweredPixels\EmpoweredPixels.csproj", "{2DF1D332-7AC1-434C-90C7-0A458F2708DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmpoweredPixels.Test", "EmpoweredPixels.Test\EmpoweredPixels.Test.csproj", "{79AC2777-081E-47F8-B797-54E73A5D1079}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmpoweredPixels.Test", "EmpoweredPixels.Test\EmpoweredPixels.Test.csproj", "{79AC2777-081E-47F8-B797-54E73A5D1079}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmpoweredPixels.Test.Balance", "EmpoweredPixels.Test.Balance\EmpoweredPixels.Test.Balance.csproj", "{4AECAF9F-8B76-4A3A-B3D7-0994EF66F827}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{79AC2777-081E-47F8-B797-54E73A5D1079}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79AC2777-081E-47F8-B797-54E73A5D1079}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79AC2777-081E-47F8-B797-54E73A5D1079}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AECAF9F-8B76-4A3A-B3D7-0994EF66F827}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AECAF9F-8B76-4A3A-B3D7-0994EF66F827}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AECAF9F-8B76-4A3A-B3D7-0994EF66F827}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AECAF9F-8B76-4A3A-B3D7-0994EF66F827}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
