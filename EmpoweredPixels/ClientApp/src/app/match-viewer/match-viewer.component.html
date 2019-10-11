@@ -6,15 +6,15 @@
   <div class="table-responsive-lg">
     <table class="table table-sm clickable">
       <thead>
-        <th>Team</th>
-        <th>Points</th>
-        <th>Name</th>
-        <th>Kills</th>
-        <th>Deaths</th>
-        <th>Rounds alive</th>
-        <th>Damage done</th>
-        <th>Damage taken</th>
-        <th>Distance traveled</th>
+        <th>{{ 'matchViewer.team' | translate }}</th>
+        <th>{{ 'matchViewer.points' | translate }}</th>
+        <th>{{ 'matchViewer.name' | translate }}</th>
+        <th>{{ 'matchViewer.kills' | translate }}</th>
+        <th>{{ 'matchViewer.deaths' | translate }}</th>
+        <th>{{ 'matchViewer.roundsAlive' | translate }}</th>
+        <th>{{ 'matchViewer.damageDone' | translate }}</th>
+        <th>{{ 'matchViewer.damageTaken' | translate }}</th>
+        <th>{{ 'matchViewer.distanceTraveled' | translate }}</th>
       </thead>
 
       <tbody *ngIf="fighterscores">

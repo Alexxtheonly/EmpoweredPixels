@@ -2,12 +2,12 @@
     <div class="card card-body justify-content-center col-12 col-md-6">
         <app-equipment [equipment]="equipment" [disableContext]="true"></app-equipment>
         <hr />
-        <span class="badge">Balance: <span
+        <span class="badge">{{ 'inventory.balance' | translate }}: <span
                 [ngClass]="balance?.balance < costs ? 'text-danger' : ''">{{ balance?.balance }} <img
                     class="balance-icon" src="assets/images/items/a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702.svg" />
             </span></span>
         <button [disabled]="enhancementInProgress" class="btn btn-outline-success" (click)="enhance()">
-            Enhance, Cost: {{ costs }} <img class="balance-icon"
+            {{ 'inventory.enhanceAndCost' | translate }}: {{ costs }} <img class="balance-icon"
                 src="assets/images/items/a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702.svg" />
             <div *ngIf="enhancementInProgress" class="spinner-border text-info" role="status"></div>
         </button>

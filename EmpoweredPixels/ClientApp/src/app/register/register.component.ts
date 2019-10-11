@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { UserFeedbackService } from './../+services/userfeedback.service';
 import { RegisterData } from './+modules/register-data';
 import { RegisterService } from './+services/register.service';
@@ -20,7 +21,8 @@ export class RegisterComponent implements OnInit
     private registerService: RegisterService,
     private userfeedbackService: UserFeedbackService,
     private formbuilder: FormBuilder,
-    private router: Router) { }
+    private router: Router,
+    private translateService: TranslateService) { }
 
   ngOnInit()
   {
@@ -53,7 +55,7 @@ export class RegisterComponent implements OnInit
 
     this.registerService.register(data).subscribe(() =>
     {
-      this.userfeedbackService.success('successfully registered');
+      this.userfeedbackService.success(this.translateService.instant('registerSuccessfull'));
       this.router.navigate(['login']);
     }, error =>
     {

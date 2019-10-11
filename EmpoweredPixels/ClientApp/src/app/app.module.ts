@@ -24,7 +24,6 @@ import { TimeAgoPipe } from 'time-ago-pipe';
 import { FighterNamePipe } from './match-viewer/+pipes/fighter-name-pipe';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { RoundsViewerComponent } from './match-viewer/+components/rounds-viewer/rounds-viewer.component';
 import { MatchbrowserComponent } from './match/matchbrowser/matchbrowser.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgAggregatePipesModule, NgArrayPipesModule } from 'angular-pipes';
@@ -37,7 +36,6 @@ import { RewardComponent } from './rewards/+components/reward/reward.component';
 import { RewardsComponent } from './rewards/rewards/rewards.component';
 import { RewardContentComponent } from './rewards/+components/reward-content/reward-content.component';
 import { ItemComponent } from './rewards/+components/item/item.component';
-import { FighterStatForecastComponent } from './roster/+components/fighter-stat-forecast/fighter-stat-forecast.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MomentModule } from 'ngx-moment';
@@ -77,7 +75,6 @@ export function HttpLoaderFactory(http: HttpClient)
     TimeAgoPipe,
     FighterNamePipe,
     FooterComponent,
-    RoundsViewerComponent,
     MatchbrowserComponent,
     LeagueBrowserComponent,
     LeagueDetailComponent,
@@ -88,7 +85,6 @@ export function HttpLoaderFactory(http: HttpClient)
     RewardsComponent,
     RewardContentComponent,
     ItemComponent,
-    FighterStatForecastComponent,
     VarDirective,
     LastLeagueWinnerPipe,
     ArmoryComponent,
