@@ -10,7 +10,8 @@
 
     <div class="card-body">
         <button [disabled]="claimed" class="btn btn-block btn-light" (click)="claim()">
-            <span *ngIf="!claimed">Claim now</span> <span *ngIf="claimed">Claimed!</span>
+            <span *ngIf="!claimed">{{ 'rewards.claim' | translate }}</span> <span
+                *ngIf="claimed">{{ 'rewards.claimed' | translate }}</span>
             <div *ngIf="loading" class="spinner-border text-info" role="status"></div>
         </button>
     </div>

@@ -12,8 +12,8 @@
     <span *ngIf="equipment" [ngClass]="getCssRarity()"
         class="badge">{{ 'rarity.' + equipment.rarity | translate }}</span>
 
-    <span *ngIf="equipment?.armor" class="badge">{{ equipment.armor }} Armor</span>
-    <span *ngIf="equipment?.power" class="badge">{{equipment.power }} Power</span>
+    <span *ngIf="equipment?.armor" class="badge">{{ equipment.armor }} {{ 'equipment.armor' | translate }}</span>
+    <span *ngIf="equipment?.power" class="badge">{{equipment.power }} {{ 'equipment.power' | translate }}</span>
 </div>
 
 <div class="modal" [ngStyle]="{ display: modalVisible ? 'flex' : 'none' }">
@@ -22,15 +22,17 @@
             <div class="modal-body">
                 <div class="btn-group-vertical" style="display: block">
                     <a *ngIf="equipment" routerLink="/equipment/enhance/{{ equipment.id }}"
-                        class="btn btn-sm btn-outline-success">Enhance</a>
+                        class="btn btn-sm btn-outline-success">{{ 'equipment.enhance' | translate }}</a>
                     <button *ngIf="equipment && isUnequipped()" class="btn btn-sm btn-outline-light"
-                        (click)="equip()">Equip</button>
+                        (click)="equip()">{{ 'equipment.equip' | translate }}</button>
                     <button *ngIf="equipment && !isUnequipped()" class="btn btn-sm btn-outline-light"
-                        (click)="unequip()">Unequip</button>
+                        (click)="unequip()">{{ 'equipment.unequip' | translate }}</button>
                     <hr />
-                    <button class="btn btn-sm btn-outline-danger" (click)="salvage()">Salvage</button>
+                    <button class="btn btn-sm btn-outline-danger"
+                        (click)="salvage()">{{ 'equipment.salvage' | translate }}</button>
                     <hr />
-                    <button class="btn btn-sm btn-secondary" (click)="hideModal()">Close</button>
+                    <button class="btn btn-sm btn-secondary"
+                        (click)="hideModal()">{{ 'equipment.close' | translate }}</button>
                 </div>
             </div>
         </div>

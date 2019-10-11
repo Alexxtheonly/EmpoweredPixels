@@ -2,7 +2,7 @@
 
     <div class="row">
         <div class="col-sm-12 col-md-4">
-            <h1>{{ leagueDetail.name | translate }} <h5 class="text-muted">Next match:
+            <h1>{{ leagueDetail.name | translate }} <h5 class="text-muted">{{ 'league.nextMatch' | translate }}:
                     {{ leagueDetail.nextMatch | date:'short' }}
                 </h5>
             </h1>
@@ -13,22 +13,22 @@
             </div>
             <div class="inline" style="margin-top: 10px;text-align: left; margin-left: 15px;">
                 <p *ngIf="highscores&&highscores.length!=0">{{highscores[0].username}}</p>
-                <label class="text-muted">League champ</label>
+                <label class="text-muted">{{ 'league.champ' | translate }}</label>
             </div>
         </div>
     </div>
 
     <div class="row">
         <div class="card card-body col-12">
-            <h4>Recent matches</h4>
-            <span *ngIf="page?.total === 0">No matches yet.</span>
+            <h4>{{ 'league.recentMatches' | translate }}</h4>
+            <span *ngIf="page?.total === 0">{{ 'league.noMatchesYet' | translate }}</span>
             <div class="table-responsive" *ngIf="page?.total > 0">
                 <table class="table table-sm clickable">
                     <thead>
                         <tr>
-                            <th>Started</th>
-                            <th>Division</th>
-                            <th>Winner</th>
+                            <th>{{ 'league.started' | translate }}</th>
+                            <th>{{ 'league.division' | translate }}</th>
+                            <th>{{ 'league.winner' | translate }}</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -46,7 +46,7 @@
                             <td>
                                 <a class="replay" routerLink="/replay/{{ match.matchId }}">
                                     <img src="assets/images/play-button.svg" />
-                                    Replay</a>
+                                    {{ 'league.replay' | translate }}</a>
                             </td>
                         </tr>
                     </tbody>
@@ -61,16 +61,15 @@
     </div>
     <div class="row">
         <div class="card card-body col-12 col-md-6">
-            <h5>Highscores</h5>
-            <span class="text-muted">Top {{ leagueHighscoreOptions.top }}, last
-                {{ leagueHighscoreOptions.lastMatches }} matches</span>
+            <h5>{{ 'league.highscores' | translate }}</h5>
+            <span class="text-muted"> {{ 'league.topLastMatches' | translate: highScoreTranslateParams }}</span>
 
             <div class="table-responsive">
                 <table class="table table-sm">
                     <thead>
                         <tr>
-                            <th>Wins</th>
-                            <th>Fighter</th>
+                            <th>{{ 'league.wins' | translate }}</th>
+                            <th>{{ 'league.fighter' | translate }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,9 +87,9 @@
         <div class="card card-body col-12 col-md-6">
             <span class="justify-content-end">
                 <button *ngIf="subs?.length===0" class="btn btn-outline-success"
-                    (click)="subscribe()">Subscribe</button>
+                    (click)="subscribe()">{{ 'league.subscribe' | translate }}</button>
                 <button *ngIf="subs?.length>0" class="btn btn-outline-danger"
-                    (click)="unsubscribe()">Unsubscribe</button>
+                    (click)="unsubscribe()">{{ 'league.unsubscribe' | translate }}</button>
             </span>
 
             <h4>Subscribers <span class="badge badge-light">{{ leagueDetail.subscriberCount }}</span></h4>
@@ -99,8 +98,8 @@
                 <table class="table table-sm">
                     <thead>
                         <tr>
-                            <th>Fighter</th>
-                            <th>User</th>
+                            <th>{{ 'league.fighter' | translate }}</th>
+                            <th>{{ 'league.user' | translate }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -118,7 +117,7 @@
 <div class="modal modal-dialog-centered" [ngStyle]="{ display: showModal ? 'flex' : 'none' }">
     <div class="modal-dialog modal-content">
         <div class="modal-header">
-            <h5 class="modal-title justify-content-center">Choose your fighter</h5>
+            <h5 class="modal-title justify-content-center">{{ 'league.chooseYourFighter' | translate }}</h5>
             <button type="button" class="close" (click)="showModal = false">
                 <span>&times;</span>
             </button>

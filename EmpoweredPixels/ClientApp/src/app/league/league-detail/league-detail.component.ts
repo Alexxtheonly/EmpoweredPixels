@@ -4,13 +4,11 @@ import { LeagueHighscoreOptions } from './../+models/league-highscore-options';
 import { RosterService } from './../../roster/+services/roster.service';
 import { LeagueMatch } from './../+models/league-match';
 import { LeagueService } from './../+services/league.service';
-import { Observable } from 'rxjs';
 import { LeagueDetail } from './../+models/league-detail';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Fighter } from 'src/app/roster/+models/fighter';
 import { PagingOptions } from 'src/app/match/+models/paging-options';
-import { Match } from 'src/app/match/+models/match';
 import { Page } from 'src/app/match/+models/page';
 import { LeagueHighscore } from '../+models/league-highscore';
 
@@ -35,6 +33,11 @@ export class LeagueDetailComponent implements OnInit
 
   public highscores: LeagueHighscore[];
   public leagueHighscoreOptions: LeagueHighscoreOptions = new LeagueHighscoreOptions();
+
+  public highScoreTranslateParams = {
+    topCount: '5',
+    matchesCount: '25'
+  };
 
   private id: number;
 
