@@ -60,9 +60,7 @@ namespace EmpoweredPixels.Utilities.MatchExecution
         // based on level difference
         var levelDifference = maxLevelInMatch - fighter.Level;
 
-        // only boost if difference is > 2 levels
-        var multiplicator = Math.Max(levelDifference - 2, 0);
-        fighterExperienceCalculator.AddExperience(fighterExperience, contribution, multiplicator);
+        fighterExperienceCalculator.AddExperience(fighterExperience, contribution, levelDifference);
         var levelAfter = fighterExperienceCalculator.GetLevel(fighterExperience);
 
         if (levelBefore.Level < levelAfter.Level)

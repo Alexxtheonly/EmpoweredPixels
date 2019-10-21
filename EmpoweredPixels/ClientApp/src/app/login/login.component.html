@@ -29,7 +29,8 @@
 			</div>
 			<div class="card-footer">
 				<div class="d-flex justify-content-center">
-					{{ 'login.dontHaveAnAccount' | translate }} <a routerlink="/register">{{ 'login.signUp' | translate }}</a>
+					{{ 'login.dontHaveAnAccount' | translate }} <a
+					[routerLink]='["/register"]'>{{ 'login.signUp' | translate }}</a>
 				</div>
 				<div class="d-flex justify-content-center">
 					<a href="#">{{ 'login.forgotYourPassword' | translate }}</a>

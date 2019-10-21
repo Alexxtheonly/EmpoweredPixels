@@ -100,6 +100,9 @@ namespace EmpoweredPixels.Utilities.LeageExecution
         .Where(o => !o.IsDeactivated)
         .Include(o => o.Subscriptions)
         .ThenInclude(o => o.Fighter)
+        .ThenInclude(o => o.EloRating)
+        .Include(o => o.Subscriptions)
+        .ThenInclude(o => o.Fighter)
         .ThenInclude(o => o.Equipment)
         .ThenInclude(o => o.SocketStones)
         .FirstOrDefaultAsync(o => o.Id == leagueId);
