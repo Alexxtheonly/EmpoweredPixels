@@ -12,7 +12,7 @@
 
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
-    <Version>0.14.10</Version>
+    <Version>0.14.11</Version>
   </PropertyGroup>
 
   <ItemGroup>
