@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EmpoweredPixels.Models;
@@ -63,7 +62,7 @@ namespace EmpoweredPixels.Utilities.MatchExecution
         fighterExperienceCalculator.AddExperience(fighterExperience, contribution, levelDifference);
         var levelAfter = fighterExperienceCalculator.GetLevel(fighterExperience);
 
-        if (levelBefore.Level < levelAfter.Level)
+        for (int i = levelBefore.Level; i < levelAfter.Level; i++)
         {
           databaseContext.AddRange(fighterLevelUpHandler.Up(fighter));
         }
