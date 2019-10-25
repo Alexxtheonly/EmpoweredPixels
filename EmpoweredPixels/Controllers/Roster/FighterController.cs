@@ -45,6 +45,8 @@ namespace EmpoweredPixels.Controllers.Roster
       return Ok(await Context.Fighters
         .Where(o => o.UserId == userId)
         .Include(o => o.Equipment)
+        .ThenInclude(o => o.Option)
+        .Include(o => o.Equipment)
         .ThenInclude(o => o.SocketStones)
         .ProjectTo<FighterDto>(Mapper.ConfigurationProvider)
         .ToListAsync());
@@ -61,6 +63,8 @@ namespace EmpoweredPixels.Controllers.Roster
 
       var fighter = await Context.Fighters
         .Where(o => o.UserId == userId)
+        .Include(o => o.Equipment)
+        .ThenInclude(o => o.Option)
         .Include(o => o.Equipment)
         .ThenInclude(o => o.SocketStones)
         .FirstOrDefaultAsync(o => o.Id == id);
@@ -150,6 +154,8 @@ namespace EmpoweredPixels.Controllers.Roster
         .AsTracking()
         .Where(o => o.UserId == userId)
         .Include(o => o.Equipment)
+        .ThenInclude(o => o.Option)
+        .Include(o => o.Equipment)
         .ThenInclude(o => o.SocketStones)
         .FirstOrDefaultAsync(o => o.Id == id);
 
@@ -188,6 +194,8 @@ namespace EmpoweredPixels.Controllers.Roster
       var fighter = await Context.Fighters
         .AsTracking()
         .Where(o => o.UserId == userId)
+        .Include(o => o.Equipment)
+        .ThenInclude(o => o.Option)
         .Include(o => o.Equipment)
         .ThenInclude(o => o.SocketStones)
         .FirstOrDefaultAsync(o => o.Id == id);

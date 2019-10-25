@@ -3,10 +3,12 @@
         style="position: relative; width: 75px; height: 75px; display: inline-block;">
         <span *ngIf="equipment" class="badge badge-dark"
             style="position: absolute; right: 1px;">+{{ equipment?.enhancement }}</span>
+        <img class="favorite-icon" *ngIf="!disableContext && equipment?.isFavorite"
+            src="assets/images/favorite_set.svg">
         <img *ngIf="equipment" src="assets/images/equipment/{{ equipment.type }}.svg">
     </div>
     <span *ngIf="equipment" style="position: absolute; margin-left: 0.5em;">{{ getTranslation() | translate }}</span>
-    <span *ngIf="equipment" [ngStyle]="{'text-danger': isLevelTooHigh()}" class="badge"
+    <span *ngIf="equipment" [ngClass]="getLevelColor()" class="badge"
         style="margin-left: 0.5em;">{{ 'equipment.level' | translate}}
         {{equipment.level}}</span>
     <span *ngIf="equipment" [ngClass]="getCssRarity()"
@@ -23,14 +25,26 @@
                 <div class="btn-group-vertical" style="display: block">
                     <a *ngIf="equipment" routerLink="/equipment/enhance/{{ equipment.id }}"
                         class="btn btn-sm btn-outline-success">{{ 'equipment.enhance' | translate }}</a>
+
                     <button *ngIf="equipment && isUnequipped()" class="btn btn-sm btn-outline-light"
                         (click)="equip()">{{ 'equipment.equip' | translate }}</button>
+
                     <button *ngIf="equipment && !isUnequipped()" class="btn btn-sm btn-outline-light"
                         (click)="unequip()">{{ 'equipment.unequip' | translate }}</button>
+
+                    <button *ngIf="!equipment?.isFavorite" class="btn btn-sm btn-outline-warning"
+                        (click)="setFavorite()">{{ 'equipment.setFavorite' | translate}}</button>
+
+                    <button *ngIf="equipment?.isFavorite" class="btn btn-sm btn-outline-warning"
+                        (click)="unsetFavorite()">{{ 'equipment.unsetFavorite' | translate }}</button>
+
                     <hr />
+
                     <button class="btn btn-sm btn-outline-danger"
                         (click)="salvage()">{{ 'equipment.salvage' | translate }}</button>
+
                     <hr />
+
                     <button class="btn btn-sm btn-secondary"
                         (click)="hideModal()">{{ 'equipment.close' | translate }}</button>
                 </div>

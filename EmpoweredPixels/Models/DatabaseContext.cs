@@ -68,6 +68,8 @@ namespace EmpoweredPixels.Models
 
     public DbSet<SocketStone> SocketStones { get; set; }
 
+    public DbSet<EquipmentOption> EquipmentOptions { get; set; }
+
     public DbSet<FighterEloRating> FighterEloRatings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -316,6 +318,12 @@ namespace EmpoweredPixels.Models
         e.Property(o => o.Id).ValueGeneratedOnAdd();
         e.HasOne(o => o.User).WithMany().HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
         e.HasOne(o => o.Equipment).WithMany(o => o.SocketStones).HasForeignKey(o => o.EquipmentId).IsRequired(false).OnDelete(DeleteBehavior.ClientSetNull);
+      });
+
+      modelBuilder.Entity<EquipmentOption>(e =>
+      {
+        e.HasKey(o => o.EquipmentId);
+        e.HasOne(o => o.Equipment).WithOne(o => o.Option).HasForeignKey<EquipmentOption>(o => o.EquipmentId).OnDelete(DeleteBehavior.Cascade);
       });
 
       modelBuilder.Entity<FighterEloRating>(e =>

@@ -9,6 +9,8 @@ export class Equipment
 
     public fighterId: string;
 
+    public isFavorite: boolean;
+
     public level: number;
 
     public rarity: number;

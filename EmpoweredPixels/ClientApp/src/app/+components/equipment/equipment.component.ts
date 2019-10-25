@@ -63,6 +63,22 @@ export class EquipmentComponent implements OnInit
     }
   }
 
+  public getLevelColor(): string
+  {
+    const levelDiff = this.fighter.level - this.equipment.level;
+
+    if (levelDiff < 0)
+    {
+      return 'itemlevel-strong';
+    } else if (levelDiff > 8)
+    {
+      return 'itemlevel-weak';
+    } else
+    {
+      return '';
+    }
+  }
+
   public isLevelTooHigh()
   {
     if (!this.fighter)
@@ -71,6 +87,24 @@ export class EquipmentComponent implements OnInit
     }
 
     return this.fighter.level < this.equipment.level;
+  }
+
+  public setFavorite()
+  {
+    this.equipmentService.setFavorite(this.equipment.id).subscribe(result =>
+    {
+      this.equipment = result;
+      this.hideModal();
+    });
+  }
+
+  public unsetFavorite()
+  {
+    this.equipmentService.unsetFavorite(this.equipment.id).subscribe(result =>
+    {
+      this.equipment = result;
+      this.hideModal();
+    });
   }
 
   public getTranslation(): string

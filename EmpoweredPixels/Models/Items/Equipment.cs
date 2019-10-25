@@ -53,6 +53,8 @@ namespace EmpoweredPixels.Models.Items
 
     public IEnumerable<SocketStone> SocketStones { get; set; }
 
+    public EquipmentOption Option { get; set; }
+
     public IStats Clone()
     {
       throw new NotImplementedException();

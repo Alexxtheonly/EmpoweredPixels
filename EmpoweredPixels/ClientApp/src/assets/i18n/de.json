@@ -41,7 +41,9 @@
 		"level": "Lv.",
 		"power": "Stärke",
 		"salvage": "Wiederverwerten",
-		"unequip": "Ausziehen"
+		"unequip": "Ausziehen",
+		"setFavorite": "Als Favorit",
+		"unsetFavorite": "Favorit entfernen"
 	},
 	"errorcodes": {
 		"1": "Ungültige Anmeldeinformationen",
@@ -74,7 +76,9 @@
 	},
 	"inventory": {
 		"balance": "Saldo",
-		"enhanceAndCost": "Verbessern, Kosten"
+		"enhanceAndCost": "Verbessern, Kosten",
+		"salvageInventory": "Inventar wiederverwerten",
+		"salvageInventoryWarning": "Du bist dabei dein gesamtes Inventar wieder zu verwerten. Es werden alle Gegenstände im Inventar zerstört, die keine Favoriten sind. Angezogenes wird nicht wiederverwertet."
 	},
 	"items": {
 		"a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702": "Ermächtigte Partikel"

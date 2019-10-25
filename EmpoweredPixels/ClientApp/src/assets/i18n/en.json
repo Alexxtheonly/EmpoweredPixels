@@ -41,7 +41,9 @@
 		"level": "Lv.",
 		"power": "Power",
 		"salvage": "Salvage",
-		"unequip": "Unequip"
+		"unequip": "Unequip",
+		"setFavorite": "Set favorite",
+		"unsetFavorite": "Unset favorite"
 	},
 	"errorcodes": {
 		"1": "Invalid credentials",
@@ -74,7 +76,9 @@
 	},
 	"inventory": {
 		"balance": "Balance",
-		"enhanceAndCost": "Enhance, Cost"
+		"enhanceAndCost": "Enhance, Cost",
+		"salvageInventory": "Salvage inventory",
+		"salvageInventoryWarning": "You're about to salvage all your inventory. All items in your inventory that are not favorites will be destroyed. Equipped items will not be salvaged."
 	},
 	"items": {
 		"a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702": "Empowered Particle"
