@@ -16,6 +16,8 @@ namespace EmpoweredPixels.DataTransferObjects.Items
 
     public Guid? FighterId { get; set; }
 
+    public bool IsFavorite { get; set; }
+
     public int Level { get; set; }
 
     public ItemRarity Rarity { get; set; }

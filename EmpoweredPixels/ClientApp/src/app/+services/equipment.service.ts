@@ -34,6 +34,21 @@ export class EquipmentService
     return this.http.post<Item[]>('api/equipment/salvage', equipment);
   }
 
+  public salvageInventory(): Observable<Item[]>
+  {
+    return this.http.post<Item[]>('api/equipment/salvage/inventory', null);
+  }
+
+  public setFavorite(equipmentId: string): Observable<Equipment>
+  {
+    return this.http.post<Equipment>(`api/equipment/${equipmentId}/favorite`, null);
+  }
+
+  public unsetFavorite(equipmentId: string): Observable<Equipment>
+  {
+    return this.http.delete<Equipment>(`api/equipment/${equipmentId}/favorite`);
+  }
+
   public getInventoryPage(options: PagingOptions): Observable<Page<Equipment>>
   {
     return this.http.post<Page<Equipment>>('api/equipment/inventory', options);

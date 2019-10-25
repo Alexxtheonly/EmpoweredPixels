@@ -49,8 +49,8 @@ namespace EmpoweredPixels.Utilities.EloCalculation
 
     private EloResult CalculateElo(int playerLeftRating, int playerRightRating, Outcome outcome)
     {
-      // Number between 10 = fast change and 32 = slow change
-      const int eloK = 24;
+      // Number between 10 = slow change and 32 = fast change
+      const int eloK = 32;
 
       int delta = (int)(eloK * ((int)outcome - ExpectationToWin(playerLeftRating, playerRightRating)));
 

@@ -10,7 +10,8 @@ namespace EmpoweredPixels.Profiles.Items
     public EquipmentProfile()
     {
       CreateMap<Equipment, EquipmentDto>()
-        .ForMember(o => o.IsWeapon, opt => opt.MapFrom(o => EquipmentConstants.IsWeaponConstant(o.Type)));
+        .ForMember(o => o.IsWeapon, opt => opt.MapFrom(o => EquipmentConstants.IsWeaponConstant(o.Type)))
+        .ForMember(o => o.IsFavorite, opt => opt.MapFrom(o => o.Option == null ? false : o.Option.IsFavorite));
       CreateMap<EquipmentDto, Equipment>();
     }
   }

@@ -1,4 +1,11 @@
 <div *ngIf="page">
+    <div class="row mb-3">
+        <div class="col-12 col-md-6 col-lg-3">
+            <button [disabled]="salvageInProgress" class="btn btn-block btn-sm btn-outline-danger"
+                (click)="salvageInventory()">{{ 'inventory.salvageInventory' | translate }}</button>
+        </div>
+    </div>
+
     <app-equipment
         *ngFor="let equip of page?.items | paginate: { id: 'server', itemsPerPage: options.pageSize, currentPage: options.pageNumber, totalItems: page.total }"
         class="col-12 col-md-6" style="display: inline-block; padding-left: 0px; padding-right: 0px;"

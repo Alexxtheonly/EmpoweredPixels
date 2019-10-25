@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Page } from './../../match/+models/page';
 import { Item } from './../../rewards/+models/item';
 import { EquipmentService } from './../../+services/equipment.service';
@@ -22,6 +23,8 @@ export class EquipmentInventoryComponent implements OnInit
 
   public loading: boolean;
 
+  public salvageInProgress: boolean;
+
   @Input()
   public fighter: Fighter;
 
@@ -31,7 +34,7 @@ export class EquipmentInventoryComponent implements OnInit
   @Output()
   salvaged = new EventEmitter<Item[]>();
 
-  constructor(private equipmentService: EquipmentService) { }
+  constructor(private equipmentService: EquipmentService, private translateService: TranslateService) { }
 
   ngOnInit()
   {
@@ -42,6 +45,24 @@ export class EquipmentInventoryComponent implements OnInit
     this.equipmentService.getInventoryPage(this.options).subscribe(result =>
     {
       this.page = result;
+    });
+  }
+
+  public salvageInventory(): void
+  {
+    if (!confirm(this.translateService.instant('inventory.salvageInventoryWarning')))
+    {
+      return;
+    }
+    this.salvageInProgress = true;
+    this.equipmentService.salvageInventory().subscribe(result =>
+    {
+      this.updateSalvage(result);
+      this.loadEquipment();
+      this.salvageInProgress = false;
+    }, error =>
+    {
+      this.salvageInProgress = false;
     });
   }
 
