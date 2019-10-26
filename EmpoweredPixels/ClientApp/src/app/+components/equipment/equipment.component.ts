@@ -65,17 +65,22 @@ export class EquipmentComponent implements OnInit
 
   public getLevelColor(): string
   {
+    if (!this.fighter || !this.equipment)
+    {
+      return;
+    }
+
     const levelDiff = this.fighter.level - this.equipment.level;
 
     if (levelDiff < 0)
     {
       return 'itemlevel-strong';
-    } else if (levelDiff > 8)
+    } else if (levelDiff >= 8)
     {
       return 'itemlevel-weak';
     } else
     {
-      return '';
+      return;
     }
   }
 
