@@ -6,7 +6,8 @@ namespace EmpoweredPixels.Utilities.EnhancementCalculation
 {
   public class EnhancementProbability : IEnhancementProbability
   {
-    private const float ChancePerLevel = 9.02F;
+    private const float ChancePerLevel = 10;
+    private const float MaxFailChance = 50;
 
     public bool IsSuccess(IEnhancable enhancable)
     {
@@ -21,7 +22,7 @@ namespace EmpoweredPixels.Utilities.EnhancementCalculation
     private float GetFailChance(int powerup)
     {
       var chance = powerup * ChancePerLevel;
-      return chance >= 100 ? 99 : chance;
+      return chance > MaxFailChance ? MaxFailChance : chance;
     }
   }
 }
