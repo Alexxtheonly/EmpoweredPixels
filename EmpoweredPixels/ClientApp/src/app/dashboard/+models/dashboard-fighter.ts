@@ -1,14 +1,8 @@
-export class FighterArmoryOverview
+export class DashboardFighter
 {
     public fighterId: string;
 
     public fighterName: string;
-
-    public fighterLevel: number;
-
-    public username: string;
-
-    public userId: number;
 
     public fighterElo: number;
 

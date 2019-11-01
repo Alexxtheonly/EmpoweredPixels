@@ -1,0 +1,18 @@
+<ng-container *ngIf="(leagues$ | async) as leagues">
+    <div class="table-responsive">
+        <table class="table table-sm clickable">
+            <thead>
+                <tr>
+                    <th>{{ 'dashboard.leagueName' | translate }}</th>
+                    <th>{{ 'dashboard.leagueSubscribed' | translate }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let league of leagues" routerLink="/league/{{ league.leagueId }}">
+                    <td>{{ league.leagueName | translate }}</td>
+                    <td>{{ league.isSubscribed }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-container>

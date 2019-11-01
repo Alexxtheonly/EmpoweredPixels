@@ -4,6 +4,7 @@ import { PagingOptions } from 'src/app/match/+models/paging-options';
 import { Component, OnInit } from '@angular/core';
 import { Page } from 'src/app/match/+models/page';
 import { FighterArmoryOverview } from '../+models/fighter-armory-overview';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-armory-overview',
@@ -20,10 +21,25 @@ export class ArmoryOverviewComponent implements OnInit
 
   public userId: number;
 
-  constructor(private armoryService: ArmoryService, authService: AuthService)
+  constructor(
+    private armoryService: ArmoryService,
+    authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute)
   {
     this.userId = authService.getUserId();
-    this.loadArmoryOverview();
+
+    this.route.queryParams.subscribe(result =>
+    {
+      let page = result['page'];
+
+      if (!page)
+      {
+        page = 1;
+      }
+
+      this.loadPage(page);
+    });
   }
 
   ngOnInit()
@@ -36,6 +52,12 @@ export class ArmoryOverviewComponent implements OnInit
     {
       this.page = result;
       this.loading = false;
+      this.router.navigate(
+        [],
+        {
+          relativeTo: this.route,
+          queryParams: { page: this.options.pageNumber },
+        });
     });
   }
 

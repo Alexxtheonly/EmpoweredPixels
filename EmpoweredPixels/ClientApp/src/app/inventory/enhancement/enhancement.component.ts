@@ -1,3 +1,4 @@
+import { EnhancementStats } from './enhancement-stats';
 import { CurrencyBalance } from './../+models/currency-balance';
 import { InventoryService } from './../+services/inventory.service';
 import { Equipment } from './../../roster/+models/equipment';
@@ -20,45 +21,64 @@ export class EnhancementComponent implements OnInit
 
   public balance: CurrencyBalance;
 
+  public stats: EnhancementStats = new EnhancementStats();
+
   constructor(private route: ActivatedRoute, private equipmentService: EquipmentService, private inventoryService: InventoryService)
   {
+  }
+
+  private async updateBalance()
+  {
+    this.balance = await this.inventoryService.getBalance().toPromise();
+  }
+
+  async ngOnInit()
+  {
     const id: string = this.route.snapshot.paramMap.get('id');
-    equipmentService.getEquipment(id).subscribe(result =>
-    {
-      this.equipment = result;
-    });
 
-    this.equipmentService.getEnhanceCost().subscribe(result =>
-    {
-      this.costs = result;
-    });
+    this.equipment = await this.equipmentService.getEquipment(id).toPromise();
 
-    this.updateBalance();
+    this.costs = await this.equipmentService.getEnhanceCost().toPromise();
+
+    await this.updateBalance();
   }
 
-  private updateBalance()
-  {
-    this.inventoryService.getBalance().subscribe(result =>
-    {
-      this.balance = result;
-    });
-  }
-
-  ngOnInit()
-  {
-  }
-
-  public enhance(): void
+  public async enhance(): Promise<void>
   {
     this.enhancementInProgress = true;
-    this.equipmentService.enhance(this.equipment).subscribe(result =>
+    const old = this.equipment;
+    try
+    {
+      this.equipment = await this.equipmentService.enhance(this.equipment).toPromise();
+    }
+    catch
     {
       this.enhancementInProgress = false;
-      this.equipment = result;
-      this.updateBalance();
-    }, error =>
+      return;
+    }
+    this.enhancementInProgress = false;
+    await this.updateBalance();
+
+    this.stats.tries++;
+    if (old.enhancement < this.equipment.enhancement)
     {
-      this.enhancementInProgress = false;
-    });
+      this.handleSuccess();
+    } else
+    {
+      this.handleFailure();
+    }
+  }
+
+  private handleSuccess()
+  {
+    if (this.equipment.enhancement > this.stats.maxEnhancement)
+    {
+      this.stats.maxEnhancement = this.equipment.enhancement;
+    }
+  }
+
+  private handleFailure()
+  {
+    this.stats.failures++;
   }
 }

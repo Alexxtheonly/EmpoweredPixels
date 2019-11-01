@@ -8,7 +8,9 @@
 		"elo": "Elo",
 		"killDeathRatio": "K/D Ratio",
 		"kills": "Kills",
-		"offensiveRating": "Offensive Rating"
+		"offensiveRating": "Offensive Rating",
+		"fighter": "Fighter",
+		"username": "User"
 	},
 	"b174d408-ea66-4e63-a321-613ea6b4dbbe": "Medium (150 x 150)",
 	"buffs": {
@@ -78,7 +80,11 @@
 		"balance": "Balance",
 		"enhanceAndCost": "Enhance, Cost",
 		"salvageInventory": "Salvage inventory",
-		"salvageInventoryWarning": "You're about to salvage all your inventory. All items in your inventory that are not favorites will be destroyed. Equipped items will not be salvaged."
+		"salvageInventoryWarning": "You're about to salvage all your inventory. All items in your inventory that are not favorites will be destroyed. Equipped items will not be salvaged.",
+		"tries": "Tries",
+		"failures": "Failures",
+		"maxEnhancement": "Highest enhancement",
+		"usedCurrency": "Used"
 	},
 	"items": {
 		"a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702": "Empowered Particle"
@@ -207,6 +213,11 @@
 		"to": "to"
 	},
 	"salvageConfirm": "Are you sure you want to salvage {{ name }} {{ rarity }}? It will be destroyed in the process.",
+	"dashboard": {
+		"league": "League",
+		"place": "Place",
+		"elo": "Elo"
+	},
 	"skills": {
 		"02be7ca2-7290-4150-8ec3-727a2a6a13a0": "Precise Arrow",
 		"050438ad-de49-40f9-8b3b-649d89954d3f": "Cutting Leap",

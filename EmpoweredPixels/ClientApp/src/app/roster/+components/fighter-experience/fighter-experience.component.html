@@ -1,14 +1,16 @@
-<div class="progress">
-    <div class="progress-bar text-dark bg-success" [ngStyle]="{ width: percent + '%' }">
-        {{ percent | number }} %
+<ng-container *ngIf="(experience$ | async) as experience">
+    <div class="progress">
+        <div class="progress-bar text-dark bg-success" [ngStyle]="{ width: getPercent(experience) + '%' }">
+            {{ getPercent(experience) | number }} %
+        </div>
     </div>
-</div>
-<div class="float-left exp-text">
-    <span>{{ 'roster.level' | translate }} {{ experience?.level }}</span>
-</div>
-<div class="float-right  exp-text">
-    <span><span class="text-muted mr-2">{{ experience?.levelExp - experience?.currentExp }}
-            {{ 'roster.experience' | translate }}
-            {{ 'roster.to' | translate }}</span>
-        {{ 'roster.level' | translate }} {{ experience?.level + 1 }}</span>
-</div>
+    <div class="float-left exp-text">
+        <span>{{ 'roster.level' | translate }} {{ experience?.level }}</span>
+    </div>
+    <div class="float-right  exp-text">
+        <span><span class="text-muted mr-2">{{ experience?.levelExp - experience?.currentExp }}
+                {{ 'roster.experience' | translate }}
+                {{ 'roster.to' | translate }}</span>
+            {{ 'roster.level' | translate }} {{ experience?.level + 1 }}</span>
+    </div>
+</ng-container>

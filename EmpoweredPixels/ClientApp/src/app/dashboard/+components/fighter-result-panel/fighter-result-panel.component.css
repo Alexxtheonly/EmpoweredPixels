@@ -1,8 +1,8 @@
+.place-image {
+    height: 32px;
+}
+
 .clickable tbody tr:hover {
     background: rgba(3, 0, 33, 0.2);
     cursor: pointer;
-}
-
-.elo-image {
-    height: 20px;
 }

@@ -8,7 +8,9 @@
 		"elo": "Elo",
 		"killDeathRatio": "K/D Verhältnis",
 		"kills": "Kills",
-		"offensiveRating": "Offensives Rating"
+		"offensiveRating": "Offensives Rating",
+		"fighter": "Kämpfer",
+		"username": "Benutzer"
 	},
 	"b174d408-ea66-4e63-a321-613ea6b4dbbe": "Mittel (150 x 150)",
 	"buffs": {
@@ -78,7 +80,11 @@
 		"balance": "Saldo",
 		"enhanceAndCost": "Verbessern, Kosten",
 		"salvageInventory": "Inventar wiederverwerten",
-		"salvageInventoryWarning": "Du bist dabei dein gesamtes Inventar wieder zu verwerten. Es werden alle Gegenstände im Inventar zerstört, die keine Favoriten sind. Angezogenes wird nicht wiederverwertet."
+		"salvageInventoryWarning": "Du bist dabei dein gesamtes Inventar wieder zu verwerten. Es werden alle Gegenstände im Inventar zerstört, die keine Favoriten sind. Angezogenes wird nicht wiederverwertet.",
+		"tries": "Versuche",
+		"failures": "Fehlschläge",
+		"maxEnhancement": "Höchste Verbesserung",
+		"usedCurrency": "Verbraucht"
 	},
 	"items": {
 		"a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702": "Ermächtigte Partikel"
@@ -207,6 +213,11 @@
 		"to": "zu"
 	},
 	"salvageConfirm": "Bist du sicher, dass du {{ name }} {{ rarity }} wiederverwerten möchtest? Es wird dabei zerstört.",
+	"dashboard": {
+		"league": "Liga",
+		"place": "Platzierung",
+		"elo": "Elo"
+	},
 	"skills": {
 		"02be7ca2-7290-4150-8ec3-727a2a6a13a0": "Präziser Pfeil",
 		"050438ad-de49-40f9-8b3b-649d89954d3f": "Schnittsprung",

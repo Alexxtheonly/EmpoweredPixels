@@ -10,6 +10,10 @@ namespace EmpoweredPixels.DataTransferObjects.Armory
 
     public int FighterLevel { get; set; }
 
+    public int FighterElo { get; set; }
+
+    public int FighterPreviousElo { get; set; }
+
     public string Username { get; set; }
 
     public long UserId { get; set; }
