@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using EmpoweredPixels.DataTransferObjects.Armory;
 using EmpoweredPixels.DataTransferObjects.Roster;
 using EmpoweredPixels.Exceptions.Roster;
@@ -30,8 +29,18 @@ namespace EmpoweredPixels.Controllers.Armory
       return Ok(await Context.Fighters
         .Include(o => o.User)
         .Include(o => o.EloRating)
+        .Where(o => o.EloRating != null)
         .OrderByDescending(o => o.EloRating.CurrentElo)
-        .ProjectTo<FighterArmoryViewDto>(Mapper.ConfigurationProvider)
+        .Select(o => new FighterArmoryViewDto()
+        {
+          FighterId = o.Id,
+          FighterName = o.Name,
+          FighterLevel = o.Level,
+          Username = o.User.Name,
+          UserId = o.UserId,
+          FighterElo = o.EloRating.CurrentElo,
+          FighterPreviousElo = o.EloRating.PreviousElo,
+        })
         .GetPage(options));
     }
 

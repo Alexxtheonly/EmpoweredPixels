@@ -6,11 +6,36 @@
                 [ngClass]="balance?.balance < costs ? 'text-danger' : ''">{{ balance?.balance }} <img
                     class="balance-icon" src="assets/images/items/a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702.svg" />
             </span></span>
-        <button [disabled]="enhancementInProgress" class="btn btn-outline-success" (click)="enhance()">
+        <button [disabled]="enhancementInProgress || balance?.balance < costs" class="btn btn-outline-success"
+            (click)="enhance()">
             {{ 'inventory.enhanceAndCost' | translate }}: {{ costs }} <img class="balance-icon"
                 src="assets/images/items/a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702.svg" />
-            <div *ngIf="enhancementInProgress" class="spinner-border text-info" role="status"></div>
+            <div *ngIf="enhancementInProgress" class="spinner-border text-info" style="height: 20px;" role="status">
+            </div>
         </button>
-
+        <hr />
+        <div class="table-responsive">
+            <table class="table table-sm">
+                <tbody>
+                    <tr>
+                        <td>{{ stats.tries }}</td>
+                        <td>{{ 'inventory.tries' | translate }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ stats.failures }}</td>
+                        <td>{{ 'inventory.failures' | translate }}</td>
+                    </tr>
+                    <tr>
+                        <td>+{{ stats.maxEnhancement }}</td>
+                        <td>{{ 'inventory.maxEnhancement' | translate }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ stats.tries * costs }} <img class="balance-icon"
+                                src="assets/images/items/a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702.svg" /></td>
+                        <td>{{ 'inventory.usedCurrency' | translate }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

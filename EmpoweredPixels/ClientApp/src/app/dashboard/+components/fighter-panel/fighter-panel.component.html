@@ -1,0 +1,16 @@
+<ng-container *ngIf="(fighters$ | async) as fighters">
+    <div *ngFor="let fighter of fighters">
+        <p>{{ fighter.fighterName }}
+            <span class="badge">{{ 'dashboard.elo' | translate }}:
+                {{ fighter.fighterElo }}
+                <img class="elo-image" *ngIf="fighter.fighterElo > fighter.fighterPreviousElo"
+                    src="/assets/images/growth.svg">
+                <img class="elo-image" *ngIf="fighter.fighterElo < fighter.fighterPreviousElo"
+                    src="/assets/images/shrink.svg">
+            </span>
+        </p>
+
+        <app-fighter-experience [fighterId]="fighter.fighterId"></app-fighter-experience>
+        <app-fighter-result-panel [fighterId]="fighter.fighterId"></app-fighter-result-panel>
+    </div>
+</ng-container>

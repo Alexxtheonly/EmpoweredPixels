@@ -1,0 +1,26 @@
+<ng-container *ngIf="(results$ | async) as results">
+    <div class="table-responsive">
+        <table class="table table-sm clickable">
+            <thead>
+                <tr>
+                    <th>{{ 'dashboard.place' | translate }}</th>
+                    <th>{{ 'dashboard.league' | translate }}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let result of results" routerLink="/match/{{ result.matchId }}/result">
+                    <td>
+                        <img *ngIf="result.isFirst" src="assets/images/first-place.svg" class="place-image">
+                        <img *ngIf="result.isSecond" src="assets/images/second-place.svg" class="place-image">
+                        <img *ngIf="result.isThird" src="assets/images/third-place.svg" class="place-image">
+                        <img *ngIf="!(result.isFirst || result.isSecond || result.isThird)"
+                            src="assets/images/any-place.svg" class="place-image">
+                    </td>
+                    <td>{{ result.leagueName | translate }}</td>
+                    <td>{{ result.matchStart | timeAgo }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-container>

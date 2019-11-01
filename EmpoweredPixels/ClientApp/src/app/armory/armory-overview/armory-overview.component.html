@@ -1,15 +1,21 @@
 <div class="table-responsive" *ngIf="page?.total > 0">
     <table class="table table-sm clickable">
         <thead>
-            <th>Level</th>
-            <th>Fightername</th>
-            <th>Username</th>
+            <th>{{ 'armory.elo' | translate }}</th>
+            <th>{{ 'armory.fighter' | translate }}</th>
+            <th>{{ 'armory.username' | translate }}</th>
         </thead>
         <tbody>
             <tr [ngClass]="{'text-warning': armory.userId==userId}"
                 *ngFor="let armory of page?.items | paginate: { id: 'server', itemsPerPage: options.pageSize, currentPage: options.pageNumber, totalItems: page.total }"
                 routerLink="/armory/{{ armory.fighterId }}">
-                <td>{{ armory.fighterLevel }}</td>
+                <td>
+                    {{ armory.fighterElo }}
+                    <img class="elo-image" *ngIf="armory.fighterElo > armory.fighterPreviousElo"
+                        src="/assets/images/growth.svg">
+                    <img class="elo-image" *ngIf="armory.fighterElo < armory.fighterPreviousElo"
+                        src="/assets/images/shrink.svg">
+                </td>
                 <td>{{ armory.fighterName }}</td>
                 <td class="text-muted">{{ armory.username }}</td>
             </tr>

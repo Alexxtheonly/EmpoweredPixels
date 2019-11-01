@@ -51,6 +51,9 @@ import { UserLeagueSubscriptionsPipe } from './league/+pipes/user-league-subscri
 import { ArmoryOverviewComponent } from './armory/armory-overview/armory-overview.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FighterExperienceComponent } from './roster/+components/fighter-experience/fighter-experience.component';
+import { LeaguePanelComponent } from './dashboard/+components/league-panel/league-panel.component';
+import { FighterPanelComponent } from './dashboard/+components/fighter-panel/fighter-panel.component';
+import { FighterResultPanelComponent } from './dashboard/+components/fighter-result-panel/fighter-result-panel.component';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -95,7 +98,10 @@ export function HttpLoaderFactory(http: HttpClient)
     UserLeagueSubscriptionsPipe,
     ArmoryOverviewComponent,
     DashboardComponent,
-    FighterExperienceComponent
+    FighterExperienceComponent,
+    LeaguePanelComponent,
+    FighterPanelComponent,
+    FighterResultPanelComponent
   ],
   imports: [
     MomentModule,

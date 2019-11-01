@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { FighterExperience } from './../../../player/+models/fighter-experience';
 import { RosterService } from 'src/app/roster/+services/roster.service';
 import { Component, OnInit, Input } from '@angular/core';
@@ -9,21 +10,12 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class FighterExperienceComponent implements OnInit
 {
-  private id: string;
-
-  public experience: FighterExperience;
-
-  public percent: number;
+  public experience$: Observable<FighterExperience>;
 
   @Input()
   set fighterId(fighterId: string)
   {
-    this.id = fighterId;
-    this.rosterService.getExperience(this.id).subscribe(result =>
-    {
-      this.experience = result;
-      this.percent = (this.experience.currentExp / this.experience.levelExp) * 100;
-    });
+    this.experience$ = this.rosterService.getExperience(fighterId);
   }
 
   constructor(private rosterService: RosterService) { }
@@ -33,4 +25,8 @@ export class FighterExperienceComponent implements OnInit
 
   }
 
+  public getPercent(experience: FighterExperience): number
+  {
+    return (experience.currentExp / experience.levelExp) * 100;
+  }
 }
