@@ -25,7 +25,7 @@ namespace EmpoweredPixels.Skills.Attack.Greatsword.Strong
     {
       return new EngineTick[]
       {
-        target.ApplyCharge(actor, 10),
+        target.ApplyCharge(actor, 9),
       };
     }
   }

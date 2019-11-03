@@ -33,6 +33,7 @@ namespace EmpoweredPixels.Extensions
       added.Speed = stats.Speed + add.Speed;
       added.Vision = stats.Vision + add.Vision;
       added.Vitality = stats.Vitality + add.Vitality;
+      added.ParryChance = stats.ParryChance + add.ParryChance;
 
       return added;
     }

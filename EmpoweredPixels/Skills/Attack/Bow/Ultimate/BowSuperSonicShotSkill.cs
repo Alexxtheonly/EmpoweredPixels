@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SharpFightingEngine.Engines;
 using SharpFightingEngine.Engines.Ticks;
 using SharpFightingEngine.Fighters;
+using SharpFightingEngine.Skills.Conditions;
 using SharpFightingEngine.Skills.Extensions;
 
 namespace EmpoweredPixels.Skills.Attack.Bow.Ultimate
@@ -23,7 +24,7 @@ namespace EmpoweredPixels.Skills.Attack.Bow.Ultimate
     {
       return new List<EngineTick>
       {
-        target.ApplyStun(actor, 20),
+        target.ApplyCondition(actor, 50, new StunSkillCondition(actor) { Remaining = 0 }),
         target.ApplyBleeding(actor, 100)
       };
     }

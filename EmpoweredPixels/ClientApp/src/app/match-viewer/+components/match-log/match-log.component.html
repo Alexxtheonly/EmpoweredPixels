@@ -60,6 +60,7 @@
               {{ 'matchLog.to' | translate }} </span> </span> <span *ngIf="tick.reflected"
             class="font-weight-bold text-muted">
             {{ getName(tick.targetId) }} </span>
+          <span *ngIf="tick.parried" class="text-info">{{ 'matchLog.parried' | translate }}</span>
         </span>
 
         <!--Fighter died tick-->
@@ -87,7 +88,8 @@
 
         <!--Fighter stunned tick-->
         <span *ngIf="tick.isStunned">
-          <span class="font-weight-bold">{{ getName(tick.fighterId) }}</span> {{ 'matchLog.isStunnedCannotPerform' | translate }}
+          <span class="font-weight-bold">{{ getName(tick.fighterId) }}</span>
+          {{ 'matchLog.isStunnedCannotPerform' | translate }}
         </span>
       </div>
     </div>

@@ -23,6 +23,7 @@ namespace EmpoweredPixels.Extensions
           Critical = tick.Critical,
           Reflected = tick.Reflected,
           Dodged = tick.Dodged,
+          Parried = tick.Parried,
           OutOfRange = tick.OutOfRange,
         };
       }

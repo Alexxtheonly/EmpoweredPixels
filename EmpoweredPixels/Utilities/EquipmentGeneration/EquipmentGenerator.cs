@@ -196,6 +196,7 @@ namespace EmpoweredPixels.Utilities.EquipmentGeneration
       }
 
       AdjustWeaponStatPower(weaponGreatsword, 1);
+      AdjustWeaponStatParryChance(weaponGreatsword, 15);
     }
 
     private static void AdjustWeaponBowStats(Equipment weaponBow)
@@ -217,6 +218,7 @@ namespace EmpoweredPixels.Utilities.EquipmentGeneration
 
       AdjustWeaponStatConditionPower(weaponDagger, 0.5F);
       AdjustWeaponStatPower(weaponDagger, 0.5F);
+      AdjustWeaponStatParryChance(weaponDagger, 5);
     }
 
     private static void AdjustWeaponGlaiveStats(Equipment weaponGlaive)
@@ -227,6 +229,7 @@ namespace EmpoweredPixels.Utilities.EquipmentGeneration
       }
 
       AdjustWeaponStatPower(weaponGlaive, 1);
+      AdjustWeaponStatParryChance(weaponGlaive, 15);
     }
 
     private static void AdjustArmorStat(Equipment armor, float factor)
@@ -242,6 +245,11 @@ namespace EmpoweredPixels.Utilities.EquipmentGeneration
     private static void AdjustWeaponStatConditionPower(Equipment weapon, float factor)
     {
       weapon.ConditionPower = CalculateStat(weapon, factor);
+    }
+
+    private static void AdjustWeaponStatParryChance(Equipment weapon, int value)
+    {
+      weapon.ParryChance = value;
     }
 
     private static int CalculateStat(Equipment equipment, float factor)

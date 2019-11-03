@@ -8,7 +8,7 @@ namespace EmpoweredPixels.Skills.Attack.Bow
     /// <summary>
     /// Based on a few hunting sites the effective (kill) range is somewhere between 18m and 36m depending on the archer.
     /// </summary>
-    public override float Range => 27F;
+    public override float Range => 20F;
 
     public override bool CanBeReflected => true;
 
