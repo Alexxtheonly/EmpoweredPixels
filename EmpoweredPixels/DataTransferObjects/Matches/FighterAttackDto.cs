@@ -25,5 +25,7 @@ namespace EmpoweredPixels.DataTransferObjects.Matches
     public bool InsufficientEnergy { get; set; }
 
     public bool Reflected { get; set; }
+
+    public bool Parried { get; set; }
   }
 }

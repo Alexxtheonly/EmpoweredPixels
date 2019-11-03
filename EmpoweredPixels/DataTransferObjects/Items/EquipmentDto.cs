@@ -40,6 +40,8 @@ namespace EmpoweredPixels.DataTransferObjects.Items
 
     public int Vitality { get; set; }
 
+    public int ParryChance { get; set; }
+
     public int HealingPower { get; set; }
 
     public int Speed { get; set; }

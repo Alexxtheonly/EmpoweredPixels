@@ -196,7 +196,11 @@ export class GameViewerComponent implements OnInit
 
   private async handleFighterAttack(attack: FighterAttackTick)
   {
-    const attacker = this.fighters.get(attack.fighterId);
+    if (attack.dodged || attack.parried)
+    {
+      return;
+    }
+
     const target = this.fighters.get(attack.targetId);
 
     target.currentHealth -= attack.damage;

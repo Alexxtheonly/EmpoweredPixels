@@ -18,11 +18,11 @@ namespace EmpoweredPixels.Skills.Attack.Bow.Strong
 
     public override int DamageHigh => 13;
 
-    public override int Cooldown => 2;
+    public override int Cooldown => 1;
 
     public override IEnumerable<EngineTick> Perform(IFighterStats actor, IFighterStats target, EngineCalculationValues calculationValues)
     {
-      return target.ApplyKnockback(actor, 10.15F).Yield();
+      return target.ApplyKnockback(actor, 8).Yield();
     }
   }
 }

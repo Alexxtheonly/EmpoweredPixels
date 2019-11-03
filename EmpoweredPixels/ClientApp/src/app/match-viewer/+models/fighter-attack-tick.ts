@@ -23,4 +23,6 @@ export class FighterAttackTick extends Tick
    public insufficientEnergy: boolean;
 
    public reflected: boolean;
+
+   public parried: boolean;
 }

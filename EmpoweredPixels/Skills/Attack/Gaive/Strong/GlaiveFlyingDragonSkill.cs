@@ -19,7 +19,7 @@ namespace EmpoweredPixels.Skills.Attack.Gaive.Strong
 
     public override int DamageHigh => 12;
 
-    public override int Cooldown => 2;
+    public override int Cooldown => 1;
 
     public override bool CanBeReflected => true;
 
