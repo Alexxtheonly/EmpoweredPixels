@@ -23,6 +23,10 @@ export class EnhancementComponent implements OnInit
 
   public stats: EnhancementStats = new EnhancementStats();
 
+  public desiredEnhancement = 0;
+
+  public autoEnhancementInProgress = false;
+
   constructor(private route: ActivatedRoute, private equipmentService: EquipmentService, private inventoryService: InventoryService)
   {
   }
@@ -67,6 +71,16 @@ export class EnhancementComponent implements OnInit
     {
       this.handleFailure();
     }
+  }
+
+  public async autoEnhance()
+  {
+    this.autoEnhancementInProgress = true;
+    while (this.equipment.enhancement < this.desiredEnhancement)
+    {
+      await this.enhance();
+    }
+    this.autoEnhancementInProgress = false;
   }
 
   private handleSuccess()

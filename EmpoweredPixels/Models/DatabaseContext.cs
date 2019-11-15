@@ -302,6 +302,8 @@ namespace EmpoweredPixels.Models
         e.HasKey(o => o.Id);
         e.Property(o => o.Id).ValueGeneratedOnAdd();
         e.HasOne(o => o.User).WithMany().HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
+        e.HasIndex(o => o.ItemId);
+        e.HasIndex(o => o.UserId);
       });
 
       modelBuilder.Entity<Equipment>(e =>

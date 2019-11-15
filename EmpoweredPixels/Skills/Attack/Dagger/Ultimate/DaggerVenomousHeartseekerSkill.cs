@@ -14,7 +14,7 @@ namespace EmpoweredPixels.Skills.Attack.Dagger.Ultimate
 
     public override string Name => "Venomous Heartseeker";
 
-    public override int DamageLow => 35;
+    public override int DamageLow => 40;
 
     public override int DamageHigh => 45;
 

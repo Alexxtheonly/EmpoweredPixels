@@ -14,7 +14,7 @@ namespace EmpoweredPixels.Skills.Attack.Greatsword.Ultimate
 
     public override string Name => "Eviscerating Cut";
 
-    public override int DamageLow => 28;
+    public override int DamageLow => 35;
 
     public override int DamageHigh => 40;
 
