@@ -84,7 +84,9 @@
 		"tries": "Tries",
 		"failures": "Failures",
 		"maxEnhancement": "Highest enhancement",
-		"usedCurrency": "Used"
+		"usedCurrency": "Used",
+		"cancelAutoEnhancement": "Cancel",
+		"autoEnhance": "Auto"
 	},
 	"items": {
 		"a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702": "Empowered Particle"

@@ -14,7 +14,7 @@ namespace EmpoweredPixels.Skills.Attack.Bow.Ultimate
 
     public override string Name => "Super Sonic Shot";
 
-    public override int DamageLow => 28;
+    public override int DamageLow => 35;
 
     public override int DamageHigh => 40;
 

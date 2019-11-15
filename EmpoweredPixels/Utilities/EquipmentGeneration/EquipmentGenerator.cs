@@ -254,7 +254,7 @@ namespace EmpoweredPixels.Utilities.EquipmentGeneration
 
     private static int CalculateStat(Equipment equipment, float factor)
     {
-      return (int)((equipment.Level + (int)equipment.Rarity + equipment.Enhancement) * factor * BaseValue);
+      return (int)((equipment.Level + ((int)equipment.Rarity * 2) + (equipment.Enhancement * 3)) * factor * BaseValue);
     }
 
     private Equipment Generate(Guid type, int level, ItemRarity rarity, long userId)
