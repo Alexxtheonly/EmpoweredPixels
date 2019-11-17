@@ -51,6 +51,7 @@ namespace EmpoweredPixels.Controllers.Armory
         .Include(o => o.User)
         .Include(o => o.Equipment)
         .ThenInclude(o => o.SocketStones)
+        .Include(o => o.Configuration)
         .FirstOrDefaultAsync(o => o.Id == id);
 
       if (fighter == null)
@@ -83,6 +84,7 @@ namespace EmpoweredPixels.Controllers.Armory
         Deaths = deaths,
         KillDeathRatio = deaths == 0 ? kills : kills / (double)deaths,
         Fighter = Mapper.Map<FighterDto>(fighter),
+        AttunementId = fighter.Configuration?.AttunementId,
       };
 
       return Ok(armory);

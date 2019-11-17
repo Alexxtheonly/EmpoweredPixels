@@ -27,7 +27,7 @@ namespace EmpoweredPixels.Skills.Attack.Dagger.Strong
       return new EngineTick[]
       {
         target.ApplyCharge(actor, Range),
-        actor.ApplyBuff(actor, 75, new ReflectSkillBuff() { Remaining = 1 }),
+        actor.ApplyBuff(actor, 75, new ReflectSkillBuff(actor) { Remaining = 1 }),
       };
     }
   }

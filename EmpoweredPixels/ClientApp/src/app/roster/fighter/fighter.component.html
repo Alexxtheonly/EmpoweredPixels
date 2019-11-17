@@ -4,21 +4,33 @@
     </div>
     <div class="card card-body col-12">
         <h3 class="card-title">{{fighter?.name}}</h3>
-        <div class="card card-body col-12">
-            <app-fighter-experience [fighterId]="fighter?.id"> </app-fighter-experience>
+        <div class="row">
+            <div class="card card-body col-12">
+                <app-fighter-experience [fighterId]="fighter?.id"> </app-fighter-experience>
+            </div>
         </div>
 
-        <div class="card card-body">
-            <h5 class="card-title">{{ 'roster.equipment' | translate }}</h5>
-            <app-fighter-gear [fighter]="fighter" (fighterChanged)="updateFighter($event)"
-                (salvaged)="updateSalvage($event)">
-            </app-fighter-gear>
+        <div class="row">
+            <div class="card card-body">
+                <h5 class="card-title">{{ 'roster.equipment' | translate }}</h5>
+                <app-fighter-gear [fighter]="fighter" (fighterChanged)="updateFighter($event)"
+                    (salvaged)="updateSalvage($event)">
+                </app-fighter-gear>
+            </div>
         </div>
-
-        <div class="card card-body mt-2">
-            <h3 class="card-title">{{ 'roster.inventory' | translate }}</h3>
-            <app-equipment-inventory #inventory [fighter]="fighter" (fighterChanged)="updateFighter($event)"
-                (salvaged)="updateSalvage($event)"></app-equipment-inventory>
+        <div class="row">
+            <div class="card card-body mt-2">
+                <h3 class="card-title">{{ 'roster.inventory' | translate }}</h3>
+                <app-equipment-inventory #inventory [fighter]="fighter" (fighterChanged)="updateFighter($event)"
+                    (salvaged)="updateSalvage($event)"></app-equipment-inventory>
+            </div>
+        </div>
+        <div class="mt-2">
+            <ng-container *ngIf="(configuration$ | async) as configuration">
+                <app-fighter-attunements [selected]="configuration.attunementId"
+                    (selectedChange)="configuration.attunementId=$event;updateConfiguration(configuration);">
+                </app-fighter-attunements>
+            </ng-container>
         </div>
     </div>
 </div>

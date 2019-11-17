@@ -72,6 +72,8 @@ namespace EmpoweredPixels.Models
 
     public DbSet<FighterEloRating> FighterEloRatings { get; set; }
 
+    public DbSet<FighterConfiguration> FighterConfigurations { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       if (modelBuilder == null)
@@ -208,6 +210,7 @@ namespace EmpoweredPixels.Models
                 MaxFightersPerUser = 1,
                 Features = new Guid[]
                 {
+                  FeatureConstants.InvokeAttunementEffect,
                   FeatureConstants.ApplyCondition,
                   FeatureConstants.ApplyBuff,
                 },
@@ -234,6 +237,7 @@ namespace EmpoweredPixels.Models
                 MaxFightersPerUser = 1,
                 Features = new Guid[]
                 {
+                  FeatureConstants.InvokeAttunementEffect,
                   FeatureConstants.ApplyBuff,
                   FeatureConstants.ApplyCondition,
                   FeatureConstants.ReviveDeadFighters,
@@ -333,6 +337,12 @@ namespace EmpoweredPixels.Models
         e.HasKey(o => o.Id);
         e.Property(o => o.Id).ValueGeneratedOnAdd();
         e.HasOne(o => o.Fighter).WithOne(o => o.EloRating).HasForeignKey<FighterEloRating>(o => o.FighterId).OnDelete(DeleteBehavior.Cascade);
+      });
+
+      modelBuilder.Entity<FighterConfiguration>(e =>
+      {
+        e.HasKey(o => o.FighterId);
+        e.HasOne(o => o.Fighter).WithOne(o => o.Configuration).HasForeignKey<FighterConfiguration>(o => o.FighterId).OnDelete(DeleteBehavior.Cascade);
       });
     }
 

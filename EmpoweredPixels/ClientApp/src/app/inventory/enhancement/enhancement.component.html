@@ -8,23 +8,6 @@
             </span></span>
 
         <div class="btn-group" role="group">
-            <button *ngIf="!autoEnhancementInProgress" [disabled]="enhancementInProgress || balance?.balance < costs"
-                class="btn btn-outline-success" (click)="enhance()">
-                {{ 'inventory.enhanceAndCost' | translate }}: {{ costs }} <img class="balance-icon"
-                    src="assets/images/items/a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702.svg" />
-                <div *ngIf="enhancementInProgress" class="spinner-border text-info" style="height: 20px;width: 20px;"
-                    role="status">
-                </div>
-            </button>
-
-            <button *ngIf="autoEnhancementInProgress" class="btn btn-outline-warning" (click)="desiredEnhancement=0">
-                +{{ desiredEnhancement }}
-                {{ 'inventory.cancelAutoEnhancement' | translate }}
-                <div *ngIf="autoEnhancementInProgress" class="spinner-border text-info"
-                    style="height: 20px;width: 20px;" role="status">
-                </div>
-            </button>
-
             <div *ngIf="!autoEnhancementInProgress" class="btn-group" role="group">
                 <button id="btnGroupDrop1" type="button" class="btn btn-outline-success dropdown-toggle"
                     data-toggle="dropdown">
@@ -41,6 +24,23 @@
                         (click)="desiredEnhancement=11;autoEnhance();">+11</button>
                 </div>
             </div>
+
+            <button *ngIf="!autoEnhancementInProgress" [disabled]="enhancementInProgress || balance?.balance < costs"
+                class="btn btn-outline-success" (click)="enhance()">
+                {{ 'inventory.enhanceAndCost' | translate }}: {{ costs }} <img class="balance-icon"
+                    src="assets/images/items/a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702.svg" />
+                <div *ngIf="enhancementInProgress" class="spinner-border text-info" style="height: 20px;width: 20px;"
+                    role="status">
+                </div>
+            </button>
+
+            <button *ngIf="autoEnhancementInProgress" class="btn btn-outline-warning" (click)="desiredEnhancement=0">
+                +{{ desiredEnhancement }}
+                {{ 'inventory.cancelAutoEnhancement' | translate }}
+                <div *ngIf="autoEnhancementInProgress" class="spinner-border text-info"
+                    style="height: 20px;width: 20px;" role="status">
+                </div>
+            </button>
         </div>
 
         <hr />

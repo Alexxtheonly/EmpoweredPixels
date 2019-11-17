@@ -1,3 +1,5 @@
+import { FighterConfiguration } from './../+models/fighter-configuration';
+import { Observable } from 'rxjs';
 import { Item } from './../../rewards/+models/item';
 import { EquipmentInventoryComponent } from './../../inventory/equipment-inventory/equipment-inventory.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,6 +22,8 @@ export class FighterComponent implements OnInit
 
   public items: Item[];
 
+  public configuration$: Observable<FighterConfiguration>;
+
   @ViewChild('inventory', { static: false })
   inventory: EquipmentInventoryComponent;
 
@@ -37,6 +41,8 @@ export class FighterComponent implements OnInit
     {
       this.fighter = result;
     }, error => this.userfeedbackService.error(error));
+
+    this.configuration$ = this.rosterService.getConfiguration(id);
   }
 
   public deleteFighter(fighter: Fighter)
@@ -67,5 +73,10 @@ export class FighterComponent implements OnInit
     {
       this.showSalvage = true;
     }
+  }
+
+  public async updateConfiguration(config: FighterConfiguration)
+  {
+    await this.rosterService.updateConfiguration(this.fighter.id, config).toPromise();
   }
 }

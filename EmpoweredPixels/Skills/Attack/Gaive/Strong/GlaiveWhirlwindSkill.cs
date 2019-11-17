@@ -25,7 +25,7 @@ namespace EmpoweredPixels.Skills.Attack.Gaive.Strong
       return new EngineTick[]
       {
         target.ApplyKnockback(actor, 4),
-        actor.ApplyBuff(actor, 100, new ReflectSkillBuff() { Remaining = 2 }),
+        actor.ApplyBuff(actor, 100, new ReflectSkillBuff(actor) { Remaining = 2 }),
       };
     }
   }

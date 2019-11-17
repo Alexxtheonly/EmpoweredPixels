@@ -24,7 +24,7 @@ namespace EmpoweredPixels.Skills.Attack.Greatsword.Strong
     {
       return new EngineTick[]
       {
-        actor.ApplyBuff(actor, 100, new ReflectSkillBuff()),
+        actor.ApplyBuff(actor, 100, new ReflectSkillBuff(actor)),
       };
     }
   }

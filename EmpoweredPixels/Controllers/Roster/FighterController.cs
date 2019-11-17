@@ -13,6 +13,7 @@ using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Items;
 using EmpoweredPixels.Models.Roster;
 using EmpoweredPixels.Providers.DateTime;
+using EmpoweredPixels.Rewards.Items;
 using EmpoweredPixels.Utilities.EquipmentGeneration;
 using EmpoweredPixels.Utilities.FighterEquipment;
 using EmpoweredPixels.Utilities.FighterProgress;
@@ -282,6 +283,95 @@ namespace EmpoweredPixels.Controllers.Roster
         CurrentExp = level.Experience,
         LevelExp = level.RequiredExperience,
       });
+    }
+
+    [HttpGet("{id}/configuration")]
+    public async Task<ActionResult<FighterConfigurationDto>> GetFighterConfiguration(Guid id)
+    {
+      var userId = User.Claims.GetUserId();
+      if (userId == null)
+      {
+        return Forbid();
+      }
+
+      var fighter = await Context.Fighters
+        .Where(o => o.UserId == userId)
+        .FirstOrDefaultAsync(o => o.Id == id);
+
+      if (fighter == null)
+      {
+        return BadRequest();
+      }
+
+      var config = await Context.FighterConfigurations
+        .ProjectTo<FighterConfigurationDto>(Mapper.ConfigurationProvider)
+        .FirstOrDefaultAsync(o => o.FighterId == id);
+
+      if (config == null)
+      {
+        config = new FighterConfigurationDto()
+        {
+          FighterId = id,
+        };
+      }
+
+      return Ok(config);
+    }
+
+    [HttpPost("{id}/configuration")]
+    public async Task<ActionResult<FighterConfigurationDto>> UpdateFighterConfiguration(Guid id, [FromBody] FighterConfigurationDto dto)
+    {
+      var userId = User.Claims.GetUserId();
+      if (userId == null)
+      {
+        return Forbid();
+      }
+
+      if (id != dto.FighterId)
+      {
+        return BadRequest();
+      }
+
+      var fighter = await Context.Fighters
+        .Where(o => o.UserId == userId)
+        .FirstOrDefaultAsync(o => o.Id == id);
+
+      if (fighter == null)
+      {
+        return BadRequest();
+      }
+
+      var config = await Context.FighterConfigurations
+        .AsTracking()
+        .FirstOrDefaultAsync(o => o.FighterId == id);
+
+      if (config == null)
+      {
+        config = new FighterConfiguration();
+        Context.FighterConfigurations.Add(config);
+      }
+
+      if (config.AttunementId != dto.AttunementId)
+      {
+        var particles = await Context.Items
+          .Where(o => o.UserId == userId)
+          .Where(o => o.ItemId == EmpoweredParticle.Id)
+          .Take(5000)
+          .ToListAsync();
+
+        if (particles.Count != 5000)
+        {
+          return BadRequest();
+        }
+
+        Context.RemoveRange(particles);
+      }
+
+      Mapper.Map(dto, config);
+
+      await Context.SaveChangesAsync();
+
+      return Ok(Mapper.Map<FighterConfigurationDto>(config));
     }
   }
 }

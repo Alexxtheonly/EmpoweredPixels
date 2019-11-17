@@ -26,5 +26,7 @@ namespace EmpoweredPixels.DataTransferObjects.Armory
     public int Deaths { get; set; }
 
     public FighterDto Fighter { get; set; }
+
+    public Guid? AttunementId { get; set; }
   }
 }

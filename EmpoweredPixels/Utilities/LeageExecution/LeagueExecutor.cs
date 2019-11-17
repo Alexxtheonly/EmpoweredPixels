@@ -78,6 +78,8 @@ namespace EmpoweredPixels.Utilities.LeageExecution
         .ThenInclude(o => o.Fighter)
         .ThenInclude(o => o.Equipment)
         .ThenInclude(o => o.SocketStones)
+        .Include(o => o.Registrations)
+        .ThenInclude(o => o.Fighter.Configuration)
         .FirstOrDefaultAsync(o => o.Id == match.Id);
     }
 

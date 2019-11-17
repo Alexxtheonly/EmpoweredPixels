@@ -51,6 +51,8 @@ namespace EmpoweredPixels.Models.Roster
 
     public ICollection<Equipment> Equipment { get; set; }
 
+    public virtual FighterConfiguration Configuration { get; set; }
+
     public IStats Clone()
     {
       return this;

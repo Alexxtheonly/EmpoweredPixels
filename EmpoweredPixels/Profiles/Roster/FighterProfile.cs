@@ -12,6 +12,9 @@ namespace EmpoweredPixels.Profiles.Roster
         .ForMember(o => o.Equipment, opt => opt.MapFrom(o => o.Equipment));
 
       CreateMap<Fighter, FighterNameDto>(MemberList.Destination);
+
+      CreateMap<FighterConfiguration, FighterConfigurationDto>()
+        .ReverseMap();
     }
   }
 }
