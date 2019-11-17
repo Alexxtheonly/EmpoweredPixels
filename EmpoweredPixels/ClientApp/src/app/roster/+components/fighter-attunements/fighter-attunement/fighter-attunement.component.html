@@ -1,0 +1,73 @@
+<div class="col-12 col-lg-2 mt-auto mb-auto">
+    <button *ngIf="attunement === selected" class="btn btn-block btn-success"
+        disabled>{{ 'attunements.active' | translate }}</button>
+    <button *ngIf="attunement !== selected" class="btn btn-block btn-outline-success"
+        (click)="updateBalance();showAttunementConfirm=true;">{{ 'attunements.activate' | translate }}</button>
+</div>
+<span class="col-3 col-lg-1 mt-auto mb-auto">
+    {{ 'attunements.'+attunement | translate }}
+</span>
+<div class="col-3 col-lg-2 mt-auto mb-auto">
+    <img class="attunement-image attunement-image-large" src="/assets/images/attunements/{{ attunement }}.svg">
+</div>
+<table class="col-8 col-lg-2 mt-auto mb-auto text-muted">
+    <tr>
+        <td>
+            <img class="attunement-image attunement-image-small" src="/assets/images/attunements/{{ strength }}.svg">
+        </td>
+        <td>
+            {{ 'attunements.strength' | translate }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img class="attunement-image attunement-image-small" src="/assets/images/attunements/{{ weakness }}.svg">
+        </td>
+        <td>
+            {{ 'attunements.weakness' | translate }}
+        </td>
+    </tr>
+</table>
+<span class="col-12 col-lg-5 mt-auto mb-auto jumbotron">
+    {{ 'attunementDescriptions.' + attunement | translate }}
+</span>
+
+<div class="modal modal-dialog-centered" [ngStyle]="{ display: showAttunementConfirm ? 'flex' : 'none' }">
+    <div class="modal-dialog modal-content">
+        <div class="modal-body">
+            <div class="jumbotron">
+                {{ 'attunements.confirmDialog' | translate }}
+            </div>
+            <div class="row justify-content-center">
+                <img class="attunement-image attunement-image-large"
+                    src="/assets/images/attunements/{{ attunement }}.svg">
+            </div>
+            <ng-container *ngIf="balance">
+                <div class="mb-2">
+                    <div class="row justify-content-center">
+                        <span class="badge">{{ 'attunements.cost' | translate }}: <span>{{ costs }} <img
+                                    class="balance-icon"
+                                    src="assets/images/items/a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702.svg" />
+                            </span></span>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <span class="badge">{{ 'attunements.balance' | translate }}: <span
+                                [ngClass]="balance.balance < costs ? 'text-danger' : ''">{{ balance?.balance }} <img
+                                    class="balance-icon"
+                                    src="assets/images/items/a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702.svg" />
+                            </span></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <button [disabled]="balance.balance < costs" class="btn btn-outline-primary ml-auto mr-auto"
+                        style="width: 45%;"
+                        (click)="selectedChanged(attunement);showAttunementConfirm=false;">{{ 'attunements.attune' | translate }}</button>
+                    <button class="btn btn-outline-info ml-auto mr-auto" style="width: 45%;"
+                        (click)="showAttunementConfirm=false;">{{ 'attunements.notAttune' | translate }}</button>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

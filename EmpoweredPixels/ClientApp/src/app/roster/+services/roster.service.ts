@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FighterStatForecast } from '../+models/fighter-stat-forecast';
 import { Equipment } from '../+models/equipment';
+import { FighterConfiguration } from '../+models/fighter-configuration';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +54,15 @@ export class RosterService
   public getExperience(id: string): Observable<FighterExperience>
   {
     return this.http.get<FighterExperience>(`api/fighter/${id}/experience`);
+  }
+
+  public getConfiguration(fighterId: string): Observable<FighterConfiguration>
+  {
+    return this.http.get<FighterConfiguration>(`api/fighter/${fighterId}/configuration`);
+  }
+
+  public updateConfiguration(fighterId: string, config: FighterConfiguration): Observable<FighterConfiguration>
+  {
+    return this.http.post<FighterConfiguration>(`api/fighter/${fighterId}/configuration`, config);
   }
 }

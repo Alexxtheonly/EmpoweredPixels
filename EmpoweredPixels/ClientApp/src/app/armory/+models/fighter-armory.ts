@@ -20,4 +20,6 @@ export class FighterArmory
     public killDeathRatio: number;
 
     public fighter: Fighter;
+
+    public attunementId: string;
 }

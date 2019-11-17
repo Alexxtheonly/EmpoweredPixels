@@ -10,11 +10,15 @@
 		"kills": "Kills",
 		"offensiveRating": "Offensive Rating",
 		"fighter": "Fighter",
-		"username": "User"
+		"username": "User",
+		"attunedTo": "Attuned to"
 	},
 	"b174d408-ea66-4e63-a321-613ea6b4dbbe": "Medium (150 x 150)",
 	"buffs": {
-		"97a1476f-2669-45e9-b511-3f5caca1742e": "Reflect"
+		"97a1476f-2669-45e9-b511-3f5caca1742e": "Reflect",
+		"2fbb1827-fa41-4a88-8938-359b53187361": "Might",
+		"0bea7329-249e-4630-a003-9154a29b300c": "Protection",
+		"7f286156-d430-455b-9075-deaca41a2705": "Regeneration"
 	},
 	"conditions": {
 		"09fbd6b5-3f0d-4de5-b40b-d7d9c7aa7a92": "Stun",
@@ -88,6 +92,29 @@
 		"cancelAutoEnhancement": "Cancel",
 		"autoEnhance": "Auto"
 	},
+	"attunements": {
+		"44dfb638-7b83-4203-84de-d15a42d7926d": "Fire",
+		"004c6b2c-2e14-479d-b21c-12b1f81fc849": "Wind",
+		"780b0aaa-72f4-405d-b0e3-65867ca31c83": "Lightning",
+		"c26fe510-f508-4c64-b6b0-2e5f5d93181e": "Earth",
+		"8be32154-6b23-4fba-a757-81ab3c111f89": "Water",
+		"strength": "Strength",
+		"weakness": "Weakness",
+		"active": "Active",
+		"activate": "Activate",
+		"attune": "Attune",
+		"notAttune": "Cacnel",
+		"confirmDialog": "The attunement costs the fee shown below. You can change attunements at any time for the same fee.",
+		"cost": "Cost",
+		"balance": "Balance"
+	},
+	"attunementDescriptions": {
+		"44dfb638-7b83-4203-84de-d15a42d7926d": "Attuned to fire, each attack of your fighter has a 10% chance to burn your opponent. It also deals additional damage to fighters attuned to wind. Beware! Water attuned fighters deal more damage to your fighter.",
+		"004c6b2c-2e14-479d-b21c-12b1f81fc849": "Attuned to wind, your fighter gets more power every turn. He also deals additional damage to Lightning attuned fighters. Beware! Fire attuned fighters deal more damage to your fighter.",
+		"780b0aaa-72f4-405d-b0e3-65867ca31c83": "Attuned to Lightning, each attack of your fighter has a 10% chance to stun your opponent. It also deals additional damage to fighters attuned to Earth. Beware! Wind attuned fighters deal more damage to your fighter.",
+		"c26fe510-f508-4c64-b6b0-2e5f5d93181e": "Attuned to Earth, your fighter gets more armor every turn. He also deals additional damage to fighters attuned to water. Beware! Lightning attuned fighters deal more damage to your fighter.",
+		"8be32154-6b23-4fba-a757-81ab3c111f89": "Attuned to water, your fighter regenerates life points every turn. It also deals additional damage to fire attuned fighters. Beware! Earth attuned fighters deal more damage to your fighter."
+	},
 	"items": {
 		"a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702": "Empowered Particle"
 	},
@@ -146,7 +173,8 @@
 		"sacrificed": "sacrificed",
 		"spawnedAt": "spawned at",
 		"to": "to",
-		"with": "with"
+		"with": "with",
+		"regenerated": "regenerated"
 	},
 	"matchViewer": {
 		"damageDone": "Damage done",

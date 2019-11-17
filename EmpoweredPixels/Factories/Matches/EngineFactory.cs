@@ -46,6 +46,7 @@ namespace EmpoweredPixels.Factories.Matches
 
     private readonly IEnumerable<IEngineFeature> engineFeatures = new IEngineFeature[]
     {
+      new FeatureInvokeAttunementEffect(),
       new FeatureApplyCondition(),
       new FeatureApplyBuff(),
       new FeatureSacrificeToEntity(),

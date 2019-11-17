@@ -2,3 +2,13 @@
     background: rgba(1, 7, 59, 0.2);
     padding: 5px;
 }
+
+.attunement-image-small {
+    width: 30px;
+}
+
+.attunement-image {
+    padding: 0.25em;
+    border: black solid;
+    margin: 0.1em;
+}

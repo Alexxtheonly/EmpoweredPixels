@@ -54,6 +54,8 @@ import { FighterExperienceComponent } from './roster/+components/fighter-experie
 import { LeaguePanelComponent } from './dashboard/+components/league-panel/league-panel.component';
 import { FighterPanelComponent } from './dashboard/+components/fighter-panel/fighter-panel.component';
 import { FighterResultPanelComponent } from './dashboard/+components/fighter-result-panel/fighter-result-panel.component';
+import { FighterAttunementsComponent } from './roster/+components/fighter-attunements/fighter-attunements.component';
+import { FighterAttunementComponent } from './roster/+components/fighter-attunements/fighter-attunement/fighter-attunement.component';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -101,7 +103,9 @@ export function HttpLoaderFactory(http: HttpClient)
     FighterExperienceComponent,
     LeaguePanelComponent,
     FighterPanelComponent,
-    FighterResultPanelComponent
+    FighterResultPanelComponent,
+    FighterAttunementsComponent,
+    FighterAttunementComponent
   ],
   imports: [
     MomentModule,

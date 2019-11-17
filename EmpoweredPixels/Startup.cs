@@ -12,6 +12,7 @@ using EmpoweredPixels.Utilities.ContributionPointCalculation;
 using EmpoweredPixels.Utilities.EloCalculation;
 using EmpoweredPixels.Utilities.EnhancementCalculation;
 using EmpoweredPixels.Utilities.EquipmentGeneration;
+using EmpoweredPixels.Utilities.FighterAttunementSelector;
 using EmpoweredPixels.Utilities.FighterEquipment;
 using EmpoweredPixels.Utilities.FighterProgress;
 using EmpoweredPixels.Utilities.FighterSkillSelection;
@@ -80,6 +81,7 @@ namespace EmpoweredPixels
       services.AddTransient<IMatchExecutor, MatchExecutor>();
       services.AddSingleton<ILeagueDivisionDivider, LeagueDivisionDivider>();
       services.AddTransient<ILeagueExecutor, LeagueExecutor>();
+      services.AddSingleton<IFighterAttunementSelector, FighterAttunementSelector>();
 
       services.AddDbContextPool<DatabaseContext>(o => o.ConfigureDatabase(Configuration));
       services.AddAutoMapper(typeof(Startup));

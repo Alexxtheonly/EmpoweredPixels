@@ -1,0 +1,17 @@
+.attunement-image-small {
+    width: 30px;
+}
+
+.attunement-image-large {
+    width: 60px;
+}
+
+.attunement-image {
+    padding: 0.25em;
+    border: black solid;
+    margin: 0.1em;
+}
+
+.balance-icon {
+    width: 20px;
+}

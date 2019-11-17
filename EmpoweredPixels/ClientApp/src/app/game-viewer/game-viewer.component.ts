@@ -12,6 +12,7 @@ import { RoundTick } from './../match-viewer/+models/round-tick';
 import { Component, OnInit, Input, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatchService } from '../match/+services/match.service';
+import { FighterRegeneratedHealth } from '../match-viewer/+models/fighter-regenerated-health';
 
 @Component({
   selector: 'app-game-viewer',
@@ -183,6 +184,12 @@ export class GameViewerComponent implements OnInit
       this.handleFighterHeal(tick as FighterHealTick);
     }
 
+    if (tick.healthPointsRegenerated)
+    {
+      this.handleFighterHealthReg(tick as FighterRegeneratedHealth);
+      return false;
+    }
+
     if (tick.spawned)
     {
       this.handleFighterSpawn(tick as FighterSpawnedTick);
@@ -275,5 +282,11 @@ export class GameViewerComponent implements OnInit
   {
     const fighter = this.fighters.get(heal.targetId);
     fighter.currentHealth += heal.appliedHealing;
+  }
+
+  private handleFighterHealthReg(healthReg: FighterRegeneratedHealth)
+  {
+    const fighter = this.fighters.get(healthReg.fighterId);
+    fighter.currentHealth += healthReg.healthPointsRegenerated;
   }
 }

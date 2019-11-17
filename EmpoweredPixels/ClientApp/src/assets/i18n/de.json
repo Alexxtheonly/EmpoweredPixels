@@ -14,7 +14,10 @@
 	},
 	"b174d408-ea66-4e63-a321-613ea6b4dbbe": "Mittel (150 x 150)",
 	"buffs": {
-		"97a1476f-2669-45e9-b511-3f5caca1742e": "Reflektieren"
+		"97a1476f-2669-45e9-b511-3f5caca1742e": "Reflektieren",
+		"2fbb1827-fa41-4a88-8938-359b53187361": "Macht",
+		"0bea7329-249e-4630-a003-9154a29b300c": "Schutz",
+		"7f286156-d430-455b-9075-deaca41a2705": "Regeneration"
 	},
 	"conditions": {
 		"09fbd6b5-3f0d-4de5-b40b-d7d9c7aa7a92": "Betäuben",
@@ -88,6 +91,29 @@
 		"cancelAutoEnhancement": "Abbrechen",
 		"autoEnhance": "Auto"
 	},
+	"attunements": {
+		"44dfb638-7b83-4203-84de-d15a42d7926d": "Feuer",
+		"004c6b2c-2e14-479d-b21c-12b1f81fc849": "Wind",
+		"780b0aaa-72f4-405d-b0e3-65867ca31c83": "Blitz",
+		"c26fe510-f508-4c64-b6b0-2e5f5d93181e": "Erde",
+		"8be32154-6b23-4fba-a757-81ab3c111f89": "Wasser",
+		"strength": "Stärke",
+		"weakness": "Schwäche",
+		"active": "Aktiv",
+		"activate": "Aktivieren",
+		"attune": "Einstimmen",
+		"notAttune": "Abbrechen",
+		"confirmDialog": "Die Einstimmung kostet die unten ersichtliche Gebühr. Du kannst Einstimmungen jederzeit gegen die gleiche Gebühr wechseln.",
+		"cost": "Kosten",
+		"balance": "Guthaben"
+	},
+	"attunementDescriptions": {
+		"44dfb638-7b83-4203-84de-d15a42d7926d": "Auf Feuer eingestimmt, hat jeder Angriff deines Kämpfers eine 10% Chance den Gegner zu verbrennen. Außerdem fügt er Kämpfern, die auf Wind eingestimmt sind, zusätzlichen Schaden zu. Vorsicht! Auf Wasser eingestimmte Kämpfer fügen deinem Kämpfer mehr Schaden zu.",
+		"004c6b2c-2e14-479d-b21c-12b1f81fc849": "Auf Wind eingestimmt, erhält dein Kämpfer jede Runde mehr Kraft. Außerdem fügt er Kämpfern, die auf Blitz eingestimmt sind, zusätzlichen Schaden zu. Vorsicht! Auf Feuer eingestimmte Kämpfer fügen deinem Kämpfer mehr Schaden zu.",
+		"780b0aaa-72f4-405d-b0e3-65867ca31c83": "Auf Blitz eingestimmt, hat jeder Angriff deines Kämpfers eine 10% Chance den Gegner zu betäuben. Außerdem fügt er Kämpfern, die auf Erde eingestimmt sind, zusätzlichen Schaden zu. Vorsicht! Auf Wind eingestimmte Kämpfer fügen deinem Kämpfer mehr Schaden zu.",
+		"c26fe510-f508-4c64-b6b0-2e5f5d93181e": "Auf Erde eingestimmt, erhält dein Kämpfer jede Runde mehr Rüstung. Außerdem fügt er Kämpfern, die auf Wasser eingestimmt sind, zusätzlichen Schaden zu. Vorsicht! Auf Blitz eingestimmte Kämpfer fügen deinem Kämpfer mehr Schaden zu.",
+		"8be32154-6b23-4fba-a757-81ab3c111f89": "Auf Wasser eingestimmt, regeneriert dein Kämpfer jede Runde Lebenspunkte. Außerdem fügt er Kämpfern, die auf Feuer eingestimmt sind, zusätzlichen Schaden zu. Vorsicht! Auf Erde eingestimmte Kämpfer fügen deinem Kämpfer mehr Schaden zu."
+	},
 	"items": {
 		"a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702": "Ermächtigte Partikel"
 	},
@@ -146,7 +172,8 @@
 		"sacrificed": "geopfert",
 		"spawnedAt": "hervorgebracht an",
 		"to": "zu",
-		"with": "mit"
+		"with": "mit",
+		"regenerated": "regeneriert"
 	},
 	"matchViewer": {
 		"damageDone": "Verursachter Schaden",

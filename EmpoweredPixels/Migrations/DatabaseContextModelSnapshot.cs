@@ -231,14 +231,14 @@ namespace EmpoweredPixels.Migrations
                             Id = 4,
                             IsDeactivated = false,
                             Name = "league.lastmanstanding",
-                            Options = "{\"IntervalCron\":\"0 */2 * * *\",\"IsTeam\":false,\"TeamSize\":null,\"MatchOptions\":{\"IsPrivate\":true,\"MaxPowerlevel\":null,\"ActionsPerRound\":2,\"MaxFightersPerUser\":1,\"BotCount\":null,\"BotPowerlevel\":null,\"Features\":[\"5237c31f-570a-42a6-8855-0ccdc2f351e1\",\"0b93e657-ebf3-42f4-a049-fc9f7b70add9\"],\"Battlefield\":\"dc937e88-f307-4cf0-aef5-b468d27aed4b\",\"Bounds\":\"fb1698b4-809b-40cd-94d6-0a3b257255c3\",\"PositionGenerator\":\"f88be549-9be0-4dd2-aabc-5af599dcc140\",\"MoveOrder\":\"12e9e0ae-eca3-440d-a649-48d687f6d97b\",\"WinCondition\":\"f5f16639-7796-40ee-b15b-f16eb6e946c4\",\"StaleCondition\":\"04616688-2cd1-4341-b757-afdae8af4035\"}}"
+                            Options = "{\"IntervalCron\":\"0 */2 * * *\",\"IsTeam\":false,\"TeamSize\":null,\"MatchOptions\":{\"IsPrivate\":true,\"MaxPowerlevel\":null,\"ActionsPerRound\":2,\"MaxFightersPerUser\":1,\"BotCount\":null,\"BotPowerlevel\":null,\"Features\":[\"273be142-200f-4bf4-bf2c-8308cc49701a\",\"5237c31f-570a-42a6-8855-0ccdc2f351e1\",\"0b93e657-ebf3-42f4-a049-fc9f7b70add9\"],\"Battlefield\":\"dc937e88-f307-4cf0-aef5-b468d27aed4b\",\"Bounds\":\"fb1698b4-809b-40cd-94d6-0a3b257255c3\",\"PositionGenerator\":\"f88be549-9be0-4dd2-aabc-5af599dcc140\",\"MoveOrder\":\"12e9e0ae-eca3-440d-a649-48d687f6d97b\",\"WinCondition\":\"f5f16639-7796-40ee-b15b-f16eb6e946c4\",\"StaleCondition\":\"04616688-2cd1-4341-b757-afdae8af4035\"}}"
                         },
                         new
                         {
                             Id = 5,
                             IsDeactivated = false,
                             Name = "league.deathmatch",
-                            Options = "{\"IntervalCron\":\"0 */5 * * *\",\"IsTeam\":false,\"TeamSize\":null,\"MatchOptions\":{\"IsPrivate\":true,\"MaxPowerlevel\":null,\"ActionsPerRound\":2,\"MaxFightersPerUser\":1,\"BotCount\":null,\"BotPowerlevel\":null,\"Features\":[\"0b93e657-ebf3-42f4-a049-fc9f7b70add9\",\"5237c31f-570a-42a6-8855-0ccdc2f351e1\",\"c34c17d6-550f-4bb1-bfc2-65d443deeb53\"],\"Battlefield\":\"dc937e88-f307-4cf0-aef5-b468d27aed4b\",\"Bounds\":\"fb1698b4-809b-40cd-94d6-0a3b257255c3\",\"PositionGenerator\":\"f88be549-9be0-4dd2-aabc-5af599dcc140\",\"MoveOrder\":\"12e9e0ae-eca3-440d-a649-48d687f6d97b\",\"WinCondition\":\"a9bfa4b5-df2d-4ca3-93b1-f6c721c4e8ff\",\"StaleCondition\":\"cc049ce5-13c5-4f1b-b679-f216eb7c27d9\"}}"
+                            Options = "{\"IntervalCron\":\"0 */5 * * *\",\"IsTeam\":false,\"TeamSize\":null,\"MatchOptions\":{\"IsPrivate\":true,\"MaxPowerlevel\":null,\"ActionsPerRound\":2,\"MaxFightersPerUser\":1,\"BotCount\":null,\"BotPowerlevel\":null,\"Features\":[\"273be142-200f-4bf4-bf2c-8308cc49701a\",\"0b93e657-ebf3-42f4-a049-fc9f7b70add9\",\"5237c31f-570a-42a6-8855-0ccdc2f351e1\",\"c34c17d6-550f-4bb1-bfc2-65d443deeb53\"],\"Battlefield\":\"dc937e88-f307-4cf0-aef5-b468d27aed4b\",\"Bounds\":\"fb1698b4-809b-40cd-94d6-0a3b257255c3\",\"PositionGenerator\":\"f88be549-9be0-4dd2-aabc-5af599dcc140\",\"MoveOrder\":\"12e9e0ae-eca3-440d-a649-48d687f6d97b\",\"WinCondition\":\"a9bfa4b5-df2d-4ca3-93b1-f6c721c4e8ff\",\"StaleCondition\":\"cc049ce5-13c5-4f1b-b679-f216eb7c27d9\"}}"
                         });
                 });
 
@@ -618,6 +618,19 @@ namespace EmpoweredPixels.Migrations
                     b.ToTable("Fighters");
                 });
 
+            modelBuilder.Entity("EmpoweredPixels.Models.Roster.FighterConfiguration", b =>
+                {
+                    b.Property<Guid>("FighterId");
+
+                    b.Property<Guid?>("AttunementId");
+
+                    b.Property<float>("HealThreshold");
+
+                    b.HasKey("FighterId");
+
+                    b.ToTable("FighterConfigurations");
+                });
+
             modelBuilder.Entity("EmpoweredPixels.Models.Roster.FighterExperience", b =>
                 {
                     b.Property<Guid>("Id")
@@ -834,6 +847,14 @@ namespace EmpoweredPixels.Migrations
                     b.HasOne("EmpoweredPixels.Models.Identity.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EmpoweredPixels.Models.Roster.FighterConfiguration", b =>
+                {
+                    b.HasOne("EmpoweredPixels.Models.Roster.Fighter", "Fighter")
+                        .WithOne("Configuration")
+                        .HasForeignKey("EmpoweredPixels.Models.Roster.FighterConfiguration", "FighterId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

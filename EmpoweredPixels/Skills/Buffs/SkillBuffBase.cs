@@ -10,6 +10,11 @@ namespace EmpoweredPixels.Skills.Buffs
 {
   public abstract class SkillBuffBase : ISkillBuff
   {
+    public SkillBuffBase(IFighterStats source)
+    {
+      Source = source;
+    }
+
     public abstract Guid Id { get; }
 
     public abstract string Name { get; }

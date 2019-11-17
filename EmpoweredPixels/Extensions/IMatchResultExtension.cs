@@ -134,6 +134,15 @@ namespace EmpoweredPixels.Extensions
           TargetId = tick.Target.Id,
         };
       }
+      else if (engineTick.GetType() == typeof(FighterRegenerateHealthTick))
+      {
+        var tick = (FighterRegenerateHealthTick)engineTick;
+        return new FighterRegeneratedHealthTickDto()
+        {
+          FighterId = tick.Fighter.Id,
+          HealthPointsRegenerated = tick.HealthPointsRegenerated,
+        };
+      }
       else
       {
         throw new ArgumentException($"No suitable dto for type {engineTick.GetType().Name} found.");

@@ -23,6 +23,11 @@
                             <td>{{ 'roster.level' | translate }}</td>
                             <td>{{ fighterArmory.fighter.level }}</td>
                         </tr>
+                        <tr *ngIf="fighterArmory.attunementId">
+                            <td>{{ 'armory.attunedTo' | translate }}</td>
+                            <td><img class="attunement-image attunement-image-small"
+                                    src="/assets/images/attunements/{{ fighterArmory.attunementId }}.svg"></td>
+                        </tr>
                         <tr>
                             <td>{{ 'armory.offensiveRating' | translate }}</td>
                             <td>{{ fighterArmory.offensiveRating }}</td>
