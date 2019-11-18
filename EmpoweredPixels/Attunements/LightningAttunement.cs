@@ -18,7 +18,7 @@ namespace EmpoweredPixels.Attunements
 
     public override IEnumerable<EngineTick> Attack(IFighterStats actor, IFighterStats target, EngineCalculationValues calculationValues)
     {
-      if (10F.Chance())
+      if (90F.Chance())
       {
         yield break;
       }
