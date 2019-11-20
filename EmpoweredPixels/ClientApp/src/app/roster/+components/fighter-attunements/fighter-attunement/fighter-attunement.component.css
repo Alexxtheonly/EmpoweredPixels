@@ -1,9 +1,11 @@
 .attunement-image-small {
     width: 30px;
+    height: 30px;
 }
 
 .attunement-image-large {
     width: 60px;
+    height: 60px;
 }
 
 .attunement-image {
@@ -14,4 +16,5 @@
 
 .balance-icon {
     width: 20px;
+    height: 20px;
 }
