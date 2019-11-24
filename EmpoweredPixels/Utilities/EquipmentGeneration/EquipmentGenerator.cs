@@ -8,7 +8,7 @@ namespace EmpoweredPixels.Utilities.EquipmentGeneration
 {
   public class EquipmentGenerator : IEquipmentGenerator
   {
-    private const int BaseValue = 10;
+    private const int BaseValue = 30;
 
     private static readonly Dictionary<Guid, Action<Equipment>> StatAdjustments = new Dictionary<Guid, Action<Equipment>>()
     {
@@ -254,7 +254,7 @@ namespace EmpoweredPixels.Utilities.EquipmentGeneration
 
     private static int CalculateStat(Equipment equipment, float factor)
     {
-      return (int)((equipment.Level + ((int)equipment.Rarity * 2) + (equipment.Enhancement * 3)) * factor * BaseValue);
+      return (int)((equipment.Level + ((int)equipment.Rarity) + equipment.Enhancement) * factor * BaseValue);
     }
 
     private Equipment Generate(Guid type, int level, ItemRarity rarity, long userId)

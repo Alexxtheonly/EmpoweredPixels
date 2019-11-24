@@ -79,6 +79,10 @@ export class EnhancementComponent implements OnInit
     while (this.equipment.enhancement < this.desiredEnhancement)
     {
       await this.enhance();
+      if (this.balance.balance < this.costs)
+      {
+        this.desiredEnhancement = 0;
+      }
     }
     this.autoEnhancementInProgress = false;
   }

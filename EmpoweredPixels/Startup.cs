@@ -66,7 +66,7 @@ namespace EmpoweredPixels
       services.AddSingleton<IFighterLevelUpHandler, FighterLevelUpHandler>();
       services.AddSingleton<IFighterSkillSelector, FighterSkillSelector>();
       services.AddSingleton<IFighterStatCalculator, FighterStatCalculator>();
-      services.AddTransient<IRewardTrackCalculator, RewardTrackCalculator>();
+      services.AddTransient<IRewardTrackCalculator, RandomRewardCalculator>();
       services.AddSingleton<IEquipmentEnhancer, EquipmentEnhancer>();
       services.AddSingleton<IEquipmentSalvager, EquipmentSalvager>();
       services.AddTransient<IMatchScoreProcessor, MatchScoreProcessor>();

@@ -7,7 +7,7 @@ namespace EmpoweredPixels.Utilities.FighterEquipment
 {
   public class EquipmentSalvager : IEquipmentSalvager
   {
-    private const int BaseValue = 5;
+    private const int BaseValue = 30;
 
     public IEnumerable<Item> Salvage(IEnhancable enhancable, long userId)
     {
@@ -30,7 +30,7 @@ namespace EmpoweredPixels.Utilities.FighterEquipment
         return 0;
       }
 
-      return (enhancable.Level + (int)enhancable.Rarity + enhancable.Enhancement) * BaseValue;
+      return (int)enhancable.Rarity * BaseValue;
     }
   }
 }
