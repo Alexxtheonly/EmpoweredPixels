@@ -15,8 +15,8 @@ namespace EmpoweredPixels.Rewards.Pools
     {
       [EmpoweredParticle.Id] = new PoolItemOption()
       {
-        QuantityMin = 35,
-        QuantityMax = 50,
+        QuantityMin = 2000,
+        QuantityMax = 2000,
       }
     };
 
