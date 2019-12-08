@@ -33,7 +33,7 @@ export class EnhancementComponent implements OnInit
 
   private async updateBalance()
   {
-    this.balance = await this.inventoryService.getBalance().toPromise();
+    this.balance = await this.inventoryService.getParticleBalance().toPromise();
   }
 
   async ngOnInit()

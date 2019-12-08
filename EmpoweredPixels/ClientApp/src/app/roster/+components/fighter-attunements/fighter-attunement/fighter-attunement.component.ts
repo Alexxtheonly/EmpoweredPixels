@@ -42,7 +42,7 @@ export class FighterAttunementComponent implements OnInit
 
   public async updateBalance()
   {
-    this.balance = await this.inventoryService.getBalance().toPromise();
+    this.balance = await this.inventoryService.getParticleBalance().toPromise();
   }
 
   public selectedChanged(id: string)

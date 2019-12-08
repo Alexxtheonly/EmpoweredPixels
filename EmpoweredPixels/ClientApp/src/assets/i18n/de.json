@@ -37,12 +37,12 @@
 		"724bc2a7-712a-45c5-8c01-bb9c5582e33b": "Schuhe",
 		"922b5587-94e0-4fd1-a896-8e3f64c71304": "Beinpanzer",
 		"96753286-fd45-489e-a3fb-25dc758f94f7": "Großschwert",
-		"armor": "Rüstung",
 		"c615e5ec-88c2-4ebc-b338-c71baa24d5c6": "Glefe",
+		"fb6d6951-7630-4ad8-a005-df72bc02c3bf": "Bogen",
+		"armor": "Rüstung",
 		"close": "Schließen",
 		"enhance": "Verbessern",
 		"equip": "Ausrüsten",
-		"fb6d6951-7630-4ad8-a005-df72bc02c3bf": "Bogen",
 		"level": "Lv.",
 		"power": "Stärke",
 		"salvage": "Wiederverwerten",
@@ -115,7 +115,25 @@
 		"8be32154-6b23-4fba-a757-81ab3c111f89": "Auf Wasser eingestimmt, regeneriert dein Kämpfer jede Runde Lebenspunkte. Außerdem fügt er Kämpfern, die auf Feuer eingestimmt sind, zusätzlichen Schaden zu. Vorsicht! Auf Erde eingestimmte Kämpfer fügen deinem Kämpfer mehr Schaden zu."
 	},
 	"items": {
-		"a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702": "Ermächtigte Partikel"
+		"a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702": "Ermächtigte Partikel",
+		"6fe9907b-a4d9-4a45-a8c6-29bae0d6a5a6": "Token: Gewöhnliche Ausrüstung",
+		"bd973a9c-e294-4489-8841-2ad892f8f2f8": "Token: Seltene Ausrüstung",
+		"fd3be114-08ab-45ad-b5d5-23d7a1906206": "Token: Sagenhafte Ausrüstung",
+		"b583e208-3290-4660-83c6-67c151212261": "Token: Mythische Ausrüstung",
+		"4408ebb1-9213-45c2-9e6d-8ad22ead4edc": "Helm",
+		"47b22820-c3d7-495b-aac8-f29501623723": "Schulterpanzer",
+		"4dd298a2-2405-47cf-b554-6e3db9d57920": "Dolch",
+		"640d7e83-9d98-471e-928f-5a4edaa7f4b0": "Handschuhe",
+		"71e105f2-a098-47d7-a2de-561ca434ec54": "Brustpanzer",
+		"724bc2a7-712a-45c5-8c01-bb9c5582e33b": "Schuhe",
+		"922b5587-94e0-4fd1-a896-8e3f64c71304": "Beinpanzer",
+		"96753286-fd45-489e-a3fb-25dc758f94f7": "Großschwert",
+		"c615e5ec-88c2-4ebc-b338-c71baa24d5c6": "Glefe",
+		"fb6d6951-7630-4ad8-a005-df72bc02c3bf": "Bogen"
+	},
+	"shop": {
+		"price": "Kosten",
+		"buy": "Kaufen"
 	},
 	"league": {
 		"champ": "Liga-Champ",
@@ -190,7 +208,8 @@
 		"armory": "Arsenal",
 		"league": "Ligen",
 		"rewards": "Belohnungen",
-		"roster": "Kämpfer"
+		"roster": "Kämpfer",
+		"shop": "Shop"
 	},
 	"rarity": [
 		"Einfach",

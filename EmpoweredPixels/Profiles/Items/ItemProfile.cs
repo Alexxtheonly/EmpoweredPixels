@@ -10,7 +10,8 @@ namespace EmpoweredPixels.Profiles.Items
     {
       CreateMap<Item, ItemDto>()
         .ForMember(o => o.Id, opt => opt.MapFrom(o => o.Id))
-        .ForMember(o => o.ItemId, opt => opt.MapFrom(o => o.ItemId));
+        .ForMember(o => o.ItemId, opt => opt.MapFrom(o => o.ItemId))
+        .ForMember(o => o.Rarity, opt => opt.MapFrom(o => o.Rarity));
     }
   }
 }
