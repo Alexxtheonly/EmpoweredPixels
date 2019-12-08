@@ -1,0 +1,6 @@
+<ul class="list-group list-group-horizontal">
+    <li *ngFor="let price of prices" class="list-group-item">
+        <span [ngClass]="{ 'text-danger': !hasSufficientBalance(price) }">{{ price.quantity }}</span>
+        <img class="currency-icon" *ngIf="price" src="/assets/images/items/{{ price.currencyItemId }}.svg">
+    </li>
+</ul>

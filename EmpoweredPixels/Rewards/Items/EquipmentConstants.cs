@@ -26,7 +26,7 @@ namespace EmpoweredPixels.Rewards.Items
 
     public static readonly Guid WeaponGlaive = new Guid("C615E5EC-88C2-4EBC-B338-C71BAA24D5C6");
 
-    private static readonly IEnumerable<Guid> Weapons = new Guid[]
+    public static readonly IEnumerable<Guid> Weapons = new Guid[]
     {
       WeaponBow,
       WeaponGreatsword,
@@ -34,9 +34,29 @@ namespace EmpoweredPixels.Rewards.Items
       WeaponGlaive,
     };
 
+    public static readonly IEnumerable<Guid> Armors = new Guid[]
+    {
+      ArmorHead,
+      ArmorShoulders,
+      ArmorChest,
+      ArmorHands,
+      ArmorLegs,
+      ArmorShoes,
+    };
+
     public static bool IsWeaponConstant(Guid equipment)
     {
       return Weapons.Contains(equipment);
+    }
+
+    public static bool IsArmorConstant(Guid equipment)
+    {
+      return Armors.Contains(equipment);
+    }
+
+    public static bool IsEquipmentConstant(Guid equipment)
+    {
+      return IsWeaponConstant(equipment) || IsArmorConstant(equipment);
     }
   }
 }

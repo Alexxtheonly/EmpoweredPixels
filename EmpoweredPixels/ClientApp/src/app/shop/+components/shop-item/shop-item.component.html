@@ -1,0 +1,7 @@
+<app-item [item]="item"></app-item>
+<div class="mr-auto ml-auto">
+    <app-shop-item-price #prices class="d-inline-block" [prices]="item?.prices" [balances]="balances">
+    </app-shop-item-price>
+</div>
+<button class="btn btn-block btn-outline-primary mt-1" [disabled]="!prices.canBeBought()"
+    (click)="buyItem()">{{ 'shop.buy' | translate }}</button>

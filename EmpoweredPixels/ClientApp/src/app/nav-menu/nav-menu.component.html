@@ -23,6 +23,10 @@
               routerLinkActive="router-link-active">{{ 'menu.roster' | translate }}</a>
           </li>
           <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <a class="nav-link" [routerLink]='["/shop"]'
+                routerLinkActive="router-link-active">{{ 'menu.shop' | translate }}</a>
+            </li>
+          <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
             <a class="nav-link" [routerLink]='["/rewards"]'
               routerLinkActive="router-link-active">{{ 'menu.rewards' | translate }}<span class="badge badge-primary"
                 *ngIf="rewardCount>0">{{ rewardCount }}</span></a>

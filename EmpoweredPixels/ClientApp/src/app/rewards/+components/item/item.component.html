@@ -1,8 +1,10 @@
 <div style="padding: 0.5em;">
-    <div class="item-border rounded" style="position: relative; width: 75px; height: 75px; display: inline-block;">
-        <span *ngIf="item" class="badge badge-dark" style="position: absolute; right: 1px;">{{ count }}</span>
-        {{ item.itemId }}
-        <img *ngIf="item" src="assets/images/items/{{ item }}.svg">
+    <div [ngClass]="getCssRarity()" class="item-border rounded"
+        style="position: relative; width: 75px; height: 75px; display: inline-block;">
+        <span *ngIf="item && count > 1" class="badge badge-dark"
+            style="position: absolute; right: 1px;">{{ count }}</span>
+        <img *ngIf="item" src="assets/images/items/{{ item.itemId }}.svg">
     </div>
-    <span *ngIf="item" style="position: absolute; margin-left: 1em;">{{ 'items.' + item | translate }}</span>
+    <span *ngIf="item" class="ml-2" style="position: absolute;">{{ 'items.' + item.itemId | translate }}</span>
+    <span *ngIf="item" [ngClass]="getCssRarity()" class="badge ml-2">{{ 'rarity.' + item.rarity | translate }}</span>
 </div>

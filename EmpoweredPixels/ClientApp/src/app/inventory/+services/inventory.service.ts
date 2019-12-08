@@ -11,8 +11,28 @@ export class InventoryService
 
   constructor(private http: HttpClient) { }
 
-  public getBalance(): Observable<CurrencyBalance>
+  public getParticleBalance(): Observable<CurrencyBalance>
   {
-    return this.http.get<CurrencyBalance>('api/inventory/balance');
+    return this.http.get<CurrencyBalance>('api/inventory/balance/particles');
+  }
+
+  public getCommonTokenBalance(): Observable<CurrencyBalance>
+  {
+    return this.http.get<CurrencyBalance>('api/inventory/balance/token/common');
+  }
+
+  public getRareTokenBalance(): Observable<CurrencyBalance>
+  {
+    return this.http.get<CurrencyBalance>('api/inventory/balance/token/rare');
+  }
+
+  public getFabledTokenBalance(): Observable<CurrencyBalance>
+  {
+    return this.http.get<CurrencyBalance>('api/inventory/balance/token/fabled');
+  }
+
+  public getMythicTokenBalance(): Observable<CurrencyBalance>
+  {
+    return this.http.get<CurrencyBalance>('api/inventory/balance/token/mythic');
   }
 }

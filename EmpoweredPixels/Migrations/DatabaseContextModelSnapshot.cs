@@ -157,6 +157,8 @@ namespace EmpoweredPixels.Migrations
 
                     b.Property<Guid>("ItemId");
 
+                    b.Property<int>("Rarity");
+
                     b.Property<long>("UserId");
 
                     b.HasKey("Id");

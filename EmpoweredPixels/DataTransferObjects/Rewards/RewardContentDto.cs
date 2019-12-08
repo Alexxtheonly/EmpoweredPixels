@@ -5,8 +5,8 @@ namespace EmpoweredPixels.DataTransferObjects.Rewards
 {
   public class RewardContentDto
   {
-    public ICollection<ItemDto> Items { get; set; }
+    public ICollection<ItemDto> Items { get; set; } = new List<ItemDto>();
 
-    public ICollection<EquipmentDto> Equipment { get; set; }
+    public ICollection<EquipmentDto> Equipment { get; set; } = new List<EquipmentDto>();
   }
 }

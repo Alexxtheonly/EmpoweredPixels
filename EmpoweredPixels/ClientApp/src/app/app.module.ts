@@ -56,6 +56,10 @@ import { FighterPanelComponent } from './dashboard/+components/fighter-panel/fig
 import { FighterResultPanelComponent } from './dashboard/+components/fighter-result-panel/fighter-result-panel.component';
 import { FighterAttunementsComponent } from './roster/+components/fighter-attunements/fighter-attunements.component';
 import { FighterAttunementComponent } from './roster/+components/fighter-attunements/fighter-attunement/fighter-attunement.component';
+import { ShopComponent } from './shop/shop.component';
+import { CurrencyBalanceComponent } from './+components/currency-balance/currency-balance.component';
+import { ShopItemComponent } from './shop/+components/shop-item/shop-item.component';
+import { ShopItemPriceComponent } from './shop/+components/shop-item-price/shop-item-price.component';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -105,7 +109,11 @@ export function HttpLoaderFactory(http: HttpClient)
     FighterPanelComponent,
     FighterResultPanelComponent,
     FighterAttunementsComponent,
-    FighterAttunementComponent
+    FighterAttunementComponent,
+    ShopComponent,
+    CurrencyBalanceComponent,
+    ShopItemComponent,
+    ShopItemPriceComponent
   ],
   imports: [
     MomentModule,
@@ -136,6 +144,7 @@ export function HttpLoaderFactory(http: HttpClient)
       { path: 'armory', component: ArmoryOverviewComponent, canActivate: [AuthGuardService] },
       { path: 'armory/:id', component: ArmoryComponent, canActivate: [AuthGuardService] },
       { path: 'equipment/enhance/:id', component: EnhancementComponent, canActivate: [AuthGuardService] },
+      { path: 'shop', component: ShopComponent, canActivate: [AuthGuardService] },
     ]),
     TranslateModule.forRoot({
       loader: {

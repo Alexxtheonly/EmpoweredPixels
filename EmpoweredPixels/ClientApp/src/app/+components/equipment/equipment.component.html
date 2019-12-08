@@ -7,9 +7,8 @@
             src="assets/images/favorite_set.svg">
         <img *ngIf="equipment" src="assets/images/equipment/{{ equipment.type }}.svg">
     </div>
-    <span *ngIf="equipment" style="position: absolute; margin-left: 0.5em;">{{ getTranslation() | translate }}</span>
-    <span *ngIf="equipment" [ngClass]="getLevelColor()" class="badge"
-        style="margin-left: 0.5em;">{{ 'equipment.level' | translate}}
+    <span *ngIf="equipment" class="ml-2" style="position: absolute;">{{ getTranslation() | translate }}</span>
+    <span *ngIf="equipment" [ngClass]="getLevelColor()" class="badge ml-2">{{ 'equipment.level' | translate}}
         {{equipment.level}}</span>
     <span *ngIf="equipment" [ngClass]="getCssRarity()"
         class="badge">{{ 'rarity.' + equipment.rarity | translate }}</span>

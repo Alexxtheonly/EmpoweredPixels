@@ -1,4 +1,5 @@
 ﻿using System;
+using EmpoweredPixels.Enums.Equipment;
 
 namespace EmpoweredPixels.DataTransferObjects.Items
 {
@@ -7,5 +8,7 @@ namespace EmpoweredPixels.DataTransferObjects.Items
     public Guid Id { get; set; }
 
     public Guid ItemId { get; set; }
+
+    public ItemRarity Rarity { get; set; }
   }
 }

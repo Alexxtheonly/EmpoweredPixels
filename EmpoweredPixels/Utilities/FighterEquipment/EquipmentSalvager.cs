@@ -2,6 +2,7 @@
 using EmpoweredPixels.Interfaces.Equipment;
 using EmpoweredPixels.Models.Items;
 using EmpoweredPixels.Rewards.Items;
+using SharpFightingEngine.Utilities;
 
 namespace EmpoweredPixels.Utilities.FighterEquipment
 {
@@ -18,6 +19,17 @@ namespace EmpoweredPixels.Utilities.FighterEquipment
         yield return new Item()
         {
           ItemId = EmpoweredParticle.Id,
+          Rarity = Enums.Equipment.ItemRarity.Basic,
+          UserId = userId,
+        };
+      }
+
+      if (enhancable.Rarity != Enums.Equipment.ItemRarity.Basic && 20F.Chance())
+      {
+        yield return new Item()
+        {
+          ItemId = EquipmentToken.Get(enhancable.Rarity),
+          Rarity = enhancable.Rarity,
           UserId = userId,
         };
       }
