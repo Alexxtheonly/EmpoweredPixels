@@ -8,7 +8,7 @@
         <tbody>
             <tr [ngClass]="{'text-warning': armory.userId==userId}"
                 *ngFor="let armory of page?.items | paginate: { id: 'server', itemsPerPage: options.pageSize, currentPage: options.pageNumber, totalItems: page.total }"
-                routerLink="/armory/{{ armory.fighterId }}">
+                routerLink="/leaderboard/{{ armory.fighterId }}">
                 <td>
                     {{ armory.fighterElo }}
                     <img class="elo-image" *ngIf="armory.fighterElo > armory.fighterPreviousElo"

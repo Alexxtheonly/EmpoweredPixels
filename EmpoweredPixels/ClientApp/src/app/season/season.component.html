@@ -1,0 +1,31 @@
+<div class="table-responsive" *ngIf="page?.total > 0">
+    <table class="table table-sm">
+        <thead>
+            <th>{{ 'seasons.position' | translate }}</th>
+            <th>{{ 'seasons.name' | translate }}</th>
+            <th>{{ 'seasons.reward' | translate }}</th>
+            <th>{{ 'seasons.salvaged' | translate }}</th>
+        </thead>
+        <tbody>
+            <tr
+                *ngFor="let summary of page?.items | paginate: { id: 'server', itemsPerPage: options.pageSize, currentPage: options.pageNumber, totalItems: page.total }">
+                <td>
+                    {{ summary.position }}
+                </td>
+                <td>{{ 'seasons.' + summary.seasonId | translate }}</td>
+                <td>
+                    <app-currency-balance [balance]="getBonusBalance(summary)"></app-currency-balance>
+                </td>
+                <td>
+                    <app-currency-balance [balance]="getSalvageBalance(summary)"></app-currency-balance>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="text-align: center;">
+    <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+    <pagination-controls class="ep-pagination" (pageChange)="loadPage($event)" id="server">
+    </pagination-controls>
+</div>

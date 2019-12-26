@@ -27,7 +27,7 @@ namespace EmpoweredPixels.Extensions
     public static DbContextOptionsBuilder ConfigureSqlServerDatabase(this DbContextOptionsBuilder builder, string connectionString)
     {
       return builder
-         .UseSqlServer(connectionString);
+         .UseSqlServer(connectionString, cfg => cfg.EnableRetryOnFailure());
     }
 
     public static DbContextOptionsBuilder ConfigureDatabase(this DbContextOptionsBuilder builder, IConfiguration configuration)
@@ -39,7 +39,8 @@ namespace EmpoweredPixels.Extensions
       }
       else
       {
-        return builder.ConfigureSqlServerDatabase(connectionString);
+        return builder
+          .ConfigureSqlServerDatabase(connectionString);
       }
     }
   }

@@ -106,6 +106,11 @@ namespace EmpoweredPixels.Controllers.Roster
         return BadRequest();
       }
 
+      if (await Context.Fighters.AnyAsync(o => o.UserId == userId))
+      {
+        return BadRequest();
+      }
+
       var fighter = new Fighter()
       {
         Name = name,
@@ -134,7 +139,6 @@ namespace EmpoweredPixels.Controllers.Roster
 
       fighterOutfitter.Equip(fighter, weapon, false);
 
-      // todo: set max fighters per user
       Context.Fighters.Add(fighter);
       Context.Equipment.AddRange(armorHead, armorShoulders, armorChest, armorHands, armorLegs, armorShoes, weapon);
       await Context.SaveChangesAsync();

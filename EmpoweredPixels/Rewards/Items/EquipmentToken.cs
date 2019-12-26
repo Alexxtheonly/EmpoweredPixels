@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using EmpoweredPixels.Enums.Equipment;
 
 namespace EmpoweredPixels.Rewards.Items
@@ -14,6 +15,15 @@ namespace EmpoweredPixels.Rewards.Items
     public static readonly Guid Mythic = new Guid("B583E208-3290-4660-83C6-67C151212261");
 
     public static readonly Guid Legendary = new Guid("2DC028CD-16B5-47DC-A192-BCF0D35B4D1A");
+
+    public static readonly IEnumerable<Guid> Tokens = new Guid[]
+    {
+      Common,
+      Rare,
+      Fabled,
+      Mythic,
+      Legendary,
+    };
 
     public static Guid Get(ItemRarity rarity)
     {

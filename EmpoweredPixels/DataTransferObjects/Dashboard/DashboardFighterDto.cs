@@ -8,8 +8,8 @@ namespace EmpoweredPixels.DataTransferObjects.Dashboard
 
     public string FighterName { get; set; }
 
-    public int FighterElo { get; set; }
+    public int? FighterElo { get; set; }
 
-    public int FighterPreviousElo { get; set; }
+    public int? FighterPreviousElo { get; set; }
   }
 }

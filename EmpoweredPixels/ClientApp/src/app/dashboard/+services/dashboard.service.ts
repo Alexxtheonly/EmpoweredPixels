@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { DashboardLeague } from '../+models/dashboard-league';
 import { DashboardFighter } from '../+models/dashboard-fighter';
 import { DashboardFighterResult } from '../+models/dashboard-fighter-result';
+import { DashboardSeason } from '../+models/dashboard-season';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +27,10 @@ export class DashboardService
   public getFighterResults(fighterId: string): Observable<DashboardFighterResult[]>
   {
     return this.http.get<DashboardFighterResult[]>(`api/dashboard/results/${fighterId}`);
+  }
+
+  public getSeason(): Observable<DashboardSeason>
+  {
+    return this.http.get<DashboardSeason>('api/dashboard/season');
   }
 }

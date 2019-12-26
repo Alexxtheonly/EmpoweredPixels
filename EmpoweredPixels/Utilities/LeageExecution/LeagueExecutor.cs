@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Leagues;
 using EmpoweredPixels.Models.Matches;
+using EmpoweredPixels.Models.Roster;
 using EmpoweredPixels.Providers.DateTime;
 using EmpoweredPixels.Utilities.MatchExecution;
 using Microsoft.EntityFrameworkCore;
@@ -32,12 +33,9 @@ namespace EmpoweredPixels.Utilities.LeageExecution
     {
       var league = await GetLeague(leagueId);
 
-      if (!league.Subscriptions.Skip(1).Any())
-      {
-        return;
-      }
+      var fighters = await databaseContext.Fighters.Include(o => o.EloRating).ToListAsync();
 
-      var divisions = divisionDivider.GetDivisions(league.Subscriptions);
+      var divisions = divisionDivider.GetDivisions(fighters);
 
       foreach (var division in divisions)
       {
@@ -45,7 +43,7 @@ namespace EmpoweredPixels.Utilities.LeageExecution
       }
     }
 
-    private async Task ExecuteDivisionMatch(League league, IGrouping<int, LeagueSubscription> division)
+    private async Task ExecuteDivisionMatch(League league, IGrouping<int, Fighter> division)
     {
       var match = new Match()
       {
@@ -68,6 +66,7 @@ namespace EmpoweredPixels.Utilities.LeageExecution
       });
 
       await matchExecutor.Execute(match);
+      await databaseContext.SaveChangesAsync();
     }
 
     private Task<Match> GetMatch(Match match)
@@ -83,14 +82,14 @@ namespace EmpoweredPixels.Utilities.LeageExecution
         .FirstOrDefaultAsync(o => o.Id == match.Id);
     }
 
-    private void AddMatchRegistrations(IGrouping<int, LeagueSubscription> division, Match match)
+    private void AddMatchRegistrations(IGrouping<int, Fighter> division, Match match)
     {
       foreach (var subscriber in division)
       {
         match.Registrations.Add(new MatchRegistration()
         {
           Date = dateTimeProvider.Now,
-          FighterId = subscriber.FighterId,
+          FighterId = subscriber.Id,
           Match = match,
         });
       }

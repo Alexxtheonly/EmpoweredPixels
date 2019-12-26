@@ -206,11 +206,12 @@
 		"team": "Team"
 	},
 	"menu": {
-		"armory": "Armory",
+		"leaderboard": "Leaderboard",
 		"league": "Leagues",
 		"rewards": "Rewards",
 		"roster": "Roster",
-		"shop": "Shop"
+		"shop": "Shop",
+		"season": "Seasons"
 	},
 	"rarity": [
 		"Basic",
@@ -266,7 +267,10 @@
 	"dashboard": {
 		"league": "League",
 		"place": "Place",
-		"elo": "Elo"
+		"elo": "Elo",
+		"season": "Season",
+		"position": "Position",
+		"ends": "Ends"
 	},
 	"skills": {
 		"02be7ca2-7290-4150-8ec3-727a2a6a13a0": "Precise Arrow",
@@ -290,5 +294,24 @@
 		"954d02ec-92c2-4b0d-9a2f-ea3bf4704fd7": "Eviscerating Cut",
 		"d269bb3a-d3ae-4a42-a1dc-28f557b78f4d": "Backstab",
 		"f0ac2cba-fbcb-4b37-a564-1f333ce58c74": "Swing"
+	},
+	"seasons": {
+		"4de99edf-3fed-40f7-b920-d2f7364edba4": "Lynx",
+		"7c3eb882-3f6e-4d4c-9981-f18c4956a9f9": "Bull",
+		"db9f6bfd-af72-4db9-9009-e0ee67455b65": "Frog",
+		"89e755c5-b53d-46c6-b3f1-c418d1dc32e4": "Gorilla",
+		"3a98a10d-f2ae-4700-b65d-0a44625fc08d": "Griffin",
+		"df75d992-6b64-44d7-aaf3-fd07aec1374b": "Lion",
+		"92d0d0f9-57d5-4f49-b1fa-68e9aad60846": "Octopus",
+		"d087ce6b-7027-4cba-94f3-5af0299f5e68": "Panda",
+		"1e2c8876-ff2e-408e-9034-14667cbba862": "Pegasus",
+		"c34a9f16-8de7-4240-afa8-982bbc720117": "Mantis",
+		"ecf7b8ca-7e58-47e1-8a6a-56b4694d4d27": "Wyrm",
+		"a1c6ea93-5f75-4962-a86f-c26e2190a939": "Tiger",
+		"6b4d3986-1f25-4887-8c4a-ae44cdd034d1": "Wolf",
+		"position": "Position",
+		"name": "Name",
+		"reward": "Reward",
+		"salvaged": "Salvaged"
 	}
 }

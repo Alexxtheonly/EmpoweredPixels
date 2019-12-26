@@ -18,13 +18,10 @@ import { NewFighterComponent } from './roster/new-fighter/new-fighter.component'
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { FighterStatComponent } from './roster/fighter/+directives/fighter-stat/fighter-stat.component';
 import { MatchCreationComponent } from './match/match-creation/match-creation.component';
-import { MatchlobbyComponent } from './match/matchlobby/matchlobby.component';
-import { MatchParticipantComponent } from './match/matchlobby/match-participant/match-participant.component';
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { FighterNamePipe } from './match-viewer/+pipes/fighter-name-pipe';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { MatchbrowserComponent } from './match/matchbrowser/matchbrowser.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgAggregatePipesModule, NgArrayPipesModule } from 'angular-pipes';
 import { LeagueBrowserComponent } from './league/league-browser/league-browser.component';
@@ -60,6 +57,8 @@ import { ShopComponent } from './shop/shop.component';
 import { CurrencyBalanceComponent } from './+components/currency-balance/currency-balance.component';
 import { ShopItemComponent } from './shop/+components/shop-item/shop-item.component';
 import { ShopItemPriceComponent } from './shop/+components/shop-item-price/shop-item-price.component';
+import { SeasonPanelComponent } from './dashboard/+components/season-panel/season-panel.component';
+import { SeasonComponent } from './season/season.component';
 
 export function HttpLoaderFactory(http: HttpClient)
 {
@@ -79,12 +78,9 @@ export function HttpLoaderFactory(http: HttpClient)
     NewFighterComponent,
     FighterStatComponent,
     MatchCreationComponent,
-    MatchlobbyComponent,
-    MatchParticipantComponent,
     TimeAgoPipe,
     FighterNamePipe,
     FooterComponent,
-    MatchbrowserComponent,
     LeagueBrowserComponent,
     LeagueDetailComponent,
     GameViewerComponent,
@@ -113,7 +109,9 @@ export function HttpLoaderFactory(http: HttpClient)
     ShopComponent,
     CurrencyBalanceComponent,
     ShopItemComponent,
-    ShopItemPriceComponent
+    ShopItemPriceComponent,
+    SeasonPanelComponent,
+    SeasonComponent,
   ],
   imports: [
     MomentModule,
@@ -134,17 +132,17 @@ export function HttpLoaderFactory(http: HttpClient)
       { path: 'roster', component: RosterComponent, canActivate: [AuthGuardService] },
       { path: 'roster/fighter/new', component: NewFighterComponent, canActivate: [AuthGuardService] },
       { path: 'roster/fighter/:id', component: FighterComponent, canActivate: [AuthGuardService] },
-      { path: 'match/:id', component: MatchlobbyComponent, canActivate: [AuthGuardService] },
       { path: 'match/:id/result', component: MatchViewerComponent, canActivate: [AuthGuardService] },
       { path: 'match/:id/log', component: MatchLogComponent, canActivate: [AuthGuardService] },
       { path: 'league', component: LeagueBrowserComponent, canActivate: [AuthGuardService] },
       { path: 'league/:id', component: LeagueDetailComponent, canActivate: [AuthGuardService] },
       { path: 'replay/:id', component: GameViewerComponent, canActivate: [AuthGuardService] },
       { path: 'rewards', component: RewardsComponent, canActivate: [AuthGuardService] },
-      { path: 'armory', component: ArmoryOverviewComponent, canActivate: [AuthGuardService] },
-      { path: 'armory/:id', component: ArmoryComponent, canActivate: [AuthGuardService] },
+      { path: 'leaderboard', component: ArmoryOverviewComponent, canActivate: [AuthGuardService] },
+      { path: 'leaderboard/:id', component: ArmoryComponent, canActivate: [AuthGuardService] },
       { path: 'equipment/enhance/:id', component: EnhancementComponent, canActivate: [AuthGuardService] },
       { path: 'shop', component: ShopComponent, canActivate: [AuthGuardService] },
+      { path: 'seasons', component: SeasonComponent, canActivate: [AuthGuardService] },
     ]),
     TranslateModule.forRoot({
       loader: {

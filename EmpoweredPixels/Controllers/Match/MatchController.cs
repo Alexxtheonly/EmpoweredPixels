@@ -10,7 +10,6 @@ using EmpoweredPixels.Exceptions.Matches;
 using EmpoweredPixels.Exceptions.Roster;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Factories.Matches;
-using EmpoweredPixels.Hubs.Matches;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Matches;
 using EmpoweredPixels.Providers.DateTime;
@@ -18,7 +17,6 @@ using EmpoweredPixels.Utilities.ContributionPointCalculation;
 using EmpoweredPixels.Utilities.Paging;
 using EmpoweredPixels.Utilities.Paging.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SharpFightingEngine.Fighters;
@@ -28,7 +26,6 @@ namespace EmpoweredPixels.Controllers.Matches
   public class MatchController : ControllerBase<DatabaseContext, MatchController>
   {
     private readonly IDateTimeProvider dateTimeProvider;
-    private readonly IHubContext<MatchHub, IMatchClient> matchHubContext;
     private readonly IEngineFactory engineFactory;
 
     public MatchController(
@@ -36,12 +33,10 @@ namespace EmpoweredPixels.Controllers.Matches
       ILogger<MatchController> logger,
       IMapper mapper,
       IDateTimeProvider dateTimeProvider,
-      IHubContext<MatchHub, IMatchClient> matchHubContext,
       IEngineFactory engineFactory)
       : base(context, logger, mapper)
     {
       this.dateTimeProvider = dateTimeProvider;
-      this.matchHubContext = matchHubContext;
       this.engineFactory = engineFactory;
     }
 
@@ -81,11 +76,6 @@ namespace EmpoweredPixels.Controllers.Matches
 
       Context.Add(match);
       await Context.SaveChangesAsync();
-
-      if (!match.Options.IsPrivate)
-      {
-        _ = matchHubContext.Clients.All.UpdateMatchBrowser();
-      }
 
       return Ok(Mapper.Map<MatchDto>(match));
     }
@@ -202,13 +192,6 @@ namespace EmpoweredPixels.Controllers.Matches
       Context.MatchRegistrations.Add(registration);
       await Context.SaveChangesAsync();
 
-      if (!match.Options.IsPrivate)
-      {
-        _ = matchHubContext.Clients.All.UpdateMatchBrowser();
-      }
-
-      await PushMatchUpdate(match.Id);
-
       return Ok();
     }
 
@@ -289,8 +272,6 @@ namespace EmpoweredPixels.Controllers.Matches
 
       await Context.SaveChangesAsync();
 
-      await PushMatchUpdate(match.Id);
-
       return Ok();
     }
 
@@ -330,13 +311,6 @@ namespace EmpoweredPixels.Controllers.Matches
 
       Context.MatchRegistrations.Remove(registration);
       await Context.SaveChangesAsync();
-
-      if (!match.Options.IsPrivate)
-      {
-        _ = matchHubContext.Clients.All.UpdateMatchBrowser();
-      }
-
-      await PushMatchUpdate(match.Id);
 
       return Ok();
     }
@@ -379,8 +353,6 @@ namespace EmpoweredPixels.Controllers.Matches
       registration.TeamId = null;
       await Context.SaveChangesAsync();
 
-      await PushMatchUpdate(match.Id);
-
       return Ok();
     }
 
@@ -419,17 +391,6 @@ namespace EmpoweredPixels.Controllers.Matches
       }
 
       return Ok(scores.OrderByDescending(o => o.Points));
-    }
-
-    private async Task PushMatchUpdate(Guid id)
-    {
-      var match = await Context.Matches
-        .Include(o => o.Registrations)
-        .ThenInclude(o => o.Fighter)
-        .ThenInclude(o => o.User)
-        .FirstOrDefaultAsync(o => o.Id == id);
-
-      await matchHubContext.Clients.Group(id.ToString()).UpdateMatch(Mapper.Map<MatchDto>(match));
     }
   }
 }

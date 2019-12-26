@@ -54,12 +54,7 @@ namespace EmpoweredPixels.Utilities.MatchExecution
         }
 
         var levelBefore = fighterExperienceCalculator.GetLevel(fighterExperience);
-
-        // to boost low level fighters facing high level fighters we use this multiplicator to give them more experience
-        // based on level difference
-        var levelDifference = maxLevelInMatch - fighter.Level;
-
-        fighterExperienceCalculator.AddExperience(fighterExperience, contribution, levelDifference);
+        fighterExperienceCalculator.AddExperience(fighterExperience, contribution, 0);
         var levelAfter = fighterExperienceCalculator.GetLevel(fighterExperience);
 
         for (int i = levelBefore.Level; i < levelAfter.Level; i++)
