@@ -57,9 +57,9 @@ namespace EmpoweredPixels.Test.Utilities.EloCalculation
 
       eloCalculator.Calculate(ratings, positions);
 
-      Assert.Equal(1516, player1.CurrentElo);
+      Assert.Equal(1508, player1.CurrentElo);
       Assert.Equal(1500, player0.CurrentElo);
-      Assert.Equal(1484, player2.CurrentElo);
+      Assert.Equal(1492, player2.CurrentElo);
 
       Assert.Equal(1500, player0.PreviousElo);
       Assert.Equal(1500, player1.PreviousElo);
