@@ -2,9 +2,9 @@ using AutoMapper;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Factories.Matches;
 using EmpoweredPixels.Factories.Rewards;
-using EmpoweredPixels.Hubs.Matches;
 using EmpoweredPixels.Jobs;
 using EmpoweredPixels.Jobs.Rewards;
+using EmpoweredPixels.Jobs.Seasons;
 using EmpoweredPixels.Models;
 using EmpoweredPixels.Providers.DateTime;
 using EmpoweredPixels.Providers.Version;
@@ -20,6 +20,8 @@ using EmpoweredPixels.Utilities.FighterStatCalculation;
 using EmpoweredPixels.Utilities.LeageExecution;
 using EmpoweredPixels.Utilities.MatchExecution;
 using EmpoweredPixels.Utilities.RewardTrackCalculation;
+using EmpoweredPixels.Utilities.Season.Postprocessing;
+using EmpoweredPixels.Utilities.Season.Preprocessing;
 using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -83,10 +85,19 @@ namespace EmpoweredPixels
       services.AddTransient<ILeagueExecutor, LeagueExecutor>();
       services.AddSingleton<IFighterAttunementSelector, FighterAttunementSelector>();
 
-      services.AddDbContextPool<DatabaseContext>(o => o.ConfigureDatabase(Configuration));
-      services.AddAutoMapper(typeof(Startup));
+      services.AddTransient<ISeasonMatchRemover, SeasonMatchRemover>();
+      services.AddTransient<ISeasonFighterResetter, SeasonFighterResetter>();
+      services.AddTransient<ISeasonSalvageRewardProvider, SeasonSalvageRewardProvider>();
+      services.AddTransient<ISeasonEloRewardProvider, SeasonEloRewardProvider>();
+      services.AddTransient<ISeasonRewardClaimer, SeasonRewardClaimer>();
+      services.AddTransient<ISeasonPostprocessor, SeasonPostprocessor>();
 
-      services.AddSignalR();
+      services.AddTransient<ISeasonCreator, SeasonCreator>();
+      services.AddTransient<ISeasonInitiatorJob, SeasonInitiatorJob>();
+      services.AddTransient<ISeasonUserJob, SeasonUserJob>();
+
+      services.AddDbContext<DatabaseContext>(o => o.ConfigureDatabase(Configuration), ServiceLifetime.Transient);
+      services.AddAutoMapper(typeof(Startup));
 
       services.AddAuthentication(o =>
       {
@@ -121,6 +132,7 @@ namespace EmpoweredPixels
     {
       recurringJobManager.AddLeagueJobs(databaseContext);
       recurringJobManager.AddLoginRewardJob();
+      recurringJobManager.AddSeasonJob();
 
       app.UseResponseCompression();
       app.UseAuthentication();
@@ -137,11 +149,6 @@ namespace EmpoweredPixels
         routes.MapRoute(
                   name: "default",
                   template: "{controller}/{action=Index}/{id?}");
-      });
-
-      app.UseSignalR(configure =>
-      {
-        configure.MapHub<MatchHub>("/hub/match");
       });
 
       app.UseSpa(spa =>

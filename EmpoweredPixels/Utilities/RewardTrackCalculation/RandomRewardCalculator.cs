@@ -12,8 +12,8 @@ namespace EmpoweredPixels.Utilities.RewardTrackCalculation
 {
   public class RandomRewardCalculator : IRewardTrackCalculator
   {
-    private IDateTimeProvider dateTimeProvider;
-    private DatabaseContext context;
+    private readonly IDateTimeProvider dateTimeProvider;
+    private readonly DatabaseContext context;
 
     public RandomRewardCalculator(IDateTimeProvider dateTimeProvider, DatabaseContext context)
     {
@@ -51,12 +51,12 @@ namespace EmpoweredPixels.Utilities.RewardTrackCalculation
 
     private Guid? GetRewardPoolId()
     {
-      if (10F.Chance())
+      if (2.5F.Chance())
       {
         return EmpoweredChestRewardPool.Mythic;
       }
 
-      if (25F.Chance())
+      if (10F.Chance())
       {
         return EmpoweredChestRewardPool.Fabled;
       }
@@ -76,22 +76,22 @@ namespace EmpoweredPixels.Utilities.RewardTrackCalculation
 
     private int GetRolls()
     {
-      if (5F.Chance())
+      if (1F.Chance())
       {
         return 5;
       }
 
-      if (15F.Chance())
+      if (4F.Chance())
       {
         return 4;
       }
 
-      if (25F.Chance())
+      if (8F.Chance())
       {
         return 3;
       }
 
-      if (35F.Chance())
+      if (12F.Chance())
       {
         return 2;
       }

@@ -1,0 +1,10 @@
+.season-image {
+    height: 75px;
+    width: 75px;
+    background: linear-gradient(135deg, #b6cfff2b 40%, #453ace24 100%)
+}
+
+.season-progress {
+    height: 2em;
+    background-color: #00000052;
+}

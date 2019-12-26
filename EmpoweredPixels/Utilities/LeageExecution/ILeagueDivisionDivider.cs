@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using EmpoweredPixels.Models.Leagues;
+using EmpoweredPixels.Models.Roster;
 
 namespace EmpoweredPixels.Utilities.LeageExecution
 {
   public interface ILeagueDivisionDivider
   {
-    IEnumerable<IGrouping<int, LeagueSubscription>> GetDivisions(IEnumerable<LeagueSubscription> subscriptions);
+    IEnumerable<IGrouping<int, Fighter>> GetDivisions(IEnumerable<Fighter> fighters);
   }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using EmpoweredPixels.Models.Leagues;
+using EmpoweredPixels.Models.Roster;
 
 namespace EmpoweredPixels.Utilities.LeageExecution
 {
@@ -9,21 +9,21 @@ namespace EmpoweredPixels.Utilities.LeageExecution
     private const int MinSize = 4;
     private const int MaxSize = 25;
 
-    private const int EloDifferenceSplit = 50;
+    private const int EloDifferenceSplit = 20;
 
     public LeagueDivisionDivider()
     {
     }
 
-    public IEnumerable<IGrouping<int, LeagueSubscription>> GetDivisions(IEnumerable<LeagueSubscription> subscriptions)
+    public IEnumerable<IGrouping<int, Fighter>> GetDivisions(IEnumerable<Fighter> subscriptions)
     {
       var sortedByPowerlevel = subscriptions
-        .Select(o => new { Subscription = o, Elo = o.Fighter.EloRating?.CurrentElo ?? 0 })
+        .Select(o => new { Fighter = o, Elo = o.EloRating?.CurrentElo ?? 0 })
         .OrderBy(o => o.Elo)
         .ToList();
 
-      var groups = new List<Group<int, LeagueSubscription>>();
-      var group = new Group<int, LeagueSubscription>();
+      var groups = new List<Group<int, Fighter>>();
+      var group = new Group<int, Fighter>();
       int? minEloInGroup = null;
 
       for (int i = 0; i < sortedByPowerlevel.Count; i++)
@@ -43,11 +43,11 @@ namespace EmpoweredPixels.Utilities.LeageExecution
         {
           groups.Add(group);
 
-          group = new Group<int, LeagueSubscription>();
+          group = new Group<int, Fighter>();
           minEloInGroup = null;
         }
 
-        group.Add(sub.Subscription);
+        group.Add(sub.Fighter);
       }
 
       groups.Add(group);

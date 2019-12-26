@@ -1,0 +1,20 @@
+<ng-container *ngIf="season$ | async as season">
+    <h3 class="card-title">{{ 'dashboard.season' | translate }}</h3>
+    <div class="d-inline-block text-center mr-3">
+        <img class="season-image img-thumbnail season-background"
+            src="/assets/images/seasons/{{ season.seasonId }}.svg">
+        <p>{{ 'seasons.' + season.seasonId | translate }}</p>
+    </div>
+    <div class="d-inline-block align-top">
+        <div class="progress season-progress">
+            <div class="progress-bar bg-info season-progress" [ngStyle]="{ width: getSeasonProgress(season) + '%' }">
+                {{getSeasonProgress(season) | number:'1.2-2'}} %
+            </div>
+        </div>
+
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item">{{ 'dashboard.position' | translate }}: {{ season.position }}</li>
+            <li class="list-group-item">{{ 'dashboard.ends' | translate }} {{ getDiff(season.endDate) }}</li>
+        </ul>
+    </div>
+</ng-container>

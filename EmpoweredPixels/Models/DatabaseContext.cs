@@ -8,7 +8,9 @@ using EmpoweredPixels.Models.Matches;
 using EmpoweredPixels.Models.Ratings;
 using EmpoweredPixels.Models.Rewards;
 using EmpoweredPixels.Models.Roster;
+using EmpoweredPixels.Models.Seasons;
 using EmpoweredPixels.Rewards.Pools.Chests;
+using EmpoweredPixels.Utilities.Season;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SharpFightingEngine.Battlefields.Constants;
@@ -73,6 +75,12 @@ namespace EmpoweredPixels.Models
     public DbSet<FighterEloRating> FighterEloRatings { get; set; }
 
     public DbSet<FighterConfiguration> FighterConfigurations { get; set; }
+
+    public DbSet<Season> Seasons { get; set; }
+
+    public DbSet<SeasonSummary> SeasonSummaries { get; set; }
+
+    public DbSet<SeasonProgress> SeasonProgresses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -200,7 +208,7 @@ namespace EmpoweredPixels.Models
             Name = "league.lastmanstanding",
             Options = new LeagueOptionsDto()
             {
-              IntervalCron = "0 */2 * * *",
+              IntervalCron = "0 * * * *",
               MatchOptions = new MatchOptionsDto()
               {
                 ActionsPerRound = 2,
@@ -227,7 +235,7 @@ namespace EmpoweredPixels.Models
             Name = "league.deathmatch",
             Options = new LeagueOptionsDto()
             {
-              IntervalCron = "0 */5 * * *",
+              IntervalCron = "0 */2 * * *",
               MatchOptions = new MatchOptionsDto()
               {
                 ActionsPerRound = 2,
@@ -343,6 +351,35 @@ namespace EmpoweredPixels.Models
       {
         e.HasKey(o => o.FighterId);
         e.HasOne(o => o.Fighter).WithOne(o => o.Configuration).HasForeignKey<FighterConfiguration>(o => o.FighterId).OnDelete(DeleteBehavior.Cascade);
+      });
+
+      modelBuilder.Entity<Season>(e =>
+      {
+        e.HasKey(o => o.Id);
+        e.HasData(new Season[]
+        {
+          new Season()
+          {
+            Id = 1,
+            StartDate = new DateTime(2019, 10, 1),
+            EndDate = new DateTime(2020, 1, 1),
+            SeasonId = SeasonConstants.Pegasus,
+          },
+        });
+      });
+
+      modelBuilder.Entity<SeasonSummary>(e =>
+      {
+        e.HasKey(o => o.Id);
+        e.HasOne(o => o.User).WithMany().HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
+        e.HasOne(o => o.Season).WithMany().HasForeignKey(o => o.SeasonId).OnDelete(DeleteBehavior.Cascade);
+      });
+
+      modelBuilder.Entity<SeasonProgress>(e =>
+      {
+        e.HasKey(o => o.Id);
+        e.HasOne(o => o.User).WithMany().HasForeignKey(o => o.UserId).OnDelete(DeleteBehavior.Cascade);
+        e.HasOne(o => o.Season).WithMany().HasForeignKey(o => o.SeasonId).OnDelete(DeleteBehavior.Cascade);
       });
     }
 

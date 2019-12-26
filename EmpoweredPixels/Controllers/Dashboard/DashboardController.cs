@@ -95,5 +95,28 @@ namespace EmpoweredPixels.Controllers.Dashboard
 
       return Ok(dtos);
     }
+
+    [HttpGet("season")]
+    public async Task<ActionResult<DashboardSeasonDto>> GetSeasonPanel()
+    {
+      var userId = User.Claims.GetUserId();
+      if (userId == null)
+      {
+        return Forbid();
+      }
+
+      var dto = await Context.Seasons
+        .OrderByDescending(o => o.EndDate)
+        .Select(o => new DashboardSeasonDto()
+        {
+          SeasonId = o.SeasonId,
+          StartDate = o.StartDate,
+          EndDate = o.EndDate,
+          Position = Context.FighterEloRatings
+          .Where(r => r.CurrentElo > (Context.FighterEloRatings.Where(e => e.Fighter.UserId == userId).FirstOrDefault() == null ? 0 : Context.FighterEloRatings.Where(e => e.Fighter.UserId == userId).OrderByDescending(e => e.CurrentElo).FirstOrDefault().CurrentElo)).Count() + 1,
+        }).FirstOrDefaultAsync();
+
+      return Ok(dto);
+    }
   }
 }

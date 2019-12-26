@@ -57,11 +57,10 @@ namespace EmpoweredPixels.Utilities.FighterProgress
 
     public long GetNeededExperience(int level)
     {
-      var factor = 2.5 * (level / 8D);
+      const float exponent = 1.1F;
+      const int baseXP = 1000;
 
-      const int experienceNeeded = 256;
-
-      return (long)(experienceNeeded * Math.Pow(factor, 2));
+      return (long)Math.Floor(baseXP * Math.Pow(level, exponent));
     }
   }
 }
