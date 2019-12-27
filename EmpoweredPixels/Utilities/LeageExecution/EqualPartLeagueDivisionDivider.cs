@@ -17,7 +17,7 @@ namespace EmpoweredPixels.Utilities.LeageExecution
 
       int division = 1;
       foreach (var chunk in fighters
-        .OrderByDescending(o => o.EloRating.CurrentElo)
+        .OrderByDescending(o => o.EloRating?.CurrentElo ?? 0)
         .ToList()
         .Split(divisions))
       {
