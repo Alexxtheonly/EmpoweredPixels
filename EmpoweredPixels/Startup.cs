@@ -81,7 +81,7 @@ namespace EmpoweredPixels
       services.AddTransient<IMatchProcessor, MatchProcessor>();
       services.AddTransient<IMatchPostprocessor, MatchPostprocessor>();
       services.AddTransient<IMatchExecutor, MatchExecutor>();
-      services.AddSingleton<ILeagueDivisionDivider, LeagueDivisionDivider>();
+      services.AddSingleton<ILeagueDivisionDivider, EqualPartLeagueDivisionDivider>();
       services.AddTransient<ILeagueExecutor, LeagueExecutor>();
       services.AddSingleton<IFighterAttunementSelector, FighterAttunementSelector>();
 
