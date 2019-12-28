@@ -23,6 +23,7 @@ namespace EmpoweredPixels.Utilities.Season.Postprocessing
     {
       var equipment = await context.Equipment
         .Where(o => o.UserId == summary.UserId)
+        .AsTracking()
         .ToListAsync();
 
       var salvageItems = new List<Item>();
@@ -32,6 +33,8 @@ namespace EmpoweredPixels.Utilities.Season.Postprocessing
       }
 
       summary.SalvageValue = salvageItems.Count;
+
+      var alreadyTracked = context.ChangeTracker.Entries<Equipment>().Where(o => equipment.Any(e => e.Id == o.Entity.Id)).ToList();
 
       context.RemoveRange(equipment);
       context.AddRange(salvageItems);

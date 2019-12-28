@@ -55,9 +55,9 @@ namespace EmpoweredPixels
 
       services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
       services.AddSingleton<IVersionProvider, VersionProvider>();
-      services.AddTransient<IEngineFactory, EngineFactory>();
-      services.AddTransient<ILeagueJob, LeagueJob>();
-      services.AddTransient<ILoginRewardJob, LoginRewardJob>();
+      services.AddScoped<IEngineFactory, EngineFactory>();
+      services.AddScoped<ILeagueJob, LeagueJob>();
+      services.AddScoped<ILoginRewardJob, LoginRewardJob>();
       services.AddSingleton<IRewardFactory, RewardFactory>();
       services.AddSingleton<IContributionPointCalculator, ContributionPointCalculator>();
       services.AddSingleton<IEloCalculator, EloCalculator>();
@@ -68,35 +68,35 @@ namespace EmpoweredPixels
       services.AddSingleton<IFighterLevelUpHandler, FighterLevelUpHandler>();
       services.AddSingleton<IFighterSkillSelector, FighterSkillSelector>();
       services.AddSingleton<IFighterStatCalculator, FighterStatCalculator>();
-      services.AddTransient<IRewardTrackCalculator, RandomRewardCalculator>();
+      services.AddScoped<IRewardTrackCalculator, RandomRewardCalculator>();
       services.AddSingleton<IEquipmentEnhancer, EquipmentEnhancer>();
       services.AddSingleton<IEquipmentSalvager, EquipmentSalvager>();
-      services.AddTransient<IMatchScoreProcessor, MatchScoreProcessor>();
+      services.AddScoped<IMatchScoreProcessor, MatchScoreProcessor>();
       services.AddSingleton<IMatchFighterPreparer, MatchFighterPreparer>();
-      services.AddTransient<IMatchContributionProcessor, MatchContributionProcessor>();
-      services.AddTransient<IMatchFighterEloProcessor, MatchFighterEloProcessor>();
-      services.AddTransient<IMatchFighterExperienceProcessor, MatchFighterExperienceProcessor>();
-      services.AddTransient<IMatchFighterRewardTrackProcessor, MatchFighterRewardTrackProcessor>();
-      services.AddTransient<IMatchLogProcessor, MatchLogProcessor>();
-      services.AddTransient<IMatchProcessor, MatchProcessor>();
-      services.AddTransient<IMatchPostprocessor, MatchPostprocessor>();
-      services.AddTransient<IMatchExecutor, MatchExecutor>();
+      services.AddScoped<IMatchContributionProcessor, MatchContributionProcessor>();
+      services.AddScoped<IMatchFighterEloProcessor, MatchFighterEloProcessor>();
+      services.AddScoped<IMatchFighterExperienceProcessor, MatchFighterExperienceProcessor>();
+      services.AddScoped<IMatchFighterRewardTrackProcessor, MatchFighterRewardTrackProcessor>();
+      services.AddScoped<IMatchLogProcessor, MatchLogProcessor>();
+      services.AddScoped<IMatchProcessor, MatchProcessor>();
+      services.AddScoped<IMatchPostprocessor, MatchPostprocessor>();
+      services.AddScoped<IMatchExecutor, MatchExecutor>();
       services.AddSingleton<ILeagueDivisionDivider, EqualPartLeagueDivisionDivider>();
-      services.AddTransient<ILeagueExecutor, LeagueExecutor>();
+      services.AddScoped<ILeagueExecutor, LeagueExecutor>();
       services.AddSingleton<IFighterAttunementSelector, FighterAttunementSelector>();
 
-      services.AddTransient<ISeasonMatchRemover, SeasonMatchRemover>();
-      services.AddTransient<ISeasonFighterResetter, SeasonFighterResetter>();
-      services.AddTransient<ISeasonSalvageRewardProvider, SeasonSalvageRewardProvider>();
-      services.AddTransient<ISeasonEloRewardProvider, SeasonEloRewardProvider>();
-      services.AddTransient<ISeasonRewardClaimer, SeasonRewardClaimer>();
-      services.AddTransient<ISeasonPostprocessor, SeasonPostprocessor>();
+      services.AddScoped<ISeasonMatchRemover, SeasonMatchRemover>();
+      services.AddScoped<ISeasonFighterResetter, SeasonFighterResetter>();
+      services.AddScoped<ISeasonSalvageRewardProvider, SeasonSalvageRewardProvider>();
+      services.AddScoped<ISeasonEloRewardProvider, SeasonEloRewardProvider>();
+      services.AddScoped<ISeasonRewardClaimer, SeasonRewardClaimer>();
+      services.AddScoped<ISeasonPostprocessor, SeasonPostprocessor>();
 
-      services.AddTransient<ISeasonCreator, SeasonCreator>();
-      services.AddTransient<ISeasonInitiatorJob, SeasonInitiatorJob>();
-      services.AddTransient<ISeasonUserJob, SeasonUserJob>();
+      services.AddScoped<ISeasonCreator, SeasonCreator>();
+      services.AddScoped<ISeasonInitiatorJob, SeasonInitiatorJob>();
+      services.AddScoped<ISeasonUserJob, SeasonUserJob>();
 
-      services.AddDbContext<DatabaseContext>(o => o.ConfigureDatabase(Configuration), ServiceLifetime.Transient);
+      services.AddDbContext<DatabaseContext>(o => o.ConfigureDatabase(Configuration));
       services.AddAutoMapper(typeof(Startup));
 
       services.AddAuthentication(o =>

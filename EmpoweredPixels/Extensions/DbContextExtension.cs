@@ -27,7 +27,11 @@ namespace EmpoweredPixels.Extensions
     public static DbContextOptionsBuilder ConfigureSqlServerDatabase(this DbContextOptionsBuilder builder, string connectionString)
     {
       return builder
-         .UseSqlServer(connectionString, cfg => cfg.EnableRetryOnFailure());
+         .UseSqlServer(connectionString, cfg =>
+         {
+           cfg.EnableRetryOnFailure();
+           cfg.CommandTimeout(180);
+         });
     }
 
     public static DbContextOptionsBuilder ConfigureDatabase(this DbContextOptionsBuilder builder, IConfiguration configuration)
