@@ -27,8 +27,8 @@ namespace EmpoweredPixels.Utilities.FighterProgress
 
       fighter.Power = baseValue * fighter.Level;
       fighter.Armor = baseValue * fighter.Level;
-      fighter.Accuracy = baseValue * fighter.Level;
-      fighter.Agility = baseValue * fighter.Level;
+      fighter.Accuracy = 3 * fighter.Level;
+      fighter.Agility = 3 * fighter.Level;
       fighter.ConditionPower = baseValue * fighter.Level;
       fighter.Ferocity = 50;
       fighter.HealingPower = baseValue * fighter.Level;
