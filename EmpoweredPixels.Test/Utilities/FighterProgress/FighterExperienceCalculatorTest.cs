@@ -19,9 +19,9 @@ namespace EmpoweredPixels.Test.Utilities.FighterProgress
     }
 
     [Theory]
-    [InlineData(12500, 5, 1415, 5873)]
-    [InlineData(325000, 22, 25979, 29968)]
-    [InlineData(550000, 29, 9445, 40610)]
+    [InlineData(12500, 6, 500, 2000)]
+    [InlineData(325000, 61, 0, 9000)]
+    [InlineData(550000, 82, 6000, 12000)]
     public void ShouldReturnFighterLevel(long experience, int expectedLevel, int expectedExperience, int expectedRequiredExperience)
     {
       var fighterlevel = fighterExperienceCalculator.GetLevel(new FighterExperience() { Points = experience });
@@ -31,14 +31,14 @@ namespace EmpoweredPixels.Test.Utilities.FighterProgress
     }
 
     [Theory]
-    [InlineData(1, 1000)]
-    [InlineData(8, 9849)]
-    [InlineData(16, 21112)]
-    [InlineData(24, 32978)]
-    [InlineData(32, 45254)]
-    [InlineData(5, 5873)]
-    [InlineData(14, 18228)]
-    [InlineData(30, 42153)]
+    [InlineData(1, 2000)]
+    [InlineData(8, 3000)]
+    [InlineData(16, 4000)]
+    [InlineData(24, 5000)]
+    [InlineData(32, 6000)]
+    [InlineData(5, 2000)]
+    [InlineData(14, 3000)]
+    [InlineData(30, 5000)]
     public void ShouldReturnCorrectFighterExperience(int level, long expected)
     {
       var actual = fighterExperienceCalculator.GetNeededExperience(level);

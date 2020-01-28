@@ -1,4 +1,4 @@
-﻿using System;
+﻿using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Models.Roster;
 using EmpoweredPixels.Providers.DateTime;
 using EmpoweredPixels.Utilities.ContributionPointCalculation;
@@ -57,10 +57,7 @@ namespace EmpoweredPixels.Utilities.FighterProgress
 
     public long GetNeededExperience(int level)
     {
-      const float exponent = 1.1F;
-      const int baseXP = 1000;
-
-      return (long)Math.Floor(baseXP * Math.Pow(level, exponent));
+      return 2000 + (1000 * (level.NearestBase(8) / 8));
     }
   }
 }
