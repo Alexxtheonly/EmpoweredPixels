@@ -51,22 +51,22 @@ namespace EmpoweredPixels.Utilities.RewardTrackCalculation
 
     private Guid? GetRewardPoolId()
     {
-      if (2.5F.Chance())
+      if (1.25F.Chance())
       {
         return EmpoweredChestRewardPool.Mythic;
       }
 
-      if (10F.Chance())
+      if (8F.Chance())
       {
         return EmpoweredChestRewardPool.Fabled;
       }
 
-      if (50F.Chance())
+      if (30F.Chance())
       {
         return EmpoweredChestRewardPool.Rare;
       }
 
-      if (80F.Chance())
+      if (50F.Chance())
       {
         return EmpoweredChestRewardPool.Common;
       }

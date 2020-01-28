@@ -8,7 +8,7 @@ namespace EmpoweredPixels.Utilities.FighterEquipment
 {
   public class EquipmentSalvager : IEquipmentSalvager
   {
-    private const int BaseValue = 30;
+    private const int BaseValue = 40;
 
     public IEnumerable<Item> Salvage(IEnhancable enhancable, long userId)
     {
@@ -24,7 +24,7 @@ namespace EmpoweredPixels.Utilities.FighterEquipment
         };
       }
 
-      if (enhancable.Rarity != Enums.Equipment.ItemRarity.Basic && 20F.Chance())
+      if (enhancable.Rarity != Enums.Equipment.ItemRarity.Basic && 33F.Chance())
       {
         yield return new Item()
         {
