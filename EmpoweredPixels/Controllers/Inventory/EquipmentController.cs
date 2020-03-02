@@ -103,7 +103,7 @@ namespace EmpoweredPixels.Controllers.Inventory
         return BadRequest();
       }
 
-      var items = equipmentSalvager.Salvage(equipment, userId.Value);
+      var items = equipmentSalvager.Salvage(equipment, userId.Value).ToList();
       Context.Remove(equipment);
       Context.AddRange(items);
       await Context.SaveChangesAsync();
@@ -129,7 +129,7 @@ namespace EmpoweredPixels.Controllers.Inventory
       var items = new List<Item>();
       foreach (var equip in equipment)
       {
-        items.AddRange(equipmentSalvager.Salvage(equip, userId.Value));
+        items.AddRange(equipmentSalvager.Salvage(equip, userId.Value).ToList());
         Context.Remove(equip);
       }
 
