@@ -19,9 +19,9 @@ namespace EmpoweredPixels.Test.Utilities.FighterProgress
     }
 
     [Theory]
-    [InlineData(12500, 6, 500, 2000)]
-    [InlineData(325000, 61, 0, 9000)]
-    [InlineData(550000, 82, 6000, 12000)]
+    [InlineData(12500, 7, 500, 2000)]
+    [InlineData(325000, 61, 2000, 9000)]
+    [InlineData(550000, 82, 8000, 12000)]
     public void ShouldReturnFighterLevel(long experience, int expectedLevel, int expectedExperience, int expectedRequiredExperience)
     {
       var fighterlevel = fighterExperienceCalculator.GetLevel(new FighterExperience() { Points = experience });

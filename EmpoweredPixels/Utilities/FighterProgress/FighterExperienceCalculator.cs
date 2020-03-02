@@ -21,7 +21,7 @@ namespace EmpoweredPixels.Utilities.FighterProgress
     {
       var fighterLevel = new FighterLevel
       {
-        Level = 0,
+        Level = 1,
       };
 
       long neededExp = 0;
