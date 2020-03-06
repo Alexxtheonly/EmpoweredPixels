@@ -13,8 +13,9 @@ namespace EmpoweredPixels.Test.Utilities.FighterEquipment
 {
   public class EquipmentEnhancerTest
   {
-    private readonly EquipmentEnhancer equipmentEnhancer = new EquipmentEnhancer(new EnhancementProbability(), new EquipmentGenerator());
+    private readonly RandomEquipmentEnhancer randomEquipmentEnhancer = new RandomEquipmentEnhancer(new EnhancementProbability(), new EquipmentGenerator());
 
+    private readonly EquipmentEnhancer equipmentEnhancer = new EquipmentEnhancer(new EquipmentGenerator());
 
     [Fact]
     public void ShouldEnhance()
@@ -25,12 +26,27 @@ namespace EmpoweredPixels.Test.Utilities.FighterEquipment
 
       for (int i = 0; i < 1000000; i++)
       {
-        equipmentEnhancer.Enhance(enhanceable, GetParticles(equipmentEnhancer.RequiredParticles));
+        randomEquipmentEnhancer.Enhance(enhanceable, GetParticles(randomEquipmentEnhancer.RequiredParticles));
         if (enhanceable.Enhancement > maxEnhancement)
         {
           maxEnhancement = enhanceable.Enhancement;
         }
       }
+    }
+
+    [Theory]
+    [InlineData(0, 5)]
+    [InlineData(0, 15)]
+    [InlineData(0, 50)]
+    public void ShouldEnhanceDesired(int currentEnhancement, int desiredEnhancement)
+    {
+      var enhancable = Mock.Of<IEnhancable>();
+      enhancable.Enhancement = currentEnhancement;
+
+      var cost = equipmentEnhancer.GetCost(enhancable, desiredEnhancement);
+      equipmentEnhancer.Enhance(enhancable, GetParticles(cost), desiredEnhancement);
+
+      Assert.Equal(desiredEnhancement, enhancable.Enhancement);
     }
 
     private IEnumerable<Item> GetParticles(int count)

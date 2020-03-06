@@ -3,6 +3,7 @@ using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Factories.Matches;
 using EmpoweredPixels.Factories.Rewards;
 using EmpoweredPixels.Jobs;
+using EmpoweredPixels.Jobs.Inventory;
 using EmpoweredPixels.Jobs.Rewards;
 using EmpoweredPixels.Jobs.Seasons;
 using EmpoweredPixels.Models;
@@ -69,7 +70,7 @@ namespace EmpoweredPixels
       services.AddSingleton<IFighterSkillSelector, FighterSkillSelector>();
       services.AddSingleton<IFighterStatCalculator, FighterStatCalculator>();
       services.AddScoped<IRewardTrackCalculator, RandomRewardCalculator>();
-      services.AddSingleton<IEquipmentEnhancer, EquipmentEnhancer>();
+      services.AddSingleton<IEquipmentEnhancer, RandomEquipmentEnhancer>();
       services.AddSingleton<IEquipmentSalvager, EquipmentSalvager>();
       services.AddScoped<IMatchScoreProcessor, MatchScoreProcessor>();
       services.AddSingleton<IMatchFighterPreparer, MatchFighterPreparer>();
@@ -95,6 +96,7 @@ namespace EmpoweredPixels
       services.AddScoped<ISeasonCreator, SeasonCreator>();
       services.AddScoped<ISeasonInitiatorJob, SeasonInitiatorJob>();
       services.AddScoped<ISeasonUserJob, SeasonUserJob>();
+      services.AddScoped<IRemoveExcessParticlesJob, RemoveExcessParticlesJob>();
 
       services.AddDbContext<DatabaseContext>(o => o.ConfigureDatabase(Configuration));
       services.AddAutoMapper(typeof(Startup));
@@ -133,6 +135,7 @@ namespace EmpoweredPixels
       recurringJobManager.AddLeagueJobs(databaseContext);
       recurringJobManager.AddLoginRewardJob();
       recurringJobManager.AddSeasonJob();
+      recurringJobManager.AddRemoveExcessParticlesJob();
 
       app.UseResponseCompression();
       app.UseAuthentication();

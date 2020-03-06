@@ -9,5 +9,9 @@ namespace EmpoweredPixels.Utilities.FighterEquipment
     int RequiredParticles { get; }
 
     void Enhance(IEnhancable enhancable, IEnumerable<Item> particles);
+
+    void Enhance(IEnhancable enhancable, IEnumerable<Item> particles, int desiredEnhancement);
+
+    int GetCost(IEnhancable enhancable, int desiredEnhancement);
   }
 }
