@@ -1,5 +1,5 @@
+import { Enhancement } from './../inventory/+models/enhancement';
 import { PagingOptions } from 'src/app/match/+models/paging-options';
-import { EquipmentFilter } from './../+models/equipment-filter';
 import { Item } from './../rewards/+models/item';
 import { Equipment } from './../roster/+models/equipment';
 import { Observable } from 'rxjs';
@@ -19,14 +19,14 @@ export class EquipmentService
   {
     return this.http.get<Equipment>(`api/equipment/${id}`);
   }
-  public getEnhanceCost(): Observable<number>
+  public getEnhanceCost(enhancement: Enhancement): Observable<number>
   {
-    return this.http.get<number>('api/equipment/enhance/cost');
+    return this.http.post<number>('api/equipment/enhance/cost', enhancement);
   }
 
-  public enhance(equipment: Equipment): Observable<Equipment>
+  public enhance(enhancement: Enhancement): Observable<Equipment>
   {
-    return this.http.post<Equipment>('api/equipment/enhance', equipment);
+    return this.http.post<Equipment>('api/equipment/enhance', enhancement);
   }
 
   public salvage(equipment: Equipment): Observable<Item[]>

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using EmpoweredPixels.Jobs;
+using EmpoweredPixels.Jobs.Inventory;
 using EmpoweredPixels.Jobs.Rewards;
 using EmpoweredPixels.Jobs.Seasons;
 using EmpoweredPixels.Models;
@@ -35,6 +36,11 @@ namespace EmpoweredPixels.Extensions
     public static void AddSeasonJob(this IRecurringJobManager jobManager)
     {
       jobManager.AddOrUpdate<ISeasonInitiatorJob>(nameof(ISeasonInitiatorJob), o => o.InitAsync(), "30 * * * *");
+    }
+
+    public static void AddRemoveExcessParticlesJob(this IRecurringJobManager jobManager)
+    {
+      jobManager.AddOrUpdate<IRemoveExcessParticlesJob>(nameof(IRemoveExcessParticlesJob), o => o.RemoveAsync(), "*/10 * * * *");
     }
   }
 }
