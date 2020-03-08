@@ -1,4 +1,5 @@
-﻿using EmpoweredPixels.Models.Roster;
+﻿using EmpoweredPixels.Models;
+using EmpoweredPixels.Models.Roster;
 using EmpoweredPixels.Providers.DateTime;
 using EmpoweredPixels.Utilities.ContributionPointCalculation;
 using EmpoweredPixels.Utilities.FighterProgress;
@@ -15,7 +16,7 @@ namespace EmpoweredPixels.Test.Utilities.FighterProgress
 
     public FighterExperienceCalculatorTest()
     {
-      fighterExperienceCalculator = new FighterExperienceCalculator(new ContributionPointCalculator(), datetimeprovider.Object);
+      fighterExperienceCalculator = new FighterExperienceCalculator(datetimeprovider.Object, TestUtilities.GetTestContext<DatabaseContext>());
     }
 
     [Theory]

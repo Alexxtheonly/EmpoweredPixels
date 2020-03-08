@@ -4,14 +4,16 @@ using EmpoweredPixels.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EmpoweredPixels.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200306152748_SplitKillAndAssist")]
+    partial class SplitKillAndAssist
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -367,8 +369,6 @@ namespace EmpoweredPixels.Migrations
 
                     b.Property<Guid?>("TeamId");
 
-                    b.Property<int>("TotalAssists");
-
                     b.Property<int>("TotalDamageDone");
 
                     b.Property<int>("TotalDamageTaken");
@@ -401,8 +401,6 @@ namespace EmpoweredPixels.Migrations
                     b.Property<DateTimeOffset>("Created");
 
                     b.Property<int>("RoundsAlive");
-
-                    b.Property<int>("TotalAssists");
 
                     b.Property<int>("TotalDamageDone");
 
