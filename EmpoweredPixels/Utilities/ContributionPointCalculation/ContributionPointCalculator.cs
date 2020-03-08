@@ -1,4 +1,5 @@
-﻿using SharpFightingEngine.Engines;
+﻿using System.Linq;
+using SharpFightingEngine.Engines;
 
 namespace EmpoweredPixels.Utilities.ContributionPointCalculation
 {
@@ -8,7 +9,8 @@ namespace EmpoweredPixels.Utilities.ContributionPointCalculation
     private const int PointsSecondPlace = 30;
     private const int PointsThirdPlace = 25;
 
-    private const int KillAssistPoints = 25;
+    private const int KillPoints = 20;
+    private const int AssistPoints = 10;
     private const int PercentageOfRoundsAlivePoints = 25;
     private const int MatchParticipationPoints = 25;
 
@@ -30,7 +32,8 @@ namespace EmpoweredPixels.Utilities.ContributionPointCalculation
         points += PointsThirdPlace;
       }
 
-      points += contribution.KillsAndAssists * KillAssistPoints;
+      points += contribution.Kills.Count() * KillPoints;
+      points += contribution.Assists.Count() * AssistPoints;
       points += PercentageOfRoundsAlivePoints * contribution.PercentageOfRoundsAlive;
       points += MatchParticipationPoints * contribution.MatchParticipation;
 

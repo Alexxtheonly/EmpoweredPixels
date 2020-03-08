@@ -22,6 +22,8 @@ namespace EmpoweredPixels.DataTransferObjects.Matches
 
     public int TotalEnergyUsed { get; set; }
 
+    public int TotalAssists { get; set; }
+
     public int TotalKills { get; set; }
 
     public int TotalDeaths { get; set; }

@@ -54,7 +54,7 @@ namespace EmpoweredPixels.Utilities.MatchExecution
         }
 
         var levelBefore = fighterExperienceCalculator.GetLevel(fighterExperience);
-        fighterExperienceCalculator.AddExperience(fighterExperience, contribution, 0);
+        await fighterExperienceCalculator.AddExperienceAsync(fighterExperience, contribution, 0);
         var levelAfter = fighterExperienceCalculator.GetLevel(fighterExperience);
 
         for (int i = levelBefore.Level; i < levelAfter.Level; i++)

@@ -32,6 +32,7 @@ namespace EmpoweredPixels.Profiles.Matches
         .ForMember(o => o.TotalDistanceTraveled, opt => opt.MapFrom(o => o.TotalDistanceTraveled))
         .ForMember(o => o.TotalEnergyUsed, opt => opt.MapFrom(o => o.TotalEnergyUsed))
         .ForMember(o => o.TotalKills, opt => opt.MapFrom(o => o.TotalKills))
+        .ForMember(o => o.TotalAssists, opt => opt.MapFrom(o => o.TotalAssists))
         .ForMember(o => o.TotalRegeneratedEnergy, opt => opt.MapFrom(o => o.TotalRegeneratedEnergy))
         .ForMember(o => o.TotalRegeneratedHealth, opt => opt.MapFrom(o => o.TotalRegeneratedHealth));
     }

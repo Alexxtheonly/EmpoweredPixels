@@ -200,6 +200,7 @@
 		"deaths": "Deaths",
 		"distanceTraveled": "Distance traveled",
 		"kills": "Kills",
+		"assists": "Assists",
 		"name": "Name",
 		"points": "Points",
 		"roundsAlive": "Rounds Alive",
