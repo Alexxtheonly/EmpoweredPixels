@@ -2,70 +2,22 @@
     <div class="card card-body justify-content-center col-12 col-md-6">
         <app-equipment [equipment]="equipment" [disableContext]="true"></app-equipment>
         <hr />
+
+
+        <input type="number" class="form-control w-50 ml-auto mr-auto mb-2" [ngModel]="enhancement.desiredEnhancement"
+            (ngModelChange)="enhancement.desiredEnhancement=$event; updateCosts()">
+
+        <button [disabled]="enhancementInProgress || balance?.balance < costs"
+            class="btn btn-outline-success" (click)="enhance()">
+            {{ 'inventory.enhanceAndCost' | translate }}: {{ costs }} <img class="balance-icon"
+                src="assets/images/items/a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702.svg" />
+            <div *ngIf="enhancementInProgress" class="spinner-border text-info" style="height: 20px;width: 20px;"
+                role="status">
+            </div>
+        </button>
         <span class="badge">{{ 'inventory.balance' | translate }}: <span
                 [ngClass]="balance?.balance < costs ? 'text-danger' : ''">{{ balance?.balance }} <img
                     class="balance-icon" src="assets/images/items/a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702.svg" />
             </span></span>
-
-        <div class="btn-group" role="group">
-            <div *ngIf="!autoEnhancementInProgress" class="btn-group" role="group">
-                <button id="btnGroupDrop1" type="button" class="btn btn-outline-success dropdown-toggle"
-                    data-toggle="dropdown">
-                    {{ 'inventory.autoEnhance' | translate }}
-                </button>
-                <div class="dropdown-menu">
-                    <button class="btn btn-block btn-outline-info"
-                        (click)="desiredEnhancement=5;autoEnhance();">+5</button>
-                    <button class="btn btn-block btn-outline-primary"
-                        (click)="desiredEnhancement=7;autoEnhance();">+7</button>
-                    <button class="btn btn-block btn-outline-warning"
-                        (click)="desiredEnhancement=9;autoEnhance();">+9</button>
-                    <button class="btn btn-block btn-outline-danger"
-                        (click)="desiredEnhancement=11;autoEnhance();">+11</button>
-                </div>
-            </div>
-
-            <button *ngIf="!autoEnhancementInProgress" [disabled]="enhancementInProgress || balance?.balance < costs"
-                class="btn btn-outline-success" (click)="enhance()">
-                {{ 'inventory.enhanceAndCost' | translate }}: {{ costs }} <img class="balance-icon"
-                    src="assets/images/items/a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702.svg" />
-                <div *ngIf="enhancementInProgress" class="spinner-border text-info" style="height: 20px;width: 20px;"
-                    role="status">
-                </div>
-            </button>
-
-            <button *ngIf="autoEnhancementInProgress" class="btn btn-outline-warning" (click)="desiredEnhancement=0">
-                +{{ desiredEnhancement }}
-                {{ 'inventory.cancelAutoEnhancement' | translate }}
-                <div *ngIf="autoEnhancementInProgress" class="spinner-border text-info"
-                    style="height: 20px;width: 20px;" role="status">
-                </div>
-            </button>
-        </div>
-
-        <hr />
-        <div class="table-responsive">
-            <table class="table table-sm">
-                <tbody>
-                    <tr>
-                        <td>{{ stats.tries }}</td>
-                        <td>{{ 'inventory.tries' | translate }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ stats.failures }}</td>
-                        <td>{{ 'inventory.failures' | translate }}</td>
-                    </tr>
-                    <tr>
-                        <td>+{{ stats.maxEnhancement }}</td>
-                        <td>{{ 'inventory.maxEnhancement' | translate }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ stats.tries * costs }} <img class="balance-icon"
-                                src="assets/images/items/a1fe94ec-5b54-4c1b-a5c0-0439f4a7e702.svg" /></td>
-                        <td>{{ 'inventory.usedCurrency' | translate }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
     </div>
 </div>

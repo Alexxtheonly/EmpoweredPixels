@@ -70,7 +70,7 @@ namespace EmpoweredPixels
       services.AddSingleton<IFighterSkillSelector, FighterSkillSelector>();
       services.AddSingleton<IFighterStatCalculator, FighterStatCalculator>();
       services.AddScoped<IRewardTrackCalculator, RandomRewardCalculator>();
-      services.AddSingleton<IEquipmentEnhancer, RandomEquipmentEnhancer>();
+      services.AddSingleton<IEquipmentEnhancer, EquipmentEnhancer>();
       services.AddSingleton<IEquipmentSalvager, EquipmentSalvager>();
       services.AddScoped<IMatchScoreProcessor, MatchScoreProcessor>();
       services.AddSingleton<IMatchFighterPreparer, MatchFighterPreparer>();
@@ -135,7 +135,6 @@ namespace EmpoweredPixels
       recurringJobManager.AddLeagueJobs(databaseContext);
       recurringJobManager.AddLoginRewardJob();
       recurringJobManager.AddSeasonJob();
-      recurringJobManager.AddRemoveExcessParticlesJob();
 
       app.UseResponseCompression();
       app.UseAuthentication();

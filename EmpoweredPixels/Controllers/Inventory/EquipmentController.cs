@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using EmpoweredPixels.DataTransferObjects.Inventory;
 using EmpoweredPixels.DataTransferObjects.Items;
 using EmpoweredPixels.Extensions;
 using EmpoweredPixels.Models;
@@ -47,14 +48,8 @@ namespace EmpoweredPixels.Controllers.Inventory
       return Ok(Mapper.Map<EquipmentDto>(equipment));
     }
 
-    [HttpGet("enhance/cost")]
-    public ActionResult<int> GetEnhancementCosts([FromServices]IEquipmentEnhancer equipmentEnhancer)
-    {
-      return Ok(equipmentEnhancer.RequiredParticles);
-    }
-
-    [HttpPost("enhance")]
-    public async Task<ActionResult<EquipmentDto>> EnhanceEquipment([FromBody]EquipmentDto dto, [FromServices]IEquipmentEnhancer equipmentEnhancer)
+    [HttpPost("enhance/cost")]
+    public async Task<ActionResult<int>> GetEnhancementCosts([FromBody] EnhanceDto dto, [FromServices]IEquipmentEnhancer equipmentEnhancer)
     {
       var userId = User.Claims.GetUserId();
       if (userId == null)
@@ -65,7 +60,29 @@ namespace EmpoweredPixels.Controllers.Inventory
       var equipment = await Context.Equipment
         .AsTracking()
         .Where(o => o.UserId == userId)
-        .FirstOrDefaultAsync(o => o.Id == dto.Id);
+        .FirstOrDefaultAsync(o => o.Id == dto.Equipment.Id);
+
+      if (equipment == null)
+      {
+        return BadRequest();
+      }
+
+      return Ok(equipmentEnhancer.GetCost(equipment, dto.DesiredEnhancement));
+    }
+
+    [HttpPost("enhance")]
+    public async Task<ActionResult<EquipmentDto>> EnhanceEquipment([FromBody] EnhanceDto dto, [FromServices]IEquipmentEnhancer equipmentEnhancer)
+    {
+      var userId = User.Claims.GetUserId();
+      if (userId == null)
+      {
+        return Forbid();
+      }
+
+      var equipment = await Context.Equipment
+        .AsTracking()
+        .Where(o => o.UserId == userId)
+        .FirstOrDefaultAsync(o => o.Id == dto.Equipment.Id);
 
       if (equipment == null)
       {
@@ -74,10 +91,10 @@ namespace EmpoweredPixels.Controllers.Inventory
 
       var particles = await Context.Items
         .Where(o => o.UserId == userId && o.ItemId == EmpoweredParticle.Id)
-        .Take(equipmentEnhancer.RequiredParticles)
+        .Take(equipmentEnhancer.GetCost(equipment, dto.DesiredEnhancement))
         .ToListAsync();
 
-      equipmentEnhancer.Enhance(equipment, particles);
+      equipmentEnhancer.Enhance(equipment, particles, dto.DesiredEnhancement);
 
       Context.RemoveRange(particles);
       await Context.SaveChangesAsync();

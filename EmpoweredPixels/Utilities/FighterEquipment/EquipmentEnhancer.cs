@@ -18,7 +18,7 @@ namespace EmpoweredPixels.Utilities.FighterEquipment
       this.equipmentGenerator = equipmentGenerator;
     }
 
-    public int RequiredParticles => 2;
+    public int RequiredParticles => 25;
 
     public void Enhance(IEnhancable enhancable, IEnumerable<Item> particles)
     {

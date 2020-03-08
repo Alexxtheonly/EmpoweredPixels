@@ -164,15 +164,6 @@ export class EquipmentComponent implements OnInit
     });
   }
 
-  public enhance(): void
-  {
-    this.modalVisible = false;
-    this.equipmentService.enhance(this.equipment).subscribe(result =>
-    {
-      this.equipment = result;
-    });
-  }
-
   public equip(): void
   {
     if (!this.fighter)
