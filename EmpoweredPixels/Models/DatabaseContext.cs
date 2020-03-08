@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using EmpoweredPixels.DataTransferObjects.Leagues;
 using EmpoweredPixels.DataTransferObjects.Matches;
 using EmpoweredPixels.Models.Identity;
@@ -178,6 +179,12 @@ namespace EmpoweredPixels.Models
         e.HasKey(o => new { o.FighterId, o.MatchId });
         e.HasOne(o => o.Fighter).WithMany().HasForeignKey(o => o.FighterId).OnDelete(DeleteBehavior.Cascade);
         e.HasOne(o => o.Match).WithMany(o => o.MatchContributions).HasForeignKey(o => o.MatchId).OnDelete(DeleteBehavior.Cascade);
+        e.Property(o => o.Kills).HasConversion(
+          o => JsonConvert.SerializeObject(o),
+          o => JsonConvert.DeserializeObject<IEnumerable<Guid>>(o));
+        e.Property(o => o.Assists).HasConversion(
+          o => JsonConvert.SerializeObject(o),
+          o => JsonConvert.DeserializeObject<IEnumerable<Guid>>(o));
       });
 
       modelBuilder.Entity<League>(e =>

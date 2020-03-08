@@ -65,7 +65,7 @@ namespace EmpoweredPixels
       services.AddSingleton<IEnhancementProbability, EnhancementProbability>();
       services.AddSingleton<IEquipmentGenerator, EquipmentGenerator>();
       services.AddSingleton<IFighterOutfitter, FighterOutfitter>();
-      services.AddSingleton<IFighterExperienceCalculator, FighterExperienceCalculator>();
+      services.AddScoped<IFighterExperienceCalculator, FighterExperienceCalculator>();
       services.AddSingleton<IFighterLevelUpHandler, FighterLevelUpHandler>();
       services.AddSingleton<IFighterSkillSelector, FighterSkillSelector>();
       services.AddSingleton<IFighterStatCalculator, FighterStatCalculator>();

@@ -1,20 +1,28 @@
-﻿using EmpoweredPixels.Extensions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using EmpoweredPixels.Extensions;
+using EmpoweredPixels.Models;
 using EmpoweredPixels.Models.Roster;
 using EmpoweredPixels.Providers.DateTime;
-using EmpoweredPixels.Utilities.ContributionPointCalculation;
+using Microsoft.EntityFrameworkCore;
 using SharpFightingEngine.Engines;
 
 namespace EmpoweredPixels.Utilities.FighterProgress
 {
   public class FighterExperienceCalculator : IFighterExperienceCalculator
   {
-    private readonly IContributionPointCalculator contributionPointCalculator;
-    private readonly IDateTimeProvider dateTimeProvider;
+    private const int KillExperience = 20;
+    private const int AssistExperience = 10;
 
-    public FighterExperienceCalculator(IContributionPointCalculator contributionPointCalculator, IDateTimeProvider dateTimeProvider)
+    private readonly IDateTimeProvider dateTimeProvider;
+    private readonly DatabaseContext context;
+
+    public FighterExperienceCalculator(IDateTimeProvider dateTimeProvider, DatabaseContext context)
     {
-      this.contributionPointCalculator = contributionPointCalculator;
       this.dateTimeProvider = dateTimeProvider;
+      this.context = context;
     }
 
     public FighterLevel GetLevel(FighterExperience fighterExperience)
@@ -48,9 +56,24 @@ namespace EmpoweredPixels.Utilities.FighterProgress
       return fighterLevel;
     }
 
-    public void AddExperience(FighterExperience fighterExperience, FighterContribution contribution, double mutliplicator)
+    public async Task AddExperienceAsync(FighterExperience fighterExperience, FighterContribution contribution, double mutliplicator)
     {
-      var experience = contributionPointCalculator.Calculate(contribution);
+      var ids = new Guid[] { fighterExperience.FighterId }.Union(contribution.Kills).Union(contribution.Assists).ToList();
+      var fighters = await context.Fighters.Where(o => ids.Contains(o.Id)).ToListAsync();
+
+      var fighter = fighters.First(o => o.Id == fighterExperience.FighterId);
+      var experience = 100;
+
+      foreach (var killFighterId in contribution.Kills)
+      {
+        experience += GetExperience(fighters, fighter, killFighterId, KillExperience);
+      }
+
+      foreach (var assistFighterId in contribution.Assists)
+      {
+        experience += GetExperience(fighters, fighter, assistFighterId, AssistExperience);
+      }
+
       fighterExperience.Points += experience + (int)(experience * mutliplicator);
       fighterExperience.LastUpdate = dateTimeProvider.Now;
     }
@@ -58,6 +81,26 @@ namespace EmpoweredPixels.Utilities.FighterProgress
     public long GetNeededExperience(int level)
     {
       return 2000 + (1000 * (level.NearestBase(8) / 8));
+    }
+
+    private int GetExperience(List<Fighter> fighters, Fighter fighter, Guid otherFighterId, int experienceValue)
+    {
+      return (int)(experienceValue * GetExperienceFactor(fighter.Level, fighters.First(o => o.Id == otherFighterId).Level));
+    }
+
+    private double GetExperienceFactor(int level, int otherLevel)
+    {
+      var factor = 1D;
+
+      var difference = otherLevel - level;
+      factor += 0.2D * difference;
+
+      if (factor < 0)
+      {
+        return 0;
+      }
+
+      return factor;
     }
   }
 }

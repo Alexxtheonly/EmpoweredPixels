@@ -18,6 +18,8 @@ export class MatchFighterScore extends Tick
 
     public totalDamageTaken: number;
 
+    public totalAssists: number;
+
     public totalKills: number;
 
     public totalDeaths: number;

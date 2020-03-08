@@ -41,6 +41,7 @@ namespace EmpoweredPixels.Utilities.MatchExecution
           TotalDeaths = fighterScore.TotalDeaths,
           TotalDistanceTraveled = Math.Round(fighterScore.TotalDistanceTraveled, 2),
           TotalKills = fighterScore.TotalKills,
+          TotalAssists = fighterScore.TotalAssists,
         });
       }
 
