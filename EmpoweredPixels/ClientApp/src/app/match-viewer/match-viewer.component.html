@@ -6,7 +6,6 @@
   <div class="table-responsive-lg">
     <table class="table table-sm clickable">
       <thead>
-        <th>{{ 'matchViewer.team' | translate }}</th>
         <th>{{ 'matchViewer.points' | translate }}</th>
         <th>{{ 'matchViewer.name' | translate }}</th>
         <th>{{ 'matchViewer.kills' | translate }}</th>
@@ -21,7 +20,6 @@
       <tbody *ngIf="fighterscores">
         <tr [ngClass]="{'text-warning': score.userId==userId}" *ngFor="let score of fighterscores"
           [routerLink]="'/match/'+ id + '/log'" [queryParams]="{ filter: score.fighterId }">
-          <td [ngStyle]="{ 'background-color': getTeamColor(score.teamId) }"></td>
           <td>{{ score.points }}</td>
           <td>{{ score.fighterName }}</td>
           <td>{{ score.totalKills }}</td>
