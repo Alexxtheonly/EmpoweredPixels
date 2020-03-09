@@ -1,7 +1,7 @@
 <ng-container *ngIf="(experience$ | async) as experience">
     <div class="progress">
         <div class="progress-bar text-dark bg-success" [ngStyle]="{ width: getPercent(experience) + '%' }">
-            {{ getPercent(experience) | number }} %
+            {{ getPercent(experience) | number:'1.2-2' }} %
         </div>
     </div>
     <div class="float-left exp-text">

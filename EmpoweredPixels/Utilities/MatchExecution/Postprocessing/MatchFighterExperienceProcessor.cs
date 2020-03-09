@@ -28,8 +28,6 @@ namespace EmpoweredPixels.Utilities.MatchExecution
 
     public async Task Process(Match match, IEnumerable<FighterContribution> contributions)
     {
-      var maxLevelInMatch = match.Registrations.Max(o => o.Fighter.Level);
-
       foreach (var contribution in contributions)
       {
         var fighter = await databaseContext.Fighters
