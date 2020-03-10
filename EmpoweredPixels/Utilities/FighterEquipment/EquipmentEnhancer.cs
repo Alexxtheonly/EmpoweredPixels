@@ -53,7 +53,7 @@ namespace EmpoweredPixels.Utilities.FighterEquipment
         return 0;
       }
 
-      int gausssum = (desiredEnhancement - enhancable.Enhancement).GaussSum();
+      int gausssum = desiredEnhancement.GaussSum();
       return gausssum * RequiredParticles;
     }
   }
