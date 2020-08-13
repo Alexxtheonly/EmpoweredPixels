@@ -4,6 +4,9 @@ Is a game that I originally used to learn angular, but then became more.
 It is accessible here:
 https://empoweredpixels.dylf.de/
 
+# Fighting engine
+https://github.com/Alexxtheonly/SharpFightingEngine
+
 # Planned features
 * Add skill selection
 * Add account operations (delete, change password)
