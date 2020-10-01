@@ -1,0 +1,27 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  REVISION: $(git describe --tags --abbrev=0)
+
+steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    feedsToUse: 'config'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+- task: Docker@2
+  inputs:
+    repository: 'registry.dylf.de'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
